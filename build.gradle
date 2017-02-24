@@ -28,7 +28,6 @@ dependencies {
 }
 
 generateGrammarSource {
-    maxHeapSize = "64m"
     arguments += ["-package", "com.kasirgalabs.arm", "-visitor", "-long-messages"]
     doLast {
         copy {
