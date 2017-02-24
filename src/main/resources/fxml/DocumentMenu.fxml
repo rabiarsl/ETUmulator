@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Menu?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.input.KeyCodeCombination?>
+
+<Menu mnemonicParsing="false" text="Document" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.kasirgalabs.etumulator.DocumentMenuController">
+    <items>
+        <MenuItem mnemonicParsing="false" onAction="#newOnAction" text="New">
+            <accelerator>
+                <KeyCodeCombination alt="UP" code="N" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
+            </accelerator>
+        </MenuItem>
+        <MenuItem mnemonicParsing="false" onAction="#openOnAction" text="Open">
+            <accelerator>
+                <KeyCodeCombination alt="UP" code="O" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
+            </accelerator>
+        </MenuItem>
+        <MenuItem mnemonicParsing="false" onAction="#saveOnAction" text="Save">
+            <accelerator>
+                <KeyCodeCombination alt="UP" code="S" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
+            </accelerator>
+        </MenuItem>
+        <MenuItem mnemonicParsing="false" onAction="#saveAsOnaction" text="Save as">
+            <accelerator>
+                <KeyCodeCombination alt="UP" code="S" control="DOWN" meta="UP" shift="DOWN" shortcut="UP" />
+            </accelerator>
+        </MenuItem>
+    </items>
+</Menu>
