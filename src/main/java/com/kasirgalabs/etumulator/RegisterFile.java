@@ -16,20 +16,20 @@
  */
 package com.kasirgalabs.etumulator;
 
-import java.io.File;
-import java.io.IOException;
+import com.kasirgalabs.etumulator.registers.DefaultRegister;
 
-public interface Document {
+public class RegisterFile {
+    private static final int NUM_OF_REGS = 15;
+    private final DefaultRegister[] registers;
 
-    String getText();
+    public RegisterFile() {
+        registers = new DefaultRegister[NUM_OF_REGS];
+        for(int i = 0; i < NUM_OF_REGS; i++) {
+            registers[i] = new DefaultRegister();
+        }
+    }
 
-    void clear();
-
-    void readFile(File file) throws IOException;
-
-    void setTargetFile(File targetFile);
-
-    File getTargetFile();
-
-    void saveDocument() throws IOException;
+    public DefaultRegister getRegister(int i) {
+        return registers[i];
+    }
 }

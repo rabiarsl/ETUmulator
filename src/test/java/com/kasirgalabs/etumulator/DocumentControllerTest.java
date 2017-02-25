@@ -121,6 +121,15 @@ public class DocumentControllerTest {
     }
 
     /**
+     * Test of getTextProperty method, of class DocumentController.
+     */
+    @Test
+    public void testGetTextProperty() throws IOException {
+        String result = documentController.getText();
+        assertEquals("Text is not empty.", "", result);
+    }
+
+    /**
      * Test of clear method, of class DocumentController.
      *
      * @throws IOException If reading or writing to mock file produces an error.

@@ -14,22 +14,13 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.kasirgalabs.etumulator;
+package com.kasirgalabs.etumulator.string;
 
-import java.io.File;
-import java.io.IOException;
+public final class StringUtils {
 
-public interface Document {
-
-    String getText();
-
-    void clear();
-
-    void readFile(File file) throws IOException;
-
-    void setTargetFile(File targetFile);
-
-    File getTargetFile();
-
-    void saveDocument() throws IOException;
+    public static String add(String string0, String string1) {
+        int number0 = Integer.parseInt(string0, 2);
+        int number1 = Integer.parseInt(string1, 2);
+        return Integer.toBinaryString(number0 + number1);
+    }
 }

@@ -14,22 +14,26 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.kasirgalabs.etumulator;
+package com.kasirgalabs.etumulator.registers;
 
-import java.io.File;
-import java.io.IOException;
+public class DefaultRegister implements Register {
+    private String value;
 
-public interface Document {
+    public DefaultRegister() {
+        value = "0";
+    }
 
-    String getText();
+    public DefaultRegister(String value) {
+        this.value = value;
+    }
 
-    void clear();
+    @Override
+    public void setValue(String value) {
+        this.value = value;
+    }
 
-    void readFile(File file) throws IOException;
-
-    void setTargetFile(File targetFile);
-
-    File getTargetFile();
-
-    void saveDocument() throws IOException;
+    @Override
+    public String getValue() {
+        return value;
+    }
 }

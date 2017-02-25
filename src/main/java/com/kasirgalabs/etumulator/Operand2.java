@@ -16,20 +16,6 @@
  */
 package com.kasirgalabs.etumulator;
 
-import java.io.File;
-import java.io.IOException;
-
-public interface Document {
-
-    String getText();
-
-    void clear();
-
-    void readFile(File file) throws IOException;
-
-    void setTargetFile(File targetFile);
-
-    File getTargetFile();
-
-    void saveDocument() throws IOException;
+public interface Operand2 {
+    String getValue();
 }

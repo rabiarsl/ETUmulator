@@ -16,9 +16,9 @@
  */
 package com.kasirgalabs.etumulator;
 
-import com.kasirgalabs.arm.ArmBaseListener;
 import com.kasirgalabs.arm.ArmLexer;
 import com.kasirgalabs.arm.ArmParser;
+import com.kasirgalabs.etumulator.listener.ETUmulatorListener;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.io.PrintStream;
@@ -64,6 +64,10 @@ public class ETUmulatorController implements Initializable, Console {
         CommonTokenStream tokens = new CommonTokenStream(lexer);
         ArmParser parser = new ArmParser(tokens);
         ArmParser.ProgContext tree = parser.prog();
-        ParseTreeWalker.DEFAULT.walk(new ArmBaseListener(), tree);
+        if(parser.getNumberOfSyntaxErrors() != 0) {
+            return;
+        }
+        Registry.put(RegisterFile.class, new RegisterFile());
+        ParseTreeWalker.DEFAULT.walk(new ETUmulatorListener(), tree);
     }
 }
