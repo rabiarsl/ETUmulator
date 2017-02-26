@@ -17,10 +17,9 @@
 package com.kasirgalabs.etumulator.string;
 
 public final class StringUtils {
-
     public static String add(String string0, String string1) {
-        int number0 = Integer.parseInt(string0, 2);
-        int number1 = Integer.parseInt(string1, 2);
-        return Integer.toBinaryString(number0 + number1);
+        int number0 = Integer.parseInt(string0);
+        int number1 = Integer.parseInt(string1);
+        return Integer.toString(number0 + number1);
     }
 }

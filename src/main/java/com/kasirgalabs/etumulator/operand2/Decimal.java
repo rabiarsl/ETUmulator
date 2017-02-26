@@ -14,30 +14,16 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.kasirgalabs.etumulator.registers;
+package com.kasirgalabs.etumulator.operand2;
 
-import com.kasirgalabs.etumulator.operand2.Operand2;
-
-public class RmRegister implements Register, Operand2 {
+public class Decimal extends Number {
     private String value;
-    private final int registerNumber;
 
-    public RmRegister(int registerNumber) {
-        this.registerNumber = registerNumber;
-        this.value = RegisterUtils.getRegisterValue(registerNumber);
-    }
-
-    @Override
-    public void setValue(String value) {
+    public Decimal(String value) {
         this.value = value;
-    }
-
-    @Override
-    public String getValue() {
-        return value;
-    }
-
-    public int getRegisterNumber() {
-        return registerNumber;
+        if(value.contains("#")) {
+            this.value = value.substring(1);
+        }
+        super.setValue(this.value);
     }
 }

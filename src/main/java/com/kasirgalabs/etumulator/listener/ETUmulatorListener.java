@@ -18,8 +18,11 @@ package com.kasirgalabs.etumulator.listener;
 
 import com.kasirgalabs.arm.ArmBaseListener;
 import com.kasirgalabs.arm.ArmParser;
-import com.kasirgalabs.etumulator.Operand2;
 import com.kasirgalabs.etumulator.Registry;
+import com.kasirgalabs.etumulator.operand2.Decimal;
+import com.kasirgalabs.etumulator.operand2.Imm8m;
+import com.kasirgalabs.etumulator.operand2.Number;
+import com.kasirgalabs.etumulator.operand2.Operand2;
 import com.kasirgalabs.etumulator.registers.RdRegister;
 import com.kasirgalabs.etumulator.registers.RegisterUtils;
 import com.kasirgalabs.etumulator.registers.RmRegister;
@@ -68,8 +71,35 @@ public class ETUmulatorListener extends ArmBaseListener {
     @Override
     public void exitOperand2(ArmParser.Operand2Context ctx) {
         if(ctx.rm() != null) {
-            RmRegister rmRegister = Registry.get(RmRegister.class);
-            Registry.put(Operand2.class, rmRegister);
+            Registry.put(Operand2.class, Registry.get(RmRegister.class));
         }
+        else if(ctx.imm8m() != null) {
+            Registry.put(Operand2.class, Registry.get(Imm8m.class));
+        }
+    }
+
+    @Override
+    public void exitDecimal(ArmParser.DecimalContext ctx) {
+        Registry.put(Decimal.class, new Decimal(ctx.DECIMAL().toString()));
+    }
+
+    @Override
+    public void exitNumber(ArmParser.NumberContext ctx) {
+        if(Registry.get(Decimal.class) != null) {
+            Registry.put(Number.class, Registry.get(Decimal.class));
+        }
+    }
+
+    @Override
+    public void exitImm8m(ArmParser.Imm8mContext ctx) {
+        Registry.put(Imm8m.class, Registry.get(Number.class));
+    }
+
+    @Override
+    public void exitMov(ArmParser.MovContext ctx) {
+        RdRegister rdRegister = Registry.get(RdRegister.class);
+        Operand2 operand2 = Registry.get(Operand2.class);
+        rdRegister.setValue(operand2.getValue());
+        rdRegister.update();
     }
 }

@@ -14,7 +14,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.kasirgalabs.etumulator;
+package com.kasirgalabs.etumulator.operand2;
 
 public interface Operand2 {
     String getValue();
