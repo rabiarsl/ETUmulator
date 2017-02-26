@@ -16,15 +16,36 @@
  */
 package com.kasirgalabs.etumulator.navigator;
 
+import com.kasirgalabs.etumulator.string.StringUtils;
 import javafx.beans.property.SimpleStringProperty;
 
 public class NavigatorRow {
+    private static int type;
     private final SimpleStringProperty property;
     private final SimpleStringProperty value;
 
     public NavigatorRow(String property, String value) {
-        this.property = new SimpleStringProperty(property);
-        this.value = new SimpleStringProperty(value);
+        switch(type) {
+            case NavigatorRowType.BINARY:
+                this.property = new SimpleStringProperty(property);
+                this.value = new SimpleStringProperty(StringUtils.convertBinary(value));
+                break;
+            case NavigatorRowType.DECIMAL:
+                this.property = new SimpleStringProperty(property);
+                this.value = new SimpleStringProperty(value);
+                break;
+            case NavigatorRowType.HEX:
+                this.property = new SimpleStringProperty(property);
+                this.value = new SimpleStringProperty(StringUtils.convertHex(value));
+                break;
+            default:
+                this.property = new SimpleStringProperty(property);
+                this.value = new SimpleStringProperty(StringUtils.convertAscii(value));
+        }
+    }
+
+    public static void setType(int type) {
+        NavigatorRow.type = type;
     }
 
     public String getProperty() {

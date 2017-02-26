@@ -23,38 +23,51 @@ import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 
 public class NavigatorController implements Initializable, Observer {
+    private static final ObservableList<NavigatorRow> DATA = FXCollections.observableArrayList();
     @FXML
-    private TableColumn<NavigatorRow, String> leftColumn;
+    private TableView<NavigatorRow> table;
     @FXML
-    private TableColumn<NavigatorRow, String> rightColumn;
+    private TableColumn<NavigatorRow, String> property;
     @FXML
-    private TableView<NavigatorRow> tableView;
-    private final ObservableList<NavigatorRow> data = FXCollections.observableArrayList();
+    private TableColumn<NavigatorRow, String> value;
+    @FXML
+    private ComboBox<String> type;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        leftColumn.setCellValueFactory(new PropertyValueFactory<>("property"));
-        rightColumn.setCellValueFactory(new PropertyValueFactory<>("value"));
-        tableView.setItems(data);
+        type.setItems(FXCollections.observableArrayList(
+                new String[]{"Binary", "Decimal", "HEX", "ASCII"}));
+        type.getSelectionModel().select(0);
+        property.setCellValueFactory(new PropertyValueFactory<>("property"));
+        value.setCellValueFactory(new PropertyValueFactory<>("value"));
+        table.setItems(DATA);
         update();
         Registry.get(RegisterFile.class).addObserver(this);
     }
 
     @Override
     public void update() {
-        data.clear();
+        DATA.clear();
         RegisterFile registerFile = Registry.get(RegisterFile.class);
         for(int i = 0; i < RegisterFile.NUM_OF_REGS; i++) {
             String registerNumber = "r" + Integer.toString(i);
             String registerValue = Integer.toString(registerFile.getValue(i));
-            data.add(new NavigatorRow(registerNumber, registerValue));
+            DATA.add(new NavigatorRow(registerNumber, registerValue));
         }
+    }
+
+    @FXML
+    private void typeOnAction(ActionEvent event) {
+        NavigatorRow.setType(type.getSelectionModel().getSelectedIndex());
+        update();
     }
 }
