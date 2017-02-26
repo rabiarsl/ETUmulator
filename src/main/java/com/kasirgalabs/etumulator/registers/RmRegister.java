@@ -17,7 +17,7 @@
 package com.kasirgalabs.etumulator.registers;
 
 import com.kasirgalabs.arm.ArmParser.RmContext;
-import com.kasirgalabs.etumulator.Registry;
+import com.kasirgalabs.etumulator.patterns.Registry;
 import com.kasirgalabs.etumulator.operand2.Operand2;
 
 public class RmRegister implements Register, Operand2 {

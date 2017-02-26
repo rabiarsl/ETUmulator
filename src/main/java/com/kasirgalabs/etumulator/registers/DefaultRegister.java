@@ -36,4 +36,8 @@ public class DefaultRegister implements Register {
     public int getValue() {
         return value;
     }
+
+    public void reset() {
+        this.value = 0;
+    }
 }

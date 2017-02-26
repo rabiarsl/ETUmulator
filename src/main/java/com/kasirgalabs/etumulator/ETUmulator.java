@@ -16,10 +16,11 @@
  */
 package com.kasirgalabs.etumulator;
 
-import com.kasirgalabs.etumulator.document.GUIDocumentChooser;
 import com.kasirgalabs.etumulator.document.DocumentChooser;
+import com.kasirgalabs.etumulator.document.GUIDocumentChooser;
+import com.kasirgalabs.etumulator.patterns.Registry;
+import com.kasirgalabs.etumulator.registers.RegisterFile;
 import java.io.IOException;
-import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -35,23 +36,20 @@ public class ETUmulator extends Application {
     }
 
     @Override
-    public void start(Stage primaryStage) {
-        primaryStage.setTitle("ETUmulator");
-        Parent root;
-        try {
-            ClassLoader classLoader = ETUmulator.class.getClassLoader();
-            FXMLLoader fxmlLoader = new FXMLLoader(classLoader.getResource("fxml/ETUmulator.fxml"));
-            root = (Parent) fxmlLoader.load();
-        } catch(IOException ex) {
-            LOG.log(Level.SEVERE, null, ex);
-            return;
-        }
-        Scene scene = new Scene(root);
-        primaryStage.setScene(scene);
-
+    public void start(Stage primaryStage) throws IOException {
         GUIDocumentChooser documentChooser = new GUIDocumentChooser();
         Registry.put(DocumentChooser.class, documentChooser);
+        Registry.put(RegisterFile.class, new RegisterFile());
+
+        primaryStage.setTitle("ETUmulator");
+        Parent root;
+        ClassLoader classLoader = ETUmulator.class.getClassLoader();
+        FXMLLoader fxmlLoader = new FXMLLoader(classLoader.getResource("fxml/ETUmulator.fxml"));
+        root = (Parent) fxmlLoader.load();
+        Scene scene = new Scene(root);
+        primaryStage.setScene(scene);
         primaryStage.show();
+
         documentChooser.setWindow(primaryStage.getOwner());
     }
 }

@@ -20,6 +20,7 @@ import com.kasirgalabs.arm.ArmLexer;
 import com.kasirgalabs.arm.ArmParser;
 import com.kasirgalabs.etumulator.document.Document;
 import com.kasirgalabs.etumulator.listener.ETUmulatorListener;
+import com.kasirgalabs.etumulator.patterns.Registry;
 import com.kasirgalabs.etumulator.registers.RegisterFile;
 import java.io.IOException;
 import java.io.OutputStream;
@@ -69,7 +70,7 @@ public class ETUmulatorController implements Initializable, Console {
         if(parser.getNumberOfSyntaxErrors() != 0) {
             return;
         }
-        Registry.put(RegisterFile.class, new RegisterFile());
+        Registry.get(RegisterFile.class).reset();
         ParseTreeWalker.DEFAULT.walk(new ETUmulatorListener(), tree);
     }
 }

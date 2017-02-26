@@ -14,8 +14,24 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.kasirgalabs.etumulator;
+package com.kasirgalabs.etumulator.navigator;
 
-public interface Console {
-    void write(Object o);
+import javafx.beans.property.SimpleStringProperty;
+
+public class NavigatorRow {
+    private final SimpleStringProperty property;
+    private final SimpleStringProperty value;
+
+    public NavigatorRow(String property, String value) {
+        this.property = new SimpleStringProperty(property);
+        this.value = new SimpleStringProperty(value);
+    }
+
+    public String getProperty() {
+        return property.get();
+    }
+
+    public String getValue() {
+        return value.get();
+    }
 }

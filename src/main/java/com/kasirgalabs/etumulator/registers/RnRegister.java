@@ -17,7 +17,7 @@
 package com.kasirgalabs.etumulator.registers;
 
 import com.kasirgalabs.arm.ArmParser.RnContext;
-import com.kasirgalabs.etumulator.Registry;
+import com.kasirgalabs.etumulator.patterns.Registry;
 
 public class RnRegister implements Register {
     private int value;

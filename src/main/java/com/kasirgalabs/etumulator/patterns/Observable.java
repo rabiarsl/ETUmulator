@@ -14,8 +14,10 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.kasirgalabs.etumulator;
+package com.kasirgalabs.etumulator.patterns;
 
-public interface Console {
-    void write(Object o);
+public interface Observable {
+    void addObserver(Observer observer);
+
+    void notifyObservers();
 }

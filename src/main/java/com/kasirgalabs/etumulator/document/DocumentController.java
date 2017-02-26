@@ -16,7 +16,7 @@
  */
 package com.kasirgalabs.etumulator.document;
 
-import com.kasirgalabs.etumulator.Registry;
+import com.kasirgalabs.etumulator.patterns.Registry;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;

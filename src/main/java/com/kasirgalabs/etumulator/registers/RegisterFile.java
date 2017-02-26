@@ -16,11 +16,18 @@
  */
 package com.kasirgalabs.etumulator.registers;
 
-public class RegisterFile {
-    private static final int NUM_OF_REGS = 15;
+import com.kasirgalabs.etumulator.patterns.Observable;
+import com.kasirgalabs.etumulator.patterns.Observer;
+import java.util.ArrayList;
+import java.util.List;
+
+public class RegisterFile implements Observable {
+    public static final int NUM_OF_REGS = 15;
     private final DefaultRegister[] registers;
+    private final List<Observer> observers;
 
     public RegisterFile() {
+        observers = new ArrayList<>();
         registers = new DefaultRegister[NUM_OF_REGS];
         for(int i = 0; i < NUM_OF_REGS; i++) {
             registers[i] = new DefaultRegister();
@@ -33,5 +40,24 @@ public class RegisterFile {
 
     public void update(int registerNumber, int value) {
         registers[registerNumber].setValue(value);
+        notifyObservers();
+    }
+
+    @Override
+    public void addObserver(Observer observer) {
+        observers.add(observer);
+    }
+
+    @Override
+    public void notifyObservers() {
+        observers.forEach((observer) -> {
+            observer.update();
+        });
+    }
+
+    public void reset() {
+        for(int i = 0; i < NUM_OF_REGS; i++) {
+            registers[i].reset();
+        }
     }
 }

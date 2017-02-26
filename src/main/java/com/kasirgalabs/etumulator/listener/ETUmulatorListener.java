@@ -18,7 +18,7 @@ package com.kasirgalabs.etumulator.listener;
 
 import com.kasirgalabs.arm.ArmBaseListener;
 import com.kasirgalabs.arm.ArmParser;
-import com.kasirgalabs.etumulator.Registry;
+import com.kasirgalabs.etumulator.patterns.Registry;
 import com.kasirgalabs.etumulator.operand2.Decimal;
 import com.kasirgalabs.etumulator.operand2.Hex;
 import com.kasirgalabs.etumulator.operand2.Imm8m;
