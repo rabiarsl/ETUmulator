@@ -18,7 +18,9 @@ package com.kasirgalabs.etumulator;
 
 import com.kasirgalabs.arm.ArmLexer;
 import com.kasirgalabs.arm.ArmParser;
+import com.kasirgalabs.etumulator.document.Document;
 import com.kasirgalabs.etumulator.listener.ETUmulatorListener;
+import com.kasirgalabs.etumulator.registers.RegisterFile;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.io.PrintStream;

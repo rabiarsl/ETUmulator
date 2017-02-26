@@ -16,33 +16,20 @@
  */
 package com.kasirgalabs.etumulator.registers;
 
-import com.kasirgalabs.etumulator.Registry;
+import com.kasirgalabs.etumulator.registers.DefaultRegister;
 
-public class RdRegister implements Register {
-    private String value;
-    private final int registerNumber;
+public class RegisterFile {
+    private static final int NUM_OF_REGS = 15;
+    private final DefaultRegister[] registers;
 
-    public RdRegister(int registerNumber) {
-        this.registerNumber = registerNumber;
-        this.value = RegisterUtils.getRegisterValue(registerNumber);
+    public RegisterFile() {
+        registers = new DefaultRegister[NUM_OF_REGS];
+        for(int i = 0; i < NUM_OF_REGS; i++) {
+            registers[i] = new DefaultRegister();
+        }
     }
 
-    @Override
-    public void setValue(String value) {
-        this.value = value;
-    }
-
-    @Override
-    public String getValue() {
-        return value;
-    }
-
-    public int getRegisterNumber() {
-        return registerNumber;
-    }
-
-    public void update() {
-        RegisterFile registerFile = Registry.get(RegisterFile.class);
-        registerFile.getRegister(registerNumber).setValue(value);
+    public DefaultRegister getRegister(int i) {
+        return registers[i];
     }
 }

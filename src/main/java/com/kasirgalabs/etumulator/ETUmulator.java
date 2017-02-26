@@ -16,6 +16,7 @@
  */
 package com.kasirgalabs.etumulator;
 
+import com.kasirgalabs.etumulator.document.DocumentChooser;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;

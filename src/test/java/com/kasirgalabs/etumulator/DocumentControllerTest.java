@@ -16,6 +16,8 @@
  */
 package com.kasirgalabs.etumulator;
 
+import com.kasirgalabs.etumulator.document.DocumentController;
+
 import static org.junit.Assert.assertEquals;
 
 import java.io.BufferedReader;

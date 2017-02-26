@@ -20,6 +20,7 @@ import com.kasirgalabs.arm.ArmBaseListener;
 import com.kasirgalabs.arm.ArmParser;
 import com.kasirgalabs.etumulator.Registry;
 import com.kasirgalabs.etumulator.operand2.Decimal;
+import com.kasirgalabs.etumulator.operand2.Hex;
 import com.kasirgalabs.etumulator.operand2.Imm8m;
 import com.kasirgalabs.etumulator.operand2.Number;
 import com.kasirgalabs.etumulator.operand2.Operand2;
@@ -79,20 +80,27 @@ public class ETUmulatorListener extends ArmBaseListener {
     }
 
     @Override
-    public void exitDecimal(ArmParser.DecimalContext ctx) {
-        Registry.put(Decimal.class, new Decimal(ctx.DECIMAL().toString()));
+    public void exitImm8m(ArmParser.Imm8mContext ctx) {
+        Registry.put(Imm8m.class, Registry.get(Number.class));
     }
 
     @Override
     public void exitNumber(ArmParser.NumberContext ctx) {
         if(Registry.get(Decimal.class) != null) {
             Registry.put(Number.class, Registry.get(Decimal.class));
+            return;
         }
+        Registry.put(Number.class, Registry.get(Hex.class));
     }
 
     @Override
-    public void exitImm8m(ArmParser.Imm8mContext ctx) {
-        Registry.put(Imm8m.class, Registry.get(Number.class));
+    public void exitDecimal(ArmParser.DecimalContext ctx) {
+        Registry.put(Decimal.class, new Decimal(ctx.DECIMAL().toString()));
+    }
+
+    @Override
+    public void exitHex(ArmParser.HexContext ctx) {
+        Registry.put(Hex.class, new Hex(ctx.HEX().toString()));
     }
 
     @Override

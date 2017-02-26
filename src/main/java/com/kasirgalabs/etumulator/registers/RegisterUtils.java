@@ -16,7 +16,6 @@
  */
 package com.kasirgalabs.etumulator.registers;
 
-import com.kasirgalabs.etumulator.RegisterFile;
 import com.kasirgalabs.etumulator.Registry;
 import org.antlr.v4.runtime.tree.TerminalNode;
 

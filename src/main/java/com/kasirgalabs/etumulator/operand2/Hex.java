@@ -14,22 +14,18 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.kasirgalabs.etumulator;
+package com.kasirgalabs.etumulator.operand2;
 
-import java.io.File;
-import java.io.IOException;
+public class Hex extends Number {
+    private String value;
 
-public interface Document {
-
-    String getText();
-
-    void clear();
-
-    void readFile(File file) throws IOException;
-
-    void setTargetFile(File targetFile);
-
-    File getTargetFile();
-
-    void saveDocument() throws IOException;
+    public Hex(String value) {
+        this.value = value;
+        if(value.contains("#")) {
+            this.value = value.substring(1);
+        }
+        this.value = this.value.substring(2);
+        this.value = Integer.toString(Integer.parseInt(this.value, 16));
+        super.setValue(this.value);
+    }
 }

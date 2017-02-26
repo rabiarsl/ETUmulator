@@ -16,6 +16,8 @@
  */
 package com.kasirgalabs.etumulator;
 
+import com.kasirgalabs.etumulator.document.Document;
+import com.kasirgalabs.etumulator.document.DocumentChooser;
 import java.io.File;
 import java.io.IOException;
 import javafx.stage.FileChooser;
