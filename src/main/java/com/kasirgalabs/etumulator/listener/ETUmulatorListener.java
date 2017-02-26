@@ -28,8 +28,6 @@ import com.kasirgalabs.etumulator.registers.RdRegister;
 import com.kasirgalabs.etumulator.registers.RegisterUtils;
 import com.kasirgalabs.etumulator.registers.RmRegister;
 import com.kasirgalabs.etumulator.registers.RnRegister;
-import com.kasirgalabs.etumulator.string.StringUtils;
-import org.antlr.v4.runtime.tree.TerminalNode;
 
 public class ETUmulatorListener extends ArmBaseListener {
     @Override
@@ -37,34 +35,30 @@ public class ETUmulatorListener extends ArmBaseListener {
         RdRegister rdRegister = Registry.get(RdRegister.class);
         RnRegister rnRegister = Registry.get(RnRegister.class);
         Operand2 operand2 = Registry.get(Operand2.class);
-        String string0 = rnRegister.getValue();
-        String string1 = operand2.getValue();
-        String result = StringUtils.add(string0, string1);
-        rdRegister.setValue(result);
+        int value0 = rnRegister.getValue();
+        int value1 = operand2.getValue();
+        rdRegister.setValue(value0 + value1);
         rdRegister.update();
-        System.out.println(result);
+        System.out.println(value0 + value1);
     }
 
     @Override
     public void exitRd(ArmParser.RdContext ctx) {
-        TerminalNode register = ctx.REGISTER();
-        int registerNumber = RegisterUtils.getRegisterNumber(register);
+        int registerNumber = RegisterUtils.parseRegisterNumber(ctx.REGISTER());
         RdRegister rdRegister = new RdRegister(registerNumber);
         Registry.put(RdRegister.class, rdRegister);
     }
 
     @Override
     public void exitRn(ArmParser.RnContext ctx) {
-        TerminalNode register = ctx.REGISTER();
-        int registerNumber = RegisterUtils.getRegisterNumber(register);
+        int registerNumber = RegisterUtils.parseRegisterNumber(ctx.REGISTER());
         RnRegister rnRegister = new RnRegister(registerNumber);
         Registry.put(RnRegister.class, rnRegister);
     }
 
     @Override
     public void exitRm(ArmParser.RmContext ctx) {
-        TerminalNode register = ctx.REGISTER();
-        int registerNumber = RegisterUtils.getRegisterNumber(register);
+        int registerNumber = RegisterUtils.parseRegisterNumber(ctx.REGISTER());
         RmRegister rmRegister = new RmRegister(registerNumber);
         Registry.put(RmRegister.class, rmRegister);
     }
@@ -86,7 +80,7 @@ public class ETUmulatorListener extends ArmBaseListener {
 
     @Override
     public void exitNumber(ArmParser.NumberContext ctx) {
-        if(Registry.get(Decimal.class) != null) {
+        if(ctx.decimal() != null) {
             Registry.put(Number.class, Registry.get(Decimal.class));
             return;
         }

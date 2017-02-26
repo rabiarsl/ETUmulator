@@ -17,15 +17,12 @@
 package com.kasirgalabs.etumulator.operand2;
 
 public class Hex extends Number {
-    private String value;
-
     public Hex(String value) {
-        this.value = value;
+        String temp = value;
         if(value.contains("#")) {
-            this.value = value.substring(1);
+            temp = value.substring(1);
         }
-        this.value = this.value.substring(2);
-        this.value = Integer.toString(Integer.parseInt(this.value, 16));
-        super.setValue(this.value);
+        temp = temp.substring(2);
+        super.setValue(Integer.parseInt(temp, 16));
     }
 }

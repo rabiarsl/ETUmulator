@@ -17,7 +17,7 @@
 package com.kasirgalabs.etumulator.registers;
 
 public interface Register {
-    void setValue(String value);
+    void setValue(int value);
 
-    String getValue();
+    int getValue();
 }

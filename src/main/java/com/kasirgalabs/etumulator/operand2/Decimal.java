@@ -17,13 +17,11 @@
 package com.kasirgalabs.etumulator.operand2;
 
 public class Decimal extends Number {
-    private String value;
-
     public Decimal(String value) {
-        this.value = value;
+        String temp = value;
         if(value.contains("#")) {
-            this.value = value.substring(1);
+            temp = value.substring(1);
         }
-        super.setValue(this.value);
+        super.setValue(Integer.parseInt(temp));
     }
 }

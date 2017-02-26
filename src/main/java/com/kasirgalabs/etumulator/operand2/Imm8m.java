@@ -17,14 +17,14 @@
 package com.kasirgalabs.etumulator.operand2;
 
 public class Imm8m implements Operand2 {
-    private String value;
+    private int value;
 
-    public void setValue(String value) {
+    public void setValue(int value) {
         this.value = value;
     }
 
     @Override
-    public String getValue() {
+    public int getValue() {
         return value;
     }
 }

@@ -16,22 +16,25 @@
  */
 package com.kasirgalabs.etumulator.registers;
 
+import com.kasirgalabs.etumulator.Registry;
+
 public class RnRegister implements Register {
-    private String value;
+    private int value;
     private final int registerNumber;
 
     public RnRegister(int registerNumber) {
         this.registerNumber = registerNumber;
-        this.value = RegisterUtils.getRegisterValue(registerNumber);
+        RegisterFile registerFile = Registry.get(RegisterFile.class);
+        this.value = registerFile.getValue(registerNumber);
     }
 
     @Override
-    public void setValue(String value) {
+    public void setValue(int value) {
         this.value = value;
     }
 
     @Override
-    public String getValue() {
+    public int getValue() {
         return value;
     }
 

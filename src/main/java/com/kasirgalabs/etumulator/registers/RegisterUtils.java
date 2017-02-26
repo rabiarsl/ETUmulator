@@ -16,7 +16,6 @@
  */
 package com.kasirgalabs.etumulator.registers;
 
-import com.kasirgalabs.etumulator.Registry;
 import org.antlr.v4.runtime.tree.TerminalNode;
 
 public final class RegisterUtils {
@@ -24,15 +23,9 @@ public final class RegisterUtils {
     private RegisterUtils() {
     }
 
-    public static int getRegisterNumber(TerminalNode register) {
+    public static int parseRegisterNumber(TerminalNode register) {
         String name = register.toString();
         String number = name.substring(1, name.length());
         return Integer.parseInt(number);
-    }
-
-    public static String getRegisterValue(int registerNumber) {
-        RegisterFile registerFile = Registry.get(RegisterFile.class);
-        Register register = registerFile.getRegister(registerNumber);
-        return register.getValue();
     }
 }

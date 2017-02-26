@@ -17,23 +17,23 @@
 package com.kasirgalabs.etumulator.registers;
 
 public class DefaultRegister implements Register {
-    private String value;
+    private int value;
 
     public DefaultRegister() {
-        value = "0";
+        value = 0;
     }
 
-    public DefaultRegister(String value) {
+    public DefaultRegister(int value) {
         this.value = value;
     }
 
     @Override
-    public void setValue(String value) {
+    public void setValue(int value) {
         this.value = value;
     }
 
     @Override
-    public String getValue() {
+    public int getValue() {
         return value;
     }
 }

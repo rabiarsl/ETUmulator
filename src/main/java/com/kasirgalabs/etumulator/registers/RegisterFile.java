@@ -16,8 +16,6 @@
  */
 package com.kasirgalabs.etumulator.registers;
 
-import com.kasirgalabs.etumulator.registers.DefaultRegister;
-
 public class RegisterFile {
     private static final int NUM_OF_REGS = 15;
     private final DefaultRegister[] registers;
@@ -31,5 +29,13 @@ public class RegisterFile {
 
     public DefaultRegister getRegister(int i) {
         return registers[i];
+    }
+
+    public int getValue(int registerNumber) {
+        return registers[registerNumber].getValue();
+    }
+
+    public void update(int registerNumber, int value) {
+        registers[registerNumber].setValue(value);
     }
 }
