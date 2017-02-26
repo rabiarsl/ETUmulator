@@ -27,10 +27,6 @@ public class RegisterFile {
         }
     }
 
-    public DefaultRegister getRegister(int i) {
-        return registers[i];
-    }
-
     public int getValue(int registerNumber) {
         return registers[registerNumber].getValue();
     }

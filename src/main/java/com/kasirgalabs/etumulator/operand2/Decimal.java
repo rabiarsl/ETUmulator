@@ -16,12 +16,14 @@
  */
 package com.kasirgalabs.etumulator.operand2;
 
+import com.kasirgalabs.arm.ArmParser.DecimalContext;
+
 public class Decimal extends Number {
-    public Decimal(String value) {
-        String temp = value;
+    public Decimal(DecimalContext ctx) {
+        String value = ctx.DECIMAL().toString();
         if(value.contains("#")) {
-            temp = value.substring(1);
+            value = value.substring(1);
         }
-        super.setValue(Integer.parseInt(temp));
+        super.setValue(Integer.parseInt(value));
     }
 }

@@ -16,6 +16,7 @@
  */
 package com.kasirgalabs.etumulator.registers;
 
+import com.kasirgalabs.arm.ArmParser.RmContext;
 import com.kasirgalabs.etumulator.Registry;
 import com.kasirgalabs.etumulator.operand2.Operand2;
 
@@ -23,8 +24,8 @@ public class RmRegister implements Register, Operand2 {
     private int value;
     private final int registerNumber;
 
-    public RmRegister(int registerNumber) {
-        this.registerNumber = registerNumber;
+    public RmRegister(RmContext ctx) {
+        registerNumber = RegisterUtils.parseRegisterNumber(ctx.REGISTER());
         RegisterFile registerFile = Registry.get(RegisterFile.class);
         this.value = registerFile.getValue(registerNumber);
     }

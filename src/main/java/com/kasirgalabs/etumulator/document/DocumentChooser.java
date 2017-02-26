@@ -20,7 +20,6 @@ import java.io.File;
 import java.io.IOException;
 
 public interface DocumentChooser {
-
     void createDocument();
 
     void openDocument() throws IOException;

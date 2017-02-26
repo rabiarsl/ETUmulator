@@ -16,13 +16,15 @@
  */
 package com.kasirgalabs.etumulator.operand2;
 
+import com.kasirgalabs.arm.ArmParser.HexContext;
+
 public class Hex extends Number {
-    public Hex(String value) {
-        String temp = value;
+    public Hex(HexContext ctx) {
+        String value = ctx.HEX().toString();
         if(value.contains("#")) {
-            temp = value.substring(1);
+            value = value.substring(1);
         }
-        temp = temp.substring(2);
-        super.setValue(Integer.parseInt(temp, 16));
+        value = value.substring(2);
+        super.setValue(Integer.parseInt(value, 16));
     }
 }

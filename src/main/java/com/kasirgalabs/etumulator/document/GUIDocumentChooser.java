@@ -14,10 +14,9 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.kasirgalabs.etumulator;
+package com.kasirgalabs.etumulator.document;
 
-import com.kasirgalabs.etumulator.document.Document;
-import com.kasirgalabs.etumulator.document.DocumentChooser;
+import com.kasirgalabs.etumulator.Registry;
 import java.io.File;
 import java.io.IOException;
 import javafx.stage.FileChooser;

@@ -21,15 +21,11 @@ import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 
 public class DocumentMenuController implements Initializable {
-    private static final Logger LOG = Logger.getLogger(DocumentMenuController.class.getName());
-
     @Override
     public void initialize(URL url, ResourceBundle rb) {
     }
@@ -47,13 +43,9 @@ public class DocumentMenuController implements Initializable {
     }
 
     @FXML
-    private void saveOnAction(ActionEvent event) {
+    private void saveOnAction(ActionEvent event) throws IOException {
         Document document = Registry.get(Document.class);
-        try {
-            document.saveDocument();
-        } catch(IOException ex) {
-            LOG.log(Level.SEVERE, null, ex);
-        }
+        document.saveDocument();
     }
 
     @FXML

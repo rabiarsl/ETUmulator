@@ -25,7 +25,6 @@ import com.kasirgalabs.etumulator.operand2.Imm8m;
 import com.kasirgalabs.etumulator.operand2.Number;
 import com.kasirgalabs.etumulator.operand2.Operand2;
 import com.kasirgalabs.etumulator.registers.RdRegister;
-import com.kasirgalabs.etumulator.registers.RegisterUtils;
 import com.kasirgalabs.etumulator.registers.RmRegister;
 import com.kasirgalabs.etumulator.registers.RnRegister;
 
@@ -44,57 +43,37 @@ public class ETUmulatorListener extends ArmBaseListener {
 
     @Override
     public void exitRd(ArmParser.RdContext ctx) {
-        int registerNumber = RegisterUtils.parseRegisterNumber(ctx.REGISTER());
-        RdRegister rdRegister = new RdRegister(registerNumber);
-        Registry.put(RdRegister.class, rdRegister);
+        Registry.put(RdRegister.class, new RdRegister(ctx));
     }
 
     @Override
     public void exitRn(ArmParser.RnContext ctx) {
-        int registerNumber = RegisterUtils.parseRegisterNumber(ctx.REGISTER());
-        RnRegister rnRegister = new RnRegister(registerNumber);
-        Registry.put(RnRegister.class, rnRegister);
+        Registry.put(RnRegister.class, new RnRegister(ctx));
     }
 
     @Override
     public void exitRm(ArmParser.RmContext ctx) {
-        int registerNumber = RegisterUtils.parseRegisterNumber(ctx.REGISTER());
-        RmRegister rmRegister = new RmRegister(registerNumber);
-        Registry.put(RmRegister.class, rmRegister);
-    }
-
-    @Override
-    public void exitOperand2(ArmParser.Operand2Context ctx) {
-        if(ctx.rm() != null) {
-            Registry.put(Operand2.class, Registry.get(RmRegister.class));
-        }
-        else if(ctx.imm8m() != null) {
-            Registry.put(Operand2.class, Registry.get(Imm8m.class));
-        }
+        Registry.put(Operand2.class, new RmRegister(ctx));
     }
 
     @Override
     public void exitImm8m(ArmParser.Imm8mContext ctx) {
-        Registry.put(Imm8m.class, Registry.get(Number.class));
+        Registry.put(Operand2.class, Registry.get(Imm8m.class));
     }
 
     @Override
     public void exitNumber(ArmParser.NumberContext ctx) {
-        if(ctx.decimal() != null) {
-            Registry.put(Number.class, Registry.get(Decimal.class));
-            return;
-        }
-        Registry.put(Number.class, Registry.get(Hex.class));
+        Registry.put(Imm8m.class, Registry.get(Number.class));
     }
 
     @Override
     public void exitDecimal(ArmParser.DecimalContext ctx) {
-        Registry.put(Decimal.class, new Decimal(ctx.DECIMAL().toString()));
+        Registry.put(Number.class, new Decimal(ctx));
     }
 
     @Override
     public void exitHex(ArmParser.HexContext ctx) {
-        Registry.put(Hex.class, new Hex(ctx.HEX().toString()));
+        Registry.put(Number.class, new Hex(ctx));
     }
 
     @Override
