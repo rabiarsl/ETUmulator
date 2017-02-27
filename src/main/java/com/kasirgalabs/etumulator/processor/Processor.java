@@ -14,11 +14,10 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.kasirgalabs.etumulator.listener;
+package com.kasirgalabs.etumulator.processor;
 
 import com.kasirgalabs.arm.ArmBaseListener;
 import com.kasirgalabs.arm.ArmParser;
-import com.kasirgalabs.etumulator.pattern.Registry;
 import com.kasirgalabs.etumulator.operand2.Decimal;
 import com.kasirgalabs.etumulator.operand2.Hex;
 import com.kasirgalabs.etumulator.operand2.Imm8m;
@@ -28,58 +27,92 @@ import com.kasirgalabs.etumulator.register.RdRegister;
 import com.kasirgalabs.etumulator.register.RmRegister;
 import com.kasirgalabs.etumulator.register.RnRegister;
 
-public class ETUmulatorListener extends ArmBaseListener {
+public class Processor extends ArmBaseListener {
+    private RdRegister rdRegister;
+    private RnRegister rnRegister;
+    private Operand2 operand2;
+    private Imm8m imm8m;
+    private Number number;
+
     @Override
     public void exitAdd(ArmParser.AddContext ctx) {
-        RdRegister rdRegister = Registry.get(RdRegister.class);
-        RnRegister rnRegister = Registry.get(RnRegister.class);
-        Operand2 operand2 = Registry.get(Operand2.class);
-        int value0 = rnRegister.getValue();
-        int value1 = operand2.getValue();
-        rdRegister.setValue(value0 + value1);
+        rdRegister.setValue(rnRegister.getValue() + operand2.getValue());
         rdRegister.update();
-        System.out.println(value0 + value1);
+    }
+
+    @Override
+    public void exitAnd(ArmParser.AndContext ctx) {
+        rdRegister.setValue(rnRegister.getValue() & operand2.getValue());
+        rdRegister.update();
+    }
+
+    @Override
+    public void exitOrr(ArmParser.OrrContext ctx) {
+        rdRegister.setValue(rnRegister.getValue() | operand2.getValue());
+        rdRegister.update();
+    }
+
+    @Override
+    public void exitEor(ArmParser.EorContext ctx) {
+        rdRegister.setValue(rnRegister.getValue() ^ operand2.getValue());
+        rdRegister.update();
+    }
+
+    @Override
+    public void exitOrn(ArmParser.OrnContext ctx) {
+        rdRegister.setValue(rnRegister.getValue() | ~operand2.getValue());
+        rdRegister.update();
+    }
+
+    @Override
+    public void exitBic(ArmParser.BicContext ctx) {
+        rdRegister.setValue(rnRegister.getValue() & ~operand2.getValue());
+        rdRegister.update();
+    }
+
+    @Override
+    public void exitMvn(ArmParser.MvnContext ctx) {
+        rdRegister.setValue(0xffffffff ^ operand2.getValue());
+        rdRegister.update();
     }
 
     @Override
     public void exitRd(ArmParser.RdContext ctx) {
-        Registry.put(RdRegister.class, new RdRegister(ctx));
+        rdRegister = new RdRegister(ctx);
     }
 
     @Override
     public void exitRn(ArmParser.RnContext ctx) {
-        Registry.put(RnRegister.class, new RnRegister(ctx));
+        rnRegister = new RnRegister(ctx);
     }
 
     @Override
     public void exitRm(ArmParser.RmContext ctx) {
-        Registry.put(Operand2.class, new RmRegister(ctx));
+        operand2 = new RmRegister(ctx);
     }
 
     @Override
     public void exitImm8m(ArmParser.Imm8mContext ctx) {
-        Registry.put(Operand2.class, Registry.get(Imm8m.class));
+        operand2 = imm8m;
     }
 
     @Override
     public void exitNumber(ArmParser.NumberContext ctx) {
-        Registry.put(Imm8m.class, Registry.get(Number.class));
+        imm8m = number;
     }
 
     @Override
     public void exitDecimal(ArmParser.DecimalContext ctx) {
-        Registry.put(Number.class, new Decimal(ctx));
+        number = new Decimal(ctx);
     }
 
     @Override
     public void exitHex(ArmParser.HexContext ctx) {
-        Registry.put(Number.class, new Hex(ctx));
+        number = new Hex(ctx);
     }
 
     @Override
     public void exitMov(ArmParser.MovContext ctx) {
-        RdRegister rdRegister = Registry.get(RdRegister.class);
-        Operand2 operand2 = Registry.get(Operand2.class);
         rdRegister.setValue(operand2.getValue());
         rdRegister.update();
     }

@@ -329,6 +329,18 @@ public interface ArmVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitOrrs(ArmParser.OrrsContext ctx);
 	/**
+	 * Visit a parse tree produced by {@link ArmParser#orn}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitOrn(ArmParser.OrnContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link ArmParser#orns}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitOrns(ArmParser.OrnsContext ctx);
+	/**
 	 * Visit a parse tree produced by {@link ArmParser#bic}.
 	 * @param ctx the parse tree
 	 * @return the visitor result

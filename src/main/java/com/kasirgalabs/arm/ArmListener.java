@@ -538,6 +538,26 @@ public interface ArmListener extends ParseTreeListener {
 	 */
 	void exitOrrs(ArmParser.OrrsContext ctx);
 	/**
+	 * Enter a parse tree produced by {@link ArmParser#orn}.
+	 * @param ctx the parse tree
+	 */
+	void enterOrn(ArmParser.OrnContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link ArmParser#orn}.
+	 * @param ctx the parse tree
+	 */
+	void exitOrn(ArmParser.OrnContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link ArmParser#orns}.
+	 * @param ctx the parse tree
+	 */
+	void enterOrns(ArmParser.OrnsContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link ArmParser#orns}.
+	 * @param ctx the parse tree
+	 */
+	void exitOrns(ArmParser.OrnsContext ctx);
+	/**
 	 * Enter a parse tree produced by {@link ArmParser#bic}.
 	 * @param ctx the parse tree
 	 */

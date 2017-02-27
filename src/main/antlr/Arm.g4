@@ -58,6 +58,8 @@ instruction
     | eors
     | orr
     | orrs
+    | orn
+    | orns
     | bic
     | bics
     | b
@@ -492,6 +494,22 @@ ORRS
     : O R R S
     ;
 
+orn
+    : ORN rd COMMA rn COMMA operand2
+    ;
+
+ORN
+    : O R N
+    ;
+
+orns
+    : ORNS rd COMMA rn COMMA operand2
+    ;
+
+ORNS
+    : O R N S
+    ;
+
 bic
     : BIC rd COMMA rn COMMA operand2
     ;
@@ -534,7 +552,7 @@ BNE
 
 bcs
     : BCS LABEL
-    ;    
+    ;
 
 BCS
     : B C S

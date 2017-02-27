@@ -18,8 +18,9 @@ package com.kasirgalabs.etumulator;
 
 import com.kasirgalabs.arm.ArmLexer;
 import com.kasirgalabs.arm.ArmParser;
+import com.kasirgalabs.etumulator.console.Console;
 import com.kasirgalabs.etumulator.document.Document;
-import com.kasirgalabs.etumulator.listener.ETUmulatorListener;
+import com.kasirgalabs.etumulator.processor.Processor;
 import com.kasirgalabs.etumulator.pattern.Registry;
 import com.kasirgalabs.etumulator.register.RegisterFile;
 import java.io.IOException;
@@ -71,6 +72,6 @@ public class ETUmulatorController implements Initializable, Console {
             return;
         }
         Registry.get(RegisterFile.class).reset();
-        ParseTreeWalker.DEFAULT.walk(new ETUmulatorListener(), tree);
+        ParseTreeWalker.DEFAULT.walk(new Processor(), tree);
     }
 }
