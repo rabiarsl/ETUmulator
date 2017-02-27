@@ -41,6 +41,6 @@ public final class StringUtils {
     }
 
     public static String convertAscii(String decimal) {
-        return Character.toString((char) Integer.parseInt(decimal));
+        return AsciiTable.getAscii(Integer.parseInt(decimal));
     }
 }
