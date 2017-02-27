@@ -14,18 +14,10 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.kasirgalabs.etumulator.registers;
+package com.kasirgalabs.etumulator.pattern;
 
-import org.antlr.v4.runtime.tree.TerminalNode;
+public interface Observable {
+    void addObserver(Observer observer);
 
-public final class RegisterUtils {
-
-    private RegisterUtils() {
-    }
-
-    public static int parseRegisterNumber(TerminalNode register) {
-        String name = register.toString();
-        String number = name.substring(1, name.length());
-        return Integer.parseInt(number);
-    }
+    void notifyObservers();
 }

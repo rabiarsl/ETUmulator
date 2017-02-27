@@ -14,10 +14,10 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.kasirgalabs.etumulator.registers;
+package com.kasirgalabs.etumulator.register;
 
 import com.kasirgalabs.arm.ArmParser.RdContext;
-import com.kasirgalabs.etumulator.patterns.Registry;
+import com.kasirgalabs.etumulator.pattern.Registry;
 
 public class RdRegister implements Register {
     private int value;

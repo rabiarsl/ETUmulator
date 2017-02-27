@@ -16,9 +16,9 @@
  */
 package com.kasirgalabs.etumulator.navigator;
 
-import com.kasirgalabs.etumulator.patterns.Observer;
-import com.kasirgalabs.etumulator.patterns.Registry;
-import com.kasirgalabs.etumulator.registers.RegisterFile;
+import com.kasirgalabs.etumulator.pattern.Observer;
+import com.kasirgalabs.etumulator.pattern.Registry;
+import com.kasirgalabs.etumulator.register.RegisterFile;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.collections.FXCollections;

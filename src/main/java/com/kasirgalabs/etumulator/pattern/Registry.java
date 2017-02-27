@@ -14,10 +14,27 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.kasirgalabs.etumulator.registers;
+package com.kasirgalabs.etumulator.pattern;
 
-public interface Register {
-    void setValue(int value);
+import java.util.HashMap;
+import java.util.Map;
 
-    int getValue();
+public final class Registry {
+    private static final Map<Class<? extends Object>, Object> MAP = new HashMap<>();
+
+    private Registry() {
+    }
+
+    public static <T, U extends T> U put(Class<T> type, U object) {
+        MAP.put(type, object);
+        return object;
+    }
+
+    public static <T> T get(Class<T> type) {
+        T result = type.cast(MAP.get(type));
+        if(result != null) {
+            return result;
+        }
+        return result;
+    }
 }

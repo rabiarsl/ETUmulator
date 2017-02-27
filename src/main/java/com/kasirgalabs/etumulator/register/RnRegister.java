@@ -14,17 +14,16 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.kasirgalabs.etumulator.registers;
+package com.kasirgalabs.etumulator.register;
 
-import com.kasirgalabs.arm.ArmParser.RmContext;
-import com.kasirgalabs.etumulator.patterns.Registry;
-import com.kasirgalabs.etumulator.operand2.Operand2;
+import com.kasirgalabs.arm.ArmParser.RnContext;
+import com.kasirgalabs.etumulator.pattern.Registry;
 
-public class RmRegister implements Register, Operand2 {
+public class RnRegister implements Register {
     private int value;
     private final int registerNumber;
 
-    public RmRegister(RmContext ctx) {
+    public RnRegister(RnContext ctx) {
         registerNumber = RegisterUtils.parseRegisterNumber(ctx.REGISTER());
         RegisterFile registerFile = Registry.get(RegisterFile.class);
         this.value = registerFile.getValue(registerNumber);

@@ -16,7 +16,7 @@
  */
 package com.kasirgalabs.etumulator.document;
 
-import com.kasirgalabs.etumulator.patterns.Registry;
+import com.kasirgalabs.etumulator.pattern.Registry;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;

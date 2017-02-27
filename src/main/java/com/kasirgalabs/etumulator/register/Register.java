@@ -14,30 +14,10 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.kasirgalabs.etumulator.registers;
+package com.kasirgalabs.etumulator.register;
 
-public class DefaultRegister implements Register {
-    private int value;
+public interface Register {
+    void setValue(int value);
 
-    public DefaultRegister() {
-        value = 0;
-    }
-
-    public DefaultRegister(int value) {
-        this.value = value;
-    }
-
-    @Override
-    public void setValue(int value) {
-        this.value = value;
-    }
-
-    @Override
-    public int getValue() {
-        return value;
-    }
-
-    public void reset() {
-        this.value = 0;
-    }
+    int getValue();
 }

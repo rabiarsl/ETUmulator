@@ -18,8 +18,8 @@ package com.kasirgalabs.etumulator;
 
 import com.kasirgalabs.etumulator.document.DocumentChooser;
 import com.kasirgalabs.etumulator.document.GUIDocumentChooser;
-import com.kasirgalabs.etumulator.patterns.Registry;
-import com.kasirgalabs.etumulator.registers.RegisterFile;
+import com.kasirgalabs.etumulator.pattern.Registry;
+import com.kasirgalabs.etumulator.register.RegisterFile;
 import java.io.IOException;
 import java.util.logging.Logger;
 import javafx.application.Application;

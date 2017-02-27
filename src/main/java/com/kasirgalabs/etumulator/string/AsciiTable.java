@@ -26,7 +26,7 @@ public final class AsciiTable {
     private static final int FORMFEED = 12;
     private static final int CARRIAGE_RETURN = 13;
     private static final int ESCAPE = 27;
-    private static final char[] EXTENDED = {0x00C7, 0x00FC, 0x00E9, 0x00E2,
+    private static final char[] EXTENDED_ASCII_TABLE = {0x00C7, 0x00FC, 0x00E9, 0x00E2,
         0x00E4, 0x00E0, 0x00E5, 0x00E7, 0x00EA, 0x00EB, 0x00E8, 0x00EF,
         0x00EE, 0x00EC, 0x00C4, 0x00C5, 0x00C9, 0x00E6, 0x00C6, 0x00F4,
         0x00F6, 0x00F2, 0x00FB, 0x00F9, 0x00FF, 0x00D6, 0x00DC, 0x00A2,
@@ -54,17 +54,14 @@ public final class AsciiTable {
         if(hasEscapeSequence(code)) {
             return escapeSequence(code);
         }
-        if(code >= 0x80 && code <= 0xFF) {
-            return Character.toString(EXTENDED[code - 0x80]);
+        if(isExtendedAscii(code)) {
+            return Character.toString(EXTENDED_ASCII_TABLE[code - 0x80]);
         }
         return Character.toString((char) code);
     }
 
     private static boolean hasEscapeSequence(int code) {
-        if((code >= 7 && code <= 13) || code == 00 || code == 27) {
-            return true;
-        }
-        return false;
+        return (code >= 7 && code <= 13) || code == 0 || code == 27;
     }
 
     private static String escapeSequence(int code) {
@@ -88,5 +85,9 @@ public final class AsciiTable {
             default:
                 return "\\0";
         }
+    }
+
+    private static boolean isExtendedAscii(int code) {
+        return (code >= 0x80 && code <= 0xFF);
     }
 }

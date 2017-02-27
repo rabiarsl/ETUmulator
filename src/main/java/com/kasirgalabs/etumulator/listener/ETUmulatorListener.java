@@ -18,15 +18,15 @@ package com.kasirgalabs.etumulator.listener;
 
 import com.kasirgalabs.arm.ArmBaseListener;
 import com.kasirgalabs.arm.ArmParser;
-import com.kasirgalabs.etumulator.patterns.Registry;
+import com.kasirgalabs.etumulator.pattern.Registry;
 import com.kasirgalabs.etumulator.operand2.Decimal;
 import com.kasirgalabs.etumulator.operand2.Hex;
 import com.kasirgalabs.etumulator.operand2.Imm8m;
 import com.kasirgalabs.etumulator.operand2.Number;
 import com.kasirgalabs.etumulator.operand2.Operand2;
-import com.kasirgalabs.etumulator.registers.RdRegister;
-import com.kasirgalabs.etumulator.registers.RmRegister;
-import com.kasirgalabs.etumulator.registers.RnRegister;
+import com.kasirgalabs.etumulator.register.RdRegister;
+import com.kasirgalabs.etumulator.register.RmRegister;
+import com.kasirgalabs.etumulator.register.RnRegister;
 
 public class ETUmulatorListener extends ArmBaseListener {
     @Override
