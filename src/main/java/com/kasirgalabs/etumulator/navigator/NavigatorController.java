@@ -46,7 +46,8 @@ public class NavigatorController implements Initializable, Observer {
     public void initialize(URL url, ResourceBundle rb) {
         type.setItems(FXCollections.observableArrayList(
                 new String[]{"Binary", "Decimal", "HEX", "ASCII"}));
-        type.getSelectionModel().select(0);
+        type.getSelectionModel().select(1);
+        NavigatorRow.setType(type.getSelectionModel().getSelectedIndex());
         property.setCellValueFactory(new PropertyValueFactory<>("property"));
         value.setCellValueFactory(new PropertyValueFactory<>("value"));
         table.setItems(DATA);
