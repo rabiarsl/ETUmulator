@@ -50,6 +50,20 @@ public class Processor extends ArmBaseListener {
     }
 
     @Override
+    public void exitSub(ArmParser.SubContext ctx) {
+        rdRegister.setValue(rnRegister.getValue() - operand2.getValue());
+        rdRegister.update();
+    }
+
+    @Override
+    public void exitSubs(ArmParser.SubsContext ctx) {
+        long result = rnRegister.getValue() - operand2.getValue();
+        CPSR.updateWithOverflow(result);
+        rdRegister.setValue(result);
+        rdRegister.update();
+    }
+
+    @Override
     public void exitAnd(ArmParser.AndContext ctx) {
         rdRegister.setValue(rnRegister.getValue() & operand2.getValue());
         rdRegister.update();

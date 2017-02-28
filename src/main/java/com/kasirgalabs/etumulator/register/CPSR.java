@@ -67,7 +67,7 @@ public final class CPSR {
     public static void updateWithOverflow(long value) {
         updateWithoutOverflow(value);
         overflow = false;
-        if(value < 0 || value > MAX_VALUE) {
+        if(value < 0 || value > RegisterUtils.MAX32) {
             overflow = true;
         }
     }
