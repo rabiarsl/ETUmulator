@@ -178,6 +178,32 @@ public class Processor extends ArmBaseListener {
     }
 
     @Override
+    public void exitMov(ArmParser.MovContext ctx) {
+        rdRegister.setValue(operand2.getValue());
+        rdRegister.update();
+    }
+
+    @Override
+    public void exitCmp(ArmParser.CmpContext ctx) {
+        CPSR.updateWithOverflow(rnRegister.getValue() - operand2.getValue());
+    }
+
+    @Override
+    public void exitCmn(ArmParser.CmnContext ctx) {
+        CPSR.updateWithOverflow(rnRegister.getValue() + operand2.getValue());
+    }
+
+    @Override
+    public void enterTst(ArmParser.TstContext ctx) {
+        CPSR.updateWithoutOverflow(rnRegister.getValue() & operand2.getValue());
+    }
+
+    @Override
+    public void enterTeq(ArmParser.TeqContext ctx) {
+        CPSR.updateWithoutOverflow(rnRegister.getValue() ^ operand2.getValue());
+    }
+
+    @Override
     public void exitRd(ArmParser.RdContext ctx) {
         rdRegister = new RdRegister(ctx);
     }
@@ -210,11 +236,5 @@ public class Processor extends ArmBaseListener {
     @Override
     public void exitHex(ArmParser.HexContext ctx) {
         number = new Hex(ctx);
-    }
-
-    @Override
-    public void exitMov(ArmParser.MovContext ctx) {
-        rdRegister.setValue(operand2.getValue());
-        rdRegister.update();
     }
 }
