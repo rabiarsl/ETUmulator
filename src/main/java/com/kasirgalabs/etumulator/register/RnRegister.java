@@ -20,7 +20,7 @@ import com.kasirgalabs.arm.ArmParser.RnContext;
 import com.kasirgalabs.etumulator.pattern.Registry;
 
 public class RnRegister implements Register {
-    private int value;
+    private long value;
     private final int registerNumber;
 
     public RnRegister(RnContext ctx) {
@@ -30,12 +30,12 @@ public class RnRegister implements Register {
     }
 
     @Override
-    public void setValue(int value) {
+    public void setValue(long value) {
         this.value = value;
     }
 
     @Override
-    public int getValue() {
+    public long getValue() {
         return value;
     }
 

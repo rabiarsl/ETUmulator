@@ -19,7 +19,6 @@ package com.kasirgalabs.etumulator.register;
 import org.antlr.v4.runtime.tree.TerminalNode;
 
 public final class RegisterUtils {
-
     private RegisterUtils() {
     }
 

@@ -17,11 +17,11 @@
 package com.kasirgalabs.etumulator.register;
 
 import com.kasirgalabs.arm.ArmParser.RmContext;
-import com.kasirgalabs.etumulator.pattern.Registry;
 import com.kasirgalabs.etumulator.operand2.Operand2;
+import com.kasirgalabs.etumulator.pattern.Registry;
 
 public class RmRegister implements Register, Operand2 {
-    private int value;
+    private long value;
     private final int registerNumber;
 
     public RmRegister(RmContext ctx) {
@@ -31,12 +31,12 @@ public class RmRegister implements Register, Operand2 {
     }
 
     @Override
-    public void setValue(int value) {
+    public void setValue(long value) {
         this.value = value;
     }
 
     @Override
-    public int getValue() {
+    public long getValue() {
         return value;
     }
 

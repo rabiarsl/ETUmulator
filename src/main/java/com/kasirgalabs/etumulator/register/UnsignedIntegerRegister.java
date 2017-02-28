@@ -16,28 +16,41 @@
  */
 package com.kasirgalabs.etumulator.register;
 
-public class DefaultRegister implements Register {
-    private int value;
+public class UnsignedIntegerRegister implements Register {
+    private static final long MAX_VALUE = 4294967295L;
+    private static final long MASK = 0x00000000FFFFFFFFL;
+    private long value;
 
-    public DefaultRegister() {
+    public UnsignedIntegerRegister() {
         value = 0;
     }
 
-    public DefaultRegister(int value) {
-        this.value = value;
+    public UnsignedIntegerRegister(long value) {
+        this.value = toUnsinged32Bit(value);
     }
 
     @Override
-    public void setValue(int value) {
-        this.value = value;
+    public void setValue(long value) {
+        this.value = toUnsinged32Bit(value);
     }
 
     @Override
-    public int getValue() {
+    public long getValue() {
         return value;
     }
 
     public void reset() {
         this.value = 0;
+    }
+
+    private long toUnsinged32Bit(long result) {
+        long temp = result;
+        if(temp < 0) {
+            temp = -temp;
+        }
+        if(temp > MAX_VALUE) {
+            temp &= MASK;
+        }
+        return temp;
     }
 }

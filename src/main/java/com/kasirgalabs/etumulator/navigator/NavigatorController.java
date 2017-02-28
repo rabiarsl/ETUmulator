@@ -61,7 +61,7 @@ public class NavigatorController implements Initializable, Observer {
         RegisterFile registerFile = Registry.get(RegisterFile.class);
         for(int i = 0; i < RegisterFile.NUM_OF_REGS; i++) {
             String registerNumber = "r" + Integer.toString(i);
-            String registerValue = Integer.toString(registerFile.getValue(i));
+            String registerValue = Long.toString(registerFile.getValue(i));
             DATA.add(new NavigatorRow(registerNumber, registerValue));
         }
     }

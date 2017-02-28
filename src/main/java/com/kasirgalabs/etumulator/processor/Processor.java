@@ -23,6 +23,7 @@ import com.kasirgalabs.etumulator.operand2.Hex;
 import com.kasirgalabs.etumulator.operand2.Imm8m;
 import com.kasirgalabs.etumulator.operand2.Number;
 import com.kasirgalabs.etumulator.operand2.Operand2;
+import com.kasirgalabs.etumulator.register.CPSR;
 import com.kasirgalabs.etumulator.register.RdRegister;
 import com.kasirgalabs.etumulator.register.RmRegister;
 import com.kasirgalabs.etumulator.register.RnRegister;
@@ -37,6 +38,14 @@ public class Processor extends ArmBaseListener {
     @Override
     public void exitAdd(ArmParser.AddContext ctx) {
         rdRegister.setValue(rnRegister.getValue() + operand2.getValue());
+        rdRegister.update();
+    }
+
+    @Override
+    public void exitAdds(ArmParser.AddsContext ctx) {
+        long result = rnRegister.getValue() + operand2.getValue();
+        CPSR.updateWithOverflow(result);
+        rdRegister.setValue(result);
         rdRegister.update();
     }
 

@@ -28,7 +28,7 @@ public class NavigatorRow {
         switch(type) {
             case NavigatorRowType.BINARY:
                 this.property = new SimpleStringProperty(property);
-                this.value = new SimpleStringProperty(StringUtils.convertBinary(value));
+                this.value = new SimpleStringProperty(StringUtils.toBinaryString(value));
                 break;
             case NavigatorRowType.DECIMAL:
                 this.property = new SimpleStringProperty(property);
@@ -36,11 +36,11 @@ public class NavigatorRow {
                 break;
             case NavigatorRowType.HEX:
                 this.property = new SimpleStringProperty(property);
-                this.value = new SimpleStringProperty(StringUtils.convertHex(value));
+                this.value = new SimpleStringProperty(StringUtils.toHexString(value));
                 break;
             default:
                 this.property = new SimpleStringProperty(property);
-                this.value = new SimpleStringProperty(StringUtils.convertAscii(value));
+                this.value = new SimpleStringProperty(StringUtils.toAsciiString(value));
         }
     }
 

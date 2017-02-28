@@ -23,22 +23,22 @@ import java.util.List;
 
 public class RegisterFile implements Observable {
     public static final int NUM_OF_REGS = 15;
-    private final DefaultRegister[] registers;
+    private final UnsignedIntegerRegister[] registers;
     private final List<Observer> observers;
 
     public RegisterFile() {
         observers = new ArrayList<>();
-        registers = new DefaultRegister[NUM_OF_REGS];
+        registers = new UnsignedIntegerRegister[NUM_OF_REGS];
         for(int i = 0; i < NUM_OF_REGS; i++) {
-            registers[i] = new DefaultRegister();
+            registers[i] = new UnsignedIntegerRegister();
         }
     }
 
-    public int getValue(int registerNumber) {
+    public long getValue(int registerNumber) {
         return registers[registerNumber].getValue();
     }
 
-    public void update(int registerNumber, int value) {
+    public void update(int registerNumber, long value) {
         registers[registerNumber].setValue(value);
         notifyObservers();
     }

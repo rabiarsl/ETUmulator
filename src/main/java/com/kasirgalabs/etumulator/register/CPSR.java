@@ -17,6 +17,7 @@
 package com.kasirgalabs.etumulator.register;
 
 public final class CPSR {
+    private static final long MAX_VALUE = 4294967295L;
     private static boolean overflow;
     private static boolean zero;
     private static boolean carry;
@@ -55,5 +56,19 @@ public final class CPSR {
 
     public static void setNegative(boolean negative) {
         CPSR.negative = negative;
+    }
+
+    public static void updateWithoutOverflow(long value) {
+        negative = value < 0;
+        zero = value == 0;
+        carry = (value & (1L << 32)) != 0;
+    }
+
+    public static void updateWithOverflow(long value) {
+        updateWithoutOverflow(value);
+        overflow = false;
+        if(value < 0 || value > MAX_VALUE) {
+            overflow = true;
+        }
     }
 }
