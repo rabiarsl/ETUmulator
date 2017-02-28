@@ -50,6 +50,27 @@ public class Processor extends ArmBaseListener {
     }
 
     @Override
+    public void exitAdc(ArmParser.AdcContext ctx) {
+        long result = rnRegister.getValue() + operand2.getValue();
+        if(CPSR.isCarry()) {
+            result++;
+        }
+        rdRegister.setValue(result);
+        rdRegister.update();
+    }
+
+    @Override
+    public void exitAdcs(ArmParser.AdcsContext ctx) {
+        long result = rnRegister.getValue() + operand2.getValue();
+        if(CPSR.isCarry()) {
+            result++;
+        }
+        CPSR.updateWithOverflow(result);
+        rdRegister.setValue(result);
+        rdRegister.update();
+    }
+
+    @Override
     public void exitSub(ArmParser.SubContext ctx) {
         rdRegister.setValue(rnRegister.getValue() - operand2.getValue());
         rdRegister.update();
@@ -58,6 +79,63 @@ public class Processor extends ArmBaseListener {
     @Override
     public void exitSubs(ArmParser.SubsContext ctx) {
         long result = rnRegister.getValue() - operand2.getValue();
+        CPSR.updateWithOverflow(result);
+        rdRegister.setValue(result);
+        rdRegister.update();
+    }
+
+    @Override
+    public void exitSbc(ArmParser.SbcContext ctx) {
+        long result = rnRegister.getValue() - operand2.getValue();
+        if(CPSR.isCarry()) {
+            result--;
+        }
+        rdRegister.setValue(result);
+        rdRegister.update();
+    }
+
+    @Override
+    public void exitSbcs(ArmParser.SbcsContext ctx) {
+        long result = rnRegister.getValue() - operand2.getValue();
+        if(CPSR.isCarry()) {
+            result--;
+        }
+        CPSR.updateWithOverflow(result);
+        rdRegister.setValue(result);
+        rdRegister.update();
+    }
+
+    @Override
+    public void exitRsb(ArmParser.RsbContext ctx) {
+        long result = operand2.getValue() - rnRegister.getValue();
+        rdRegister.setValue(result);
+        rdRegister.update();
+    }
+
+    @Override
+    public void exitRsbs(ArmParser.RsbsContext ctx) {
+        long result = operand2.getValue() - rnRegister.getValue();
+        CPSR.updateWithOverflow(result);
+        rdRegister.setValue(result);
+        rdRegister.update();
+    }
+
+    @Override
+    public void exitRsc(ArmParser.RscContext ctx) {
+        long result = operand2.getValue() - rnRegister.getValue();
+        if(CPSR.isCarry()) {
+            result--;
+        }
+        rdRegister.setValue(result);
+        rdRegister.update();
+    }
+
+    @Override
+    public void exitRscs(ArmParser.RscsContext ctx) {
+        long result = operand2.getValue() - rnRegister.getValue();
+        if(CPSR.isCarry()) {
+            result--;
+        }
         CPSR.updateWithOverflow(result);
         rdRegister.setValue(result);
         rdRegister.update();
