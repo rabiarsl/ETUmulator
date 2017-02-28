@@ -212,14 +212,28 @@ public class Processor extends ArmBaseListener {
     }
 
     @Override
+    public void exitMov(ArmParser.MovContext ctx) {
+        rdRegister.setValue(operand2.getValue());
+        rdRegister.update();
+    }
+
+    @Override
+    public void exitMovs(ArmParser.MovsContext ctx) {
+        CPSR.updateWithoutOverflow(operand2.getValue());
+        rdRegister.setValue(operand2.getValue());
+        rdRegister.update();
+    }
+
+    @Override
     public void exitMvn(ArmParser.MvnContext ctx) {
         rdRegister.setValue(0xffffffff ^ operand2.getValue());
         rdRegister.update();
     }
 
     @Override
-    public void exitMov(ArmParser.MovContext ctx) {
-        rdRegister.setValue(operand2.getValue());
+    public void exitMvns(ArmParser.MvnsContext ctx) {
+        CPSR.updateWithoutOverflow(0xffffffff ^ operand2.getValue());
+        rdRegister.setValue(0xffffffff ^ operand2.getValue());
         rdRegister.update();
     }
 
