@@ -148,8 +148,10 @@ public class Processor extends ArmBaseListener {
     }
 
     @Override
-    public void exitOrr(ArmParser.OrrContext ctx) {
-        rdRegister.setValue(rnRegister.getValue() | operand2.getValue());
+    public void exitAnds(ArmParser.AndsContext ctx) {
+        long result = rnRegister.getValue() & operand2.getValue();
+        CPSR.updateWithoutOverflow(result);
+        rdRegister.setValue(result);
         rdRegister.update();
     }
 
@@ -160,14 +162,52 @@ public class Processor extends ArmBaseListener {
     }
 
     @Override
+    public void exitEors(ArmParser.EorsContext ctx) {
+        long result = rnRegister.getValue() ^ operand2.getValue();
+        CPSR.updateWithoutOverflow(result);
+        rdRegister.setValue(result);
+        rdRegister.update();
+    }
+
+    @Override
+    public void exitOrr(ArmParser.OrrContext ctx) {
+        rdRegister.setValue(rnRegister.getValue() | operand2.getValue());
+        rdRegister.update();
+    }
+
+    @Override
+    public void exitOrrs(ArmParser.OrrsContext ctx) {
+        long result = rnRegister.getValue() | operand2.getValue();
+        CPSR.updateWithoutOverflow(result);
+        rdRegister.setValue(result);
+        rdRegister.update();
+    }
+
+    @Override
     public void exitOrn(ArmParser.OrnContext ctx) {
         rdRegister.setValue(rnRegister.getValue() | ~operand2.getValue());
         rdRegister.update();
     }
 
     @Override
+    public void exitOrns(ArmParser.OrnsContext ctx) {
+        long result = rnRegister.getValue() | ~operand2.getValue();
+        CPSR.updateWithoutOverflow(result);
+        rdRegister.setValue(result);
+        rdRegister.update();
+    }
+
+    @Override
     public void exitBic(ArmParser.BicContext ctx) {
         rdRegister.setValue(rnRegister.getValue() & ~operand2.getValue());
+        rdRegister.update();
+    }
+
+    @Override
+    public void exitBics(ArmParser.BicsContext ctx) {
+        long result = rnRegister.getValue() & ~operand2.getValue();
+        CPSR.updateWithoutOverflow(result);
+        rdRegister.setValue(result);
         rdRegister.update();
     }
 
