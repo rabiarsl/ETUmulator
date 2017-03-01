@@ -16,20 +16,20 @@
  */
 package com.kasirgalabs.etumulator.register;
 
-public class UnsignedIntegerRegister implements Register {
+public class IntegerRegister implements Register {
     private long value;
 
-    public UnsignedIntegerRegister() {
+    public IntegerRegister() {
         value = 0;
     }
 
-    public UnsignedIntegerRegister(long value) {
-        this.value = RegisterUtils.toUnsinged32Bit(value);
+    public IntegerRegister(long value) {
+        this.value = RegisterUtils.to32Bit(value);
     }
 
     @Override
     public void setValue(long value) {
-        this.value = RegisterUtils.toUnsinged32Bit(value);
+        this.value = RegisterUtils.to32Bit(value);
     }
 
     @Override

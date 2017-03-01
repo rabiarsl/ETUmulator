@@ -60,13 +60,26 @@ public final class CPSR {
     public static void updateWithoutOverflow(long value) {
         negative = value < 0;
         zero = value == 0;
+        carry = value < 0 || value > RegisterUtils.MAX32;
         carry = (value & (1L << 32)) != 0;
     }
 
-    public static void updateWithOverflow(long value) {
-        updateWithoutOverflow(value);
-        overflow = false;
-        if(value < 0 || value > RegisterUtils.MAX32) {
+    public static void updateWithAdditionOverflow(long result, long left, long right) {
+        updateWithoutOverflow(result);
+        try {
+            Math.addExact((int) left, (int) right);
+            overflow = false;
+        } catch(ArithmeticException e) {
+            overflow = true;
+        }
+    }
+
+    public static void updateWithSubtractionOverflow(long result, long left, long right) {
+        updateWithoutOverflow(result);
+        try {
+            Math.subtractExact((int) left, (int) right);
+            overflow = false;
+        } catch(ArithmeticException e) {
             overflow = true;
         }
     }

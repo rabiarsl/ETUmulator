@@ -31,14 +31,7 @@ public final class RegisterUtils {
         return Integer.parseInt(number);
     }
 
-    public static long toUnsinged32Bit(long result) {
-        long temp = result;
-        if(temp < 0) {
-            temp = MAX32 + temp;
-        }
-        if(temp > MAX32) {
-            temp &= MASK32;
-        }
-        return temp;
+    public static long to32Bit(long result) {
+        return result & MASK32;
     }
 }

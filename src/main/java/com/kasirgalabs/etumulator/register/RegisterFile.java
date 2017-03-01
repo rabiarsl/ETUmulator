@@ -23,14 +23,14 @@ import java.util.List;
 
 public class RegisterFile implements Observable {
     public static final int NUM_OF_REGS = 15;
-    private final UnsignedIntegerRegister[] registers;
+    private final IntegerRegister[] registers;
     private final List<Observer> observers;
 
     public RegisterFile() {
         observers = new ArrayList<>();
-        registers = new UnsignedIntegerRegister[NUM_OF_REGS];
+        registers = new IntegerRegister[NUM_OF_REGS];
         for(int i = 0; i < NUM_OF_REGS; i++) {
-            registers[i] = new UnsignedIntegerRegister();
+            registers[i] = new IntegerRegister();
         }
     }
 
