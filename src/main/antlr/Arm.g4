@@ -869,8 +869,7 @@ offset
     ;
 
 number
-    :
-    | decimal
+    : decimal
     | hex
     ;
 
