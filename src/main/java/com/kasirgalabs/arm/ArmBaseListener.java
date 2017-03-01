@@ -1072,6 +1072,18 @@ public class ArmBaseListener implements ArmListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
+	@Override public void enterNop(ArmParser.NopContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitNop(ArmParser.NopContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
 	@Override public void enterRd(ArmParser.RdContext ctx) { }
 	/**
 	 * {@inheritDoc}

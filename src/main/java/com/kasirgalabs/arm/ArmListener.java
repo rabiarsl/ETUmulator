@@ -888,6 +888,16 @@ public interface ArmListener extends ParseTreeListener {
 	 */
 	void exitPop(ArmParser.PopContext ctx);
 	/**
+	 * Enter a parse tree produced by {@link ArmParser#nop}.
+	 * @param ctx the parse tree
+	 */
+	void enterNop(ArmParser.NopContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link ArmParser#nop}.
+	 * @param ctx the parse tree
+	 */
+	void exitNop(ArmParser.NopContext ctx);
+	/**
 	 * Enter a parse tree produced by {@link ArmParser#rd}.
 	 * @param ctx the parse tree
 	 */

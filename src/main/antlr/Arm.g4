@@ -93,6 +93,7 @@ instruction
     | strsh
     | push
     | pop
+    | nop
     ;
 
 add
@@ -783,6 +784,14 @@ pop
 
 POP
     : P O P
+    ;
+
+nop
+    : NOP
+    ;
+
+NOP
+    : N O P
     ;
 
 rd

@@ -16,13 +16,11 @@
  */
 package com.kasirgalabs.etumulator;
 
-import com.kasirgalabs.arm.ArmLexer;
-import com.kasirgalabs.arm.ArmParser;
 import com.kasirgalabs.etumulator.console.Console;
 import com.kasirgalabs.etumulator.document.Document;
 import com.kasirgalabs.etumulator.pattern.Registry;
+import com.kasirgalabs.etumulator.processor.Loader;
 import com.kasirgalabs.etumulator.processor.Processor;
-import com.kasirgalabs.etumulator.register.RegisterFile;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.io.PrintStream;
@@ -33,9 +31,6 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextArea;
-import org.antlr.v4.runtime.ANTLRInputStream;
-import org.antlr.v4.runtime.CommonTokenStream;
-import org.antlr.v4.runtime.tree.ParseTreeWalker;
 
 public class ETUmulatorController implements Initializable, Console {
     @FXML
@@ -63,15 +58,7 @@ public class ETUmulatorController implements Initializable, Console {
     private void runButtonOnAction(ActionEvent event) {
         String text = Registry.get(Document.class).getText();
         char[] code = (text + "\n").toCharArray();
-        ANTLRInputStream in = new ANTLRInputStream(code, code.length);
-        ArmLexer lexer = new ArmLexer(in);
-        CommonTokenStream tokens = new CommonTokenStream(lexer);
-        ArmParser parser = new ArmParser(tokens);
-        ArmParser.ProgContext tree = parser.prog();
-        if(parser.getNumberOfSyntaxErrors() != 0) {
-            return;
-        }
-        Registry.get(RegisterFile.class).reset();
-        ParseTreeWalker.DEFAULT.walk(new Processor(), tree);
+        Loader loader = new Loader(new Processor());
+        loader.loadAndRun(code);
     }
 }

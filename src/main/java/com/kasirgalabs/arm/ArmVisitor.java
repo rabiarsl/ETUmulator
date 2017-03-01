@@ -539,6 +539,12 @@ public interface ArmVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitPop(ArmParser.PopContext ctx);
 	/**
+	 * Visit a parse tree produced by {@link ArmParser#nop}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitNop(ArmParser.NopContext ctx);
+	/**
 	 * Visit a parse tree produced by {@link ArmParser#rd}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
