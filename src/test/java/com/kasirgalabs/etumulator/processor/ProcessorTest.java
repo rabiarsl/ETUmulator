@@ -16,14 +16,22 @@
  */
 package com.kasirgalabs.etumulator.processor;
 
-import org.antlr.v4.runtime.BaseErrorListener;
-import org.antlr.v4.runtime.RecognitionException;
-import org.antlr.v4.runtime.Recognizer;
+import com.kasirgalabs.etumulator.register.RegisterFile;
+import org.junit.Test;
 
-public class ErrorListener extends BaseErrorListener {
-    @Override
-    public void syntaxError(Recognizer<?, ?> recognizer, Object offendingSymbol,
-            int line, int charPositionInLine, String msg, RecognitionException e) {
-        System.err.println("line " + line + ":" + charPositionInLine + " " + msg);
+public class ProcessorTest {
+
+    /**
+     * Test of run method, of class Loader.
+     */
+    @Test
+    public void testRun() {
+        RegisterFile registerFile = new RegisterFile();
+        Processor processor = new Processor(registerFile);
+
+        char[] code = ("nop\n"
+                + "nop\n"
+                + "nop\n").toCharArray();
+        processor.run(code);
     }
 }

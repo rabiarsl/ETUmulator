@@ -17,15 +17,15 @@
 package com.kasirgalabs.etumulator.register;
 
 import com.kasirgalabs.arm.ArmParser.RdContext;
-import com.kasirgalabs.etumulator.pattern.Registry;
 
 public class RdRegister implements Register {
     private long value;
     private final int registerNumber;
+    private final RegisterFile registerFile;
 
-    public RdRegister(RdContext ctx) {
+    public RdRegister(RdContext ctx, RegisterFile registerFile) {
+        this.registerFile = registerFile;
         registerNumber = RegisterUtils.parseRegisterNumber(ctx.REGISTER());
-        RegisterFile registerFile = Registry.get(RegisterFile.class);
         this.value = registerFile.getValue(registerNumber);
     }
 
@@ -44,7 +44,6 @@ public class RdRegister implements Register {
     }
 
     public void update() {
-        RegisterFile registerFile = Registry.get(RegisterFile.class);
         registerFile.update(registerNumber, value);
     }
 }

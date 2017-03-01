@@ -17,15 +17,13 @@
 package com.kasirgalabs.etumulator.register;
 
 import com.kasirgalabs.arm.ArmParser.RnContext;
-import com.kasirgalabs.etumulator.pattern.Registry;
 
 public class RnRegister implements Register {
     private long value;
     private final int registerNumber;
 
-    public RnRegister(RnContext ctx) {
+    public RnRegister(RnContext ctx, RegisterFile registerFile) {
         registerNumber = RegisterUtils.parseRegisterNumber(ctx.REGISTER());
-        RegisterFile registerFile = Registry.get(RegisterFile.class);
         this.value = registerFile.getValue(registerNumber);
     }
 

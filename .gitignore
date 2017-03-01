@@ -1,6 +1,7 @@
 *.class
 *.jar
 hs_err_pid*
-/.nb-gradle/
-/build/
+.nb-gradle
+build
 .gradle
+nbproject

@@ -26,19 +26,20 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 
 public class DocumentMenuController implements Initializable {
+    private DocumentChooser documentChooser;
+
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        documentChooser = Registry.get(DocumentChooser.class);
     }
 
     @FXML
     private void newOnAction(ActionEvent event) {
-        DocumentChooser documentChooser = Registry.get(DocumentChooser.class);
         documentChooser.createDocument();
     }
 
     @FXML
     private void openOnAction(ActionEvent event) throws IOException {
-        DocumentChooser documentChooser = Registry.get(DocumentChooser.class);
         documentChooser.openDocument();
     }
 
@@ -50,7 +51,6 @@ public class DocumentMenuController implements Initializable {
 
     @FXML
     private void saveAsOnaction(ActionEvent event) throws IOException {
-        DocumentChooser documentChooser = Registry.get(DocumentChooser.class);
         Document document = Registry.get(Document.class);
         File file = documentChooser.chooseDocument();
         if(file == null) {

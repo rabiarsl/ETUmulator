@@ -17,7 +17,6 @@
 package com.kasirgalabs.etumulator.register;
 
 public final class CPSR {
-    private static final long MAX_VALUE = 4294967295L;
     private static boolean overflow;
     private static boolean zero;
     private static boolean carry;

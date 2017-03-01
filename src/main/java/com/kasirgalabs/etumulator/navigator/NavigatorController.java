@@ -41,6 +41,7 @@ public class NavigatorController implements Initializable, Observer {
     private TableColumn<NavigatorRow, String> value;
     @FXML
     private ComboBox<String> type;
+    private RegisterFile registerFile;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -51,14 +52,14 @@ public class NavigatorController implements Initializable, Observer {
         property.setCellValueFactory(new PropertyValueFactory<>("property"));
         value.setCellValueFactory(new PropertyValueFactory<>("value"));
         table.setItems(DATA);
+        registerFile = Registry.get(RegisterFile.class);
         update();
-        Registry.get(RegisterFile.class).addObserver(this);
+        registerFile.addObserver(this);
     }
 
     @Override
     public void update() {
         DATA.clear();
-        RegisterFile registerFile = Registry.get(RegisterFile.class);
         for(int i = 0; i < RegisterFile.NUM_OF_REGS; i++) {
             String registerNumber = "r" + Integer.toString(i);
             String registerValue = Long.toString(registerFile.getValue(i));

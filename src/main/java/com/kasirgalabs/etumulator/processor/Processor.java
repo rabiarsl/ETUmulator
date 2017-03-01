@@ -17,6 +17,7 @@
 package com.kasirgalabs.etumulator.processor;
 
 import com.kasirgalabs.arm.ArmBaseListener;
+import com.kasirgalabs.arm.ArmLexer;
 import com.kasirgalabs.arm.ArmParser;
 import com.kasirgalabs.etumulator.operand2.Decimal;
 import com.kasirgalabs.etumulator.operand2.Hex;
@@ -25,8 +26,12 @@ import com.kasirgalabs.etumulator.operand2.Number;
 import com.kasirgalabs.etumulator.operand2.Operand2;
 import com.kasirgalabs.etumulator.register.CPSR;
 import com.kasirgalabs.etumulator.register.RdRegister;
+import com.kasirgalabs.etumulator.register.RegisterFile;
 import com.kasirgalabs.etumulator.register.RmRegister;
 import com.kasirgalabs.etumulator.register.RnRegister;
+import org.antlr.v4.runtime.ANTLRInputStream;
+import org.antlr.v4.runtime.CommonTokenStream;
+import org.antlr.v4.runtime.tree.ParseTreeWalker;
 
 public class Processor extends ArmBaseListener {
     private RdRegister rdRegister;
@@ -34,6 +39,25 @@ public class Processor extends ArmBaseListener {
     private Operand2 operand2;
     private Imm8m imm8m;
     private Number number;
+    private final RegisterFile registerFile;
+
+    public Processor(RegisterFile registerFile) {
+        this.registerFile = registerFile;
+    }
+
+    public void run(char[] code) {
+        ANTLRInputStream in = new ANTLRInputStream(code, code.length);
+        ArmLexer lexer = new ArmLexer(in);
+        lexer.removeErrorListeners();
+        CommonTokenStream tokens = new CommonTokenStream(lexer);
+        ArmParser parser = new ArmParser(tokens);
+        parser.removeErrorListeners();
+        ArmParser.ProgContext tree = parser.prog();
+        if(parser.getNumberOfSyntaxErrors() != 0) {
+            return;
+        }
+        ParseTreeWalker.DEFAULT.walk(this, tree);
+    }
 
     @Override
     public void exitAdd(ArmParser.AddContext ctx) {
@@ -259,17 +283,17 @@ public class Processor extends ArmBaseListener {
 
     @Override
     public void exitRd(ArmParser.RdContext ctx) {
-        rdRegister = new RdRegister(ctx);
+        rdRegister = new RdRegister(ctx, registerFile);
     }
 
     @Override
     public void exitRn(ArmParser.RnContext ctx) {
-        rnRegister = new RnRegister(ctx);
+        rnRegister = new RnRegister(ctx, registerFile);
     }
 
     @Override
     public void exitRm(ArmParser.RmContext ctx) {
-        operand2 = new RmRegister(ctx);
+        operand2 = new RmRegister(ctx, registerFile);
     }
 
     @Override
