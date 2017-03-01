@@ -51,19 +51,23 @@ public class NavigatorController implements Initializable, Observer {
         NavigatorRow.setType(type.getSelectionModel().getSelectedIndex());
         property.setCellValueFactory(new PropertyValueFactory<>("property"));
         value.setCellValueFactory(new PropertyValueFactory<>("value"));
+        for(int i = 0; i < RegisterFile.NUM_OF_REGS; i++) {
+            String registerNumber = "r" + Integer.toString(i);
+            DATA.add(i, new NavigatorRow(registerNumber, "?"));
+        }
+        property.setComparator(new NavigatorRowComparator());
         table.setItems(DATA);
         registerFile = Registry.get(RegisterFile.class);
-        update();
         registerFile.addObserver(this);
     }
 
     @Override
     public void update() {
-        DATA.clear();
-        for(int i = 0; i < RegisterFile.NUM_OF_REGS; i++) {
-            String registerNumber = "r" + Integer.toString(i);
-            String registerValue = Long.toString(registerFile.getValue(i));
-            DATA.add(new NavigatorRow(registerNumber, registerValue));
+        for(int i = 0; i < DATA.size(); i++) {
+            NavigatorRow navigatorRow = DATA.remove(i);
+            int registerNumber = Integer.parseInt(navigatorRow.getProperty().substring(1));
+            String registerValue = Long.toString(registerFile.getValue(registerNumber));
+            DATA.add(i, new NavigatorRow("r" + Integer.toString(registerNumber), registerValue));
         }
     }
 
