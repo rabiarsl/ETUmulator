@@ -48,10 +48,8 @@ public class Processor extends ArmBaseListener {
     public void run(char[] code) {
         ANTLRInputStream in = new ANTLRInputStream(code, code.length);
         ArmLexer lexer = new ArmLexer(in);
-        lexer.removeErrorListeners();
         CommonTokenStream tokens = new CommonTokenStream(lexer);
         ArmParser parser = new ArmParser(tokens);
-        parser.removeErrorListeners();
         ArmParser.ProgContext tree = parser.prog();
         if(parser.getNumberOfSyntaxErrors() != 0) {
             return;
@@ -274,6 +272,14 @@ public class Processor extends ArmBaseListener {
     @Override
     public void enterTeq(ArmParser.TeqContext ctx) {
         CPSR.updateNZ(rnRegister.getValue() ^ operand2.getValue());
+    }
+
+    @Override
+    public void exitLdr(ArmParser.LdrContext ctx) {
+        if(ctx.number() != null) {
+            rdRegister.setValue(number.getValue());
+        }
+        rdRegister.update();
     }
 
     @Override

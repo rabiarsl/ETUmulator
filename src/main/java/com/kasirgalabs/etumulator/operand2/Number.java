@@ -17,4 +17,15 @@
 package com.kasirgalabs.etumulator.operand2;
 
 public class Number extends Imm8m {
+    private int value;
+
+    @Override
+    public void setValue(int value) {
+        this.value = value;
+    }
+
+    @Override
+    public int getValue() {
+        return value;
+    }
 }
