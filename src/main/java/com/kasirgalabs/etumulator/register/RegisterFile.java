@@ -34,11 +34,11 @@ public class RegisterFile implements Observable {
         }
     }
 
-    public long getValue(int registerNumber) {
+    public int getValue(int registerNumber) {
         return registers[registerNumber].getValue();
     }
 
-    public void update(int registerNumber, long value) {
+    public void update(int registerNumber, int value) {
         registers[registerNumber].setValue(value);
         notifyObservers();
     }

@@ -17,23 +17,23 @@
 package com.kasirgalabs.etumulator.register;
 
 public class IntegerRegister implements Register {
-    private long value;
+    private int value;
 
     public IntegerRegister() {
         value = 0;
     }
 
-    public IntegerRegister(long value) {
-        this.value = RegisterUtils.to32Bit(value);
+    public IntegerRegister(int value) {
+        this.value = value;
     }
 
     @Override
-    public void setValue(long value) {
-        this.value = RegisterUtils.to32Bit(value);
+    public void setValue(int value) {
+        this.value = value;
     }
 
     @Override
-    public long getValue() {
+    public int getValue() {
         return value;
     }
 

@@ -20,7 +20,7 @@ import com.kasirgalabs.etumulator.string.StringUtils;
 import javafx.beans.property.SimpleStringProperty;
 
 public class NavigatorRow {
-    private static int type;
+    private static int type = -1;
     private final SimpleStringProperty property;
     private final SimpleStringProperty value;
 
@@ -38,9 +38,13 @@ public class NavigatorRow {
                 this.property = new SimpleStringProperty(property);
                 this.value = new SimpleStringProperty(StringUtils.toHexString(value));
                 break;
-            default:
+            case NavigatorRowType.ASCII:
                 this.property = new SimpleStringProperty(property);
                 this.value = new SimpleStringProperty(StringUtils.toAsciiString(value));
+                break;
+            default:
+                this.property = new SimpleStringProperty(property);
+                this.value = new SimpleStringProperty("?");
         }
     }
 

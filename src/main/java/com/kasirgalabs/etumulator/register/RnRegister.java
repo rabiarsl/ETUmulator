@@ -19,7 +19,7 @@ package com.kasirgalabs.etumulator.register;
 import com.kasirgalabs.arm.ArmParser.RnContext;
 
 public class RnRegister implements Register {
-    private long value;
+    private int value;
     private final int registerNumber;
 
     public RnRegister(RnContext ctx, RegisterFile registerFile) {
@@ -28,12 +28,12 @@ public class RnRegister implements Register {
     }
 
     @Override
-    public void setValue(long value) {
+    public void setValue(int value) {
         this.value = value;
     }
 
     @Override
-    public long getValue() {
+    public int getValue() {
         return value;
     }
 

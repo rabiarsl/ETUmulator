@@ -47,8 +47,6 @@ public class NavigatorController implements Initializable, Observer {
     public void initialize(URL url, ResourceBundle rb) {
         type.setItems(FXCollections.observableArrayList(
                 new String[]{"Binary", "Decimal", "HEX", "ASCII"}));
-        type.getSelectionModel().select(1);
-        NavigatorRow.setType(type.getSelectionModel().getSelectedIndex());
         property.setCellValueFactory(new PropertyValueFactory<>("property"));
         value.setCellValueFactory(new PropertyValueFactory<>("value"));
         for(int i = 0; i < RegisterFile.NUM_OF_REGS; i++) {
@@ -66,7 +64,7 @@ public class NavigatorController implements Initializable, Observer {
         for(int i = 0; i < DATA.size(); i++) {
             NavigatorRow navigatorRow = DATA.remove(i);
             int registerNumber = Integer.parseInt(navigatorRow.getProperty().substring(1));
-            String registerValue = Long.toString(registerFile.getValue(registerNumber));
+            String registerValue = Integer.toString(registerFile.getValue(registerNumber));
             DATA.add(i, new NavigatorRow("r" + Integer.toString(registerNumber), registerValue));
         }
     }

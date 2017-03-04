@@ -24,6 +24,6 @@ public class Decimal extends Number {
         if(value.contains("#")) {
             value = value.substring(1);
         }
-        super.setValue(Long.parseLong(value));
+        super.setValue(Integer.parseUnsignedInt(value));
     }
 }

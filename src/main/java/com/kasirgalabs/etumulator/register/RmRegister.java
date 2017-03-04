@@ -20,7 +20,7 @@ import com.kasirgalabs.arm.ArmParser.RmContext;
 import com.kasirgalabs.etumulator.operand2.Operand2;
 
 public class RmRegister implements Register, Operand2 {
-    private long value;
+    private int value;
     private final int registerNumber;
 
     public RmRegister(RmContext ctx, RegisterFile registerFile) {
@@ -29,12 +29,12 @@ public class RmRegister implements Register, Operand2 {
     }
 
     @Override
-    public void setValue(long value) {
+    public void setValue(int value) {
         this.value = value;
     }
 
     @Override
-    public long getValue() {
+    public int getValue() {
         return value;
     }
 

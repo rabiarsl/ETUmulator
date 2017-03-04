@@ -25,6 +25,6 @@ public class Hex extends Number {
             value = value.substring(1);
         }
         value = value.substring(2);
-        super.setValue(Long.parseLong(value, 16));
+        super.setValue(Integer.parseUnsignedInt(value, 16));
     }
 }

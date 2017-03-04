@@ -17,5 +17,5 @@
 package com.kasirgalabs.etumulator.operand2;
 
 public interface Operand2 {
-    long getValue();
+    int getValue();
 }

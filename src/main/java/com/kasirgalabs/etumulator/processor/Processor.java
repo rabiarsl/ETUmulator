@@ -67,15 +67,14 @@ public class Processor extends ArmBaseListener {
 
     @Override
     public void exitAdds(ArmParser.AddsContext ctx) {
-        long result = rnRegister.getValue() + operand2.getValue();
-        CPSR.updateWithAdditionOverflow(result, rnRegister.getValue(), operand2.getValue());
-        rdRegister.setValue(result);
+        CPSR.additionUpdateNZV(rnRegister.getValue(), operand2.getValue());
+        rdRegister.setValue(rnRegister.getValue() + operand2.getValue());
         rdRegister.update();
     }
 
     @Override
     public void exitAdc(ArmParser.AdcContext ctx) {
-        long result = rnRegister.getValue() + operand2.getValue();
+        int result = rnRegister.getValue() + operand2.getValue();
         if(CPSR.isCarry()) {
             result++;
         }
@@ -85,12 +84,12 @@ public class Processor extends ArmBaseListener {
 
     @Override
     public void exitAdcs(ArmParser.AdcsContext ctx) {
-        long result = rnRegister.getValue() + operand2.getValue();
-        CPSR.updateWithAdditionOverflow(result, rnRegister.getValue(), operand2.getValue());
+        int result = rnRegister.getValue() + operand2.getValue();
+        CPSR.additionUpdateNZV(rnRegister.getValue(), operand2.getValue());
         if(CPSR.isCarry()) {
             result++;
         }
-        CPSR.updateWithAdditionOverflow(result, result, result + 1);
+        CPSR.additionUpdateNZV(result, 1);
         rdRegister.setValue(result);
         rdRegister.update();
     }
@@ -103,15 +102,14 @@ public class Processor extends ArmBaseListener {
 
     @Override
     public void exitSubs(ArmParser.SubsContext ctx) {
-        long result = rnRegister.getValue() - operand2.getValue();
-        CPSR.updateWithSubtractionOverflow(result, rnRegister.getValue(), operand2.getValue());
-        rdRegister.setValue(result);
+        CPSR.subtractionUpdateNZV(rnRegister.getValue(), operand2.getValue());
+        rdRegister.setValue(rnRegister.getValue() - operand2.getValue());
         rdRegister.update();
     }
 
     @Override
     public void exitSbc(ArmParser.SbcContext ctx) {
-        long result = rnRegister.getValue() - operand2.getValue();
+        int result = rnRegister.getValue() - operand2.getValue();
         if(CPSR.isCarry()) {
             result--;
         }
@@ -121,34 +119,33 @@ public class Processor extends ArmBaseListener {
 
     @Override
     public void exitSbcs(ArmParser.SbcsContext ctx) {
-        long result = rnRegister.getValue() - operand2.getValue();
-        CPSR.updateWithSubtractionOverflow(result, rnRegister.getValue(), operand2.getValue());
+        int result = rnRegister.getValue() - operand2.getValue();
+        CPSR.subtractionUpdateNZV(rnRegister.getValue(), operand2.getValue());
         if(CPSR.isCarry()) {
             result--;
         }
-        CPSR.updateWithSubtractionOverflow(result, result, result - 1);
+        CPSR.subtractionUpdateNZV(result, - 1);
         rdRegister.setValue(result);
         rdRegister.update();
     }
 
     @Override
     public void exitRsb(ArmParser.RsbContext ctx) {
-        long result = operand2.getValue() - rnRegister.getValue();
-        rdRegister.setValue(result);
+        rdRegister.setValue(operand2.getValue() - rnRegister.getValue());
         rdRegister.update();
     }
 
     @Override
     public void exitRsbs(ArmParser.RsbsContext ctx) {
-        long result = operand2.getValue() - rnRegister.getValue();
-        CPSR.updateWithSubtractionOverflow(result, operand2.getValue(), rnRegister.getValue());
+        int result = operand2.getValue() - rnRegister.getValue();
+        CPSR.subtractionUpdateNZV(operand2.getValue(), rnRegister.getValue());
         rdRegister.setValue(result);
         rdRegister.update();
     }
 
     @Override
     public void exitRsc(ArmParser.RscContext ctx) {
-        long result = operand2.getValue() - rnRegister.getValue();
+        int result = operand2.getValue() - rnRegister.getValue();
         if(CPSR.isCarry()) {
             result--;
         }
@@ -158,12 +155,12 @@ public class Processor extends ArmBaseListener {
 
     @Override
     public void exitRscs(ArmParser.RscsContext ctx) {
-        long result = operand2.getValue() - rnRegister.getValue();
-        CPSR.updateWithSubtractionOverflow(result, operand2.getValue(), rnRegister.getValue());
+        int result = operand2.getValue() - rnRegister.getValue();
+        CPSR.subtractionUpdateNZV(operand2.getValue(), rnRegister.getValue());
         if(CPSR.isCarry()) {
             result--;
         }
-        CPSR.updateWithSubtractionOverflow(result, result, result - 1);
+        CPSR.subtractionUpdateNZV(result, - 1);
         rdRegister.setValue(result);
         rdRegister.update();
     }
@@ -176,9 +173,8 @@ public class Processor extends ArmBaseListener {
 
     @Override
     public void exitAnds(ArmParser.AndsContext ctx) {
-        long result = rnRegister.getValue() & operand2.getValue();
-        CPSR.updateWithoutOverflow(result);
-        rdRegister.setValue(result);
+        CPSR.updateNZ(rnRegister.getValue() & operand2.getValue());
+        rdRegister.setValue(rnRegister.getValue() & operand2.getValue());
         rdRegister.update();
     }
 
@@ -190,9 +186,8 @@ public class Processor extends ArmBaseListener {
 
     @Override
     public void exitEors(ArmParser.EorsContext ctx) {
-        long result = rnRegister.getValue() ^ operand2.getValue();
-        CPSR.updateWithoutOverflow(result);
-        rdRegister.setValue(result);
+        CPSR.updateNZ(rnRegister.getValue() ^ operand2.getValue());
+        rdRegister.setValue(rnRegister.getValue() ^ operand2.getValue());
         rdRegister.update();
     }
 
@@ -204,9 +199,8 @@ public class Processor extends ArmBaseListener {
 
     @Override
     public void exitOrrs(ArmParser.OrrsContext ctx) {
-        long result = rnRegister.getValue() | operand2.getValue();
-        CPSR.updateWithoutOverflow(result);
-        rdRegister.setValue(result);
+        CPSR.updateNZ(rnRegister.getValue() | operand2.getValue());
+        rdRegister.setValue(rnRegister.getValue() | operand2.getValue());
         rdRegister.update();
     }
 
@@ -218,9 +212,8 @@ public class Processor extends ArmBaseListener {
 
     @Override
     public void exitOrns(ArmParser.OrnsContext ctx) {
-        long result = rnRegister.getValue() | ~operand2.getValue();
-        CPSR.updateWithoutOverflow(result);
-        rdRegister.setValue(result);
+        CPSR.updateNZ(rnRegister.getValue() | ~operand2.getValue());
+        rdRegister.setValue(rnRegister.getValue() | ~operand2.getValue());
         rdRegister.update();
     }
 
@@ -232,9 +225,8 @@ public class Processor extends ArmBaseListener {
 
     @Override
     public void exitBics(ArmParser.BicsContext ctx) {
-        long result = rnRegister.getValue() & ~operand2.getValue();
-        CPSR.updateWithoutOverflow(result);
-        rdRegister.setValue(result);
+        CPSR.updateNZ(rnRegister.getValue() & ~operand2.getValue());
+        rdRegister.setValue(rnRegister.getValue() & ~operand2.getValue());
         rdRegister.update();
     }
 
@@ -246,7 +238,7 @@ public class Processor extends ArmBaseListener {
 
     @Override
     public void exitMovs(ArmParser.MovsContext ctx) {
-        CPSR.updateWithoutOverflow(operand2.getValue());
+        CPSR.updateNZ(operand2.getValue());
         rdRegister.setValue(operand2.getValue());
         rdRegister.update();
     }
@@ -259,31 +251,29 @@ public class Processor extends ArmBaseListener {
 
     @Override
     public void exitMvns(ArmParser.MvnsContext ctx) {
-        CPSR.updateWithoutOverflow(0xffffffff ^ operand2.getValue());
+        CPSR.updateNZ(0xffffffff ^ operand2.getValue());
         rdRegister.setValue(0xffffffff ^ operand2.getValue());
         rdRegister.update();
     }
 
     @Override
     public void exitCmp(ArmParser.CmpContext ctx) {
-        long result = rnRegister.getValue() - operand2.getValue();
-        CPSR.updateWithSubtractionOverflow(result, rnRegister.getValue(), operand2.getValue());
+        CPSR.subtractionUpdateNZV(rnRegister.getValue(), operand2.getValue());
     }
 
     @Override
     public void exitCmn(ArmParser.CmnContext ctx) {
-        long result = rnRegister.getValue() - operand2.getValue();
-        CPSR.updateWithAdditionOverflow(result, rnRegister.getValue(), operand2.getValue());
+        CPSR.additionUpdateNZV(rnRegister.getValue(), operand2.getValue());
     }
 
     @Override
     public void enterTst(ArmParser.TstContext ctx) {
-        CPSR.updateWithoutOverflow(rnRegister.getValue() & operand2.getValue());
+        CPSR.updateNZ(rnRegister.getValue() & operand2.getValue());
     }
 
     @Override
     public void enterTeq(ArmParser.TeqContext ctx) {
-        CPSR.updateWithoutOverflow(rnRegister.getValue() ^ operand2.getValue());
+        CPSR.updateNZ(rnRegister.getValue() ^ operand2.getValue());
     }
 
     @Override

@@ -23,8 +23,8 @@ public final class StringUtils {
     }
 
     public static String toBinaryString(String decimal) {
-        long temp = Long.parseLong(decimal);
-        String binaryString = Long.toBinaryString(temp);
+        int temp = Integer.parseInt(decimal);
+        String binaryString = Integer.toBinaryString(temp);
         int missingBits = BIT_WIDTH - binaryString.length();
         for(int i = 0; i < missingBits; i++) {
             binaryString = "0" + binaryString;
@@ -33,8 +33,8 @@ public final class StringUtils {
     }
 
     public static String toHexString(String decimal) {
-        long temp = Long.parseLong(decimal);
-        String hexString = Long.toHexString(temp);
+        int temp = Integer.parseInt(decimal);
+        String hexString = Integer.toHexString(temp);
         int missingBits = BIT_WIDTH / 4 - hexString.length();
         for(int i = 0; i < missingBits; i++) {
             hexString = "0" + hexString;
@@ -43,6 +43,6 @@ public final class StringUtils {
     }
 
     public static String toAsciiString(String decimal) {
-        return AsciiTable.getAscii((int) Long.parseLong(decimal));
+        return AsciiTable.getAscii(Integer.parseInt(decimal));
     }
 }

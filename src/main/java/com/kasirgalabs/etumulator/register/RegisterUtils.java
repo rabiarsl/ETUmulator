@@ -19,8 +19,6 @@ package com.kasirgalabs.etumulator.register;
 import org.antlr.v4.runtime.tree.TerminalNode;
 
 public final class RegisterUtils {
-    public static final long MAX32 = 4294967295L;
-    public static final long MASK32 = 0x00000000FFFFFFFFL;
 
     private RegisterUtils() {
     }
@@ -29,9 +27,5 @@ public final class RegisterUtils {
         String name = register.toString();
         String number = name.substring(1, name.length());
         return Integer.parseInt(number);
-    }
-
-    public static long to32Bit(long result) {
-        return result & MASK32;
     }
 }

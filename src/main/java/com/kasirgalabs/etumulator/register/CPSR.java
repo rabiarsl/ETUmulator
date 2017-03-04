@@ -29,55 +29,37 @@ public final class CPSR {
         return overflow;
     }
 
-    public static void setOverflow(boolean overflow) {
-        CPSR.overflow = overflow;
-    }
-
     public static boolean isZero() {
         return zero;
-    }
-
-    public static void setZero(boolean zero) {
-        CPSR.zero = zero;
     }
 
     public static boolean isCarry() {
         return carry;
     }
 
-    public static void setCarry(boolean carry) {
-        CPSR.carry = carry;
-    }
-
     public static boolean isNegative() {
         return negative;
     }
 
-    public static void setNegative(boolean negative) {
-        CPSR.negative = negative;
-    }
-
-    public static void updateWithoutOverflow(long value) {
+    public static void updateNZ(int value) {
         negative = value < 0;
         zero = value == 0;
-        carry = value < 0 || value > RegisterUtils.MAX32;
-        carry = (value & (1L << 32)) != 0;
     }
 
-    public static void updateWithAdditionOverflow(long result, long left, long right) {
-        updateWithoutOverflow(result);
+    public static void additionUpdateNZV(int left, int right) {
+        updateNZ(left + right);
         try {
-            Math.addExact((int) left, (int) right);
+            Math.addExact(left, right);
             overflow = false;
         } catch(ArithmeticException e) {
             overflow = true;
         }
     }
 
-    public static void updateWithSubtractionOverflow(long result, long left, long right) {
-        updateWithoutOverflow(result);
+    public static void subtractionUpdateNZV(int left, int right) {
+        updateNZ(left - right);
         try {
-            Math.subtractExact((int) left, (int) right);
+            Math.subtractExact(left, right);
             overflow = false;
         } catch(ArithmeticException e) {
             overflow = true;
