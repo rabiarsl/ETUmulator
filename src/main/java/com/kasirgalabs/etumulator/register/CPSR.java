@@ -17,28 +17,32 @@
 package com.kasirgalabs.etumulator.register;
 
 public final class CPSR {
-    private static boolean overflow;
+    private static boolean negative;
     private static boolean zero;
     private static boolean carry;
-    private static boolean negative;
+    private static boolean overflow;
 
     private CPSR() {
     }
 
-    public static boolean isOverflow() {
-        return overflow;
+    public static boolean isNegative() {
+        return negative;
     }
 
     public static boolean isZero() {
         return zero;
     }
 
+    public static void setCarry(boolean carry) {
+        CPSR.carry = carry;
+    }
+
     public static boolean isCarry() {
         return carry;
     }
 
-    public static boolean isNegative() {
-        return negative;
+    public static boolean isOverflow() {
+        return overflow;
     }
 
     public static void updateNZ(int value) {
