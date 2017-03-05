@@ -2,7 +2,7 @@ package com.kasirgalabs.etumulator.processor;
 
 import static org.junit.Assert.assertEquals;
 
-import com.kasirgalabs.etumulator.register.RegisterFile;
+import com.kasirgalabs.etumulator.ProcessorTester;
 import org.junit.Test;
 
 /*
@@ -21,34 +21,27 @@ import org.junit.Test;
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-public class MovInstructionTest {
+public class MovInstructionTest extends ProcessorTester {
     /**
      * Test of exitMov method, of class Processor.
      */
     @Test
     public void testExitMov() {
-        RegisterFile registerFile = new RegisterFile();
-        Processor processor = new Processor(registerFile);
-
-        registerFile.reset();
         char[] code = ("mov r0, #0\n").toCharArray();
-        processor.run(code);
+        runTestCode(code, true);
         assertEquals("Mov operation result is wrong.", registerFile.getValue(0), 0);
 
-        registerFile.reset();
         code = ("mov r0, #4\n").toCharArray();
-        processor.run(code);
+        runTestCode(code, true);
         assertEquals("Mov operation result is wrong.", registerFile.getValue(0), 4);
 
-        registerFile.reset();
         code = ("mov r0, 0xf\n").toCharArray();
-        processor.run(code);
+        runTestCode(code, true);
         assertEquals("Mov operation result is wrong.", registerFile.getValue(0), 0xf);
 
-        registerFile.reset();
         code = ("mov r1, 8\n"
                 + "mov r0, r1\n").toCharArray();
-        processor.run(code);
+        runTestCode(code, true);
         assertEquals("Mov operation result is wrong.", registerFile.getValue(0), 8);
     }
 }

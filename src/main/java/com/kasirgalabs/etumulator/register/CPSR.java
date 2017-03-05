@@ -16,41 +16,38 @@
  */
 package com.kasirgalabs.etumulator.register;
 
-public final class CPSR {
-    private static boolean negative;
-    private static boolean zero;
-    private static boolean carry;
-    private static boolean overflow;
+public class CPSR {
+    private boolean negative;
+    private boolean zero;
+    private boolean carry;
+    private boolean overflow;
 
-    private CPSR() {
-    }
-
-    public static boolean isNegative() {
+    public boolean isNegative() {
         return negative;
     }
 
-    public static boolean isZero() {
+    public boolean isZero() {
         return zero;
     }
 
-    public static void setCarry(boolean carry) {
-        CPSR.carry = carry;
+    public void setCarry(boolean carry) {
+        this.carry = carry;
     }
 
-    public static boolean isCarry() {
+    public boolean isCarry() {
         return carry;
     }
 
-    public static boolean isOverflow() {
+    public boolean isOverflow() {
         return overflow;
     }
 
-    public static void updateNZ(int value) {
+    public void updateNZ(int value) {
         negative = value < 0;
         zero = value == 0;
     }
 
-    public static void additionUpdateNZV(int left, int right) {
+    public void additionUpdateNZV(int left, int right) {
         updateNZ(left + right);
         try {
             Math.addExact(left, right);
@@ -60,7 +57,7 @@ public final class CPSR {
         }
     }
 
-    public static void subtractionUpdateNZV(int left, int right) {
+    public void subtractionUpdateNZV(int left, int right) {
         updateNZ(left - right);
         try {
             Math.subtractExact(left, right);
@@ -68,5 +65,12 @@ public final class CPSR {
         } catch(ArithmeticException e) {
             overflow = true;
         }
+    }
+
+    public void reset() {
+        negative = false;
+        zero = false;
+        carry = false;
+        overflow = false;
     }
 }

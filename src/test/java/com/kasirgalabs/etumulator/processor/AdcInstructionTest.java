@@ -18,48 +18,41 @@ package com.kasirgalabs.etumulator.processor;
 
 import static org.junit.Assert.assertEquals;
 
-import com.kasirgalabs.etumulator.register.CPSR;
-import com.kasirgalabs.etumulator.register.RegisterFile;
+import com.kasirgalabs.etumulator.ProcessorTester;
 import org.junit.Test;
 
-public class AdcInstructionTest {
+public class AdcInstructionTest extends ProcessorTester {
     /**
      * Test of exitAdc method, of class Processor.
      */
     @Test
     public void testExitAdc() {
-        RegisterFile registerFile = new RegisterFile();
-        Processor processor = new Processor(registerFile);
-
+        cpsr.setCarry(false);
         char[] code = ("adc r1, r2, r3\n").toCharArray();
-        processor.run(code);
+        runTestCode(code, false);
         assertEquals("Addition result is wrong.", registerFile.getValue(1), 0);
 
-        registerFile.reset();
-        CPSR.setCarry(true);
+        cpsr.setCarry(true);
         code = ("adc r0, r1, 0\n").toCharArray();
-        processor.run(code);
+        runTestCode(code, false);
         assertEquals("Addition result is wrong.", registerFile.getValue(0), 1);
 
-        registerFile.reset();
-        CPSR.setCarry(false);
+        cpsr.setCarry(false);
         code = ("adc r0, r1, 4\n").toCharArray();
-        processor.run(code);
+        runTestCode(code, false);
         assertEquals("Addition result is wrong.", registerFile.getValue(0), 4);
 
-        registerFile.reset();
-        CPSR.setCarry(true);
+        cpsr.setCarry(true);
         code = ("mov r1, #1\n"
                 + "mov r2, #2\n"
                 + "adc r0, r1, r2\n").toCharArray();
-        processor.run(code);
+        runTestCode(code, false);
         assertEquals("Addition result is wrong.", registerFile.getValue(0), 4);
 
-        registerFile.reset();
-        CPSR.setCarry(true);
+        cpsr.setCarry(true);
         code = ("mov r0, #1\n"
                 + "adc r0, r0, r0\n").toCharArray();
-        processor.run(code);
+        runTestCode(code, false);
         assertEquals("Addition result is wrong.", registerFile.getValue(0), 3);
     }
 }

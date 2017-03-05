@@ -18,28 +18,25 @@ package com.kasirgalabs.etumulator.processor;
 
 import static org.junit.Assert.assertEquals;
 
-import com.kasirgalabs.etumulator.register.RegisterFile;
+import com.kasirgalabs.etumulator.ProcessorTester;
 import org.junit.Test;
 
-public class LdrInstructionTest {
+public class LdrInstructionTest extends ProcessorTester {
     /**
      * Test of exitLdr method, of class Processor.
      */
     @Test
     public void testExitLdr() {
-        RegisterFile registerFile = new RegisterFile();
-        Processor processor = new Processor(registerFile);
-
         char[] code = ("ldr r0, =0xffffffff\n").toCharArray();
-        processor.run(code);
+        runTestCode(code, true);
         assertEquals("Addition result is wrong.", registerFile.getValue(0), 0xffffffff);
 
         code = ("ldr r0, =#123\n").toCharArray();
-        processor.run(code);
+        runTestCode(code, true);
         assertEquals("Addition result is wrong.", registerFile.getValue(0), 123);
 
         code = ("ldr r0, =#0x7fffffff\n").toCharArray();
-        processor.run(code);
+        runTestCode(code, true);
         assertEquals("Addition result is wrong.", registerFile.getValue(0), Integer.MAX_VALUE);
     }
 }

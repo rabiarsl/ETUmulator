@@ -18,43 +18,35 @@ package com.kasirgalabs.etumulator.processor;
 
 import static org.junit.Assert.assertEquals;
 
-import com.kasirgalabs.etumulator.register.CPSR;
-import com.kasirgalabs.etumulator.register.RegisterFile;
+import com.kasirgalabs.etumulator.ProcessorTester;
 import org.junit.Test;
 
-public class AddsInstructionTest {
+public class AddsInstructionTest extends ProcessorTester {
     /**
      * Test of exitAdds method, of class Processor.
      */
     @Test
     public void testExitAdds() {
-        RegisterFile registerFile = new RegisterFile();
-        Processor processor = new Processor(registerFile);
-
-        registerFile.reset();
         char[] code = ("adds r1, r2, #0\n").toCharArray();
-        processor.run(code);
+        runTestCode(code, true);
         assertEquals("Addition result is wrong.", registerFile.getValue(1), 0);
 
-        registerFile.reset();
         code = ("adds r1, r2, 8\n").toCharArray();
-        processor.run(code);
+        runTestCode(code, true);
         assertEquals("Addition result is wrong.", registerFile.getValue(1), 8);
 
-        registerFile.reset();
         code = ("add r0, r0, #0xf0\n"
                 + "adds r0, r0, 0xf0\n").toCharArray();
-        processor.run(code);
+        runTestCode(code, true);
         assertEquals("Addition result is wrong.", registerFile.getValue(0), 0x1e0);
 
-        registerFile.reset();
         code = ("ldr r1, =#0x80000000\n"
                 + "ldr r2, =0xffffffff\n"
                 + "adds r0, r1, r2\n").toCharArray();
-        processor.run(code);
+        runTestCode(code, true);
         assertEquals("Addition result is wrong.", registerFile.getValue(0), Integer.MAX_VALUE);
-        assertEquals("Negative flag is wrong.", false, CPSR.isNegative());
-        assertEquals("Zero flag is wrong.", false, CPSR.isZero());
-        assertEquals("Overflow flag is wrong.", true, CPSR.isOverflow());
+        assertEquals("Negative flag is wrong.", false, cpsr.isNegative());
+        assertEquals("Zero flag is wrong.", false, cpsr.isZero());
+        assertEquals("Overflow flag is wrong.", true, cpsr.isOverflow());
     }
 }

@@ -14,20 +14,28 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.kasirgalabs.etumulator.processor;
+package com.kasirgalabs.etumulator;
 
-import com.kasirgalabs.etumulator.ProcessorTester;
-import org.junit.Test;
+import com.kasirgalabs.etumulator.processor.Processor;
+import com.kasirgalabs.etumulator.register.CPSR;
+import com.kasirgalabs.etumulator.register.RegisterFile;
 
-public class ProcessorTest extends ProcessorTester {
-    /**
-     * Test of run method, of class Loader.
-     */
-    @Test
-    public void testRun() {
-        char[] code = ("nop\n"
-                + "nop\n"
-                + "nop\n").toCharArray();
-        runTestCode(code, true);
+public class ProcessorTester {
+    protected final RegisterFile registerFile;
+    protected final CPSR cpsr;
+    private final Processor processor;
+
+    public ProcessorTester() {
+        registerFile = new RegisterFile();
+        cpsr = new CPSR();
+        processor = new Processor(registerFile, cpsr);
+    }
+
+    protected final void runTestCode(char[] code, boolean reset) {
+        if(reset) {
+            registerFile.reset();
+            cpsr.reset();
+        }
+        processor.run(code);
     }
 }

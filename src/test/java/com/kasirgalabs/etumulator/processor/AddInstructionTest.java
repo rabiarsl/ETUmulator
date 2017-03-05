@@ -18,36 +18,30 @@ package com.kasirgalabs.etumulator.processor;
 
 import static org.junit.Assert.assertEquals;
 
-import com.kasirgalabs.etumulator.register.RegisterFile;
+import com.kasirgalabs.etumulator.ProcessorTester;
 import org.junit.Test;
 
-public class AddInstructionTest {
+public class AddInstructionTest extends ProcessorTester {
     /**
      * Test of exitAdd method, of class Processor.
      */
     @Test
     public void testExitAdd() {
-        RegisterFile registerFile = new RegisterFile();
-        Processor processor = new Processor(registerFile);
-
         char[] code = ("add r1, r2, r3\n").toCharArray();
-        processor.run(code);
+        runTestCode(code, true);
         assertEquals("Addition result is wrong.", registerFile.getValue(1), 0);
 
-        registerFile.reset();
         code = ("add r1, r2, #64\n").toCharArray();
-        processor.run(code);
+        runTestCode(code, true);
         assertEquals("Addition result is wrong.", registerFile.getValue(1), 64);
 
-        registerFile.reset();
         code = ("add r1, r2, 0x0\n").toCharArray();
-        processor.run(code);
+        runTestCode(code, true);
         assertEquals("Addition result is wrong.", registerFile.getValue(1), 0);
 
-        registerFile.reset();
         code = ("add r1, r2, #0xff\n"
                 + "add r1, r1, 0xff\n").toCharArray();
-        processor.run(code);
+        runTestCode(code, true);
         assertEquals("Addition result is wrong.", registerFile.getValue(1), 510);
     }
 }

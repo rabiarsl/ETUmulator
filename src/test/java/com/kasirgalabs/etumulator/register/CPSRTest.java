@@ -21,30 +21,41 @@ import static org.junit.Assert.assertEquals;
 import org.junit.Test;
 
 public class CPSRTest {
+    private final CPSR cpsr;
+
+    public CPSRTest() {
+        cpsr = new CPSR();
+    }
+
     /**
      * Test of updateNZ method, of class CPSR.
      */
     @Test
     public void testUpdateNZ() {
-        CPSR.updateNZ(1);
-        assertEquals("Negative flag is wrong.", false, CPSR.isNegative());
-        assertEquals("Zero flag is wrong.", false, CPSR.isZero());
+        cpsr.reset();
+        cpsr.updateNZ(1);
+        assertEquals("Negative flag is wrong.", false, cpsr.isNegative());
+        assertEquals("Zero flag is wrong.", false, cpsr.isZero());
 
-        CPSR.updateNZ(0);
-        assertEquals("Negative flag is wrong.", false, CPSR.isNegative());
-        assertEquals("Zero flag is wrong.", true, CPSR.isZero());
+        cpsr.reset();
+        cpsr.updateNZ(0);
+        assertEquals("Negative flag is wrong.", false, cpsr.isNegative());
+        assertEquals("Zero flag is wrong.", true, cpsr.isZero());
 
-        CPSR.updateNZ(-1);
-        assertEquals("Negative flag is wrong.", true, CPSR.isNegative());
-        assertEquals("Zero flag is wrong.", false, CPSR.isZero());
+        cpsr.reset();
+        cpsr.updateNZ(-1);
+        assertEquals("Negative flag is wrong.", true, cpsr.isNegative());
+        assertEquals("Zero flag is wrong.", false, cpsr.isZero());
 
-        CPSR.updateNZ(Integer.MAX_VALUE);
-        assertEquals("Negative flag is wrong.", false, CPSR.isNegative());
-        assertEquals("Zero flag is wrong.", false, CPSR.isZero());
+        cpsr.reset();
+        cpsr.updateNZ(Integer.MAX_VALUE);
+        assertEquals("Negative flag is wrong.", false, cpsr.isNegative());
+        assertEquals("Zero flag is wrong.", false, cpsr.isZero());
 
-        CPSR.updateNZ(Integer.MIN_VALUE);
-        assertEquals("Negative flag is wrong.", true, CPSR.isNegative());
-        assertEquals("Zero flag is wrong.", false, CPSR.isZero());
+        cpsr.reset();
+        cpsr.updateNZ(Integer.MIN_VALUE);
+        assertEquals("Negative flag is wrong.", true, cpsr.isNegative());
+        assertEquals("Zero flag is wrong.", false, cpsr.isZero());
     }
 
     /**
@@ -52,35 +63,41 @@ public class CPSRTest {
      */
     @Test
     public void testAdditionUpdateNZV() {
-        CPSR.additionUpdateNZV(1, 1);
-        assertEquals("Negative flag is wrong.", false, CPSR.isNegative());
-        assertEquals("Zero flag is wrong.", false, CPSR.isZero());
-        assertEquals("Overflow flag is wrong.", false, CPSR.isOverflow());
+        cpsr.reset();
+        cpsr.additionUpdateNZV(1, 1);
+        assertEquals("Negative flag is wrong.", false, cpsr.isNegative());
+        assertEquals("Zero flag is wrong.", false, cpsr.isZero());
+        assertEquals("Overflow flag is wrong.", false, cpsr.isOverflow());
 
-        CPSR.additionUpdateNZV(0, 0);
-        assertEquals("Negative flag is wrong.", false, CPSR.isNegative());
-        assertEquals("Zero flag is wrong.", true, CPSR.isZero());
-        assertEquals("Overflow flag is wrong.", false, CPSR.isOverflow());
+        cpsr.reset();
+        cpsr.additionUpdateNZV(0, 0);
+        assertEquals("Negative flag is wrong.", false, cpsr.isNegative());
+        assertEquals("Zero flag is wrong.", true, cpsr.isZero());
+        assertEquals("Overflow flag is wrong.", false, cpsr.isOverflow());
 
-        CPSR.additionUpdateNZV(-1, -1);
-        assertEquals("Negative flag is wrong.", true, CPSR.isNegative());
-        assertEquals("Zero flag is wrong.", false, CPSR.isZero());
-        assertEquals("Overflow flag is wrong.", false, CPSR.isOverflow());
+        cpsr.reset();
+        cpsr.additionUpdateNZV(-1, -1);
+        assertEquals("Negative flag is wrong.", true, cpsr.isNegative());
+        assertEquals("Zero flag is wrong.", false, cpsr.isZero());
+        assertEquals("Overflow flag is wrong.", false, cpsr.isOverflow());
 
-        CPSR.additionUpdateNZV(Integer.MAX_VALUE, Integer.MAX_VALUE);
-        assertEquals("Negative flag is wrong.", true, CPSR.isNegative());
-        assertEquals("Zero flag is wrong.", false, CPSR.isZero());
-        assertEquals("Overflow flag is wrong.", true, CPSR.isOverflow());
+        cpsr.reset();
+        cpsr.additionUpdateNZV(Integer.MAX_VALUE, Integer.MAX_VALUE);
+        assertEquals("Negative flag is wrong.", true, cpsr.isNegative());
+        assertEquals("Zero flag is wrong.", false, cpsr.isZero());
+        assertEquals("Overflow flag is wrong.", true, cpsr.isOverflow());
 
-        CPSR.additionUpdateNZV(Integer.MIN_VALUE, Integer.MIN_VALUE);
-        assertEquals("Negative flag is wrong.", false, CPSR.isNegative());
-        assertEquals("Zero flag is wrong.", true, CPSR.isZero());
-        assertEquals("Overflow flag is wrong.", true, CPSR.isOverflow());
+        cpsr.reset();
+        cpsr.additionUpdateNZV(Integer.MIN_VALUE, Integer.MIN_VALUE);
+        assertEquals("Negative flag is wrong.", false, cpsr.isNegative());
+        assertEquals("Zero flag is wrong.", true, cpsr.isZero());
+        assertEquals("Overflow flag is wrong.", true, cpsr.isOverflow());
 
-        CPSR.additionUpdateNZV(Integer.MAX_VALUE, Integer.MIN_VALUE);
-        assertEquals("Negative flag is wrong.", true, CPSR.isNegative());
-        assertEquals("Zero flag is wrong.", false, CPSR.isZero());
-        assertEquals("Overflow flag is wrong.", false, CPSR.isOverflow());
+        cpsr.reset();
+        cpsr.additionUpdateNZV(Integer.MAX_VALUE, Integer.MIN_VALUE);
+        assertEquals("Negative flag is wrong.", true, cpsr.isNegative());
+        assertEquals("Zero flag is wrong.", false, cpsr.isZero());
+        assertEquals("Overflow flag is wrong.", false, cpsr.isOverflow());
     }
 
     /**
@@ -88,34 +105,40 @@ public class CPSRTest {
      */
     @Test
     public void testSubtractionUpdateNZV() {
-        CPSR.subtractionUpdateNZV(1, 1);
-        assertEquals("Negative flag is wrong.", false, CPSR.isNegative());
-        assertEquals("Zero flag is wrong.", true, CPSR.isZero());
-        assertEquals("Overflow flag is wrong.", false, CPSR.isOverflow());
+        cpsr.reset();
+        cpsr.subtractionUpdateNZV(1, 1);
+        assertEquals("Negative flag is wrong.", false, cpsr.isNegative());
+        assertEquals("Zero flag is wrong.", true, cpsr.isZero());
+        assertEquals("Overflow flag is wrong.", false, cpsr.isOverflow());
 
-        CPSR.subtractionUpdateNZV(0, 0);
-        assertEquals("Negative flag is wrong.", false, CPSR.isNegative());
-        assertEquals("Zero flag is wrong.", true, CPSR.isZero());
-        assertEquals("Overflow flag is wrong.", false, CPSR.isOverflow());
+        cpsr.reset();
+        cpsr.subtractionUpdateNZV(0, 0);
+        assertEquals("Negative flag is wrong.", false, cpsr.isNegative());
+        assertEquals("Zero flag is wrong.", true, cpsr.isZero());
+        assertEquals("Overflow flag is wrong.", false, cpsr.isOverflow());
 
-        CPSR.subtractionUpdateNZV(-1, -1);
-        assertEquals("Negative flag is wrong.", false, CPSR.isNegative());
-        assertEquals("Zero flag is wrong.", true, CPSR.isZero());
-        assertEquals("Overflow flag is wrong.", false, CPSR.isOverflow());
+        cpsr.reset();
+        cpsr.subtractionUpdateNZV(-1, -1);
+        assertEquals("Negative flag is wrong.", false, cpsr.isNegative());
+        assertEquals("Zero flag is wrong.", true, cpsr.isZero());
+        assertEquals("Overflow flag is wrong.", false, cpsr.isOverflow());
 
-        CPSR.subtractionUpdateNZV(Integer.MAX_VALUE, Integer.MAX_VALUE);
-        assertEquals("Negative flag is wrong.", false, CPSR.isNegative());
-        assertEquals("Zero flag is wrong.", true, CPSR.isZero());
-        assertEquals("Overflow flag is wrong.", false, CPSR.isOverflow());
+        cpsr.reset();
+        cpsr.subtractionUpdateNZV(Integer.MAX_VALUE, Integer.MAX_VALUE);
+        assertEquals("Negative flag is wrong.", false, cpsr.isNegative());
+        assertEquals("Zero flag is wrong.", true, cpsr.isZero());
+        assertEquals("Overflow flag is wrong.", false, cpsr.isOverflow());
 
-        CPSR.subtractionUpdateNZV(Integer.MIN_VALUE, Integer.MIN_VALUE);
-        assertEquals("Negative flag is wrong.", false, CPSR.isNegative());
-        assertEquals("Zero flag is wrong.", true, CPSR.isZero());
-        assertEquals("Overflow flag is wrong.", false, CPSR.isOverflow());
+        cpsr.reset();
+        cpsr.subtractionUpdateNZV(Integer.MIN_VALUE, Integer.MIN_VALUE);
+        assertEquals("Negative flag is wrong.", false, cpsr.isNegative());
+        assertEquals("Zero flag is wrong.", true, cpsr.isZero());
+        assertEquals("Overflow flag is wrong.", false, cpsr.isOverflow());
 
-        CPSR.subtractionUpdateNZV(Integer.MAX_VALUE, Integer.MIN_VALUE);
-        assertEquals("Negative flag is wrong.", true, CPSR.isNegative());
-        assertEquals("Zero flag is wrong.", false, CPSR.isZero());
-        assertEquals("Overflow flag is wrong.", true, CPSR.isOverflow());
+        cpsr.reset();
+        cpsr.subtractionUpdateNZV(Integer.MAX_VALUE, Integer.MIN_VALUE);
+        assertEquals("Negative flag is wrong.", true, cpsr.isNegative());
+        assertEquals("Zero flag is wrong.", false, cpsr.isZero());
+        assertEquals("Overflow flag is wrong.", true, cpsr.isOverflow());
     }
 }
