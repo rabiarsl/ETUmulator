@@ -18,6 +18,7 @@ package com.kasirgalabs.etumulator.processor;
 
 import static org.junit.Assert.assertEquals;
 
+import com.kasirgalabs.etumulator.register.CPSR;
 import com.kasirgalabs.etumulator.register.RegisterFile;
 import org.junit.Test;
 
@@ -45,5 +46,15 @@ public class AddsInstructionTest {
                 + "adds r0, r0, 0xf0\n").toCharArray();
         processor.run(code);
         assertEquals("Addition result is wrong.", registerFile.getValue(0), 0x1e0);
+
+        registerFile.reset();
+        code = ("ldr r1, =#0x80000000\n"
+                + "ldr r2, =0xffffffff\n"
+                + "adds r0, r1, r2\n").toCharArray();
+        processor.run(code);
+        assertEquals("Addition result is wrong.", registerFile.getValue(0), Integer.MAX_VALUE);
+        assertEquals("Negative flag is wrong.", false, CPSR.isNegative());
+        assertEquals("Zero flag is wrong.", false, CPSR.isZero());
+        assertEquals("Overflow flag is wrong.", true, CPSR.isOverflow());
     }
 }
