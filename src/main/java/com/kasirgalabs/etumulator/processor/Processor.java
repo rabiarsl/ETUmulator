@@ -83,11 +83,14 @@ public class Processor extends ArmBaseListener {
     @Override
     public void exitAdcs(ArmParser.AdcsContext ctx) {
         int result = rnRegister.getValue() + operand2.getValue();
+        System.out.println(result);
         CPSR.additionUpdateNZV(rnRegister.getValue(), operand2.getValue());
         if(CPSR.isCarry()) {
+            if(!CPSR.isOverflow()) {
+                CPSR.additionUpdateNZV(result, 1);
+            }
             result++;
         }
-        CPSR.additionUpdateNZV(result, 1);
         rdRegister.setValue(result);
         rdRegister.update();
     }
