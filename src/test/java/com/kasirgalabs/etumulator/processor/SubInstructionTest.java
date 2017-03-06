@@ -21,22 +21,30 @@ import static org.junit.Assert.assertEquals;
 import com.kasirgalabs.etumulator.ProcessorTester;
 import org.junit.Test;
 
-public class LdrInstructionTest extends ProcessorTester {
+public class SubInstructionTest extends ProcessorTester {
     /**
-     * Test of exitLdr method, of class Processor.
+     * Test of exitSub method, of class Processor.
      */
     @Test
-    public void testExitLdr() {
-        char[] code = ("ldr r0, =0xffffffff\n").toCharArray();
+    public void testExitSub() {
+        char[] code = ("sub r0, r1, r2\n").toCharArray();
         runTestCode(code, true);
-        assertEquals("Load result is wrong.", registerFile.getValue(0), 0xffffffff);
+        assertEquals("Subtraction result is wrong.", registerFile.getValue(1), 0);
 
-        code = ("ldr r0, =#123\n").toCharArray();
+        code = ("sub r0, r1, #1\n").toCharArray();
         runTestCode(code, true);
-        assertEquals("Load result is wrong.", registerFile.getValue(0), 123);
+        assertEquals("Subtraction result is wrong.", registerFile.getValue(0), -1);
 
-        code = ("ldr r0, =#0x7fffffff\n").toCharArray();
+        code = ("mov r1, #2\n"
+                + "mov r2, #1\n"
+                + "sub r0, r1, r2\n").toCharArray();
         runTestCode(code, true);
-        assertEquals("Load result is wrong.", registerFile.getValue(0), Integer.MAX_VALUE);
+        assertEquals("Subtraction result is wrong.", registerFile.getValue(0), 1);
+
+        code = ("mov r1, #0xf\n"
+                + "mov r2, 0xff\n"
+                + "sub r0, r1, r2\n").toCharArray();
+        runTestCode(code, true);
+        assertEquals("Subtraction result is wrong.", registerFile.getValue(0), -240);
     }
 }

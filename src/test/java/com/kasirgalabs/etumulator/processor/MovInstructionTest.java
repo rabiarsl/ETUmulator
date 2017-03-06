@@ -29,19 +29,19 @@ public class MovInstructionTest extends ProcessorTester {
     public void testExitMov() {
         char[] code = ("mov r0, #0\n").toCharArray();
         runTestCode(code, true);
-        assertEquals("Mov operation result is wrong.", registerFile.getValue(0), 0);
+        assertEquals("Move result is wrong.", registerFile.getValue(0), 0);
 
         code = ("mov r0, #4\n").toCharArray();
         runTestCode(code, true);
-        assertEquals("Mov operation result is wrong.", registerFile.getValue(0), 4);
+        assertEquals("Move result is wrong.", registerFile.getValue(0), 4);
 
         code = ("mov r0, 0xf\n").toCharArray();
         runTestCode(code, true);
-        assertEquals("Mov operation result is wrong.", registerFile.getValue(0), 0xf);
+        assertEquals("Move result is wrong.", registerFile.getValue(0), 0xf);
 
         code = ("mov r1, 8\n"
                 + "mov r0, r1\n").toCharArray();
         runTestCode(code, true);
-        assertEquals("Mov operation result is wrong.", registerFile.getValue(0), 8);
+        assertEquals("Move result is wrong.", registerFile.getValue(0), 8);
     }
 }
