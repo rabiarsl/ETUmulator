@@ -2,7 +2,7 @@ package com.kasirgalabs.etumulator.processor;
 
 import static org.junit.Assert.assertEquals;
 
-import com.kasirgalabs.etumulator.ProcessorTester;
+import com.kasirgalabs.etumulator.InstructionTester;
 import org.junit.Test;
 
 /*
@@ -21,7 +21,7 @@ import org.junit.Test;
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-public class RscsInstructionTest extends ProcessorTester {
+public class RscsInstructionTest extends InstructionTester {
     /**
      * Test of exitRscs method, of class Processor.
      */
@@ -32,7 +32,7 @@ public class RscsInstructionTest extends ProcessorTester {
                 + "ldr r1, =#0x80000000\n"
                 + "rscs r0, r2, r1\n").toCharArray();
         runTestCode(code, false);
-        assertEquals("Reverse subtraction result is wrong.", registerFile.getValue(0), Integer.MAX_VALUE);
+        assertEquals("Subtraction result is wrong.", registerFile.getValue(0), Integer.MAX_VALUE);
         assertEquals("Negative flag is wrong.", false, cpsr.isNegative());
         assertEquals("Zero flag is wrong.", false, cpsr.isZero());
         assertEquals("Overflow flag is wrong.", true, cpsr.isOverflow());
@@ -42,7 +42,7 @@ public class RscsInstructionTest extends ProcessorTester {
                 + "ldr r1, =#0x80000000\n"
                 + "rscs r0, r2, r1\n").toCharArray();
         runTestCode(code, false);
-        assertEquals("Reverse subtraction result is wrong.", registerFile.getValue(0), Integer.MAX_VALUE - 1);
+        assertEquals("Subtraction result is wrong.", registerFile.getValue(0), Integer.MAX_VALUE - 1);
         assertEquals("Negative flag is wrong.", false, cpsr.isNegative());
         assertEquals("Zero flag is wrong.", false, cpsr.isZero());
         assertEquals("Overflow flag is wrong.", true, cpsr.isOverflow());
@@ -50,7 +50,7 @@ public class RscsInstructionTest extends ProcessorTester {
         cpsr.setCarry(false);
         code = ("rscs r0, r1, #0\n").toCharArray();
         runTestCode(code, false);
-        assertEquals("Reverse subtraction result is wrong.", registerFile.getValue(0), 0);
+        assertEquals("Subtraction result is wrong.", registerFile.getValue(0), 0);
         assertEquals("Negative flag is wrong.", false, cpsr.isNegative());
         assertEquals("Zero flag is wrong.", true, cpsr.isZero());
         assertEquals("Overflow flag is wrong.", false, cpsr.isOverflow());

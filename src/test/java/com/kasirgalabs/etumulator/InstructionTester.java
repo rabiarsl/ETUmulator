@@ -20,12 +20,12 @@ import com.kasirgalabs.etumulator.processor.Processor;
 import com.kasirgalabs.etumulator.register.CPSR;
 import com.kasirgalabs.etumulator.register.RegisterFile;
 
-public class ProcessorTester {
+public class InstructionTester {
     protected final RegisterFile registerFile;
     protected final CPSR cpsr;
     private final Processor processor;
 
-    public ProcessorTester() {
+    public InstructionTester() {
         registerFile = new RegisterFile();
         cpsr = new CPSR();
         processor = new Processor(registerFile, cpsr);

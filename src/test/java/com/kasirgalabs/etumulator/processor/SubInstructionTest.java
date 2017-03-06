@@ -18,10 +18,10 @@ package com.kasirgalabs.etumulator.processor;
 
 import static org.junit.Assert.assertEquals;
 
-import com.kasirgalabs.etumulator.ProcessorTester;
+import com.kasirgalabs.etumulator.InstructionTester;
 import org.junit.Test;
 
-public class SubInstructionTest extends ProcessorTester {
+public class SubInstructionTest extends InstructionTester {
     /**
      * Test of exitSub method, of class Processor.
      */

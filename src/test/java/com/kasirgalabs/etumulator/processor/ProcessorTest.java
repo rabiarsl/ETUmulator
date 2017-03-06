@@ -16,10 +16,10 @@
  */
 package com.kasirgalabs.etumulator.processor;
 
-import com.kasirgalabs.etumulator.ProcessorTester;
+import com.kasirgalabs.etumulator.InstructionTester;
 import org.junit.Test;
 
-public class ProcessorTest extends ProcessorTester {
+public class ProcessorTest extends InstructionTester {
     /**
      * Test of run method, of class Loader.
      */

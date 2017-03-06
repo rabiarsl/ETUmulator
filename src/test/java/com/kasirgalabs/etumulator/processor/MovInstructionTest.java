@@ -2,7 +2,7 @@ package com.kasirgalabs.etumulator.processor;
 
 import static org.junit.Assert.assertEquals;
 
-import com.kasirgalabs.etumulator.ProcessorTester;
+import com.kasirgalabs.etumulator.InstructionTester;
 import org.junit.Test;
 
 /*
@@ -21,7 +21,7 @@ import org.junit.Test;
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-public class MovInstructionTest extends ProcessorTester {
+public class MovInstructionTest extends InstructionTester {
     /**
      * Test of exitMov method, of class Processor.
      */

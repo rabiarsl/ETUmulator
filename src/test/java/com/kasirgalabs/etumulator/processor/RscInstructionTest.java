@@ -18,10 +18,10 @@ package com.kasirgalabs.etumulator.processor;
 
 import static org.junit.Assert.assertEquals;
 
-import com.kasirgalabs.etumulator.ProcessorTester;
+import com.kasirgalabs.etumulator.InstructionTester;
 import org.junit.Test;
 
-public class RscInstructionTest extends ProcessorTester {
+public class RscInstructionTest extends InstructionTester {
     /**
      * Test of exitRsc method, of class Processor.
      */
@@ -30,29 +30,29 @@ public class RscInstructionTest extends ProcessorTester {
         cpsr.setCarry(false);
         char[] code = ("rsc r1, r2, r3\n").toCharArray();
         runTestCode(code, false);
-        assertEquals("Reverse subtraction result is wrong.", registerFile.getValue(1), 0);
+        assertEquals("Subtraction result is wrong.", registerFile.getValue(1), 0);
 
         cpsr.setCarry(true);
         code = ("rsc r0, r1, 0\n").toCharArray();
         runTestCode(code, false);
-        assertEquals("Reverse subtraction result is wrong.", registerFile.getValue(0), -1);
+        assertEquals("Subtraction result is wrong.", registerFile.getValue(0), -1);
 
         cpsr.setCarry(false);
         code = ("rsc r0, r1, 4\n").toCharArray();
         runTestCode(code, false);
-        assertEquals("Reverse subtraction result is wrong.", registerFile.getValue(0), 4);
+        assertEquals("Subtraction result is wrong.", registerFile.getValue(0), 4);
 
         cpsr.setCarry(true);
         code = ("mov r1, #1\n"
                 + "mov r2, #2\n"
                 + "rsc r0, r2, r1\n").toCharArray();
         runTestCode(code, false);
-        assertEquals("Reverse subtraction result is wrong.", registerFile.getValue(0), -2);
+        assertEquals("Subtraction result is wrong.", registerFile.getValue(0), -2);
 
         cpsr.setCarry(true);
         code = ("mov r0, #1\n"
                 + "rsc r0, r0, r0\n").toCharArray();
         runTestCode(code, false);
-        assertEquals("Reverse subtraction result is wrong.", registerFile.getValue(0), -1);
+        assertEquals("Subtraction result is wrong.", registerFile.getValue(0), -1);
     }
 }

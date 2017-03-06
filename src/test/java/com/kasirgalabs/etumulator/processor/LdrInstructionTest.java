@@ -18,10 +18,10 @@ package com.kasirgalabs.etumulator.processor;
 
 import static org.junit.Assert.assertEquals;
 
-import com.kasirgalabs.etumulator.ProcessorTester;
+import com.kasirgalabs.etumulator.InstructionTester;
 import org.junit.Test;
 
-public class LdrInstructionTest extends ProcessorTester {
+public class LdrInstructionTest extends InstructionTester {
     /**
      * Test of exitLdr method, of class Processor.
      */
