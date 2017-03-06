@@ -29,7 +29,7 @@ public class SubInstructionTest extends ProcessorTester {
     public void testExitSub() {
         char[] code = ("sub r0, r1, r2\n").toCharArray();
         runTestCode(code, true);
-        assertEquals("Subtraction result is wrong.", registerFile.getValue(1), 0);
+        assertEquals("Subtraction result is wrong.", registerFile.getValue(0), 0);
 
         code = ("sub r0, r1, #1\n").toCharArray();
         runTestCode(code, true);

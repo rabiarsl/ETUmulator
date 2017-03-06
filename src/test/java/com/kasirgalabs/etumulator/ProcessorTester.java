@@ -32,8 +32,8 @@ public class ProcessorTester {
     }
 
     protected final void runTestCode(char[] code, boolean reset) {
+        registerFile.reset();
         if(reset) {
-            registerFile.reset();
             cpsr.reset();
         }
         processor.run(code);
