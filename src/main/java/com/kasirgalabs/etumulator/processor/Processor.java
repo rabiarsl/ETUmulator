@@ -162,9 +162,11 @@ public class Processor extends ArmBaseListener {
         int result = operand2.getValue() - rnRegister.getValue();
         cpsr.subtractionUpdateNZV(operand2.getValue(), rnRegister.getValue());
         if(cpsr.isCarry()) {
+            if(!cpsr.isOverflow()) {
+                cpsr.subtractionUpdateNZV(result, -1);
+            }
             result--;
         }
-        cpsr.subtractionUpdateNZV(result, - 1);
         rdRegister.setValue(result);
         rdRegister.update();
     }
