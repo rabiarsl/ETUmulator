@@ -21,34 +21,36 @@ import static org.junit.Assert.assertEquals;
 import com.kasirgalabs.etumulator.ProcessorTester;
 import org.junit.Test;
 
-public class AdcsInstructionTest extends ProcessorTester {
+public class SbcsInstructionTest extends ProcessorTester {
     /**
-     * Test of exitAdcs method, of class Processor.
+     * Test of exitSbcs method, of class Processor.
      */
     @Test
-    public void testExitAdcs() {
+    public void testExitSbcs() {
         cpsr.setCarry(false);
-        char[] code = ("mov r1, #1\n"
-                + "adcs r0, r1, r1\n").toCharArray();
+        char[] code = ("ldr r1, =#0x80000000\n"
+                + "sbcs r0, r1, #1\n").toCharArray();
         runTestCode(code, false);
-        assertEquals("Addition result is wrong.", registerFile.getValue(0), 2);
-
-        cpsr.setCarry(true);
-        code = ("ldr r1, =0x7fffffff\n"
-                + "adcs r0, r1, r1\n").toCharArray();
-        runTestCode(code, false);
-        assertEquals("Addition result is wrong.", registerFile.getValue(0), -1);
-        assertEquals("Negative flag is wrong.", true, cpsr.isNegative());
+        assertEquals("Subtraction result is wrong.", registerFile.getValue(0), Integer.MAX_VALUE);
+        assertEquals("Negative flag is wrong.", false, cpsr.isNegative());
         assertEquals("Zero flag is wrong.", false, cpsr.isZero());
         assertEquals("Overflow flag is wrong.", true, cpsr.isOverflow());
 
         cpsr.setCarry(true);
-        code = ("ldr r1, =0x7fffffff\n"
-                + "adcs r0, r1, #0\n").toCharArray();
+        code = ("ldr r1, =#0x80000000\n"
+                + "sbcs r0, r1, #1\n").toCharArray();
         runTestCode(code, false);
-        assertEquals("Addition result is wrong.", registerFile.getValue(0), Integer.MIN_VALUE);
-        assertEquals("Negative flag is wrong.", true, cpsr.isNegative());
+        assertEquals("Subtraction result is wrong.", registerFile.getValue(0), Integer.MAX_VALUE - 1);
+        assertEquals("Negative flag is wrong.", false, cpsr.isNegative());
         assertEquals("Zero flag is wrong.", false, cpsr.isZero());
         assertEquals("Overflow flag is wrong.", true, cpsr.isOverflow());
+
+        cpsr.setCarry(false);
+        code = ("sbcs r0, r1, #0\n").toCharArray();
+        runTestCode(code, false);
+        assertEquals("Subtraction result is wrong.", registerFile.getValue(0), 0);
+        assertEquals("Negative flag is wrong.", false, cpsr.isNegative());
+        assertEquals("Zero flag is wrong.", true, cpsr.isZero());
+        assertEquals("Overflow flag is wrong.", false, cpsr.isOverflow());
     }
 }

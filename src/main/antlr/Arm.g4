@@ -15,6 +15,8 @@ instruction
     | adc
     | adcs
     | sub
+    | sbc
+    | sbcs
     | subs
     | rsb
     | rsbs
