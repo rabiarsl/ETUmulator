@@ -30,12 +30,12 @@ public class AndInstructionTest extends InstructionTester {
         char[] code = ("mov r1, #0\n"
                 + "mov r2, #1\n"
                 + "and r0, r1, r2\n").toCharArray();
-        runTestCode(code, true);
+        runTestCode(code);
         assertEquals("AND result is wrong.", registerFile.getValue(0), 0);
 
         code = ("ldr r1, =0xffffffff\n"
                 + "and r0, r1, 0xf\n").toCharArray();
-        runTestCode(code, true);
+        runTestCode(code);
         assertEquals("AND result is wrong.", registerFile.getValue(0), 0xf);
     }
 }

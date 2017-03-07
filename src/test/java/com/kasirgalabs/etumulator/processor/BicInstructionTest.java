@@ -21,27 +21,27 @@ import static org.junit.Assert.assertEquals;
 import com.kasirgalabs.etumulator.InstructionTester;
 import org.junit.Test;
 
-public class OrrInstructionTest extends InstructionTester {
+public class BicInstructionTest extends InstructionTester {
     /**
-     * Test of exitOrr method, of class Processor.
+     * Test of exitBic method, of class Processor.
      */
     @Test
-    public void testExitOrr() {
+    public void testExitBic() {
         char[] code = ("mov r1, #0\n"
                 + "mov r2, #1\n"
-                + "orr r0, r1, r2\n").toCharArray();
+                + "bic r0, r1, r2\n").toCharArray();
         runTestCode(code);
-        assertEquals("OR result is wrong.", registerFile.getValue(0), 1);
+        assertEquals("AND result is wrong.", registerFile.getValue(0), 0 & ~1);
 
         code = ("ldr r1, =0xffffffff\n"
-                + "orr r0, r1, 0\n").toCharArray();
+                + "bic r0, r1, 0\n").toCharArray();
         runTestCode(code);
-        assertEquals("OR result is wrong.", registerFile.getValue(0), -1);
+        assertEquals("AND result is wrong.", registerFile.getValue(0), 0xffffffff & ~0);
 
         code = ("ldr r1, =0x0f0f0f0f\n"
                 + "ldr r2, = 0xf0f0f0f0\n"
-                + "orr r0, r1, r2\n").toCharArray();
+                + "bic r0, r1, r2\n").toCharArray();
         runTestCode(code);
-        assertEquals("OR result is wrong.", registerFile.getValue(0), -1);
+        assertEquals("AND result is wrong.", registerFile.getValue(0), 0x0f0f0f0f & ~0xf0f0f0f0);
     }
 }

@@ -31,11 +31,8 @@ public class InstructionTester {
         processor = new Processor(registerFile, cpsr);
     }
 
-    protected final void runTestCode(char[] code, boolean reset) {
+    protected final void runTestCode(char[] code) {
         registerFile.reset();
-        if(reset) {
-            cpsr.reset();
-        }
         processor.run(code);
     }
 }

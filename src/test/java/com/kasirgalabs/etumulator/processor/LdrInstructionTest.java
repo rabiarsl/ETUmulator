@@ -28,15 +28,15 @@ public class LdrInstructionTest extends InstructionTester {
     @Test
     public void testExitLdr() {
         char[] code = ("ldr r0, =0xffffffff\n").toCharArray();
-        runTestCode(code, true);
+        runTestCode(code);
         assertEquals("Load result is wrong.", registerFile.getValue(0), 0xffffffff);
 
         code = ("ldr r0, =#123\n").toCharArray();
-        runTestCode(code, true);
+        runTestCode(code);
         assertEquals("Load result is wrong.", registerFile.getValue(0), 123);
 
         code = ("ldr r0, =#0x7fffffff\n").toCharArray();
-        runTestCode(code, true);
+        runTestCode(code);
         assertEquals("Load result is wrong.", registerFile.getValue(0), Integer.MAX_VALUE);
     }
 }

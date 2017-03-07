@@ -30,14 +30,14 @@ public class AndsInstructionTest extends InstructionTester {
         char[] code = ("mov r1, #0\n"
                 + "mov r2, #1\n"
                 + "ands r0, r1, r2\n").toCharArray();
-        runTestCode(code, true);
+        runTestCode(code);
         assertEquals("AND result is wrong.", registerFile.getValue(0), 0);
         assertEquals("Negative flag is wrong.", false, cpsr.isNegative());
         assertEquals("Zero flag is wrong.", true, cpsr.isZero());
 
         code = ("ldr r1, =0xffffffff\n"
                 + "ands r0, r1, r1\n").toCharArray();
-        runTestCode(code, true);
+        runTestCode(code);
         assertEquals("AND result is wrong.", registerFile.getValue(0), -1);
         assertEquals("Negative flag is wrong.", true, cpsr.isNegative());
         assertEquals("Zero flag is wrong.", false, cpsr.isZero());

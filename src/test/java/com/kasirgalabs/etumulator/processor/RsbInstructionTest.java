@@ -28,24 +28,24 @@ public class RsbInstructionTest extends InstructionTester {
     @Test
     public void testExitRsb() {
         char[] code = ("rsb r0, r2, r1\n").toCharArray();
-        runTestCode(code, true);
+        runTestCode(code);
         assertEquals("Subtraction result is wrong.", registerFile.getValue(0), 0);
 
         code = ("mov r1, #1\n"
                 + "rsb r0, r1, #0\n").toCharArray();
-        runTestCode(code, true);
+        runTestCode(code);
         assertEquals("Subtraction result is wrong.", registerFile.getValue(0), -1);
 
         code = ("mov r1, #2\n"
                 + "mov r2, #1\n"
                 + "rsb r0, r2, r1\n").toCharArray();
-        runTestCode(code, true);
+        runTestCode(code);
         assertEquals("Subtraction result is wrong.", registerFile.getValue(0), 1);
 
         code = ("mov r1, #0xf\n"
                 + "mov r2, 0xff\n"
                 + "rsb r0, r2, r1\n").toCharArray();
-        runTestCode(code, true);
+        runTestCode(code);
         assertEquals("Subtraction result is wrong.", registerFile.getValue(0), -240);
     }
 }

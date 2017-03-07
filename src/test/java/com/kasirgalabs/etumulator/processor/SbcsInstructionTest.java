@@ -30,7 +30,7 @@ public class SbcsInstructionTest extends InstructionTester {
         cpsr.setCarry(false);
         char[] code = ("ldr r1, =#0x80000000\n"
                 + "sbcs r0, r1, #1\n").toCharArray();
-        runTestCode(code, false);
+        runTestCode(code);
         assertEquals("Subtraction result is wrong.", registerFile.getValue(0), Integer.MAX_VALUE);
         assertEquals("Negative flag is wrong.", false, cpsr.isNegative());
         assertEquals("Zero flag is wrong.", false, cpsr.isZero());
@@ -39,7 +39,7 @@ public class SbcsInstructionTest extends InstructionTester {
         cpsr.setCarry(true);
         code = ("ldr r1, =#0x80000000\n"
                 + "sbcs r0, r1, #1\n").toCharArray();
-        runTestCode(code, false);
+        runTestCode(code);
         assertEquals("Subtraction result is wrong.", registerFile.getValue(0), Integer.MAX_VALUE - 1);
         assertEquals("Negative flag is wrong.", false, cpsr.isNegative());
         assertEquals("Zero flag is wrong.", false, cpsr.isZero());
@@ -47,7 +47,7 @@ public class SbcsInstructionTest extends InstructionTester {
 
         cpsr.setCarry(false);
         code = ("sbcs r0, r1, #0\n").toCharArray();
-        runTestCode(code, false);
+        runTestCode(code);
         assertEquals("Subtraction result is wrong.", registerFile.getValue(0), 0);
         assertEquals("Negative flag is wrong.", false, cpsr.isNegative());
         assertEquals("Zero flag is wrong.", true, cpsr.isZero());

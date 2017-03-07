@@ -30,12 +30,12 @@ public class EorInstructionTest extends InstructionTester {
         char[] code = ("mov r1, #0\n"
                 + "mov r2, #1\n"
                 + "eor r0, r1, r2\n").toCharArray();
-        runTestCode(code, true);
+        runTestCode(code);
         assertEquals("XOR result is wrong.", registerFile.getValue(0), 1);
 
         code = ("ldr r1, =0xffffffff\n"
                 + "eor r0, r1, r1\n").toCharArray();
-        runTestCode(code, true);
+        runTestCode(code);
         assertEquals("XOR result is wrong.", registerFile.getValue(0), 0);
     }
 }

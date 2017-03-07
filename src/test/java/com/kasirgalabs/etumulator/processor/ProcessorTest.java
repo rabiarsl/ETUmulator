@@ -28,6 +28,6 @@ public class ProcessorTest extends InstructionTester {
         char[] code = ("nop\n"
                 + "nop\n"
                 + "nop\n").toCharArray();
-        runTestCode(code, true);
+        runTestCode(code);
     }
 }

@@ -21,37 +21,37 @@ import static org.junit.Assert.assertEquals;
 import com.kasirgalabs.etumulator.InstructionTester;
 import org.junit.Test;
 
-public class OrnsInstructionTest extends InstructionTester {
+public class BicsInstructionTest extends InstructionTester {
     /**
-     * Test of exitOrns method, of class Processor.
+     * Test of exitBics method, of class Processor.
      */
     @Test
-    public void testExitOrns() {
+    public void testExitBics() {
         char[] code = ("mov r1, #0\n"
                 + "mov r2, #1\n"
-                + "orns r0, r1, r2\n").toCharArray();
+                + "bics r0, r1, r2\n").toCharArray();
         runTestCode(code);
-        assertEquals("OR result is wrong.", registerFile.getValue(0), -2);
-        assertEquals("Negative flag is wrong.", true, cpsr.isNegative());
-        assertEquals("Zero flag is wrong.", false, cpsr.isZero());
+        assertEquals("AND result is wrong.", registerFile.getValue(0), 0 & ~0);
+        assertEquals("Negative flag is wrong.", false, cpsr.isNegative());
+        assertEquals("Zero flag is wrong.", true, cpsr.isZero());
 
         code = ("ldr r1, =0xffffffff\n"
-                + "orns r0, r1, r1\n").toCharArray();
+                + "bics r0, r1, r1\n").toCharArray();
         runTestCode(code);
-        assertEquals("OR result is wrong.", registerFile.getValue(0), 0xffffffff | ~0xffffffff);
-        assertEquals("Negative flag is wrong.", true, cpsr.isNegative());
-        assertEquals("Zero flag is wrong.", false, cpsr.isZero());
+        assertEquals("AND result is wrong.", registerFile.getValue(0), 0xffffffff & ~0xffffffff);
+        assertEquals("Negative flag is wrong.", false, cpsr.isNegative());
+        assertEquals("Zero flag is wrong.", true, cpsr.isZero());
 
         code = ("ldr r1, =0xffffffff\n"
-                + "orns r0, r1, 0\n").toCharArray();
+                + "bics r0, r1, 0\n").toCharArray();
         runTestCode(code);
-        assertEquals("OR result is wrong.", registerFile.getValue(0), -1);
+        assertEquals("AND result is wrong.", registerFile.getValue(0), 0xffffffff | ~0);
         assertEquals("Negative flag is wrong.", true, cpsr.isNegative());
         assertEquals("Zero flag is wrong.", false, cpsr.isZero());
 
-        code = ("orns r0, r1, 0xffffffff\n").toCharArray();
+        code = ("bics r0, r1, 0xffffffff\n").toCharArray();
         runTestCode(code);
-        assertEquals("OR result is wrong.", registerFile.getValue(0), 0);
+        assertEquals("AND result is wrong.", registerFile.getValue(0), 0 & ~0xffffffff);
         assertEquals("Negative flag is wrong.", false, cpsr.isNegative());
         assertEquals("Zero flag is wrong.", true, cpsr.isZero());
     }
