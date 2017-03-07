@@ -166,7 +166,6 @@ public class Processor extends ArmBaseListener {
         cpsr.subtractionUpdateNZV(operand2.getValue(), rnRegister.getValue());
         if(!cpsr.isCarry()) {
             if(!cpsr.isOverflow()) {
-                System.out.println("asd");
                 cpsr.subtractionUpdateNZV(result, 1);
             }
             result--;
@@ -276,6 +275,19 @@ public class Processor extends ArmBaseListener {
     public void exitMuls(ArmParser.MulsContext ctx) {
         rdRegister.setValue(rmRegister.getValue() * rsRegister.getValue());
         cpsr.updateNZ(rmRegister.getValue() * rsRegister.getValue());
+        rdRegister.update();
+    }
+
+    @Override
+    public void exitMla(ArmParser.MlaContext ctx) {
+        rdRegister.setValue(rnRegister.getValue() + (rmRegister.getValue() * rsRegister.getValue()));
+        rdRegister.update();
+    }
+
+    @Override
+    public void exitMlas(ArmParser.MlasContext ctx) {
+        rdRegister.setValue(rnRegister.getValue() + (rmRegister.getValue() * rsRegister.getValue()));
+        cpsr.updateNZ(rnRegister.getValue() + (rmRegister.getValue() * rsRegister.getValue()));
         rdRegister.update();
     }
 
