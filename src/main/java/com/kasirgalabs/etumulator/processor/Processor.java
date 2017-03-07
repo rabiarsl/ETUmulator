@@ -273,12 +273,12 @@ public class Processor extends ArmBaseListener {
     }
 
     @Override
-    public void enterTst(ArmParser.TstContext ctx) {
+    public void exitTst(ArmParser.TstContext ctx) {
         cpsr.updateNZ(rnRegister.getValue() & operand2.getValue());
     }
 
     @Override
-    public void enterTeq(ArmParser.TeqContext ctx) {
+    public void exitTeq(ArmParser.TeqContext ctx) {
         cpsr.updateNZ(rnRegister.getValue() ^ operand2.getValue());
     }
 
