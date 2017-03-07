@@ -29,6 +29,7 @@ import com.kasirgalabs.etumulator.register.RdRegister;
 import com.kasirgalabs.etumulator.register.RegisterFile;
 import com.kasirgalabs.etumulator.register.RmRegister;
 import com.kasirgalabs.etumulator.register.RnRegister;
+import com.kasirgalabs.etumulator.register.RsRegister;
 import org.antlr.v4.runtime.ANTLRInputStream;
 import org.antlr.v4.runtime.CommonTokenStream;
 import org.antlr.v4.runtime.tree.ParseTreeWalker;
@@ -36,6 +37,8 @@ import org.antlr.v4.runtime.tree.ParseTreeWalker;
 public class Processor extends ArmBaseListener {
     private RdRegister rdRegister;
     private RnRegister rnRegister;
+    private RmRegister rmRegister;
+    private RsRegister rsRegister;
     private Operand2 operand2;
     private Imm8m imm8m;
     private Number number;
@@ -264,6 +267,19 @@ public class Processor extends ArmBaseListener {
     }
 
     @Override
+    public void exitMul(ArmParser.MulContext ctx) {
+        rdRegister.setValue(rmRegister.getValue() * rsRegister.getValue());
+        rdRegister.update();
+    }
+
+    @Override
+    public void exitMuls(ArmParser.MulsContext ctx) {
+        rdRegister.setValue(rmRegister.getValue() * rsRegister.getValue());
+        cpsr.updateNZ(rmRegister.getValue() * rsRegister.getValue());
+        rdRegister.update();
+    }
+
+    @Override
     public void exitCmp(ArmParser.CmpContext ctx) {
         cpsr.subtractionUpdateNZV(rnRegister.getValue(), operand2.getValue());
     }
@@ -303,7 +319,13 @@ public class Processor extends ArmBaseListener {
 
     @Override
     public void exitRm(ArmParser.RmContext ctx) {
-        operand2 = new RmRegister(ctx, registerFile);
+        rmRegister = new RmRegister(ctx, registerFile);
+        operand2 = rmRegister;
+    }
+
+    @Override
+    public void exitRs(ArmParser.RsContext ctx) {
+        rsRegister = new RsRegister(ctx, registerFile);
     }
 
     @Override
