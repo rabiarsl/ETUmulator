@@ -27,7 +27,7 @@ public class RscsInstructionTest extends InstructionTester {
      */
     @Test
     public void testExitRscs() {
-        cpsr.setCarry(false);
+        cpsr.setCarry(true);
         char[] code = ("mov r2, #1\n"
                 + "ldr r1, =#0x80000000\n"
                 + "rscs r0, r2, r1\n").toCharArray();
@@ -37,7 +37,7 @@ public class RscsInstructionTest extends InstructionTester {
         assertEquals("Zero flag is wrong.", false, cpsr.isZero());
         assertEquals("Overflow flag is wrong.", true, cpsr.isOverflow());
 
-        cpsr.setCarry(true);
+        cpsr.setCarry(false);
         code = ("mov r2, #1\n"
                 + "ldr r1, =#0x80000000\n"
                 + "rscs r0, r2, r1\n").toCharArray();
@@ -47,12 +47,22 @@ public class RscsInstructionTest extends InstructionTester {
         assertEquals("Zero flag is wrong.", false, cpsr.isZero());
         assertEquals("Overflow flag is wrong.", true, cpsr.isOverflow());
 
-        cpsr.setCarry(false);
+        cpsr.setCarry(true);
         code = ("rscs r0, r1, #0\n").toCharArray();
         runTestCode(code);
         assertEquals("Subtraction result is wrong.", registerFile.getValue(0), 0);
         assertEquals("Negative flag is wrong.", false, cpsr.isNegative());
         assertEquals("Zero flag is wrong.", true, cpsr.isZero());
         assertEquals("Overflow flag is wrong.", false, cpsr.isOverflow());
+
+        cpsr.setCarry(false);
+        code = ("mov r2, #1\n"
+                + "ldr r1, =#0x80000001\n"
+                + "rscs r0, r2, r1\n").toCharArray();
+        runTestCode(code);
+        assertEquals("Subtraction result is wrong.", registerFile.getValue(0), Integer.MAX_VALUE);
+        assertEquals("Negative flag is wrong.", false, cpsr.isNegative());
+        assertEquals("Zero flag is wrong.", false, cpsr.isZero());
+        assertEquals("Overflow flag is wrong.", true, cpsr.isOverflow());
     }
 }

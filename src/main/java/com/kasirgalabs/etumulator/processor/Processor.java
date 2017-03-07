@@ -112,7 +112,7 @@ public class Processor extends ArmBaseListener {
     @Override
     public void exitSbc(ArmParser.SbcContext ctx) {
         int result = rnRegister.getValue() - operand2.getValue();
-        if(cpsr.isCarry()) {
+        if(!cpsr.isCarry()) {
             result--;
         }
         rdRegister.setValue(result);
@@ -123,9 +123,9 @@ public class Processor extends ArmBaseListener {
     public void exitSbcs(ArmParser.SbcsContext ctx) {
         int result = rnRegister.getValue() - operand2.getValue();
         cpsr.subtractionUpdateNZV(rnRegister.getValue(), operand2.getValue());
-        if(cpsr.isCarry()) {
+        if(!cpsr.isCarry()) {
             if(!cpsr.isOverflow()) {
-                cpsr.subtractionUpdateNZV(result, -1);
+                cpsr.subtractionUpdateNZV(result, 1);
             }
             result--;
         }
@@ -161,9 +161,10 @@ public class Processor extends ArmBaseListener {
     public void exitRscs(ArmParser.RscsContext ctx) {
         int result = operand2.getValue() - rnRegister.getValue();
         cpsr.subtractionUpdateNZV(operand2.getValue(), rnRegister.getValue());
-        if(cpsr.isCarry()) {
+        if(!cpsr.isCarry()) {
             if(!cpsr.isOverflow()) {
-                cpsr.subtractionUpdateNZV(result, -1);
+                System.out.println("asd");
+                cpsr.subtractionUpdateNZV(result, 1);
             }
             result--;
         }
