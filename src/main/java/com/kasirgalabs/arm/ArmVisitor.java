@@ -605,11 +605,11 @@ public interface ArmVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitShiftedrm(ArmParser.ShiftedrmContext ctx);
 	/**
-	 * Visit a parse tree produced by {@link ArmParser#option}.
+	 * Visit a parse tree produced by {@link ArmParser#shiftOption}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitOption(ArmParser.OptionContext ctx);
+	T visitShiftOption(ArmParser.ShiftOptionContext ctx);
 	/**
 	 * Visit a parse tree produced by {@link ArmParser#shift}.
 	 * @param ctx the parse tree

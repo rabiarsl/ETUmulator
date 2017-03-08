@@ -51,7 +51,7 @@ public class ArmParser extends Parser {
 		RULE_strb = 83, RULE_strsb = 84, RULE_strh = 85, RULE_strsh = 86, RULE_push = 87, 
 		RULE_pop = 88, RULE_nop = 89, RULE_rd = 90, RULE_rn = 91, RULE_rm = 92, 
 		RULE_rs = 93, RULE_rdlo = 94, RULE_rdhi = 95, RULE_reglist = 96, RULE_operand2 = 97, 
-		RULE_shiftedrm = 98, RULE_option = 99, RULE_shift = 100, RULE_imm8m = 101, 
+		RULE_shiftedrm = 98, RULE_shiftOption = 99, RULE_shift = 100, RULE_imm8m = 101, 
 		RULE_offset = 102, RULE_number = 103, RULE_decimal = 104, RULE_hex = 105, 
 		RULE_label = 106;
 	public static final String[] ruleNames = {
@@ -65,7 +65,7 @@ public class ArmParser extends Parser {
 		"bvs", "bvc", "bhi", "bls", "bge", "blt", "bgt", "ble", "bal", "bl", "ldr", 
 		"ldrb", "ldrsb", "ldrh", "ldrsh", "str", "strb", "strsb", "strh", "strsh", 
 		"push", "pop", "nop", "rd", "rn", "rm", "rs", "rdlo", "rdhi", "reglist", 
-		"operand2", "shiftedrm", "option", "shift", "imm8m", "offset", "number", 
+		"operand2", "shiftedrm", "shiftOption", "shift", "imm8m", "offset", "number", 
 		"decimal", "hex", "label"
 	};
 
@@ -7604,13 +7604,15 @@ public class ArmParser extends Parser {
 	}
 
 	public static class ShiftedrmContext extends ParserRuleContext {
-		public TerminalNode REGISTER() { return getToken(ArmParser.REGISTER, 0); }
-		public TerminalNode COMMA() { return getToken(ArmParser.COMMA, 0); }
-		public OptionContext option() {
-			return getRuleContext(OptionContext.class,0);
+		public RmContext rm() {
+			return getRuleContext(RmContext.class,0);
 		}
-		public ShiftContext shift() {
-			return getRuleContext(ShiftContext.class,0);
+		public TerminalNode COMMA() { return getToken(ArmParser.COMMA, 0); }
+		public ShiftOptionContext shiftOption() {
+			return getRuleContext(ShiftOptionContext.class,0);
+		}
+		public RsContext rs() {
+			return getRuleContext(RsContext.class,0);
 		}
 		public ShiftedrmContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
@@ -7638,13 +7640,13 @@ public class ArmParser extends Parser {
 			enterOuterAlt(_localctx, 1);
 			{
 			setState(1052);
-			match(REGISTER);
+			rm();
 			setState(1053);
 			match(COMMA);
 			setState(1054);
-			option();
+			shiftOption();
 			setState(1055);
-			shift();
+			rs();
 			}
 		}
 		catch (RecognitionException re) {
@@ -7658,33 +7660,33 @@ public class ArmParser extends Parser {
 		return _localctx;
 	}
 
-	public static class OptionContext extends ParserRuleContext {
+	public static class ShiftOptionContext extends ParserRuleContext {
 		public TerminalNode LSL() { return getToken(ArmParser.LSL, 0); }
 		public TerminalNode LSR() { return getToken(ArmParser.LSR, 0); }
 		public TerminalNode ASR() { return getToken(ArmParser.ASR, 0); }
 		public TerminalNode ROR() { return getToken(ArmParser.ROR, 0); }
-		public OptionContext(ParserRuleContext parent, int invokingState) {
+		public ShiftOptionContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
 		}
-		@Override public int getRuleIndex() { return RULE_option; }
+		@Override public int getRuleIndex() { return RULE_shiftOption; }
 		@Override
 		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof ArmListener ) ((ArmListener)listener).enterOption(this);
+			if ( listener instanceof ArmListener ) ((ArmListener)listener).enterShiftOption(this);
 		}
 		@Override
 		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof ArmListener ) ((ArmListener)listener).exitOption(this);
+			if ( listener instanceof ArmListener ) ((ArmListener)listener).exitShiftOption(this);
 		}
 		@Override
 		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof ArmVisitor ) return ((ArmVisitor<? extends T>)visitor).visitOption(this);
+			if ( visitor instanceof ArmVisitor ) return ((ArmVisitor<? extends T>)visitor).visitShiftOption(this);
 			else return visitor.visitChildren(this);
 		}
 	}
 
-	public final OptionContext option() throws RecognitionException {
-		OptionContext _localctx = new OptionContext(_ctx, getState());
-		enterRule(_localctx, 198, RULE_option);
+	public final ShiftOptionContext shiftOption() throws RecognitionException {
+		ShiftOptionContext _localctx = new ShiftOptionContext(_ctx, getState());
+		enterRule(_localctx, 198, RULE_shiftOption);
 		int _la;
 		try {
 			enterOuterAlt(_localctx, 1);
@@ -8409,12 +8411,12 @@ public class ArmParser extends Parser {
 		"\3\2\2\2\u0416\u0414\3\2\2\2\u0416\u0417\3\2\2\2\u0417\u00c3\3\2\2\2\u0418"+
 		"\u0416\3\2\2\2\u0419\u041d\5\u00ba^\2\u041a\u041d\5\u00c6d\2\u041b\u041d"+
 		"\5\u00ccg\2\u041c\u0419\3\2\2\2\u041c\u041a\3\2\2\2\u041c\u041b\3\2\2"+
-		"\2\u041d\u00c5\3\2\2\2\u041e\u041f\7Z\2\2\u041f\u0420\7f\2\2\u0420\u0421"+
-		"\5\u00c8e\2\u0421\u0422\5\u00caf\2\u0422\u00c7\3\2\2\2\u0423\u0424\t\3"+
-		"\2\2\u0424\u00c9\3\2\2\2\u0425\u0426\5\u00d0i\2\u0426\u00cb\3\2\2\2\u0427"+
-		"\u0428\5\u00d0i\2\u0428\u00cd\3\2\2\2\u0429\u042a\5\u00d0i\2\u042a\u00cf"+
-		"\3\2\2\2\u042b\u042e\5\u00d2j\2\u042c\u042e\5\u00d4k\2\u042d\u042b\3\2"+
-		"\2\2\u042d\u042c\3\2\2\2\u042e\u00d1\3\2\2\2\u042f\u0430\7]\2\2\u0430"+
+		"\2\u041d\u00c5\3\2\2\2\u041e\u041f\5\u00ba^\2\u041f\u0420\7f\2\2\u0420"+
+		"\u0421\5\u00c8e\2\u0421\u0422\5\u00bc_\2\u0422\u00c7\3\2\2\2\u0423\u0424"+
+		"\t\3\2\2\u0424\u00c9\3\2\2\2\u0425\u0426\5\u00d0i\2\u0426\u00cb\3\2\2"+
+		"\2\u0427\u0428\5\u00d0i\2\u0428\u00cd\3\2\2\2\u0429\u042a\5\u00d0i\2\u042a"+
+		"\u00cf\3\2\2\2\u042b\u042e\5\u00d2j\2\u042c\u042e\5\u00d4k\2\u042d\u042b"+
+		"\3\2\2\2\u042d\u042c\3\2\2\2\u042e\u00d1\3\2\2\2\u042f\u0430\7]\2\2\u0430"+
 		"\u00d3\3\2\2\2\u0431\u0432\7^\2\2\u0432\u00d5\3\2\2\2\u0433\u0434\7_\2"+
 		"\2\u0434\u0435\7g\2\2\u0435\u00d7\3\2\2\2\61\u00d9\u00de\u00e2\u013b\u022b"+
 		"\u0234\u023d\u0246\u024f\u0258\u0261\u026a\u0310\u031c\u0324\u0326\u032f"+

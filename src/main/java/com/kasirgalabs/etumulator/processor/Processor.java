@@ -24,6 +24,7 @@ import com.kasirgalabs.etumulator.operand2.Hex;
 import com.kasirgalabs.etumulator.operand2.Imm8m;
 import com.kasirgalabs.etumulator.operand2.Number;
 import com.kasirgalabs.etumulator.operand2.Operand2;
+import com.kasirgalabs.etumulator.operand2.ShiftOption;
 import com.kasirgalabs.etumulator.register.CPSR;
 import com.kasirgalabs.etumulator.register.RdRegister;
 import com.kasirgalabs.etumulator.register.RegisterFile;
@@ -38,6 +39,7 @@ public class Processor extends ArmBaseListener {
     private RdRegister rdRegister;
     private RnRegister rnRegister;
     private RmRegister rmRegister;
+    private ShiftOption shiftOption;
     private RsRegister rsRegister;
     private Operand2 operand2;
     private Imm8m imm8m;
@@ -349,6 +351,29 @@ public class Processor extends ArmBaseListener {
     @Override
     public void exitImm8m(ArmParser.Imm8mContext ctx) {
         operand2 = imm8m;
+    }
+
+    @Override
+    public void exitShiftedrm(ArmParser.ShiftedrmContext ctx) {
+        switch(shiftOption.getOption()) {
+            case ShiftOption.LSL:
+                rmRegister.setValue(rmRegister.getValue() << rsRegister.getValue());
+                break;
+            case ShiftOption.LSR:
+                rmRegister.setValue(rmRegister.getValue() >>> rsRegister.getValue());
+                break;
+            case ShiftOption.ASR:
+                rmRegister.setValue(rmRegister.getValue() >> rsRegister.getValue());
+                break;
+            case ShiftOption.ROR:
+                rmRegister.setValue(Integer.rotateRight(rmRegister.getValue(), rsRegister.getValue()));
+                break;
+        }
+    }
+
+    @Override
+    public void exitShiftOption(ArmParser.ShiftOptionContext ctx) {
+        shiftOption = new ShiftOption(ctx);
     }
 
     @Override

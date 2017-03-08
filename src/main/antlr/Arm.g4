@@ -866,10 +866,10 @@ operand2
     ;
 
 shiftedrm
-    : REGISTER COMMA option shift
+    : rm COMMA shiftOption rs
     ;
 
-option
+shiftOption
     : LSL
     | LSR
     | ASR

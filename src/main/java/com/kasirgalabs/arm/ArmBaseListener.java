@@ -1204,13 +1204,13 @@ public class ArmBaseListener implements ArmListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterOption(ArmParser.OptionContext ctx) { }
+	@Override public void enterShiftOption(ArmParser.ShiftOptionContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitOption(ArmParser.OptionContext ctx) { }
+	@Override public void exitShiftOption(ArmParser.ShiftOptionContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
