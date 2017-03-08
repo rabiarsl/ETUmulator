@@ -347,8 +347,7 @@ MVNS
     : M V N S
     ;
 asr
-    : ASR rd COMMA rm COMMA (rs | shift
-)
+    : ASR rd COMMA rm COMMA (rs | shiftValue)
     ;
 
 ASR
@@ -356,7 +355,7 @@ ASR
     ;
 
 asrs
-    : ASRS rd COMMA rm COMMA (rs | shift)
+    : ASRS rd COMMA rm COMMA (rs | shiftValue)
     ;
 
 ASRS
@@ -364,7 +363,7 @@ ASRS
     ;
 
 lsl
-    : LSL rd COMMA rm COMMA (rs | shift)
+    : LSL rd COMMA rm COMMA (rs | shiftValue)
     ;
 
 LSL
@@ -372,7 +371,7 @@ LSL
     ;
 
 lsls
-    : LSLS rd COMMA rm COMMA (rs | shift)
+    : LSLS rd COMMA rm COMMA (rs | shiftValue)
     ;
 
 LSLS
@@ -380,7 +379,7 @@ LSLS
     ;
 
 lsr
-    : LSR rd COMMA rm COMMA (rs | shift)
+    : LSR rd COMMA rm COMMA (rs | shiftValue)
     ;
 
 LSR
@@ -388,7 +387,7 @@ LSR
     ;
 
 lsrs
-    : LSRS rd COMMA rm COMMA (rs | shift)
+    : LSRS rd COMMA rm COMMA (rs | shiftValue)
     ;
 
 LSRS
@@ -396,7 +395,7 @@ LSRS
     ;
 
 ror
-    : ROR rd COMMA rm COMMA (rs | shift)
+    : ROR rd COMMA rm COMMA (rs | shiftValue)
     ;
 
 ROR
@@ -404,7 +403,7 @@ ROR
     ;
 
 rors
-    : RORS rd COMMA rm COMMA (rs | shift)
+    : RORS rd COMMA rm COMMA (rs | shiftValue)
     ;
 
 RORS
@@ -861,12 +860,17 @@ PC
 
 operand2
     : rm
-    | shiftedrm
+    | shiftedRm
+    | constantShiftedRm
     | imm8m
     ;
 
-shiftedrm
+shiftedRm
     : rm COMMA shiftOption rs
+    ;
+
+constantShiftedRm
+    : rm COMMA shiftOption shiftValue
     ;
 
 shiftOption
@@ -876,7 +880,7 @@ shiftOption
     | ROR
     ;
 
-shift
+shiftValue
     : number
     ;
 

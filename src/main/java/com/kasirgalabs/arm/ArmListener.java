@@ -988,15 +988,25 @@ public interface ArmListener extends ParseTreeListener {
 	 */
 	void exitOperand2(ArmParser.Operand2Context ctx);
 	/**
-	 * Enter a parse tree produced by {@link ArmParser#shiftedrm}.
+	 * Enter a parse tree produced by {@link ArmParser#shiftedRm}.
 	 * @param ctx the parse tree
 	 */
-	void enterShiftedrm(ArmParser.ShiftedrmContext ctx);
+	void enterShiftedRm(ArmParser.ShiftedRmContext ctx);
 	/**
-	 * Exit a parse tree produced by {@link ArmParser#shiftedrm}.
+	 * Exit a parse tree produced by {@link ArmParser#shiftedRm}.
 	 * @param ctx the parse tree
 	 */
-	void exitShiftedrm(ArmParser.ShiftedrmContext ctx);
+	void exitShiftedRm(ArmParser.ShiftedRmContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link ArmParser#constantShiftedRm}.
+	 * @param ctx the parse tree
+	 */
+	void enterConstantShiftedRm(ArmParser.ConstantShiftedRmContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link ArmParser#constantShiftedRm}.
+	 * @param ctx the parse tree
+	 */
+	void exitConstantShiftedRm(ArmParser.ConstantShiftedRmContext ctx);
 	/**
 	 * Enter a parse tree produced by {@link ArmParser#shiftOption}.
 	 * @param ctx the parse tree
@@ -1008,15 +1018,15 @@ public interface ArmListener extends ParseTreeListener {
 	 */
 	void exitShiftOption(ArmParser.ShiftOptionContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link ArmParser#shift}.
+	 * Enter a parse tree produced by {@link ArmParser#shiftValue}.
 	 * @param ctx the parse tree
 	 */
-	void enterShift(ArmParser.ShiftContext ctx);
+	void enterShiftValue(ArmParser.ShiftValueContext ctx);
 	/**
-	 * Exit a parse tree produced by {@link ArmParser#shift}.
+	 * Exit a parse tree produced by {@link ArmParser#shiftValue}.
 	 * @param ctx the parse tree
 	 */
-	void exitShift(ArmParser.ShiftContext ctx);
+	void exitShiftValue(ArmParser.ShiftValueContext ctx);
 	/**
 	 * Enter a parse tree produced by {@link ArmParser#imm8m}.
 	 * @param ctx the parse tree

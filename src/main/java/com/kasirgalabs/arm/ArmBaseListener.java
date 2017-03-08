@@ -1192,13 +1192,25 @@ public class ArmBaseListener implements ArmListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterShiftedrm(ArmParser.ShiftedrmContext ctx) { }
+	@Override public void enterShiftedRm(ArmParser.ShiftedRmContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitShiftedrm(ArmParser.ShiftedrmContext ctx) { }
+	@Override public void exitShiftedRm(ArmParser.ShiftedRmContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterConstantShiftedRm(ArmParser.ConstantShiftedRmContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitConstantShiftedRm(ArmParser.ConstantShiftedRmContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
@@ -1216,13 +1228,13 @@ public class ArmBaseListener implements ArmListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterShift(ArmParser.ShiftContext ctx) { }
+	@Override public void enterShiftValue(ArmParser.ShiftValueContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitShift(ArmParser.ShiftContext ctx) { }
+	@Override public void exitShiftValue(ArmParser.ShiftValueContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *

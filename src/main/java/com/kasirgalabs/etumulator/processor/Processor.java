@@ -24,7 +24,7 @@ import com.kasirgalabs.etumulator.operand2.Hex;
 import com.kasirgalabs.etumulator.operand2.Imm8m;
 import com.kasirgalabs.etumulator.operand2.Number;
 import com.kasirgalabs.etumulator.operand2.Operand2;
-import com.kasirgalabs.etumulator.operand2.ShiftOption;
+import com.kasirgalabs.etumulator.operand2.Shift;
 import com.kasirgalabs.etumulator.register.CPSR;
 import com.kasirgalabs.etumulator.register.RdRegister;
 import com.kasirgalabs.etumulator.register.RegisterFile;
@@ -39,7 +39,7 @@ public class Processor extends ArmBaseListener {
     private RdRegister rdRegister;
     private RnRegister rnRegister;
     private RmRegister rmRegister;
-    private ShiftOption shiftOption;
+    private Shift shift;
     private RsRegister rsRegister;
     private Operand2 operand2;
     private Imm8m imm8m;
@@ -354,26 +354,49 @@ public class Processor extends ArmBaseListener {
     }
 
     @Override
-    public void exitShiftedrm(ArmParser.ShiftedrmContext ctx) {
-        switch(shiftOption.getOption()) {
-            case ShiftOption.LSL:
+    public void exitShiftedRm(ArmParser.ShiftedRmContext ctx) {
+        switch(shift.getOption()) {
+            case Shift.LSL:
                 rmRegister.setValue(rmRegister.getValue() << rsRegister.getValue());
                 break;
-            case ShiftOption.LSR:
+            case Shift.LSR:
                 rmRegister.setValue(rmRegister.getValue() >>> rsRegister.getValue());
                 break;
-            case ShiftOption.ASR:
+            case Shift.ASR:
                 rmRegister.setValue(rmRegister.getValue() >> rsRegister.getValue());
                 break;
-            case ShiftOption.ROR:
+            case Shift.ROR:
                 rmRegister.setValue(Integer.rotateRight(rmRegister.getValue(), rsRegister.getValue()));
                 break;
         }
     }
 
     @Override
+    public void exitConstantShiftedRm(ArmParser.ConstantShiftedRmContext ctx) {
+        switch(shift.getOption()) {
+            case Shift.LSL:
+                rmRegister.setValue(rmRegister.getValue() << shift.getValue());
+                break;
+            case Shift.LSR:
+                rmRegister.setValue(rmRegister.getValue() >>> shift.getValue());
+                break;
+            case Shift.ASR:
+                rmRegister.setValue(rmRegister.getValue() >> shift.getValue());
+                break;
+            case Shift.ROR:
+                rmRegister.setValue(Integer.rotateRight(rmRegister.getValue(), shift.getValue()));
+                break;
+        }
+    }
+
+    @Override
     public void exitShiftOption(ArmParser.ShiftOptionContext ctx) {
-        shiftOption = new ShiftOption(ctx);
+        shift = new Shift(ctx);
+    }
+
+    @Override
+    public void enterShiftValue(ArmParser.ShiftValueContext ctx) {
+        shift.setValue(number.getValue());
     }
 
     @Override

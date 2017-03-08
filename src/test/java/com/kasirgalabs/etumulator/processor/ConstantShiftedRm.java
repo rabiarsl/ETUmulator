@@ -21,45 +21,40 @@ import static org.junit.Assert.assertEquals;
 import com.kasirgalabs.etumulator.InstructionTester;
 import org.junit.Test;
 
-public class ShiftedRmTest extends InstructionTester {
+public class ConstantShiftedRm extends InstructionTester {
     /**
-     * Test of exitShiftedRm method, of class Processor.
+     * Test of exitConstantShiftedRmmethod, of class Processor.
      */
     @Test
-    public void exitShiftedRm() {
+    public void exitConstantShiftedRm() {
         char[] code = ("mov r1, #1\n"
                 + "mov r2, #1\n"
-                + "mov r3, #1\n"
-                + "add r0, r1, r2, lsl r3\n").toCharArray();
+                + "add r0, r1, r2, lsl 1\n").toCharArray();
         runTestCode(code);
         assertEquals("Shift result is wrong.", registerFile.getValue(0), 3);
-        System.out.println("asdasd");
 
         code = ("mov r1, #1\n"
                 + "mov r2, #1\n"
-                + "mov r3, #1\n"
-                + "add r0, r1, r2, lsr r3\n").toCharArray();
+                + "add r0, r1, r2, lsr #1\n").toCharArray();
         runTestCode(code);
         assertEquals("Shift result is wrong.", registerFile.getValue(0), 1);
 
         code = ("mov r1, #1\n"
                 + "ldr r2, =#0xffffffff\n"
-                + "mov r3, #1\n"
-                + "add r0, r1, r2, asr r3\n").toCharArray();
+                + "add r0, r1, r2, asr #0x1\n").toCharArray();
         runTestCode(code);
         assertEquals("Shift result is wrong.", registerFile.getValue(0), 0);
 
         code = ("mov r1, #1\n"
                 + "ldr r2, =#0xffffffff\n"
-                + "mov r3, #1\n"
-                + "add r0, r1, r2, ror r3\n").toCharArray();
+                + "add r0, r1, r2, ror 0x1\n").toCharArray();
         runTestCode(code);
         assertEquals("Shift result is wrong.", registerFile.getValue(0), 0);
 
         code = ("mov r1, #1\n"
                 + "mov r2, #1\n"
                 + "mov r3, #1\n"
-                + "add r0, r1, r2, ror r3\n").toCharArray();
+                + "add r0, r1, r2, ror 1\n").toCharArray();
         runTestCode(code);
         assertEquals("Shift result is wrong.", registerFile.getValue(0), Integer.MIN_VALUE + 1);
     }

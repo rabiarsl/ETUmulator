@@ -599,11 +599,17 @@ public interface ArmVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitOperand2(ArmParser.Operand2Context ctx);
 	/**
-	 * Visit a parse tree produced by {@link ArmParser#shiftedrm}.
+	 * Visit a parse tree produced by {@link ArmParser#shiftedRm}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitShiftedrm(ArmParser.ShiftedrmContext ctx);
+	T visitShiftedRm(ArmParser.ShiftedRmContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link ArmParser#constantShiftedRm}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitConstantShiftedRm(ArmParser.ConstantShiftedRmContext ctx);
 	/**
 	 * Visit a parse tree produced by {@link ArmParser#shiftOption}.
 	 * @param ctx the parse tree
@@ -611,11 +617,11 @@ public interface ArmVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitShiftOption(ArmParser.ShiftOptionContext ctx);
 	/**
-	 * Visit a parse tree produced by {@link ArmParser#shift}.
+	 * Visit a parse tree produced by {@link ArmParser#shiftValue}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitShift(ArmParser.ShiftContext ctx);
+	T visitShiftValue(ArmParser.ShiftValueContext ctx);
 	/**
 	 * Visit a parse tree produced by {@link ArmParser#imm8m}.
 	 * @param ctx the parse tree

@@ -18,14 +18,15 @@ package com.kasirgalabs.etumulator.operand2;
 
 import com.kasirgalabs.arm.ArmParser;
 
-public class ShiftOption {
+public class Shift {
     public static final int LSL = 0;
     public static final int LSR = 1;
     public static final int ASR = 2;
     public static final int ROR = 3;
     private int option;
+    private int value;
 
-    public ShiftOption(ArmParser.ShiftOptionContext option) {
+    public Shift(ArmParser.ShiftOptionContext option) {
         switch(option.getText().toLowerCase()) {
             case "lsl":
                 this.option = LSL;
@@ -44,5 +45,13 @@ public class ShiftOption {
 
     public int getOption() {
         return option;
+    }
+
+    public void setValue(int value) {
+        this.value = value;
+    }
+
+    public int getValue() {
+        return value;
     }
 }
