@@ -62,5 +62,36 @@ public class ShiftedRmTest extends InstructionTester {
                 + "add r0, r1, r2, ror r3\n").toCharArray();
         runTestCode(code);
         assertEquals("Shift result is wrong.", registerFile.getValue(0), Integer.MIN_VALUE + 1);
+
+        code = ("mov r1, #1\n"
+                + "mov r2, #1\n"
+                + "add r0, r1, r2, lsl 1\n").toCharArray();
+        runTestCode(code);
+        assertEquals("Shift result is wrong.", registerFile.getValue(0), 3);
+
+        code = ("mov r1, #1\n"
+                + "mov r2, #1\n"
+                + "add r0, r1, r2, lsr #1\n").toCharArray();
+        runTestCode(code);
+        assertEquals("Shift result is wrong.", registerFile.getValue(0), 1);
+
+        code = ("mov r1, #1\n"
+                + "ldr r2, =#0xffffffff\n"
+                + "add r0, r1, r2, asr #0x1\n").toCharArray();
+        runTestCode(code);
+        assertEquals("Shift result is wrong.", registerFile.getValue(0), 0);
+
+        code = ("mov r1, #1\n"
+                + "ldr r2, =#0xffffffff\n"
+                + "add r0, r1, r2, ror 0x1\n").toCharArray();
+        runTestCode(code);
+        assertEquals("Shift result is wrong.", registerFile.getValue(0), 0);
+
+        code = ("mov r1, #1\n"
+                + "mov r2, #1\n"
+                + "mov r3, #1\n"
+                + "add r0, r1, r2, ror 1\n").toCharArray();
+        runTestCode(code);
+        assertEquals("Shift result is wrong.", registerFile.getValue(0), Integer.MIN_VALUE + 1);
     }
 }

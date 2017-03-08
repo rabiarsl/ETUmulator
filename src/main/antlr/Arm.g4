@@ -861,16 +861,15 @@ PC
 operand2
     : rm
     | shiftedRm
-    | constantShiftedRm
     | imm8m
     ;
 
 shiftedRm
-    : rm COMMA shiftOption rs
+    : rm COMMA shift
     ;
 
-constantShiftedRm
-    : rm COMMA shiftOption shiftValue
+shift
+    : shiftOption shiftValue
     ;
 
 shiftOption
@@ -881,7 +880,8 @@ shiftOption
     ;
 
 shiftValue
-    : number
+    : rs
+    | number
     ;
 
 imm8m
