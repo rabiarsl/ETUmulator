@@ -33,7 +33,6 @@ public class ShiftedRmTest extends InstructionTester {
                 + "add r0, r1, r2, lsl r3\n").toCharArray();
         runTestCode(code);
         assertEquals("Shift result is wrong.", registerFile.getValue(0), 3);
-        System.out.println("asdasd");
 
         code = ("mov r1, #1\n"
                 + "mov r2, #1\n"

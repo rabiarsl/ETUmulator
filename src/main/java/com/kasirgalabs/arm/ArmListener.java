@@ -1018,15 +1018,15 @@ public interface ArmListener extends ParseTreeListener {
 	 */
 	void exitShiftOption(ArmParser.ShiftOptionContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link ArmParser#shiftValue}.
+	 * Enter a parse tree produced by {@link ArmParser#shiftAmount}.
 	 * @param ctx the parse tree
 	 */
-	void enterShiftValue(ArmParser.ShiftValueContext ctx);
+	void enterShiftAmount(ArmParser.ShiftAmountContext ctx);
 	/**
-	 * Exit a parse tree produced by {@link ArmParser#shiftValue}.
+	 * Exit a parse tree produced by {@link ArmParser#shiftAmount}.
 	 * @param ctx the parse tree
 	 */
-	void exitShiftValue(ArmParser.ShiftValueContext ctx);
+	void exitShiftAmount(ArmParser.ShiftAmountContext ctx);
 	/**
 	 * Enter a parse tree produced by {@link ArmParser#imm8m}.
 	 * @param ctx the parse tree

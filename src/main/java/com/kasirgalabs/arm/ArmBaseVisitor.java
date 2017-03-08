@@ -724,7 +724,7 @@ public class ArmBaseVisitor<T> extends AbstractParseTreeVisitor<T> implements Ar
 	 * <p>The default implementation returns the result of calling
 	 * {@link #visitChildren} on {@code ctx}.</p>
 	 */
-	@Override public T visitShiftValue(ArmParser.ShiftValueContext ctx) { return visitChildren(ctx); }
+	@Override public T visitShiftAmount(ArmParser.ShiftAmountContext ctx) { return visitChildren(ctx); }
 	/**
 	 * {@inheritDoc}
 	 *

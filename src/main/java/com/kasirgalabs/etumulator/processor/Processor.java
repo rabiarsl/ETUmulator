@@ -352,21 +352,18 @@ public class Processor extends ArmBaseListener {
     }
 
     @Override
+    public void exitAsr(ArmParser.AsrContext ctx) {
+        rdRegister.setValue(Shifter.shift(rmRegister.getValue(),
+                shift.getAmount(),
+                Shift.ASR));
+        rdRegister.update();
+    }
+
+    @Override
     public void exitShiftedRm(ArmParser.ShiftedRmContext ctx) {
-        switch(shift.getOption()) {
-            case Shift.LSL:
-                rmRegister.setValue(rmRegister.getValue() << shift.getValue());
-                break;
-            case Shift.LSR:
-                rmRegister.setValue(rmRegister.getValue() >>> shift.getValue());
-                break;
-            case Shift.ASR:
-                rmRegister.setValue(rmRegister.getValue() >> shift.getValue());
-                break;
-            case Shift.ROR:
-                rmRegister.setValue(Integer.rotateRight(rmRegister.getValue(), shift.getValue()));
-                break;
-        }
+        rmRegister.setValue(Shifter.shift(rmRegister.getValue(),
+                shift.getAmount(),
+                shift.getOption()));
     }
 
     @Override
@@ -375,8 +372,11 @@ public class Processor extends ArmBaseListener {
     }
 
     @Override
-    public void enterShiftValue(ArmParser.ShiftValueContext ctx) {
-        shift.setValue(number.getValue());
+    public void enterShiftAmount(ArmParser.ShiftAmountContext ctx) {
+        if(shift == null) {
+            shift = new Shift();
+        }
+        shift.setAmount(number.getValue());
     }
 
     @Override

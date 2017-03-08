@@ -19,27 +19,29 @@ package com.kasirgalabs.etumulator.operand2;
 import com.kasirgalabs.arm.ArmParser;
 
 public class Shift {
-    public static final int LSL = 0;
-    public static final int LSR = 1;
-    public static final int ASR = 2;
+    public static final int ASR = 0;
+    public static final int LSL = 1;
+    public static final int LSR = 2;
     public static final int ROR = 3;
     private int option;
-    private int value;
+    private int amount;
+
+    public Shift() {
+    }
 
     public Shift(ArmParser.ShiftOptionContext option) {
         switch(option.getText().toLowerCase()) {
+            case "asr":
+                this.option = ASR;
+                break;
             case "lsl":
                 this.option = LSL;
                 break;
             case "lsr":
                 this.option = LSR;
                 break;
-            case "asr":
-                this.option = ASR;
-                break;
             case "ror":
                 this.option = ROR;
-                break;
         }
     }
 
@@ -47,11 +49,11 @@ public class Shift {
         return option;
     }
 
-    public void setValue(int value) {
-        this.value = value;
+    public void setAmount(int amount) {
+        this.amount = amount;
     }
 
-    public int getValue() {
-        return value;
+    public int getAmount() {
+        return amount;
     }
 }

@@ -617,11 +617,11 @@ public interface ArmVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitShiftOption(ArmParser.ShiftOptionContext ctx);
 	/**
-	 * Visit a parse tree produced by {@link ArmParser#shiftValue}.
+	 * Visit a parse tree produced by {@link ArmParser#shiftAmount}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitShiftValue(ArmParser.ShiftValueContext ctx);
+	T visitShiftAmount(ArmParser.ShiftAmountContext ctx);
 	/**
 	 * Visit a parse tree produced by {@link ArmParser#imm8m}.
 	 * @param ctx the parse tree
