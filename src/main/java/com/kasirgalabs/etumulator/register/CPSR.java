@@ -78,15 +78,17 @@ public class CPSR {
     public int shiftUpdateNZC(int value, int shiftAmount, int option) {
         carry = false;
         int result = Shifter.shift(value, shiftAmount - 1, option);
-        if(option == Shift.LSL && Integer.numberOfLeadingZeros(result) == 0) {
-            carry = true;
-            result = Shifter.shift(result, 1, option);
+        if(option == Shift.LSL) {
+            if(Integer.numberOfLeadingZeros(result) == 0) {
+                carry = true;
+            }
         }
-        else if(Integer.numberOfTrailingZeros(result) == 0) {
-            carry = true;
-            result = Shifter.shift(result, 1, option);
+        else {
+            if(Integer.numberOfTrailingZeros(result) == 0) {
+                carry = true;
+            }
         }
-
+        result = Shifter.shift(result, 1, option);
         return updateNZ(result);
     }
 

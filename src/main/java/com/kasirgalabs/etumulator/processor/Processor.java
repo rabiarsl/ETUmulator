@@ -369,6 +369,38 @@ public class Processor extends ArmBaseListener {
     }
 
     @Override
+    public void exitLsr(ArmParser.LsrContext ctx) {
+        rdRegister.setValue(Shifter.shift(rmRegister.getValue(),
+                shift.getAmount(),
+                Shift.LSR));
+        rdRegister.update();
+    }
+
+    @Override
+    public void exitLsrs(ArmParser.LsrsContext ctx) {
+        rdRegister.setValue(cpsr.shiftUpdateNZC(rmRegister.getValue(),
+                shift.getAmount(),
+                Shift.LSR));
+        rdRegister.update();
+    }
+
+    @Override
+    public void exitRor(ArmParser.RorContext ctx) {
+        rdRegister.setValue(Shifter.shift(rmRegister.getValue(),
+                shift.getAmount(),
+                Shift.ROR));
+        rdRegister.update();
+    }
+
+    @Override
+    public void exitRors(ArmParser.RorsContext ctx) {
+        rdRegister.setValue(cpsr.shiftUpdateNZC(rmRegister.getValue(),
+                shift.getAmount(),
+                Shift.ROR));
+        rdRegister.update();
+    }
+
+    @Override
     public void exitShiftedRm(ArmParser.ShiftedRmContext ctx) {
         rmRegister.setValue(Shifter.shift(rmRegister.getValue(),
                 shift.getAmount(),

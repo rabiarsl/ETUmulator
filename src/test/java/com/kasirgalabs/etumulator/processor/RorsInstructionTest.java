@@ -21,26 +21,35 @@ import static org.junit.Assert.assertEquals;
 import com.kasirgalabs.etumulator.InstructionTester;
 import org.junit.Test;
 
-public class LslsInstructionTest extends InstructionTester {
+public class RorsInstructionTest extends InstructionTester {
     /**
-     * Test of exitLsls method, of class Processor.
+     * Test of exitLsrs method, of class Processor.
      */
     @Test
     public void exitLsls() {
         char[] code = ("mov r1, 1\n"
                 + "mov r2, #1\n"
-                + "lsls r0, r1, r2\n").toCharArray();
+                + "rors r0, r1, r2\n").toCharArray();
         runTestCode(code);
-        assertEquals("Shift result is wrong.", registerFile.getValue(0), 2);
-        assertEquals("Negative flag is wrong.", false, cpsr.isNegative());
+        assertEquals("Shift result is wrong.", registerFile.getValue(0), 0x80000000);
+        assertEquals("Negative flag is wrong.", true, cpsr.isNegative());
         assertEquals("Zero flag is wrong.", false, cpsr.isZero());
+        assertEquals("Carry flag is wrong.", true, cpsr.isCarry());
+
+        code = ("mov r1, 0\n"
+                + "mov r2, #4\n"
+                + "rors r0, r1, r2\n").toCharArray();
+        runTestCode(code);
+        assertEquals("Shift result is wrong.", registerFile.getValue(0), 0);
+        assertEquals("Negative flag is wrong.", false, cpsr.isNegative());
+        assertEquals("Zero flag is wrong.", true, cpsr.isZero());
         assertEquals("Carry flag is wrong.", false, cpsr.isCarry());
 
         code = ("ldr r1, =#0xffffffff\n"
                 + "mov r2, #1\n"
-                + "lsls r0, r1, r2\n").toCharArray();
+                + "rors r0, r1, r2\n").toCharArray();
         runTestCode(code);
-        assertEquals("Shift result is wrong.", registerFile.getValue(0), 0xffffffff << 1);
+        assertEquals("Shift result is wrong.", registerFile.getValue(0), 0xffffffff);
         assertEquals("Negative flag is wrong.", true, cpsr.isNegative());
         assertEquals("Zero flag is wrong.", false, cpsr.isZero());
         assertEquals("Carry flag is wrong.", true, cpsr.isCarry());

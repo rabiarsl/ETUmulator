@@ -21,22 +21,22 @@ import static org.junit.Assert.assertEquals;
 import com.kasirgalabs.etumulator.InstructionTester;
 import org.junit.Test;
 
-public class LslInstructionTest extends InstructionTester {
+public class RorInstructionTest extends InstructionTester {
     /**
-     * Test of exitLsl method, of class Processor.
+     * Test of exitRor method, of class Processor.
      */
     @Test
-    public void exitLsl() {
+    public void exitRor() {
         char[] code = ("mov r1, 1\n"
                 + "mov r2, #1\n"
-                + "lsl r0, r1, r2\n").toCharArray();
+                + "ror r0, r1, r2\n").toCharArray();
         runTestCode(code);
-        assertEquals("Shift result is wrong.", registerFile.getValue(0), 2);
+        assertEquals("Shift result is wrong.", registerFile.getValue(0), 0x80000000);
 
         code = ("ldr r1, =#0xffffffff\n"
                 + "mov r2, #1\n"
-                + "lsl r0, r1, r2\n").toCharArray();
+                + "ror r0, r1, r2\n").toCharArray();
         runTestCode(code);
-        assertEquals("Shift result is wrong.", registerFile.getValue(0), 0xfffffffe);
+        assertEquals("Shift result is wrong.", registerFile.getValue(0), 0xffffffff);
     }
 }
