@@ -292,6 +292,12 @@ public class Processor extends ArmBaseListener {
     }
 
     @Override
+    public void exitMls(ArmParser.MlsContext ctx) {
+        rdRegister.setValue(rnRegister.getValue() - (rmRegister.getValue() * rsRegister.getValue()));
+        rdRegister.update();
+    }
+
+    @Override
     public void exitCmp(ArmParser.CmpContext ctx) {
         cpsr.subtractionUpdateNZV(rnRegister.getValue(), operand2.getValue());
     }

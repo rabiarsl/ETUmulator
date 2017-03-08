@@ -26,6 +26,7 @@ instruction
     | muls
     | mla
     | mlas
+    | mls
     | umull
     | umulls
     | umlal
@@ -224,6 +225,14 @@ mlas
 
 MLAS
     : M L A S
+    ;
+
+mls
+    : MLS rd COMMA rm COMMA rs COMMA rn
+    ;
+
+MLS
+    : M L S
     ;
 
 umull

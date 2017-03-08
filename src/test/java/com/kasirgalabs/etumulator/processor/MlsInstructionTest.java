@@ -21,21 +21,21 @@ import static org.junit.Assert.assertEquals;
 import com.kasirgalabs.etumulator.InstructionTester;
 import org.junit.Test;
 
-public class MlaInstructionTest extends InstructionTester {
+public class MlsInstructionTest extends InstructionTester {
     /**
      * Test of exitMla method, of class Processor.
      */
     @Test
     public void testExitMla() {
-        char[] code = ("mla r0, r1, r3, r4\n").toCharArray();
+        char[] code = ("mls r0, r1, r3, r4\n").toCharArray();
         runTestCode(code);
         assertEquals("Multiply result is wrong.", registerFile.getValue(0), 0);
 
         code = ("mov r1, 4\n"
                 + "mov r2, 8\n"
                 + "mov r3, #2\n"
-                + "mla r0, r1, r2, r3\n").toCharArray();
+                + "mls r0, r1, r2, r3\n").toCharArray();
         runTestCode(code);
-        assertEquals("Multiply result is wrong.", registerFile.getValue(0), 34);
+        assertEquals("Multiply result is wrong.", registerFile.getValue(0), -30);
     }
 }

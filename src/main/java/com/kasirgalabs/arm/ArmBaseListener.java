@@ -244,6 +244,18 @@ public class ArmBaseListener implements ArmListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
+	@Override public void enterMls(ArmParser.MlsContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitMls(ArmParser.MlsContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
 	@Override public void enterUmull(ArmParser.UmullContext ctx) { }
 	/**
 	 * {@inheritDoc}

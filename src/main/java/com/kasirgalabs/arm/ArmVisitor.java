@@ -125,6 +125,12 @@ public interface ArmVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitMlas(ArmParser.MlasContext ctx);
 	/**
+	 * Visit a parse tree produced by {@link ArmParser#mls}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitMls(ArmParser.MlsContext ctx);
+	/**
 	 * Visit a parse tree produced by {@link ArmParser#umull}.
 	 * @param ctx the parse tree
 	 * @return the visitor result

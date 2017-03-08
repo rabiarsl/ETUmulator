@@ -198,6 +198,16 @@ public interface ArmListener extends ParseTreeListener {
 	 */
 	void exitMlas(ArmParser.MlasContext ctx);
 	/**
+	 * Enter a parse tree produced by {@link ArmParser#mls}.
+	 * @param ctx the parse tree
+	 */
+	void enterMls(ArmParser.MlsContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link ArmParser#mls}.
+	 * @param ctx the parse tree
+	 */
+	void exitMls(ArmParser.MlsContext ctx);
+	/**
 	 * Enter a parse tree produced by {@link ArmParser#umull}.
 	 * @param ctx the parse tree
 	 */

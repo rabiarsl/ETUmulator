@@ -150,6 +150,13 @@ public class ArmBaseVisitor<T> extends AbstractParseTreeVisitor<T> implements Ar
 	 * <p>The default implementation returns the result of calling
 	 * {@link #visitChildren} on {@code ctx}.</p>
 	 */
+	@Override public T visitMls(ArmParser.MlsContext ctx) { return visitChildren(ctx); }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation returns the result of calling
+	 * {@link #visitChildren} on {@code ctx}.</p>
+	 */
 	@Override public T visitUmull(ArmParser.UmullContext ctx) { return visitChildren(ctx); }
 	/**
 	 * {@inheritDoc}
