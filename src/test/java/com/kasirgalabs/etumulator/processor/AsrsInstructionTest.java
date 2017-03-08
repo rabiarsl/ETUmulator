@@ -21,22 +21,28 @@ import static org.junit.Assert.assertEquals;
 import com.kasirgalabs.etumulator.InstructionTester;
 import org.junit.Test;
 
-public class AsrInstructionTest extends InstructionTester {
+public class AsrsInstructionTest extends InstructionTester {
     /**
-     * Test of exitAsr method, of class Processor.
+     * Test of exitAsrs method, of class Processor.
      */
     @Test
-    public void exitAsr() {
-        char[] code = ("ldr r1, =#0x80000000\n"
+    public void exitAsrs() {
+        char[] code = ("mov r1, 1\n"
                 + "mov r2, #1\n"
-                + "asr r0, r1, r2\n").toCharArray();
-        runTestCode(code);
-        assertEquals("Shift result is wrong.", registerFile.getValue(0), 0x80000000 >> 1);
-
-        code = ("mov r1, #0\n"
-                + "mov r2, #1\n"
-                + "asr r0, r1, r2\n").toCharArray();
+                + "asrs r0, r1, r2\n").toCharArray();
         runTestCode(code);
         assertEquals("Shift result is wrong.", registerFile.getValue(0), 0);
+        assertEquals("Negative flag is wrong.", false, cpsr.isNegative());
+        assertEquals("Zero flag is wrong.", true, cpsr.isZero());
+        assertEquals("Carry flag is wrong.", true, cpsr.isCarry());
+
+        code = ("ldr r1, =#0xffffffff\n"
+                + "mov r2, #1\n"
+                + "asrs r0, r1, r2\n").toCharArray();
+        runTestCode(code);
+        assertEquals("Shift result is wrong.", registerFile.getValue(0), 0xffffffff);
+        assertEquals("Negative flag is wrong.", true, cpsr.isNegative());
+        assertEquals("Zero flag is wrong.", false, cpsr.isZero());
+        assertEquals("Carry flag is wrong.", true, cpsr.isCarry());
     }
 }

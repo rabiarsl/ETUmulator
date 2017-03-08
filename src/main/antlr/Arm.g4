@@ -355,7 +355,7 @@ ASR
     ;
 
 asrs
-    : ASRS rd COMMA rm COMMA (rs | shiftAmount)
+    : ASRS rd COMMA rm COMMA shiftAmount
     ;
 
 ASRS
@@ -363,7 +363,7 @@ ASRS
     ;
 
 lsl
-    : LSL rd COMMA rm COMMA (rs | shiftAmount)
+    : LSL rd COMMA rm COMMA shiftAmount
     ;
 
 LSL
@@ -371,7 +371,7 @@ LSL
     ;
 
 lsls
-    : LSLS rd COMMA rm COMMA (rs | shiftAmount)
+    : LSLS rd COMMA rm COMMA shiftAmount
     ;
 
 LSLS
@@ -379,7 +379,7 @@ LSLS
     ;
 
 lsr
-    : LSR rd COMMA rm COMMA (rs | shiftAmount)
+    : LSR rd COMMA rm COMMA shiftAmount
     ;
 
 LSR
@@ -387,7 +387,7 @@ LSR
     ;
 
 lsrs
-    : LSRS rd COMMA rm COMMA (rs | shiftAmount)
+    : LSRS rd COMMA rm COMMA shiftAmount
     ;
 
 LSRS
@@ -395,7 +395,7 @@ LSRS
     ;
 
 ror
-    : ROR rd COMMA rm COMMA (rs | shiftAmount)
+    : ROR rd COMMA rm COMMA shiftAmount
     ;
 
 ROR
@@ -403,7 +403,7 @@ ROR
     ;
 
 rors
-    : RORS rd COMMA rm COMMA (rs | shiftAmount)
+    : RORS rd COMMA rm COMMA shiftAmount
     ;
 
 RORS

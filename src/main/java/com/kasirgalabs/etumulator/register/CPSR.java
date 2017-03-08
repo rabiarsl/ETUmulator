@@ -16,6 +16,9 @@
  */
 package com.kasirgalabs.etumulator.register;
 
+import com.kasirgalabs.etumulator.operand2.Shift;
+import com.kasirgalabs.etumulator.processor.Shifter;
+
 public class CPSR {
     private boolean negative;
     private boolean zero;
@@ -42,12 +45,14 @@ public class CPSR {
         return overflow;
     }
 
-    public void updateNZ(int value) {
+    public int updateNZ(int value) {
         negative = value < 0;
         zero = value == 0;
+        return value;
     }
 
-    public void additionUpdateNZV(int left, int right) {
+    public int additionUpdateNZV(int left, int right) {
+        int reuslt = left + right;
         updateNZ(left + right);
         try {
             Math.addExact(left, right);
@@ -55,9 +60,11 @@ public class CPSR {
         } catch(ArithmeticException e) {
             overflow = true;
         }
+        return reuslt;
     }
 
-    public void subtractionUpdateNZV(int left, int right) {
+    public int subtractionUpdateNZV(int left, int right) {
+        int reuslt = left - right;
         updateNZ(left - right);
         try {
             Math.subtractExact(left, right);
@@ -65,6 +72,22 @@ public class CPSR {
         } catch(ArithmeticException e) {
             overflow = true;
         }
+        return reuslt;
+    }
+
+    public int shiftUpdateNZC(int value, int shiftAmount, int option) {
+        carry = false;
+        int result = Shifter.shift(value, shiftAmount - 1, option);
+        if(option == Shift.LSL && Integer.numberOfLeadingZeros(result) == 0) {
+            carry = true;
+            result = Shifter.shift(result, 1, option);
+        }
+        else if(Integer.numberOfTrailingZeros(result) == 0) {
+            carry = true;
+            result = Shifter.shift(result, 1, option);
+        }
+
+        return updateNZ(result);
     }
 
     public void reset() {
