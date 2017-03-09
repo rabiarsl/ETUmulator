@@ -29,14 +29,14 @@ public class SubsInstructionTest extends InstructionTester {
     public void testExitSubs() {
         char[] code = ("subs r0, r1, r2\n").toCharArray();
         runTestCode(code);
-        assertEquals("Subtraction result is wrong.", registerFile.getValue(0), 0);
+        assertEquals("Subtraction result is wrong.", registerFile.getValue("r0"), 0);
         assertEquals("Negative flag is wrong.", false, cpsr.isNegative());
         assertEquals("Zero flag is wrong.", true, cpsr.isZero());
         assertEquals("Overflow flag is wrong.", false, cpsr.isOverflow());
 
         code = ("subs r0, r1, #1\n").toCharArray();
         runTestCode(code);
-        assertEquals("Subtraction result is wrong.", registerFile.getValue(0), -1);
+        assertEquals("Subtraction result is wrong.", registerFile.getValue("r0"), -1);
         assertEquals("Negative flag is wrong.", true, cpsr.isNegative());
         assertEquals("Zero flag is wrong.", false, cpsr.isZero());
         assertEquals("Overflow flag is wrong.", false, cpsr.isOverflow());
@@ -45,7 +45,7 @@ public class SubsInstructionTest extends InstructionTester {
                 + "mov r2, #1\n"
                 + "subs r0, r1, r2\n").toCharArray();
         runTestCode(code);
-        assertEquals("Subtraction result is wrong.", registerFile.getValue(0), Integer.MAX_VALUE);
+        assertEquals("Subtraction result is wrong.", registerFile.getValue("r0"), Integer.MAX_VALUE);
         assertEquals("Negative flag is wrong.", false, cpsr.isNegative());
         assertEquals("Zero flag is wrong.", false, cpsr.isZero());
         assertEquals("Overflow flag is wrong.", true, cpsr.isOverflow());
@@ -53,7 +53,7 @@ public class SubsInstructionTest extends InstructionTester {
         code = ("mov r1, #0xf\n"
                 + "subs r0, r0, r1\n").toCharArray();
         runTestCode(code);
-        assertEquals("Subtraction result is wrong.", registerFile.getValue(0), -0xf);
+        assertEquals("Subtraction result is wrong.", registerFile.getValue("r0"), -0xf);
         assertEquals("Negative flag is wrong.", true, cpsr.isNegative());
         assertEquals("Zero flag is wrong.", false, cpsr.isZero());
         assertEquals("Overflow flag is wrong.", false, cpsr.isOverflow());

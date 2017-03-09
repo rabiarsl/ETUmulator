@@ -31,17 +31,17 @@ public class OrrInstructionTest extends InstructionTester {
                 + "mov r2, #1\n"
                 + "orr r0, r1, r2\n").toCharArray();
         runTestCode(code);
-        assertEquals("OR result is wrong.", registerFile.getValue(0), 1);
+        assertEquals("OR result is wrong.", registerFile.getValue("r0"), 1);
 
         code = ("ldr r1, =0xffffffff\n"
                 + "orr r0, r1, 0\n").toCharArray();
         runTestCode(code);
-        assertEquals("OR result is wrong.", registerFile.getValue(0), -1);
+        assertEquals("OR result is wrong.", registerFile.getValue("r0"), -1);
 
         code = ("ldr r1, =0x0f0f0f0f\n"
                 + "ldr r2, = 0xf0f0f0f0\n"
                 + "orr r0, r1, r2\n").toCharArray();
         runTestCode(code);
-        assertEquals("OR result is wrong.", registerFile.getValue(0), -1);
+        assertEquals("OR result is wrong.", registerFile.getValue("r0"), -1);
     }
 }

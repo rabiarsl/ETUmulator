@@ -31,27 +31,27 @@ public class OrnsInstructionTest extends InstructionTester {
                 + "mov r2, #1\n"
                 + "orns r0, r1, r2\n").toCharArray();
         runTestCode(code);
-        assertEquals("OR result is wrong.", registerFile.getValue(0), -2);
+        assertEquals("OR result is wrong.", registerFile.getValue("r0"), -2);
         assertEquals("Negative flag is wrong.", true, cpsr.isNegative());
         assertEquals("Zero flag is wrong.", false, cpsr.isZero());
 
         code = ("ldr r1, =0xffffffff\n"
                 + "orns r0, r1, r1\n").toCharArray();
         runTestCode(code);
-        assertEquals("OR result is wrong.", registerFile.getValue(0), 0xffffffff | ~0xffffffff);
+        assertEquals("OR result is wrong.", registerFile.getValue("r0"), 0xffffffff | ~0xffffffff);
         assertEquals("Negative flag is wrong.", true, cpsr.isNegative());
         assertEquals("Zero flag is wrong.", false, cpsr.isZero());
 
         code = ("ldr r1, =0xffffffff\n"
                 + "orns r0, r1, 0\n").toCharArray();
         runTestCode(code);
-        assertEquals("OR result is wrong.", registerFile.getValue(0), -1);
+        assertEquals("OR result is wrong.", registerFile.getValue("r0"), -1);
         assertEquals("Negative flag is wrong.", true, cpsr.isNegative());
         assertEquals("Zero flag is wrong.", false, cpsr.isZero());
 
         code = ("orns r0, r1, 0xffffffff\n").toCharArray();
         runTestCode(code);
-        assertEquals("OR result is wrong.", registerFile.getValue(0), 0);
+        assertEquals("OR result is wrong.", registerFile.getValue("r0"), 0);
         assertEquals("Negative flag is wrong.", false, cpsr.isNegative());
         assertEquals("Zero flag is wrong.", true, cpsr.isZero());
     }

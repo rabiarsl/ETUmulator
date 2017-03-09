@@ -30,29 +30,29 @@ public class AdcInstructionTest extends InstructionTester {
         cpsr.setCarry(false);
         char[] code = ("adc r1, r2, r3\n").toCharArray();
         runTestCode(code);
-        assertEquals("Addition result is wrong.", registerFile.getValue(1), 0);
+        assertEquals("Addition result is wrong.", registerFile.getValue("r1"), 0);
 
         cpsr.setCarry(true);
         code = ("adc r0, r1, 0\n").toCharArray();
         runTestCode(code);
-        assertEquals("Addition result is wrong.", registerFile.getValue(0), 1);
+        assertEquals("Addition result is wrong.", registerFile.getValue("r0"), 1);
 
         cpsr.setCarry(false);
         code = ("adc r0, r1, 4\n").toCharArray();
         runTestCode(code);
-        assertEquals("Addition result is wrong.", registerFile.getValue(0), 4);
+        assertEquals("Addition result is wrong.", registerFile.getValue("r0"), 4);
 
         cpsr.setCarry(true);
         code = ("mov r1, #1\n"
                 + "mov r2, #2\n"
                 + "adc r0, r1, r2\n").toCharArray();
         runTestCode(code);
-        assertEquals("Addition result is wrong.", registerFile.getValue(0), 4);
+        assertEquals("Addition result is wrong.", registerFile.getValue("r0"), 4);
 
         cpsr.setCarry(true);
         code = ("mov r0, #1\n"
                 + "adc r0, r0, r0\n").toCharArray();
         runTestCode(code);
-        assertEquals("Addition result is wrong.", registerFile.getValue(0), 3);
+        assertEquals("Addition result is wrong.", registerFile.getValue("r0"), 3);
     }
 }

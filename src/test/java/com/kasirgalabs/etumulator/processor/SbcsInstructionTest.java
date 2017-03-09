@@ -31,7 +31,7 @@ public class SbcsInstructionTest extends InstructionTester {
         char[] code = ("ldr r1, =#0x80000000\n"
                 + "sbcs r0, r1, #1\n").toCharArray();
         runTestCode(code);
-        assertEquals("Subtraction result is wrong.", registerFile.getValue(0), Integer.MAX_VALUE);
+        assertEquals("Subtraction result is wrong.", registerFile.getValue("r0"), Integer.MAX_VALUE);
         assertEquals("Negative flag is wrong.", false, cpsr.isNegative());
         assertEquals("Zero flag is wrong.", false, cpsr.isZero());
         assertEquals("Overflow flag is wrong.", true, cpsr.isOverflow());
@@ -40,7 +40,7 @@ public class SbcsInstructionTest extends InstructionTester {
         code = ("ldr r1, =#0x80000000\n"
                 + "sbcs r0, r1, #1\n").toCharArray();
         runTestCode(code);
-        assertEquals("Subtraction result is wrong.", registerFile.getValue(0), Integer.MAX_VALUE - 1);
+        assertEquals("Subtraction result is wrong.", registerFile.getValue("r0"), Integer.MAX_VALUE - 1);
         assertEquals("Negative flag is wrong.", false, cpsr.isNegative());
         assertEquals("Zero flag is wrong.", false, cpsr.isZero());
         assertEquals("Overflow flag is wrong.", true, cpsr.isOverflow());
@@ -48,7 +48,7 @@ public class SbcsInstructionTest extends InstructionTester {
         cpsr.setCarry(true);
         code = ("sbcs r0, r1, #0\n").toCharArray();
         runTestCode(code);
-        assertEquals("Subtraction result is wrong.", registerFile.getValue(0), 0);
+        assertEquals("Subtraction result is wrong.", registerFile.getValue("r0"), 0);
         assertEquals("Negative flag is wrong.", false, cpsr.isNegative());
         assertEquals("Zero flag is wrong.", true, cpsr.isZero());
         assertEquals("Overflow flag is wrong.", false, cpsr.isOverflow());
@@ -57,7 +57,7 @@ public class SbcsInstructionTest extends InstructionTester {
         code = ("ldr r1, =#0x80000001\n"
                 + "sbcs r0, r1, #1\n").toCharArray();
         runTestCode(code);
-        assertEquals("Subtraction result is wrong.", registerFile.getValue(0), Integer.MAX_VALUE);
+        assertEquals("Subtraction result is wrong.", registerFile.getValue("r0"), Integer.MAX_VALUE);
         assertEquals("Negative flag is wrong.", false, cpsr.isNegative());
         assertEquals("Zero flag is wrong.", false, cpsr.isZero());
         assertEquals("Overflow flag is wrong.", true, cpsr.isOverflow());

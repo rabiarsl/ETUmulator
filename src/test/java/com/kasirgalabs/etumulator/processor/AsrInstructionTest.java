@@ -31,12 +31,12 @@ public class AsrInstructionTest extends InstructionTester {
                 + "mov r2, #1\n"
                 + "asr r0, r1, r2\n").toCharArray();
         runTestCode(code);
-        assertEquals("Shift result is wrong.", registerFile.getValue(0), 0x80000000 >> 1);
+        assertEquals("Shift result is wrong.", registerFile.getValue("r0"), 0x80000000 >> 1);
 
         code = ("mov r1, #0\n"
                 + "mov r2, #1\n"
                 + "asr r0, r1, r2\n").toCharArray();
         runTestCode(code);
-        assertEquals("Shift result is wrong.", registerFile.getValue(0), 0);
+        assertEquals("Shift result is wrong.", registerFile.getValue("r0"), 0);
     }
 }

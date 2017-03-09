@@ -31,7 +31,7 @@ public class LsrsInstructionTest extends InstructionTester {
                 + "mov r2, #1\n"
                 + "lsrs r0, r1, r2\n").toCharArray();
         runTestCode(code);
-        assertEquals("Shift result is wrong.", registerFile.getValue(0), 0);
+        assertEquals("Shift result is wrong.", registerFile.getValue("r0"), 0);
         assertEquals("Negative flag is wrong.", false, cpsr.isNegative());
         assertEquals("Zero flag is wrong.", true, cpsr.isZero());
         assertEquals("Carry flag is wrong.", true, cpsr.isCarry());
@@ -40,7 +40,7 @@ public class LsrsInstructionTest extends InstructionTester {
                 + "mov r2, #1\n"
                 + "lsrs r0, r1, r2\n").toCharArray();
         runTestCode(code);
-        assertEquals("Shift result is wrong.", registerFile.getValue(0), 0x7fffffff);
+        assertEquals("Shift result is wrong.", registerFile.getValue("r0"), 0x7fffffff);
         assertEquals("Negative flag is wrong.", false, cpsr.isNegative());
         assertEquals("Zero flag is wrong.", false, cpsr.isZero());
         assertEquals("Carry flag is wrong.", true, cpsr.isCarry());

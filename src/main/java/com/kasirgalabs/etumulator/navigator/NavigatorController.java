@@ -63,9 +63,9 @@ public class NavigatorController implements Initializable, Observer {
     public void update() {
         for(int i = 0; i < DATA.size(); i++) {
             NavigatorRow navigatorRow = DATA.remove(i);
-            int registerNumber = Integer.parseInt(navigatorRow.getProperty().substring(1));
-            String registerValue = Integer.toString(registerFile.getValue(registerNumber));
-            DATA.add(i, new NavigatorRow("r" + Integer.toString(registerNumber), registerValue));
+            String registerName = navigatorRow.getProperty().substring(1);
+            String registerValue = Integer.toString(registerFile.getValue(registerName));
+            DATA.add(i, new NavigatorRow(registerName, registerValue));
         }
     }
 

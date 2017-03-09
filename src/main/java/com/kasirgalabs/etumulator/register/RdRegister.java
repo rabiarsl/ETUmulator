@@ -19,14 +19,14 @@ package com.kasirgalabs.etumulator.register;
 import com.kasirgalabs.arm.ArmParser.RdContext;
 
 public class RdRegister implements Register {
-    private int value;
-    private final int registerNumber;
     private final RegisterFile registerFile;
+    private final String registerName;
+    private int value;
 
     public RdRegister(RdContext ctx, RegisterFile registerFile) {
         this.registerFile = registerFile;
-        registerNumber = RegisterUtils.parseRegisterNumber(ctx.REGISTER());
-        this.value = registerFile.getValue(registerNumber);
+        registerName = ctx.getText();
+        value = registerFile.getValue(registerName);
     }
 
     @Override
@@ -40,6 +40,6 @@ public class RdRegister implements Register {
     }
 
     public void update() {
-        registerFile.update(registerNumber, value);
+        registerFile.update(registerName, value);
     }
 }

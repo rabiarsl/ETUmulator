@@ -31,12 +31,12 @@ public class LsrInstructionTest extends InstructionTester {
                 + "mov r2, #1\n"
                 + "lsr r0, r1, r2\n").toCharArray();
         runTestCode(code);
-        assertEquals("Shift result is wrong.", registerFile.getValue(0), 0);
+        assertEquals("Shift result is wrong.", registerFile.getValue("r0"), 0);
 
         code = ("ldr r1, =#0xffffffff\n"
                 + "mov r2, #1\n"
                 + "lsr r0, r1, r2\n").toCharArray();
         runTestCode(code);
-        assertEquals("Shift result is wrong.", registerFile.getValue(0), 0x7fffffff);
+        assertEquals("Shift result is wrong.", registerFile.getValue("r0"), 0x7fffffff);
     }
 }

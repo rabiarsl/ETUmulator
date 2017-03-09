@@ -31,13 +31,13 @@ public class AdcsInstructionTest extends InstructionTester {
         char[] code = ("mov r1, #1\n"
                 + "adcs r0, r1, r1\n").toCharArray();
         runTestCode(code);
-        assertEquals("Addition result is wrong.", registerFile.getValue(0), 2);
+        assertEquals("Addition result is wrong.", registerFile.getValue("r0"), 2);
 
         cpsr.setCarry(true);
         code = ("ldr r1, =0x7fffffff\n"
                 + "adcs r0, r1, r1\n").toCharArray();
         runTestCode(code);
-        assertEquals("Addition result is wrong.", registerFile.getValue(0), -1);
+        assertEquals("Addition result is wrong.", registerFile.getValue("r0"), -1);
         assertEquals("Negative flag is wrong.", true, cpsr.isNegative());
         assertEquals("Zero flag is wrong.", false, cpsr.isZero());
         assertEquals("Overflow flag is wrong.", true, cpsr.isOverflow());
@@ -46,7 +46,7 @@ public class AdcsInstructionTest extends InstructionTester {
         code = ("ldr r1, =0x7fffffff\n"
                 + "adcs r0, r1, #0\n").toCharArray();
         runTestCode(code);
-        assertEquals("Addition result is wrong.", registerFile.getValue(0), Integer.MIN_VALUE);
+        assertEquals("Addition result is wrong.", registerFile.getValue("r0"), Integer.MIN_VALUE);
         assertEquals("Negative flag is wrong.", true, cpsr.isNegative());
         assertEquals("Zero flag is wrong.", false, cpsr.isZero());
         assertEquals("Overflow flag is wrong.", true, cpsr.isOverflow());

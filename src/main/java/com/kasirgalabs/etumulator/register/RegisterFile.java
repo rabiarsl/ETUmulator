@@ -19,27 +19,29 @@ package com.kasirgalabs.etumulator.register;
 import com.kasirgalabs.etumulator.pattern.Observable;
 import com.kasirgalabs.etumulator.pattern.Observer;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class RegisterFile implements Observable {
     public static final int NUM_OF_REGS = 15;
-    private final IntegerRegister[] registers;
+    private final Map<String, IntegerRegister> registers;
     private final List<Observer> observers;
 
     public RegisterFile() {
+        registers = new HashMap<>(NUM_OF_REGS);
         observers = new ArrayList<>();
-        registers = new IntegerRegister[NUM_OF_REGS];
         for(int i = 0; i < NUM_OF_REGS; i++) {
-            registers[i] = new IntegerRegister();
+            registers.put("r" + Integer.toString(i), new IntegerRegister());
         }
     }
 
-    public int getValue(int registerNumber) {
-        return registers[registerNumber].getValue();
+    public int getValue(String registerName) {
+        return registers.get(registerName).getValue();
     }
 
-    public void update(int registerNumber, int value) {
-        registers[registerNumber].setValue(value);
+    public void update(String registerName, int value) {
+        registers.get(registerName).setValue(value);
         notifyObservers();
     }
 
@@ -56,8 +58,9 @@ public class RegisterFile implements Observable {
     }
 
     public void reset() {
-        for(int i = 0; i < NUM_OF_REGS; i++) {
-            registers[i].reset();
-        }
+        registers.values().forEach((object) -> {
+            Register register = object;
+            register.setValue(0);
+        });
     }
 }

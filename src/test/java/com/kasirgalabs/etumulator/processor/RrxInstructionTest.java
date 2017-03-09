@@ -30,7 +30,7 @@ public class RrxInstructionTest extends InstructionTester {
         char[] code = ("mov r1, 1\n"
                 + "rrx r0, r1\n").toCharArray();
         runTestCode(code);
-        assertEquals("Shift result is wrong.", registerFile.getValue(0), 0);
+        assertEquals("Shift result is wrong.", registerFile.getValue("r0"), 0);
         assertEquals("Negative flag is wrong.", false, cpsr.isNegative());
         assertEquals("Zero flag is wrong.", true, cpsr.isZero());
         assertEquals("Carry flag is wrong.", true, cpsr.isCarry());
@@ -39,7 +39,7 @@ public class RrxInstructionTest extends InstructionTester {
         code = ("ldr r1, =#0xffffffff\n"
                 + "rrx r0, r1\n").toCharArray();
         runTestCode(code);
-        assertEquals("Shift result is wrong.", registerFile.getValue(0), 0xffffffff);
+        assertEquals("Shift result is wrong.", registerFile.getValue("r0"), 0xffffffff);
         assertEquals("Negative flag is wrong.", true, cpsr.isNegative());
         assertEquals("Zero flag is wrong.", false, cpsr.isZero());
         assertEquals("Carry flag is wrong.", true, cpsr.isCarry());
@@ -48,7 +48,7 @@ public class RrxInstructionTest extends InstructionTester {
         code = ("ldr r1, =#0xffffffff\n"
                 + "rrx r0, r1\n").toCharArray();
         runTestCode(code);
-        assertEquals("Shift result is wrong.", registerFile.getValue(0), Integer.MAX_VALUE);
+        assertEquals("Shift result is wrong.", registerFile.getValue("r0"), Integer.MAX_VALUE);
         assertEquals("Negative flag is wrong.", false, cpsr.isNegative());
         assertEquals("Zero flag is wrong.", false, cpsr.isZero());
         assertEquals("Carry flag is wrong.", true, cpsr.isCarry());
@@ -57,7 +57,7 @@ public class RrxInstructionTest extends InstructionTester {
         code = ("mov r1, 0\n"
                 + "rrx r0, r1\n").toCharArray();
         runTestCode(code);
-        assertEquals("Shift result is wrong.", registerFile.getValue(0), 0);
+        assertEquals("Shift result is wrong.", registerFile.getValue("r0"), 0);
         assertEquals("Negative flag is wrong.", false, cpsr.isNegative());
         assertEquals("Zero flag is wrong.", true, cpsr.isZero());
         assertEquals("Carry flag is wrong.", false, cpsr.isCarry());
@@ -66,7 +66,7 @@ public class RrxInstructionTest extends InstructionTester {
         code = ("mov r1, 1\n"
                 + "rrx r0, r1\n").toCharArray();
         runTestCode(code);
-        assertEquals("Shift result is wrong.", registerFile.getValue(0), 0);
+        assertEquals("Shift result is wrong.", registerFile.getValue("r0"), 0);
         assertEquals("Negative flag is wrong.", false, cpsr.isNegative());
         assertEquals("Zero flag is wrong.", true, cpsr.isZero());
         assertEquals("Carry flag is wrong.", true, cpsr.isCarry());

@@ -841,13 +841,10 @@ REGISTER
     | R '9'
     | R '10'
     | R '11'
-    | R '12'
-    | R '13'
-    | R '14'
     ;
 
 reglist
-    : (REGISTER | LR | PC) (COMMA REGISTER | LR | PC)*
+    : (REGISTER | LR | PC) (COMMA (REGISTER | LR | PC))*
     ;
 
 LR

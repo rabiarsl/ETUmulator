@@ -20,12 +20,12 @@ import com.kasirgalabs.arm.ArmParser.RmContext;
 import com.kasirgalabs.etumulator.operand2.Operand2;
 
 public class RmRegister implements Register, Operand2 {
+    private final String registerName;
     private int value;
-    private final int registerNumber;
 
     public RmRegister(RmContext ctx, RegisterFile registerFile) {
-        registerNumber = RegisterUtils.parseRegisterNumber(ctx.REGISTER());
-        this.value = registerFile.getValue(registerNumber);
+        registerName = ctx.getText();
+        value = registerFile.getValue(registerName);
     }
 
     @Override

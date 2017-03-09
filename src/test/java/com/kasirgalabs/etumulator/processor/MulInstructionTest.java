@@ -29,12 +29,12 @@ public class MulInstructionTest extends InstructionTester {
     public void testExitMul() {
         char[] code = ("mul r0, r1, r3\n").toCharArray();
         runTestCode(code);
-        assertEquals("Multiply result is wrong.", registerFile.getValue(0), 0);
+        assertEquals("Multiply result is wrong.", registerFile.getValue("r0"), 0);
 
         code = ("mov r1, 4\n"
                 + "mov r2, 8\n"
                 + "mul r0, r1, r2\n").toCharArray();
         runTestCode(code);
-        assertEquals("Multiply result is wrong.", registerFile.getValue(0), 32);
+        assertEquals("Multiply result is wrong.", registerFile.getValue("r0"), 32);
     }
 }

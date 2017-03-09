@@ -29,7 +29,7 @@ public class MulsInstructionTest extends InstructionTester {
     public void testExitMuls() {
         char[] code = ("muls r0, r1, r3\n").toCharArray();
         runTestCode(code);
-        assertEquals("Multiply result is wrong.", registerFile.getValue(0), 0);
+        assertEquals("Multiply result is wrong.", registerFile.getValue("r0"), 0);
         assertEquals("Negative flag is wrong.", false, cpsr.isNegative());
         assertEquals("Zero flag is wrong.", true, cpsr.isZero());
 
@@ -37,7 +37,7 @@ public class MulsInstructionTest extends InstructionTester {
                 + "mov r2, 8\n"
                 + "muls r0, r1, r2\n").toCharArray();
         runTestCode(code);
-        assertEquals("Multiply result is wrong.", registerFile.getValue(0), 32);
+        assertEquals("Multiply result is wrong.", registerFile.getValue("r0"), 32);
         assertEquals("Negative flag is wrong.", false, cpsr.isNegative());
         assertEquals("Zero flag is wrong.", false, cpsr.isZero());
     }

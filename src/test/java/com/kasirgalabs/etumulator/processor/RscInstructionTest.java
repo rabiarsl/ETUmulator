@@ -30,29 +30,29 @@ public class RscInstructionTest extends InstructionTester {
         cpsr.setCarry(false);
         char[] code = ("rsc r1, r2, r3\n").toCharArray();
         runTestCode(code);
-        assertEquals("Subtraction result is wrong.", registerFile.getValue(1), 0);
+        assertEquals("Subtraction result is wrong.", registerFile.getValue("r1"), 0);
 
         cpsr.setCarry(true);
         code = ("rsc r0, r1, 0\n").toCharArray();
         runTestCode(code);
-        assertEquals("Subtraction result is wrong.", registerFile.getValue(0), -1);
+        assertEquals("Subtraction result is wrong.", registerFile.getValue("r0"), -1);
 
         cpsr.setCarry(false);
         code = ("rsc r0, r1, 4\n").toCharArray();
         runTestCode(code);
-        assertEquals("Subtraction result is wrong.", registerFile.getValue(0), 4);
+        assertEquals("Subtraction result is wrong.", registerFile.getValue("r0"), 4);
 
         cpsr.setCarry(true);
         code = ("mov r1, #1\n"
                 + "mov r2, #2\n"
                 + "rsc r0, r2, r1\n").toCharArray();
         runTestCode(code);
-        assertEquals("Subtraction result is wrong.", registerFile.getValue(0), -2);
+        assertEquals("Subtraction result is wrong.", registerFile.getValue("r0"), -2);
 
         cpsr.setCarry(true);
         code = ("mov r0, #1\n"
                 + "rsc r0, r0, r0\n").toCharArray();
         runTestCode(code);
-        assertEquals("Subtraction result is wrong.", registerFile.getValue(0), -1);
+        assertEquals("Subtraction result is wrong.", registerFile.getValue("r0"), -1);
     }
 }
