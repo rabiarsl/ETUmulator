@@ -80,22 +80,32 @@ public class CPSR {
     }
 
     public int shiftUpdateNZC(int value, int shiftAmount, int option) {
-        shifter.setCarry(carry);
         carry = false;
+        if(shiftAmount <= 0) {
+            return updateNZ(value);
+        }
         int result = shifter.shift(value, shiftAmount - 1, option);
         if(option == Shift.LSL) {
-            if(Integer.numberOfLeadingZeros(value) == 0) {
+            if(Integer.numberOfLeadingZeros(result) == 0) {
                 carry = true;
             }
         }
         else {
-            if(Integer.numberOfTrailingZeros(value) == 0) {
+            if(Integer.numberOfTrailingZeros(result) == 0) {
                 carry = true;
             }
         }
-        if(option != Shift.RRX) {
-            result = shifter.shift(result, 1, option);
+        result = shifter.shift(value, shiftAmount, option);
+        return updateNZ(result);
+    }
+
+    public int rrxUpdateNZC(int value) {
+        shifter.setCarry(carry);
+        carry = false;
+        if(Integer.numberOfTrailingZeros(value) == 0) {
+            carry = true;
         }
+        int result = shifter.rrxShift(value);
         return updateNZ(result);
     }
 

@@ -405,9 +405,7 @@ public class Processor extends ArmBaseListener {
 
     @Override
     public void exitRrx(ArmParser.RrxContext ctx) {
-        rdRegister.setValue(cpsr.shiftUpdateNZC(rmRegister.getValue(),
-                -1, // Not used.
-                Shift.RRX));
+        rdRegister.setValue(cpsr.rrxUpdateNZC(rmRegister.getValue()));
         rdRegister.update();
     }
 

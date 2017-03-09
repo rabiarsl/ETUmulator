@@ -26,6 +26,9 @@ public class Shifter {
     }
 
     public int shift(int value, int shiftAmount, int option) {
+        if(shiftAmount <= 0) {
+            return value;
+        }
         switch(option) {
             case Shift.ASR:
                 return value >> shiftAmount;
@@ -43,5 +46,13 @@ public class Shifter {
                 return result;
         }
         return 0;
+    }
+
+    public int rrxShift(int value) {
+        int result = value >>> 1;
+        if(carry) {
+            result |= 0x80000000;
+        }
+        return result;
     }
 }

@@ -16,10 +16,9 @@
  */
 package com.kasirgalabs.etumulator.processor;
 
-import com.kasirgalabs.etumulator.processor.CPSR;
-
 import static org.junit.Assert.assertEquals;
 
+import com.kasirgalabs.etumulator.operand2.Shift;
 import org.junit.Test;
 
 public class CPSRTest {
@@ -27,6 +26,7 @@ public class CPSRTest {
 
     public CPSRTest() {
         cpsr = new CPSR();
+        cpsr.setShifter(new Shifter());
     }
 
     /**
@@ -34,27 +34,22 @@ public class CPSRTest {
      */
     @Test
     public void testUpdateNZ() {
-        cpsr.reset();
         cpsr.updateNZ(1);
         assertEquals("Negative flag is wrong.", false, cpsr.isNegative());
         assertEquals("Zero flag is wrong.", false, cpsr.isZero());
 
-        cpsr.reset();
         cpsr.updateNZ(0);
         assertEquals("Negative flag is wrong.", false, cpsr.isNegative());
         assertEquals("Zero flag is wrong.", true, cpsr.isZero());
 
-        cpsr.reset();
         cpsr.updateNZ(-1);
         assertEquals("Negative flag is wrong.", true, cpsr.isNegative());
         assertEquals("Zero flag is wrong.", false, cpsr.isZero());
 
-        cpsr.reset();
         cpsr.updateNZ(Integer.MAX_VALUE);
         assertEquals("Negative flag is wrong.", false, cpsr.isNegative());
         assertEquals("Zero flag is wrong.", false, cpsr.isZero());
 
-        cpsr.reset();
         cpsr.updateNZ(Integer.MIN_VALUE);
         assertEquals("Negative flag is wrong.", true, cpsr.isNegative());
         assertEquals("Zero flag is wrong.", false, cpsr.isZero());
@@ -65,37 +60,31 @@ public class CPSRTest {
      */
     @Test
     public void testAdditionUpdateNZV() {
-        cpsr.reset();
         cpsr.additionUpdateNZV(1, 1);
         assertEquals("Negative flag is wrong.", false, cpsr.isNegative());
         assertEquals("Zero flag is wrong.", false, cpsr.isZero());
         assertEquals("Overflow flag is wrong.", false, cpsr.isOverflow());
 
-        cpsr.reset();
         cpsr.additionUpdateNZV(0, 0);
         assertEquals("Negative flag is wrong.", false, cpsr.isNegative());
         assertEquals("Zero flag is wrong.", true, cpsr.isZero());
         assertEquals("Overflow flag is wrong.", false, cpsr.isOverflow());
 
-        cpsr.reset();
         cpsr.additionUpdateNZV(-1, -1);
         assertEquals("Negative flag is wrong.", true, cpsr.isNegative());
         assertEquals("Zero flag is wrong.", false, cpsr.isZero());
         assertEquals("Overflow flag is wrong.", false, cpsr.isOverflow());
 
-        cpsr.reset();
         cpsr.additionUpdateNZV(Integer.MAX_VALUE, Integer.MAX_VALUE);
         assertEquals("Negative flag is wrong.", true, cpsr.isNegative());
         assertEquals("Zero flag is wrong.", false, cpsr.isZero());
         assertEquals("Overflow flag is wrong.", true, cpsr.isOverflow());
 
-        cpsr.reset();
         cpsr.additionUpdateNZV(Integer.MIN_VALUE, Integer.MIN_VALUE);
         assertEquals("Negative flag is wrong.", false, cpsr.isNegative());
         assertEquals("Zero flag is wrong.", true, cpsr.isZero());
         assertEquals("Overflow flag is wrong.", true, cpsr.isOverflow());
 
-        cpsr.reset();
         cpsr.additionUpdateNZV(Integer.MAX_VALUE, Integer.MIN_VALUE);
         assertEquals("Negative flag is wrong.", true, cpsr.isNegative());
         assertEquals("Zero flag is wrong.", false, cpsr.isZero());
@@ -107,40 +96,98 @@ public class CPSRTest {
      */
     @Test
     public void testSubtractionUpdateNZV() {
-        cpsr.reset();
         cpsr.subtractionUpdateNZV(1, 1);
         assertEquals("Negative flag is wrong.", false, cpsr.isNegative());
         assertEquals("Zero flag is wrong.", true, cpsr.isZero());
         assertEquals("Overflow flag is wrong.", false, cpsr.isOverflow());
 
-        cpsr.reset();
         cpsr.subtractionUpdateNZV(0, 0);
         assertEquals("Negative flag is wrong.", false, cpsr.isNegative());
         assertEquals("Zero flag is wrong.", true, cpsr.isZero());
         assertEquals("Overflow flag is wrong.", false, cpsr.isOverflow());
 
-        cpsr.reset();
         cpsr.subtractionUpdateNZV(-1, -1);
         assertEquals("Negative flag is wrong.", false, cpsr.isNegative());
         assertEquals("Zero flag is wrong.", true, cpsr.isZero());
         assertEquals("Overflow flag is wrong.", false, cpsr.isOverflow());
 
-        cpsr.reset();
         cpsr.subtractionUpdateNZV(Integer.MAX_VALUE, Integer.MAX_VALUE);
         assertEquals("Negative flag is wrong.", false, cpsr.isNegative());
         assertEquals("Zero flag is wrong.", true, cpsr.isZero());
         assertEquals("Overflow flag is wrong.", false, cpsr.isOverflow());
 
-        cpsr.reset();
         cpsr.subtractionUpdateNZV(Integer.MIN_VALUE, Integer.MIN_VALUE);
         assertEquals("Negative flag is wrong.", false, cpsr.isNegative());
         assertEquals("Zero flag is wrong.", true, cpsr.isZero());
         assertEquals("Overflow flag is wrong.", false, cpsr.isOverflow());
 
-        cpsr.reset();
         cpsr.subtractionUpdateNZV(Integer.MAX_VALUE, Integer.MIN_VALUE);
         assertEquals("Negative flag is wrong.", true, cpsr.isNegative());
         assertEquals("Zero flag is wrong.", false, cpsr.isZero());
         assertEquals("Overflow flag is wrong.", true, cpsr.isOverflow());
+    }
+
+    /**
+     * Test of shiftUpdateNZC method, of class CPSR.
+     */
+    @Test
+    public void testShiftUpdateNZC() {
+        cpsr.shiftUpdateNZC(0xffffffff, 1, Shift.ASR);
+        assertEquals("Negative flag is wrong.", true, cpsr.isNegative());
+        assertEquals("Zero flag is wrong.", false, cpsr.isZero());
+        assertEquals("Carry flag is wrong.", true, cpsr.isCarry());
+
+        cpsr.shiftUpdateNZC(0xffffffff, 0, Shift.ASR);
+        assertEquals("Negative flag is wrong.", true, cpsr.isNegative());
+        assertEquals("Zero flag is wrong.", false, cpsr.isZero());
+        assertEquals("Carry flag is wrong.", false, cpsr.isCarry());
+
+        cpsr.shiftUpdateNZC(2, 1, Shift.ASR);
+        assertEquals("Negative flag is wrong.", false, cpsr.isNegative());
+        assertEquals("Zero flag is wrong.", false, cpsr.isZero());
+        assertEquals("Carry flag is wrong.", false, cpsr.isCarry());
+
+        cpsr.shiftUpdateNZC(0x80000000, 1, Shift.LSL);
+        assertEquals("Negative flag is wrong.", false, cpsr.isNegative());
+        assertEquals("Zero flag is wrong.", true, cpsr.isZero());
+        assertEquals("Carry flag is wrong.", true, cpsr.isCarry());
+
+        cpsr.shiftUpdateNZC(0x70000000, 1, Shift.LSL);
+        assertEquals("Negative flag is wrong.", true, cpsr.isNegative());
+        assertEquals("Zero flag is wrong.", false, cpsr.isZero());
+        assertEquals("Carry flag is wrong.", false, cpsr.isCarry());
+
+        cpsr.shiftUpdateNZC(1, 1, Shift.LSR);
+        assertEquals("Negative flag is wrong.", false, cpsr.isNegative());
+        assertEquals("Zero flag is wrong.", true, cpsr.isZero());
+        assertEquals("Carry flag is wrong.", true, cpsr.isCarry());
+
+        cpsr.shiftUpdateNZC(2, 1, Shift.LSR);
+        assertEquals("Negative flag is wrong.", false, cpsr.isNegative());
+        assertEquals("Zero flag is wrong.", false, cpsr.isZero());
+        assertEquals("Carry flag is wrong.", false, cpsr.isCarry());
+
+        cpsr.shiftUpdateNZC(2, 2, Shift.ROR);
+        assertEquals("Negative flag is wrong.", true, cpsr.isNegative());
+        assertEquals("Zero flag is wrong.", false, cpsr.isZero());
+        assertEquals("Carry flag is wrong.", true, cpsr.isCarry());
+
+        cpsr.setCarry(false);
+        cpsr.rrxUpdateNZC(1);
+        assertEquals("Negative flag is wrong.", false, cpsr.isNegative());
+        assertEquals("Zero flag is wrong.", true, cpsr.isZero());
+        assertEquals("Carry flag is wrong.", true, cpsr.isCarry());
+
+        cpsr.setCarry(true);
+        cpsr.rrxUpdateNZC(1);
+        assertEquals("Negative flag is wrong.", true, cpsr.isNegative());
+        assertEquals("Zero flag is wrong.", false, cpsr.isZero());
+        assertEquals("Carry flag is wrong.", true, cpsr.isCarry());
+
+        cpsr.setCarry(true);
+        cpsr.rrxUpdateNZC(2);
+        assertEquals("Negative flag is wrong.", true, cpsr.isNegative());
+        assertEquals("Zero flag is wrong.", false, cpsr.isZero());
+        assertEquals("Carry flag is wrong.", false, cpsr.isCarry());
     }
 }
