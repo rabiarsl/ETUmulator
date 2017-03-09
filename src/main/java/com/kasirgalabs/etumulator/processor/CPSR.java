@@ -14,16 +14,16 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.kasirgalabs.etumulator.register;
+package com.kasirgalabs.etumulator.processor;
 
 import com.kasirgalabs.etumulator.operand2.Shift;
-import com.kasirgalabs.etumulator.processor.Shifter;
 
 public class CPSR {
     private boolean negative;
     private boolean zero;
     private boolean carry;
     private boolean overflow;
+    private Shifter shifter;
 
     public boolean isNegative() {
         return negative;
@@ -43,6 +43,10 @@ public class CPSR {
 
     public boolean isOverflow() {
         return overflow;
+    }
+
+    public void setShifter(Shifter shifter) {
+        this.shifter = shifter;
     }
 
     public int updateNZ(int value) {
@@ -76,19 +80,22 @@ public class CPSR {
     }
 
     public int shiftUpdateNZC(int value, int shiftAmount, int option) {
+        shifter.setCarry(carry);
         carry = false;
-        int result = Shifter.shift(value, shiftAmount - 1, option);
+        int result = shifter.shift(value, shiftAmount - 1, option);
         if(option == Shift.LSL) {
-            if(Integer.numberOfLeadingZeros(result) == 0) {
+            if(Integer.numberOfLeadingZeros(value) == 0) {
                 carry = true;
             }
         }
         else {
-            if(Integer.numberOfTrailingZeros(result) == 0) {
+            if(Integer.numberOfTrailingZeros(value) == 0) {
                 carry = true;
             }
         }
-        result = Shifter.shift(result, 1, option);
+        if(option != Shift.RRX) {
+            result = shifter.shift(result, 1, option);
+        }
         return updateNZ(result);
     }
 

@@ -25,7 +25,6 @@ import com.kasirgalabs.etumulator.operand2.Imm8m;
 import com.kasirgalabs.etumulator.operand2.Number;
 import com.kasirgalabs.etumulator.operand2.Operand2;
 import com.kasirgalabs.etumulator.operand2.Shift;
-import com.kasirgalabs.etumulator.register.CPSR;
 import com.kasirgalabs.etumulator.register.RdRegister;
 import com.kasirgalabs.etumulator.register.RegisterFile;
 import com.kasirgalabs.etumulator.register.RmRegister;
@@ -39,17 +38,21 @@ public class Processor extends ArmBaseListener {
     private RdRegister rdRegister;
     private RnRegister rnRegister;
     private RmRegister rmRegister;
-    private Shift shift;
     private RsRegister rsRegister;
     private Operand2 operand2;
     private Imm8m imm8m;
     private Number number;
     private final RegisterFile registerFile;
     private final CPSR cpsr;
+    private final Shift shift;
+    private final Shifter shifter;
 
     public Processor(RegisterFile registerFile, CPSR cpsr) {
         this.registerFile = registerFile;
         this.cpsr = cpsr;
+        shift = new Shift();
+        shifter = new Shifter();
+        cpsr.setShifter(shifter);
     }
 
     public void run(char[] code) {
@@ -338,7 +341,7 @@ public class Processor extends ArmBaseListener {
 
     @Override
     public void exitAsr(ArmParser.AsrContext ctx) {
-        rdRegister.setValue(Shifter.shift(rmRegister.getValue(),
+        rdRegister.setValue(shifter.shift(rmRegister.getValue(),
                 shift.getAmount(),
                 Shift.ASR));
         rdRegister.update();
@@ -354,7 +357,7 @@ public class Processor extends ArmBaseListener {
 
     @Override
     public void exitLsl(ArmParser.LslContext ctx) {
-        rdRegister.setValue(Shifter.shift(rmRegister.getValue(),
+        rdRegister.setValue(shifter.shift(rmRegister.getValue(),
                 shift.getAmount(),
                 Shift.LSL));
         rdRegister.update();
@@ -370,7 +373,7 @@ public class Processor extends ArmBaseListener {
 
     @Override
     public void exitLsr(ArmParser.LsrContext ctx) {
-        rdRegister.setValue(Shifter.shift(rmRegister.getValue(),
+        rdRegister.setValue(shifter.shift(rmRegister.getValue(),
                 shift.getAmount(),
                 Shift.LSR));
         rdRegister.update();
@@ -386,7 +389,7 @@ public class Processor extends ArmBaseListener {
 
     @Override
     public void exitRor(ArmParser.RorContext ctx) {
-        rdRegister.setValue(Shifter.shift(rmRegister.getValue(),
+        rdRegister.setValue(shifter.shift(rmRegister.getValue(),
                 shift.getAmount(),
                 Shift.ROR));
         rdRegister.update();
@@ -401,22 +404,27 @@ public class Processor extends ArmBaseListener {
     }
 
     @Override
+    public void exitRrx(ArmParser.RrxContext ctx) {
+        rdRegister.setValue(cpsr.shiftUpdateNZC(rmRegister.getValue(),
+                -1, // Not used.
+                Shift.RRX));
+        rdRegister.update();
+    }
+
+    @Override
     public void exitShiftedRm(ArmParser.ShiftedRmContext ctx) {
-        rmRegister.setValue(Shifter.shift(rmRegister.getValue(),
+        rmRegister.setValue(shifter.shift(rmRegister.getValue(),
                 shift.getAmount(),
                 shift.getOption()));
     }
 
     @Override
     public void exitShiftOption(ArmParser.ShiftOptionContext ctx) {
-        shift = new Shift(ctx);
+        shift.setOption(ctx);
     }
 
     @Override
     public void exitShiftAmount(ArmParser.ShiftAmountContext ctx) {
-        if(shift == null) {
-            shift = new Shift();
-        }
         shift.setAmount(number.getValue());
     }
 

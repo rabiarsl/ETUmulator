@@ -16,8 +16,8 @@
  */
 package com.kasirgalabs.etumulator;
 
+import com.kasirgalabs.etumulator.processor.CPSR;
 import com.kasirgalabs.etumulator.processor.Processor;
-import com.kasirgalabs.etumulator.register.CPSR;
 import com.kasirgalabs.etumulator.register.RegisterFile;
 
 public class InstructionTester {

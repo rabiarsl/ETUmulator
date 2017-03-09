@@ -18,11 +18,14 @@ package com.kasirgalabs.etumulator.processor;
 
 import com.kasirgalabs.etumulator.operand2.Shift;
 
-public final class Shifter {
-    private Shifter() {
+public class Shifter {
+    private boolean carry;
+
+    public void setCarry(boolean carry) {
+        this.carry = carry;
     }
 
-    public static int shift(int value, int shiftAmount, int option) {
+    public int shift(int value, int shiftAmount, int option) {
         switch(option) {
             case Shift.ASR:
                 return value >> shiftAmount;
@@ -32,6 +35,12 @@ public final class Shifter {
                 return value >>> shiftAmount;
             case Shift.ROR:
                 return Integer.rotateRight(value, shiftAmount);
+            case Shift.RRX:
+                int result = value >>> 1;
+                if(carry) {
+                    result |= 0x80000000;
+                }
+                return result;
         }
         return 0;
     }

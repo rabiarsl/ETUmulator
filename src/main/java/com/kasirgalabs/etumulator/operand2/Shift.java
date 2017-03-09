@@ -23,13 +23,11 @@ public class Shift {
     public static final int LSL = 1;
     public static final int LSR = 2;
     public static final int ROR = 3;
+    public static final int RRX = 4;
     private int option;
     private int amount;
 
-    public Shift() {
-    }
-
-    public Shift(ArmParser.ShiftOptionContext option) {
+    public void setOption(ArmParser.ShiftOptionContext option) {
         switch(option.getText().toLowerCase()) {
             case "asr":
                 this.option = ASR;
@@ -42,6 +40,9 @@ public class Shift {
                 break;
             case "ror":
                 this.option = ROR;
+                break;
+            case "rrx":
+                this.option = RRX;
         }
     }
 
