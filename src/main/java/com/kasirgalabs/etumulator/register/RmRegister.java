@@ -37,8 +37,4 @@ public class RmRegister implements Register, Operand2 {
     public int getValue() {
         return value;
     }
-
-    public int getRegisterNumber() {
-        return registerNumber;
-    }
 }

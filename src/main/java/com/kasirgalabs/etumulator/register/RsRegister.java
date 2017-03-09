@@ -36,8 +36,4 @@ public class RsRegister implements Register {
     public int getValue() {
         return value;
     }
-
-    public int getRegisterNumber() {
-        return registerNumber;
-    }
 }

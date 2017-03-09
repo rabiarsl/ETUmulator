@@ -36,8 +36,4 @@ public class RnRegister implements Register {
     public int getValue() {
         return value;
     }
-
-    public int getRegisterNumber() {
-        return registerNumber;
-    }
 }

@@ -39,10 +39,6 @@ public class RdRegister implements Register {
         return value;
     }
 
-    public int getRegisterNumber() {
-        return registerNumber;
-    }
-
     public void update() {
         registerFile.update(registerNumber, value);
     }

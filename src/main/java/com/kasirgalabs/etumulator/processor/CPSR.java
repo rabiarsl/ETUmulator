@@ -108,11 +108,4 @@ public class CPSR {
         int result = shifter.rrxShift(value);
         return updateNZ(result);
     }
-
-    public void reset() {
-        negative = false;
-        zero = false;
-        carry = false;
-        overflow = false;
-    }
 }
