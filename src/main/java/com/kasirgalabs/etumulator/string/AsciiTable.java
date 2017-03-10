@@ -66,6 +66,8 @@ public final class AsciiTable {
 
     private static String escapeSequence(int code) {
         switch(code) {
+            case NULL:
+                return "\\0";
             case BELL:
                 return "\\a";
             case BACKSPACE:
@@ -83,7 +85,7 @@ public final class AsciiTable {
             case ESCAPE:
                 return "\\e";
             default:
-                return "\\0";
+                return "0";
         }
     }
 
