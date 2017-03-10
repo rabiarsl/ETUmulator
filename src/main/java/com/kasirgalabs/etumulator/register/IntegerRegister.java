@@ -23,10 +23,6 @@ public class IntegerRegister implements Register {
         value = 0;
     }
 
-    public IntegerRegister(int value) {
-        this.value = value;
-    }
-
     @Override
     public void setValue(int value) {
         this.value = value;
@@ -35,9 +31,5 @@ public class IntegerRegister implements Register {
     @Override
     public int getValue() {
         return value;
-    }
-
-    public void reset() {
-        this.value = 0;
     }
 }

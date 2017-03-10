@@ -16,24 +16,18 @@
  */
 package com.kasirgalabs.etumulator.register;
 
-import com.kasirgalabs.etumulator.processor.RegisterFile;
 import com.kasirgalabs.arm.ArmParser.RsContext;
+import com.kasirgalabs.etumulator.processor.RegisterFile;
 
-public class RsRegister implements Register {
+public class RsRegister {
     private final String registerName;
-    private int value;
+    private final int value;
 
     public RsRegister(RsContext ctx, RegisterFile registerFile) {
         registerName = ctx.getText();
         value = registerFile.getValue(registerName);
     }
 
-    @Override
-    public void setValue(int value) {
-        this.value = value;
-    }
-
-    @Override
     public int getValue() {
         return value;
     }

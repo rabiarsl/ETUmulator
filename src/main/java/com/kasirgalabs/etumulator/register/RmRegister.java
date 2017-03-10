@@ -16,11 +16,11 @@
  */
 package com.kasirgalabs.etumulator.register;
 
-import com.kasirgalabs.etumulator.processor.RegisterFile;
 import com.kasirgalabs.arm.ArmParser.RmContext;
 import com.kasirgalabs.etumulator.operand2.Operand2;
+import com.kasirgalabs.etumulator.processor.RegisterFile;
 
-public class RmRegister implements Register, Operand2 {
+public class RmRegister implements Operand2 {
     private final String registerName;
     private int value;
 
@@ -29,7 +29,6 @@ public class RmRegister implements Register, Operand2 {
         value = registerFile.getValue(registerName);
     }
 
-    @Override
     public void setValue(int value) {
         this.value = value;
     }
