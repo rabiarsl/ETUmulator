@@ -16,15 +16,6 @@
  */
 package com.kasirgalabs.etumulator.operand2;
 
-public class Imm8m implements Operand2 {
-    private int value;
-
-    public void setValue(int value) {
-        this.value = value;
-    }
-
-    @Override
-    public int getValue() {
-        return value;
-    }
+public abstract class Imm8m implements Operand2 {
+    public abstract void setValue(int value);
 }

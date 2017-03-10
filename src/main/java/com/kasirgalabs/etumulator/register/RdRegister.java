@@ -16,10 +16,10 @@
  */
 package com.kasirgalabs.etumulator.register;
 
-import com.kasirgalabs.etumulator.processor.RegisterFile;
 import com.kasirgalabs.arm.ArmParser.RdContext;
+import com.kasirgalabs.etumulator.processor.RegisterFile;
 
-public class RdRegister implements Register {
+public class RdRegister {
     private final RegisterFile registerFile;
     private final String registerName;
     private int value;
@@ -30,14 +30,8 @@ public class RdRegister implements Register {
         value = registerFile.getValue(registerName);
     }
 
-    @Override
     public void setValue(int value) {
         this.value = value;
-    }
-
-    @Override
-    public int getValue() {
-        return value;
     }
 
     public void update() {

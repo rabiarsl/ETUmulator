@@ -38,8 +38,9 @@ public class Shifter {
                 return value >>> shiftAmount;
             case Shift.ROR:
                 return Integer.rotateRight(value, shiftAmount);
+            default:
+                return 0;
         }
-        return 0;
     }
 
     public int rrxShift(int value) {
