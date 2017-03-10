@@ -23,15 +23,15 @@ import com.kasirgalabs.etumulator.processor.RegisterFile;
 
 public class InstructionTester {
     protected final RegisterFile registerFile;
-    protected final CPUStack CPUStack;
+    protected final CPUStack stack;
     protected final CPSR cpsr;
     private final Processor processor;
 
     public InstructionTester() {
         registerFile = new RegisterFile();
-        CPUStack = new CPUStack();
+        stack = new CPUStack();
         cpsr = new CPSR();
-        processor = new Processor(registerFile, CPUStack, cpsr);
+        processor = new Processor(registerFile, stack, cpsr);
     }
 
     protected final void runTestCode(char[] code) {

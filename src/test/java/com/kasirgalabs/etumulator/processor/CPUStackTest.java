@@ -17,21 +17,38 @@
 package com.kasirgalabs.etumulator.processor;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
-import com.kasirgalabs.etumulator.InstructionTester;
 import org.junit.Test;
 
-public class PushInstructionTest extends InstructionTester {
+public class CPUStackTest {
+    private final CPUStack stack;
+    private boolean success;
+
+    public CPUStackTest() {
+        stack = new CPUStack();
+    }
+
     /**
-     * Test of exitPush method, of class Processor.
+     * Test of push and pop methods, of class CPUStack.
      */
     @Test
-    public void testExitPush() {
-        char[] code = ("mov r0, #4\n"
-                + "ldr r1, =0xffffffff\n"
-                + "push {r0,r1}\n").toCharArray();
-        runTestCode(code);
-        assertEquals("Push result is wrong.", stack.pop().intValue(), 0xffffffff);
-        assertEquals("Push result is wrong.", stack.pop().intValue(), 4);
+    public void testPushAndPop() {
+        stack.push(1234);
+        assertEquals("Push and pop result is wrong.", stack.pop().intValue(), 1234);
+    }
+
+    /**
+     * Test of addObserver and notifyObservers methods, of class CPUStack.
+     */
+    @Test
+    public void testAddObserverAndNotifyObservers() {
+        stack.addObserver((Class<?> clazz) -> {
+            if(clazz.equals(CPUStack.class)) {
+                success = true;
+            }
+        });
+        stack.notifyObservers();
+        assertTrue("Observer did not get notified.", success);
     }
 }
