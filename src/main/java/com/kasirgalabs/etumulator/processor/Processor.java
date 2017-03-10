@@ -26,10 +26,10 @@ import com.kasirgalabs.etumulator.operand2.Number;
 import com.kasirgalabs.etumulator.operand2.Operand2;
 import com.kasirgalabs.etumulator.operand2.Shift;
 import com.kasirgalabs.etumulator.register.RdRegister;
-import com.kasirgalabs.etumulator.register.RegisterFile;
 import com.kasirgalabs.etumulator.register.RmRegister;
 import com.kasirgalabs.etumulator.register.RnRegister;
 import com.kasirgalabs.etumulator.register.RsRegister;
+import java.util.ArrayList;
 import org.antlr.v4.runtime.ANTLRInputStream;
 import org.antlr.v4.runtime.CommonTokenStream;
 import org.antlr.v4.runtime.tree.ParseTreeWalker;
@@ -43,11 +43,14 @@ public class Processor extends ArmBaseListener {
     private Imm8m imm8m;
     private Number number;
     private final RegisterFile registerFile;
+    private final CPUStack stack;
     private final CPSR cpsr;
     private final Shift shift;
     private final Shifter shifter;
+    private ArrayList<String> regList;
 
-    public Processor(RegisterFile registerFile, CPSR cpsr) {
+    public Processor(RegisterFile registerFile, CPUStack stack, CPSR cpsr) {
+        this.stack = stack;
         this.registerFile = registerFile;
         this.cpsr = cpsr;
         shift = new Shift();
@@ -439,5 +442,33 @@ public class Processor extends ArmBaseListener {
     @Override
     public void exitHex(ArmParser.HexContext ctx) {
         number = new Hex(ctx);
+    }
+
+    @Override
+    public void exitPush(ArmParser.PushContext ctx) {
+        regList.forEach((registerName) -> {
+            stack.push(registerFile.getValue(registerName));
+        });
+    }
+
+    @Override
+    public void exitPop(ArmParser.PopContext ctx) {
+        regList.forEach((registerName) -> {
+            registerFile.update(registerName, stack.pop());
+        });
+    }
+
+    @Override
+    public void exitReglist(ArmParser.ReglistContext ctx) {
+        regList = new ArrayList<>();
+        ctx.REGISTER().forEach((node) -> {
+            regList.add(node.getText());
+        });
+        ctx.LR().forEach((node) -> {
+            regList.add(node.getText());
+        });
+        ctx.PC().forEach((node) -> {
+            regList.add(node.getText());
+        });
     }
 }

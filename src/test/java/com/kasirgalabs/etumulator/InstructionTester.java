@@ -17,18 +17,21 @@
 package com.kasirgalabs.etumulator;
 
 import com.kasirgalabs.etumulator.processor.CPSR;
+import com.kasirgalabs.etumulator.processor.CPUStack;
 import com.kasirgalabs.etumulator.processor.Processor;
-import com.kasirgalabs.etumulator.register.RegisterFile;
+import com.kasirgalabs.etumulator.processor.RegisterFile;
 
 public class InstructionTester {
     protected final RegisterFile registerFile;
+    protected final CPUStack CPUStack;
     protected final CPSR cpsr;
     private final Processor processor;
 
     public InstructionTester() {
         registerFile = new RegisterFile();
+        CPUStack = new CPUStack();
         cpsr = new CPSR();
-        processor = new Processor(registerFile, cpsr);
+        processor = new Processor(registerFile, CPUStack, cpsr);
     }
 
     protected final void runTestCode(char[] code) {

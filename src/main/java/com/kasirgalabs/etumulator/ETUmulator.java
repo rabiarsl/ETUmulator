@@ -16,12 +16,15 @@
  */
 package com.kasirgalabs.etumulator;
 
+import static javafx.application.Application.launch;
+
 import com.kasirgalabs.etumulator.document.DocumentChooser;
 import com.kasirgalabs.etumulator.document.GUIDocumentChooser;
 import com.kasirgalabs.etumulator.pattern.Registry;
 import com.kasirgalabs.etumulator.processor.CPSR;
+import com.kasirgalabs.etumulator.processor.CPUStack;
 import com.kasirgalabs.etumulator.processor.Processor;
-import com.kasirgalabs.etumulator.register.RegisterFile;
+import com.kasirgalabs.etumulator.processor.RegisterFile;
 import java.io.IOException;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -39,10 +42,13 @@ public class ETUmulator extends Application {
         GUIDocumentChooser documentChooser = new GUIDocumentChooser();
         Registry.put(DocumentChooser.class, documentChooser);
         Registry.put(RegisterFile.class, new RegisterFile());
+        Registry.put(CPUStack.class, new CPUStack());
         Registry.put(CPSR.class, new CPSR());
         Registry.put(Processor.class, new Processor(
                 Registry.get(RegisterFile.class),
-                Registry.get(CPSR.class)));
+                Registry.get(CPUStack.class),
+                Registry.get(CPSR.class)
+        ));
 
         primaryStage.setTitle("ETUmulator");
         ClassLoader classLoader = ETUmulator.class.getClassLoader();

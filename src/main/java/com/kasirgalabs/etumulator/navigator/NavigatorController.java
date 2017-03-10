@@ -18,7 +18,8 @@ package com.kasirgalabs.etumulator.navigator;
 
 import com.kasirgalabs.etumulator.pattern.Observer;
 import com.kasirgalabs.etumulator.pattern.Registry;
-import com.kasirgalabs.etumulator.register.RegisterFile;
+import com.kasirgalabs.etumulator.processor.CPUStack;
+import com.kasirgalabs.etumulator.processor.RegisterFile;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.collections.FXCollections;
@@ -42,36 +43,112 @@ public class NavigatorController implements Initializable, Observer {
     @FXML
     private ComboBox<String> type;
     private RegisterFile registerFile;
+    private CPUStack stack;
+    private int previousContent;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         type.setItems(FXCollections.observableArrayList(
                 new String[]{"Binary", "Decimal", "HEX", "ASCII"}));
-        property.setCellValueFactory(new PropertyValueFactory<>("property"));
-        value.setCellValueFactory(new PropertyValueFactory<>("value"));
-        for(int i = 0; i < RegisterFile.NUM_OF_REGS; i++) {
-            String registerNumber = "r" + Integer.toString(i);
-            DATA.add(i, new NavigatorRow(registerNumber, "?"));
-        }
-        property.setComparator(new NavigatorRowComparator());
-        table.setItems(DATA);
+        type.getSelectionModel().select(1);
+        previousContent = NavigatorRowContent.REGISTERS;
+        NavigatorRow.setRowContent(NavigatorRowContent.REGISTERS);
+        NavigatorRow.setRowType(NavigatorRowType.DECIMAL);
+        stack = Registry.get(CPUStack.class);
+        stack.addObserver(this);
         registerFile = Registry.get(RegisterFile.class);
         registerFile.addObserver(this);
+        for(int i = 0; i < RegisterFile.NUM_OF_REGS; i++) {
+            String registerName = "r" + Integer.toString(i);
+            String registerValue = Integer.toString(registerFile.getValue(registerName));
+            DATA.add(i, new NavigatorRow(registerName, registerValue));
+        }
+        property.setCellValueFactory(new PropertyValueFactory<>("property"));
+        value.setCellValueFactory(new PropertyValueFactory<>("value"));
+        property.setComparator(new NavigatorRowComparator());
+        table.setItems(DATA);
     }
 
     @Override
-    public void update() {
-        for(int i = 0; i < DATA.size(); i++) {
-            NavigatorRow navigatorRow = DATA.remove(i);
-            String registerName = navigatorRow.getProperty().substring(1);
+    public void update(Class<?> clazz) {
+        if(clazz.equals(RegisterFile.class)
+                && NavigatorRow.getRowContent() == NavigatorRowContent.REGISTERS) {
+            updateRegisterContent();
+        }
+        else if(clazz.equals(CPUStack.class)
+                && NavigatorRow.getRowContent() == NavigatorRowContent.STACK) {
+            updateStackContent();
+        }
+    }
+
+    @FXML
+    private void registersButtonOnAction(ActionEvent event) {
+        previousContent = NavigatorRow.getRowContent();
+        NavigatorRow.setRowContent(NavigatorRowContent.REGISTERS);
+        updateRegisterContent();
+    }
+
+    @FXML
+    private void stackButtonOnAction(ActionEvent event) {
+        previousContent = NavigatorRow.getRowContent();
+        NavigatorRow.setRowContent(NavigatorRowContent.STACK);
+        updateStackContent();
+    }
+
+    @FXML
+    private void typeOnAction(ActionEvent event) {
+        previousContent = NavigatorRow.getRowContent();
+        int rowType = type.getSelectionModel().getSelectedIndex();
+        NavigatorRow.setRowType(rowType);
+        if(NavigatorRow.getRowContent() == NavigatorRowContent.REGISTERS) {
+            updateRegisterContent();
+        }
+        else {
+            updateStackContent();
+        }
+    }
+
+    private void updateRegisterContent() {
+        property.setText("Name");
+        if(previousContent == NavigatorRow.getRowContent()) {
+            for(int i = 0; i < DATA.size(); i++) {
+                NavigatorRow navigatorRow = DATA.get(i);
+                DATA.remove(navigatorRow);
+                String registerName = navigatorRow.getProperty();
+                String registerValue = Integer.toString(registerFile.getValue(registerName));
+                DATA.add(i, new NavigatorRow(registerName, registerValue));
+            }
+            return;
+        }
+        DATA.removeAll(DATA.subList(0, DATA.size()));
+        for(int i = 0; i < RegisterFile.NUM_OF_REGS; i++) {
+            String registerName = "r" + Integer.toString(i);
             String registerValue = Integer.toString(registerFile.getValue(registerName));
             DATA.add(i, new NavigatorRow(registerName, registerValue));
         }
     }
 
-    @FXML
-    private void typeOnAction(ActionEvent event) {
-        NavigatorRow.setType(type.getSelectionModel().getSelectedIndex());
-        update();
+    private void updateStackContent() {
+        property.setText("Number");
+        if(previousContent == NavigatorRow.getRowContent()) {
+            for(int i = 0; i < DATA.size(); i++) {
+                NavigatorRow navigatorRow = DATA.get(i);
+                DATA.remove(navigatorRow);
+                int index = Integer.parseInt(navigatorRow.getProperty());
+                String number = Integer.toString(stack.get(index));
+                DATA.add(i, new NavigatorRow(navigatorRow.getProperty(), number));
+            }
+            for(int i = DATA.size(); i < stack.size(); i++) {
+                String number = Integer.toString(stack.get(i));
+                DATA.add(i, new NavigatorRow(Integer.toString(i), number));
+            }
+            return;
+        }
+        DATA.removeAll(DATA.subList(0, DATA.size()));
+        for(int i = 0; i < stack.size(); i++) {
+            String index = Integer.toString(i);
+            String number = Integer.toString(stack.get(i));
+            DATA.add(i, new NavigatorRow(index, number));
+        }
     }
 }

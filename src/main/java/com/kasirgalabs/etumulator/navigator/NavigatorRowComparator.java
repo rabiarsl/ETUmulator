@@ -21,9 +21,12 @@ import java.util.Comparator;
 public class NavigatorRowComparator implements Comparator<String> {
     @Override
     public int compare(String o1, String o2) {
-        if(Integer.parseInt(o1.substring(1)) < Integer.parseInt(o2.substring(1))) {
-            return -1;
+        if(o1.contains("r")) {
+            if(Integer.parseInt(o1.substring(1)) < Integer.parseInt(o2.substring(1))) {
+                return -1;
+            }
+            return 1;
         }
-        return 1;
+        return Integer.parseInt(o1) < Integer.parseInt(o2) ? -1 : 1;
     }
 }

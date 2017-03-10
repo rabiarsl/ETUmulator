@@ -20,36 +20,42 @@ import com.kasirgalabs.etumulator.string.StringUtils;
 import javafx.beans.property.SimpleStringProperty;
 
 public class NavigatorRow {
-    private static int type = -1;
-    private final SimpleStringProperty property;
-    private final SimpleStringProperty value;
+    private static int rowType = -1;
+    private static int rowContent = -1;
+    private SimpleStringProperty property;
+    private SimpleStringProperty value;
 
     public NavigatorRow(String property, String value) {
-        switch(type) {
+        this.property = new SimpleStringProperty(property);
+        switch(rowType) {
             case NavigatorRowType.BINARY:
-                this.property = new SimpleStringProperty(property);
                 this.value = new SimpleStringProperty(StringUtils.toBinaryString(value));
                 break;
             case NavigatorRowType.DECIMAL:
-                this.property = new SimpleStringProperty(property);
                 this.value = new SimpleStringProperty(value);
                 break;
             case NavigatorRowType.HEX:
-                this.property = new SimpleStringProperty(property);
                 this.value = new SimpleStringProperty(StringUtils.toHexString(value));
                 break;
             case NavigatorRowType.ASCII:
-                this.property = new SimpleStringProperty(property);
                 this.value = new SimpleStringProperty(StringUtils.toAsciiString(value));
                 break;
             default:
                 this.property = new SimpleStringProperty(property);
-                this.value = new SimpleStringProperty("?");
+                this.value = new SimpleStringProperty(value);
         }
     }
 
-    public static void setType(int type) {
-        NavigatorRow.type = type;
+    public static void setRowType(int rowType) {
+        NavigatorRow.rowType = rowType;
+    }
+
+    public static void setRowContent(int rowContent) {
+        NavigatorRow.rowContent = rowContent;
+    }
+
+    public static int getRowContent() {
+        return rowContent;
     }
 
     public String getProperty() {
@@ -58,5 +64,9 @@ public class NavigatorRow {
 
     public String getValue() {
         return value.get();
+    }
+
+    public void setValue(String value) {
+        this.value = new SimpleStringProperty(value);
     }
 }

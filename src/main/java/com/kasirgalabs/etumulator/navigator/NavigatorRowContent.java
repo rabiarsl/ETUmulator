@@ -14,27 +14,13 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.kasirgalabs.etumulator.register;
+package com.kasirgalabs.etumulator.navigator;
 
-import com.kasirgalabs.etumulator.processor.RegisterFile;
-import com.kasirgalabs.arm.ArmParser.RsContext;
+public final class NavigatorRowContent {
+    public static final int REGISTERS = 0;
+    public static final int STACK = 1;
+    public static final int MEMORY = 2;
 
-public class RsRegister implements Register {
-    private final String registerName;
-    private int value;
-
-    public RsRegister(RsContext ctx, RegisterFile registerFile) {
-        registerName = ctx.getText();
-        value = registerFile.getValue(registerName);
-    }
-
-    @Override
-    public void setValue(int value) {
-        this.value = value;
-    }
-
-    @Override
-    public int getValue() {
-        return value;
+    private NavigatorRowContent() {
     }
 }

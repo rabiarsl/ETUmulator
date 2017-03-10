@@ -14,17 +14,19 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.kasirgalabs.etumulator.register;
+package com.kasirgalabs.etumulator.processor;
 
 import com.kasirgalabs.etumulator.pattern.Observable;
 import com.kasirgalabs.etumulator.pattern.Observer;
+import com.kasirgalabs.etumulator.register.IntegerRegister;
+import com.kasirgalabs.etumulator.register.Register;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 public class RegisterFile implements Observable {
-    public static final int NUM_OF_REGS = 15;
+    public static final int NUM_OF_REGS = 12;
     private final Map<String, IntegerRegister> registers;
     private final List<Observer> observers;
 
@@ -53,7 +55,7 @@ public class RegisterFile implements Observable {
     @Override
     public void notifyObservers() {
         observers.forEach((observer) -> {
-            observer.update();
+            observer.update(RegisterFile.class);
         });
     }
 

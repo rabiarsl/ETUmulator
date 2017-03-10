@@ -17,5 +17,5 @@
 package com.kasirgalabs.etumulator.pattern;
 
 public interface Observer {
-    void update();
+    void update(Class<?> clazz);
 }

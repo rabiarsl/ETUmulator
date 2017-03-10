@@ -16,6 +16,7 @@
  */
 package com.kasirgalabs.etumulator.register;
 
+import com.kasirgalabs.etumulator.processor.RegisterFile;
 import com.kasirgalabs.arm.ArmParser.RmContext;
 import com.kasirgalabs.etumulator.operand2.Operand2;
 
