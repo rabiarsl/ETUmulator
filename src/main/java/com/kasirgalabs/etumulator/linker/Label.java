@@ -26,6 +26,11 @@ public class Label {
         this.name = name;
     }
 
+    public Label(Label label) {
+        this.name = label.getName();
+        this.address = label.getAddress();
+    }
+
     public String getName() {
         return name;
     }

@@ -55,10 +55,10 @@ public class Processor extends ArmBaseListener {
         this.stack = stack;
         this.registerFile = registerFile;
         this.cpsr = cpsr;
+        this.instructionUnit = instructionUnit;
         shift = new Shift();
         shifter = new Shifter();
         cpsr.setShifter(shifter);
-        this.instructionUnit = instructionUnit;
     }
 
     public void run() {

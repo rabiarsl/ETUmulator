@@ -17,6 +17,7 @@
 package com.kasirgalabs.etumulator.processor;
 
 import com.kasirgalabs.etumulator.linker.Label;
+import java.util.ArrayList;
 import java.util.List;
 
 public class InstructionUnit {
@@ -29,11 +30,16 @@ public class InstructionUnit {
     }
 
     public void loadLabels(List<Label> labels) {
-        this.labels = labels;
+        this.labels = new ArrayList<>(labels.size());
+        labels.forEach((label) -> {
+            this.labels.add(new Label(label));
+        });
     }
 
     public char[] fetchNext() {
-        return instructions[pc++];
+        char[] instruction = instructions[pc];
+        pc++;
+        return instruction;
     }
 
     public char[] jumpToLabel(String label) {
@@ -45,12 +51,12 @@ public class InstructionUnit {
         return pc < instructions.length;
     }
 
-    public void reset() {
-        pc = 0;
-    }
-
     public void loadInstructions(char[][] instructions) {
-        this.instructions = instructions;
+        this.instructions = new char[instructions.length][];
+        for(int i = 0; i < instructions.length; i++) {
+            this.instructions[i] = new char[instructions[i].length];
+            System.arraycopy(instructions[i], 0, this.instructions[i], 0, instructions[i].length);
+        }
         pc = 0;
     }
 }
