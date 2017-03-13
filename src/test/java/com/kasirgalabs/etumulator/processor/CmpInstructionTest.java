@@ -27,28 +27,28 @@ public class CmpInstructionTest extends InstructionTester {
      */
     @Test
     public void testExitCmp() {
-        char[] code = ("cmp r2, #0\n").toCharArray();
+        String code = "cmp r2, #0\n";
         runTestCode(code);
         assertEquals("Negative flag is wrong.", false, cpsr.isNegative());
         assertEquals("Zero flag is wrong.", true, cpsr.isZero());
         assertEquals("Overflow flag is wrong.", false, cpsr.isOverflow());
 
-        code = ("cmp r2, 8\n").toCharArray();
+        code = "cmp r2, 8\n";
         runTestCode(code);
         assertEquals("Negative flag is wrong.", true, cpsr.isNegative());
         assertEquals("Zero flag is wrong.", false, cpsr.isZero());
         assertEquals("Overflow flag is wrong.", false, cpsr.isOverflow());
 
-        code = ("mov r0, #0xf0\n"
-                + "cmp r0, 0xf0\n").toCharArray();
+        code = "mov r0, #0xf0\n"
+                + "cmp r0, 0xf0\n";
         runTestCode(code);
         assertEquals("Negative flag is wrong.", false, cpsr.isNegative());
         assertEquals("Zero flag is wrong.", true, cpsr.isZero());
         assertEquals("Overflow flag is wrong.", false, cpsr.isOverflow());
 
-        code = ("ldr r1, =#0x80000000\n"
+        code = "ldr r1, =#0x80000000\n"
                 + "ldr r2, =0xffffffff\n"
-                + "cmp r1, r2\n").toCharArray();
+                + "cmp r1, r2\n";
         runTestCode(code);
         assertEquals("Negative flag is wrong.", true, cpsr.isNegative());
         assertEquals("Zero flag is wrong.", false, cpsr.isZero());

@@ -27,20 +27,20 @@ public class AddInstructionTest extends InstructionTester {
      */
     @Test
     public void testExitAdd() {
-        char[] code = ("add r1, r2, r3\n").toCharArray();
+        String code = "add r1, r2, r3\n";
         runTestCode(code);
         assertEquals("Addition result is wrong.", registerFile.getValue("r1"), 0);
 
-        code = ("add r1, r2, #64\n").toCharArray();
+        code = "add r1, r2, #64\n";
         runTestCode(code);
         assertEquals("Addition result is wrong.", registerFile.getValue("r1"), 64);
 
-        code = ("add r1, r2, 0x0\n").toCharArray();
+        code = "add r1, r2, 0x0\n";
         runTestCode(code);
         assertEquals("Addition result is wrong.", registerFile.getValue("r1"), 0);
 
-        code = ("add r1, r2, #0xff\n"
-                + "add r1, r1, 0xff\n").toCharArray();
+        code = "add r1, r2, #0xff\n"
+                + "add r1, r1, 0xff\n";
         runTestCode(code);
         assertEquals("Addition result is wrong.", registerFile.getValue("r1"), 510);
     }

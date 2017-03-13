@@ -18,7 +18,9 @@ package com.kasirgalabs.etumulator;
 
 import com.kasirgalabs.etumulator.console.Console;
 import com.kasirgalabs.etumulator.document.Document;
+import com.kasirgalabs.etumulator.linker.Linker;
 import com.kasirgalabs.etumulator.pattern.Registry;
+import com.kasirgalabs.etumulator.processor.InstructionUnit;
 import com.kasirgalabs.etumulator.processor.Processor;
 import java.io.IOException;
 import java.io.OutputStream;
@@ -55,9 +57,9 @@ public class ETUmulatorController implements Initializable, Console {
 
     @FXML
     private void runButtonOnAction(ActionEvent event) {
-        Processor processor = Registry.get(Processor.class);
+        Linker linker = new Linker(Registry.get(InstructionUnit.class));
         String text = Registry.get(Document.class).getText();
-        char[] code = (text + "\n").toCharArray();
-        processor.run(code);
+        linker.linkAndLoad(text + "\n");
+        Registry.get(Processor.class).run();
     }
 }

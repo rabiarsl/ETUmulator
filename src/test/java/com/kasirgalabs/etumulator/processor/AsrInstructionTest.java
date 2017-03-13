@@ -27,15 +27,15 @@ public class AsrInstructionTest extends InstructionTester {
      */
     @Test
     public void exitAsr() {
-        char[] code = ("ldr r1, =#0x80000000\n"
+        String code = "ldr r1, =#0x80000000\n"
                 + "mov r2, #1\n"
-                + "asr r0, r1, r2\n").toCharArray();
+                + "asr r0, r1, r2\n";
         runTestCode(code);
         assertEquals("Shift result is wrong.", registerFile.getValue("r0"), 0x80000000 >> 1);
 
-        code = ("mov r1, #0\n"
+        code = "mov r1, #0\n"
                 + "mov r2, #1\n"
-                + "asr r0, r1, r2\n").toCharArray();
+                + "asr r0, r1, r2\n";
         runTestCode(code);
         assertEquals("Shift result is wrong.", registerFile.getValue("r0"), 0);
     }

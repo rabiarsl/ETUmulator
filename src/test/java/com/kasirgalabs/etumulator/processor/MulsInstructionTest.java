@@ -27,15 +27,15 @@ public class MulsInstructionTest extends InstructionTester {
      */
     @Test
     public void testExitMuls() {
-        char[] code = ("muls r0, r1, r3\n").toCharArray();
+        String code = "muls r0, r1, r3\n";
         runTestCode(code);
         assertEquals("Multiply result is wrong.", registerFile.getValue("r0"), 0);
         assertEquals("Negative flag is wrong.", false, cpsr.isNegative());
         assertEquals("Zero flag is wrong.", true, cpsr.isZero());
 
-        code = ("mov r1, 4\n"
+        code = "mov r1, 4\n"
                 + "mov r2, 8\n"
-                + "muls r0, r1, r2\n").toCharArray();
+                + "muls r0, r1, r2\n";
         runTestCode(code);
         assertEquals("Multiply result is wrong.", registerFile.getValue("r0"), 32);
         assertEquals("Negative flag is wrong.", false, cpsr.isNegative());

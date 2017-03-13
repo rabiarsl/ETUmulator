@@ -27,15 +27,15 @@ public class RorInstructionTest extends InstructionTester {
      */
     @Test
     public void exitRor() {
-        char[] code = ("mov r1, 1\n"
+        String code = "mov r1, 1\n"
                 + "mov r2, #1\n"
-                + "ror r0, r1, r2\n").toCharArray();
+                + "ror r0, r1, r2\n";
         runTestCode(code);
         assertEquals("Shift result is wrong.", registerFile.getValue("r0"), 0x80000000);
 
-        code = ("ldr r1, =#0xffffffff\n"
+        code = "ldr r1, =#0xffffffff\n"
                 + "mov r2, #1\n"
-                + "ror r0, r1, r2\n").toCharArray();
+                + "ror r0, r1, r2\n";
         runTestCode(code);
         assertEquals("Shift result is wrong.", registerFile.getValue("r0"), 0xffffffff);
     }

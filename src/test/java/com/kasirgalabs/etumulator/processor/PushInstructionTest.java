@@ -27,9 +27,9 @@ public class PushInstructionTest extends InstructionTester {
      */
     @Test
     public void testExitPush() {
-        char[] code = ("mov r0, #4\n"
+        String code = "mov r0, #4\n"
                 + "ldr r1, =0xffffffff\n"
-                + "push {r0,r1}\n").toCharArray();
+                + "push {r0,r1}\n";
         runTestCode(code);
         assertEquals("Push result is wrong.", stack.pop().intValue(), 0xffffffff);
         assertEquals("Push result is wrong.", stack.pop().intValue(), 4);

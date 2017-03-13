@@ -27,16 +27,16 @@ public class MlasInstructionTest extends InstructionTester {
      */
     @Test
     public void testExitMlas() {
-        char[] code = ("mlas r0, r1, r3, r4\n").toCharArray();
+        String code = "mlas r0, r1, r3, r4\n";
         runTestCode(code);
         assertEquals("Multiply result is wrong.", registerFile.getValue("r0"), 0);
         assertEquals("Negative flag is wrong.", false, cpsr.isNegative());
         assertEquals("Zero flag is wrong.", true, cpsr.isZero());
 
-        code = ("mov r1, 4\n"
+        code = "mov r1, 4\n"
                 + "mov r2, 8\n"
                 + "mov r3, #2\n"
-                + "mlas r0, r1, r2, r3\n").toCharArray();
+                + "mlas r0, r1, r2, r3\n";
         runTestCode(code);
         assertEquals("Multiply result is wrong.", registerFile.getValue("r0"), 34);
         assertEquals("Negative flag is wrong.", false, cpsr.isNegative());

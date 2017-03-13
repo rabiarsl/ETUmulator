@@ -27,10 +27,10 @@ public class PopInstructionTest extends InstructionTester {
      */
     @Test
     public void testExitPop() {
-        char[] code = ("mov r0, #4\n"
+        String code = "mov r0, #4\n"
                 + "ldr r1, =0xffffffff\n"
                 + "push {r0,r1}\n"
-                + "pop {r1, r0}\n").toCharArray();
+                + "pop {r1, r0}\n";
         runTestCode(code);
         assertEquals("Pop result is wrong.", registerFile.getValue("r0"), 4);
         assertEquals("Pop result is wrong.", registerFile.getValue("r1"), 0xffffffff);

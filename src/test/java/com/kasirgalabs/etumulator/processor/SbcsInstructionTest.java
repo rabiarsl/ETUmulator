@@ -28,8 +28,8 @@ public class SbcsInstructionTest extends InstructionTester {
     @Test
     public void testExitSbcs() {
         cpsr.setCarry(true);
-        char[] code = ("ldr r1, =#0x80000000\n"
-                + "sbcs r0, r1, #1\n").toCharArray();
+        String code = "ldr r1, =#0x80000000\n"
+                + "sbcs r0, r1, #1\n";
         runTestCode(code);
         assertEquals("Subtraction result is wrong.", registerFile.getValue("r0"), Integer.MAX_VALUE);
         assertEquals("Negative flag is wrong.", false, cpsr.isNegative());
@@ -37,8 +37,8 @@ public class SbcsInstructionTest extends InstructionTester {
         assertEquals("Overflow flag is wrong.", true, cpsr.isOverflow());
 
         cpsr.setCarry(false);
-        code = ("ldr r1, =#0x80000000\n"
-                + "sbcs r0, r1, #1\n").toCharArray();
+        code = "ldr r1, =#0x80000000\n"
+                + "sbcs r0, r1, #1\n";
         runTestCode(code);
         assertEquals("Subtraction result is wrong.", registerFile.getValue("r0"), Integer.MAX_VALUE - 1);
         assertEquals("Negative flag is wrong.", false, cpsr.isNegative());
@@ -46,7 +46,7 @@ public class SbcsInstructionTest extends InstructionTester {
         assertEquals("Overflow flag is wrong.", true, cpsr.isOverflow());
 
         cpsr.setCarry(true);
-        code = ("sbcs r0, r1, #0\n").toCharArray();
+        code = "sbcs r0, r1, #0\n";
         runTestCode(code);
         assertEquals("Subtraction result is wrong.", registerFile.getValue("r0"), 0);
         assertEquals("Negative flag is wrong.", false, cpsr.isNegative());
@@ -54,8 +54,8 @@ public class SbcsInstructionTest extends InstructionTester {
         assertEquals("Overflow flag is wrong.", false, cpsr.isOverflow());
 
         cpsr.setCarry(false);
-        code = ("ldr r1, =#0x80000001\n"
-                + "sbcs r0, r1, #1\n").toCharArray();
+        code = "ldr r1, =#0x80000001\n"
+                + "sbcs r0, r1, #1\n";
         runTestCode(code);
         assertEquals("Subtraction result is wrong.", registerFile.getValue("r0"), Integer.MAX_VALUE);
         assertEquals("Negative flag is wrong.", false, cpsr.isNegative());

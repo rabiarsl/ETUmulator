@@ -27,14 +27,14 @@ public class MovsInstructionTest extends InstructionTester {
      */
     @Test
     public void testExitMovs() {
-        char[] code = ("movs r0, #0\n").toCharArray();
+        String code = "movs r0, #0\n";
         runTestCode(code);
         assertEquals("Move result is wrong.", registerFile.getValue("r0"), 0);
         assertEquals("Negative flag is wrong.", false, cpsr.isNegative());
         assertEquals("Zero flag is wrong.", true, cpsr.isZero());
 
-        code = ("mov r1, 8\n"
-                + "movs r0, r1\n").toCharArray();
+        code = "mov r1, 8\n"
+                + "movs r0, r1\n";
         runTestCode(code);
         assertEquals("Move result is wrong.", registerFile.getValue("r0"), 8);
         assertEquals("Negative flag is wrong.", false, cpsr.isNegative());

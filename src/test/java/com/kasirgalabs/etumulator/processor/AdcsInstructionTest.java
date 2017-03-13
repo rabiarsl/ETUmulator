@@ -28,14 +28,14 @@ public class AdcsInstructionTest extends InstructionTester {
     @Test
     public void testExitAdcs() {
         cpsr.setCarry(false);
-        char[] code = ("mov r1, #1\n"
-                + "adcs r0, r1, r1\n").toCharArray();
+        String code = "mov r1, #1\n"
+                + "adcs r0, r1, r1\n";
         runTestCode(code);
         assertEquals("Addition result is wrong.", registerFile.getValue("r0"), 2);
 
         cpsr.setCarry(true);
-        code = ("ldr r1, =0x7fffffff\n"
-                + "adcs r0, r1, r1\n").toCharArray();
+        code = "ldr r1, =0x7fffffff\n"
+                + "adcs r0, r1, r1\n";
         runTestCode(code);
         assertEquals("Addition result is wrong.", registerFile.getValue("r0"), -1);
         assertEquals("Negative flag is wrong.", true, cpsr.isNegative());
@@ -43,8 +43,8 @@ public class AdcsInstructionTest extends InstructionTester {
         assertEquals("Overflow flag is wrong.", true, cpsr.isOverflow());
 
         cpsr.setCarry(true);
-        code = ("ldr r1, =0x7fffffff\n"
-                + "adcs r0, r1, #0\n").toCharArray();
+        code = "ldr r1, =0x7fffffff\n"
+                + "adcs r0, r1, #0\n";
         runTestCode(code);
         assertEquals("Addition result is wrong.", registerFile.getValue("r0"), Integer.MIN_VALUE);
         assertEquals("Negative flag is wrong.", true, cpsr.isNegative());

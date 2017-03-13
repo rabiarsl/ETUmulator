@@ -28,9 +28,9 @@ public class RscsInstructionTest extends InstructionTester {
     @Test
     public void testExitRscs() {
         cpsr.setCarry(true);
-        char[] code = ("mov r2, #1\n"
+        String code = "mov r2, #1\n"
                 + "ldr r1, =#0x80000000\n"
-                + "rscs r0, r2, r1\n").toCharArray();
+                + "rscs r0, r2, r1\n";
         runTestCode(code);
         assertEquals("Subtraction result is wrong.", registerFile.getValue("r0"), Integer.MAX_VALUE);
         assertEquals("Negative flag is wrong.", false, cpsr.isNegative());
@@ -38,9 +38,9 @@ public class RscsInstructionTest extends InstructionTester {
         assertEquals("Overflow flag is wrong.", true, cpsr.isOverflow());
 
         cpsr.setCarry(false);
-        code = ("mov r2, #1\n"
+        code = "mov r2, #1\n"
                 + "ldr r1, =#0x80000000\n"
-                + "rscs r0, r2, r1\n").toCharArray();
+                + "rscs r0, r2, r1\n";
         runTestCode(code);
         assertEquals("Subtraction result is wrong.", registerFile.getValue("r0"), Integer.MAX_VALUE - 1);
         assertEquals("Negative flag is wrong.", false, cpsr.isNegative());
@@ -48,7 +48,7 @@ public class RscsInstructionTest extends InstructionTester {
         assertEquals("Overflow flag is wrong.", true, cpsr.isOverflow());
 
         cpsr.setCarry(true);
-        code = ("rscs r0, r1, #0\n").toCharArray();
+        code = "rscs r0, r1, #0\n";
         runTestCode(code);
         assertEquals("Subtraction result is wrong.", registerFile.getValue("r0"), 0);
         assertEquals("Negative flag is wrong.", false, cpsr.isNegative());
@@ -56,9 +56,9 @@ public class RscsInstructionTest extends InstructionTester {
         assertEquals("Overflow flag is wrong.", false, cpsr.isOverflow());
 
         cpsr.setCarry(false);
-        code = ("mov r2, #1\n"
+        code = "mov r2, #1\n"
                 + "ldr r1, =#0x80000001\n"
-                + "rscs r0, r2, r1\n").toCharArray();
+                + "rscs r0, r2, r1\n";
         runTestCode(code);
         assertEquals("Subtraction result is wrong.", registerFile.getValue("r0"), Integer.MAX_VALUE);
         assertEquals("Negative flag is wrong.", false, cpsr.isNegative());

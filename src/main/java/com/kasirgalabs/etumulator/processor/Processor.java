@@ -45,29 +45,26 @@ public class Processor extends ArmBaseListener {
     private final RegisterFile registerFile;
     private final CPUStack stack;
     private final CPSR cpsr;
+    private final InstructionUnit instructionUnit;
     private final Shift shift;
     private final Shifter shifter;
     private ArrayList<String> regList;
 
-    public Processor(RegisterFile registerFile, CPUStack stack, CPSR cpsr) {
+    public Processor(RegisterFile registerFile, CPUStack stack, CPSR cpsr,
+            InstructionUnit instructionUnit) {
         this.stack = stack;
         this.registerFile = registerFile;
         this.cpsr = cpsr;
         shift = new Shift();
         shifter = new Shifter();
         cpsr.setShifter(shifter);
+        this.instructionUnit = instructionUnit;
     }
 
-    public void run(char[] code) {
-        ANTLRInputStream in = new ANTLRInputStream(code, code.length);
-        ArmLexer lexer = new ArmLexer(in);
-        CommonTokenStream tokens = new CommonTokenStream(lexer);
-        ArmParser parser = new ArmParser(tokens);
-        ArmParser.ProgContext tree = parser.prog();
-        if(parser.getNumberOfSyntaxErrors() != 0) {
-            return;
+    public void run() {
+        while(instructionUnit.hasNext()) {
+            execute(instructionUnit.fetchNext());
         }
-        ParseTreeWalker.DEFAULT.walk(this, tree);
     }
 
     @Override
@@ -470,5 +467,140 @@ public class Processor extends ArmBaseListener {
         ctx.PC().forEach((node) -> {
             regList.add(node.getText());
         });
+    }
+
+    @Override
+    public void exitB(ArmParser.BContext ctx) {
+        instructionUnit.jumpToLabel(ctx.LABEL().getText());
+    }
+
+    @Override
+    public void exitBeq(ArmParser.BeqContext ctx) {
+        if(cpsr.isZero()) {
+            instructionUnit.jumpToLabel(ctx.LABEL().getText());
+        }
+    }
+
+    @Override
+    public void exitBne(ArmParser.BneContext ctx) {
+        if(!cpsr.isZero()) {
+            instructionUnit.jumpToLabel(ctx.LABEL().getText());
+        }
+    }
+
+    @Override
+    public void exitBcs(ArmParser.BcsContext ctx) {
+        if(cpsr.isCarry()) {
+            instructionUnit.jumpToLabel(ctx.LABEL().getText());
+        }
+    }
+
+    @Override
+    public void exitBhs(ArmParser.BhsContext ctx) {
+        if(cpsr.isCarry()) {
+            instructionUnit.jumpToLabel(ctx.LABEL().getText());
+        }
+    }
+
+    @Override
+    public void exitBcc(ArmParser.BccContext ctx) {
+        if(!cpsr.isCarry()) {
+            instructionUnit.jumpToLabel(ctx.LABEL().getText());
+        }
+    }
+
+    @Override
+    public void exitBlo(ArmParser.BloContext ctx) {
+        if(!cpsr.isCarry()) {
+            instructionUnit.jumpToLabel(ctx.LABEL().getText());
+        }
+    }
+
+    @Override
+    public void exitBmi(ArmParser.BmiContext ctx) {
+        if(cpsr.isNegative()) {
+            instructionUnit.jumpToLabel(ctx.LABEL().getText());
+        }
+    }
+
+    @Override
+    public void exitBpl(ArmParser.BplContext ctx) {
+        if(!cpsr.isNegative()) {
+            instructionUnit.jumpToLabel(ctx.LABEL().getText());
+        }
+    }
+
+    @Override
+    public void exitBvs(ArmParser.BvsContext ctx) {
+        if(cpsr.isOverflow()) {
+            instructionUnit.jumpToLabel(ctx.LABEL().getText());
+        }
+    }
+
+    @Override
+    public void exitBvc(ArmParser.BvcContext ctx) {
+        if(!cpsr.isOverflow()) {
+            instructionUnit.jumpToLabel(ctx.LABEL().getText());
+        }
+    }
+
+    @Override
+    public void exitBhi(ArmParser.BhiContext ctx) {
+        if(cpsr.isCarry() && !cpsr.isZero()) {
+            instructionUnit.jumpToLabel(ctx.LABEL().getText());
+        }
+    }
+
+    @Override
+    public void exitBls(ArmParser.BlsContext ctx) {
+        if(!cpsr.isCarry() || cpsr.isZero()) {
+            instructionUnit.jumpToLabel(ctx.LABEL().getText());
+        }
+    }
+
+    @Override
+    public void exitBge(ArmParser.BgeContext ctx) {
+        if(cpsr.isNegative() == cpsr.isOverflow()) {
+            instructionUnit.jumpToLabel(ctx.LABEL().getText());
+        }
+    }
+
+    @Override
+    public void exitBlt(ArmParser.BltContext ctx) {
+        if(cpsr.isNegative() != cpsr.isOverflow()) {
+            instructionUnit.jumpToLabel(ctx.LABEL().getText());
+        }
+    }
+
+    @Override
+    public void exitBgt(ArmParser.BgtContext ctx) {
+        if(!cpsr.isZero() && !(cpsr.isNegative() == cpsr.isOverflow())) {
+            instructionUnit.jumpToLabel(ctx.LABEL().getText());
+        }
+    }
+
+    @Override
+    public void exitBle(ArmParser.BleContext ctx) {
+        if(cpsr.isZero() || !(cpsr.isNegative() != cpsr.isOverflow())) {
+            instructionUnit.jumpToLabel(ctx.LABEL().getText());
+        }
+    }
+
+    @Override
+    public void exitBal(ArmParser.BalContext ctx) {
+        instructionUnit.jumpToLabel(ctx.LABEL().getText());
+    }
+
+    @Override
+    public void exitBl(ArmParser.BlContext ctx) {
+    }
+
+    private void execute(char[] instruction) {
+        ANTLRInputStream in = new ANTLRInputStream(instruction, instruction.length);
+        ArmLexer lexer = new ArmLexer(in);
+        CommonTokenStream tokens = new CommonTokenStream(lexer);
+        ArmParser parser = new ArmParser(tokens);
+        ArmParser.ProgContext tree = parser.prog();
+        ParseTreeWalker.DEFAULT.walk(this, tree);
     }
 }

@@ -27,21 +27,21 @@ public class TeqInstructionTest extends InstructionTester {
      */
     @Test
     public void testExitTeq() {
-        char[] code = ("mov r1, #0\n"
+        String code = "mov r1, #0\n"
                 + "mov r2, #1\n"
-                + "teq r1, r2\n").toCharArray();
+                + "teq r1, r2\n";
         runTestCode(code);
         assertEquals("Negative flag is wrong.", false, cpsr.isNegative());
         assertEquals("Zero flag is wrong.", false, cpsr.isZero());
 
-        code = ("ldr r1, =0xffffffff\n"
-                + "teq r1, r1\n").toCharArray();
+        code = "ldr r1, =0xffffffff\n"
+                + "teq r1, r1\n";
         runTestCode(code);
         assertEquals("Negative flag is wrong.", false, cpsr.isNegative());
         assertEquals("Zero flag is wrong.", true, cpsr.isZero());
 
-        code = ("ldr r1, =0xffffffff\n"
-                + "teq r1, 0\n").toCharArray();
+        code = "ldr r1, =0xffffffff\n"
+                + "teq r1, 0\n";
         runTestCode(code);
         assertEquals("Negative flag is wrong.", true, cpsr.isNegative());
         assertEquals("Zero flag is wrong.", false, cpsr.isZero());

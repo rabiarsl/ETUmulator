@@ -27,29 +27,29 @@ public class BicsInstructionTest extends InstructionTester {
      */
     @Test
     public void testExitBics() {
-        char[] code = ("mov r1, #0\n"
+        String code = "mov r1, #0\n"
                 + "mov r2, #1\n"
-                + "bics r0, r1, r2\n").toCharArray();
+                + "bics r0, r1, r2\n";
         runTestCode(code);
         assertEquals("AND result is wrong.", registerFile.getValue("r0"), 0 & ~0);
         assertEquals("Negative flag is wrong.", false, cpsr.isNegative());
         assertEquals("Zero flag is wrong.", true, cpsr.isZero());
 
-        code = ("ldr r1, =0xffffffff\n"
-                + "bics r0, r1, r1\n").toCharArray();
+        code = "ldr r1, =0xffffffff\n"
+                + "bics r0, r1, r1\n";
         runTestCode(code);
         assertEquals("AND result is wrong.", registerFile.getValue("r0"), 0xffffffff & ~0xffffffff);
         assertEquals("Negative flag is wrong.", false, cpsr.isNegative());
         assertEquals("Zero flag is wrong.", true, cpsr.isZero());
 
-        code = ("ldr r1, =0xffffffff\n"
-                + "bics r0, r1, 0\n").toCharArray();
+        code = "ldr r1, =0xffffffff\n"
+                + "bics r0, r1, 0\n";
         runTestCode(code);
         assertEquals("AND result is wrong.", registerFile.getValue("r0"), 0xffffffff | ~0);
         assertEquals("Negative flag is wrong.", true, cpsr.isNegative());
         assertEquals("Zero flag is wrong.", false, cpsr.isZero());
 
-        code = ("bics r0, r1, 0xffffffff\n").toCharArray();
+        code = "bics r0, r1, 0xffffffff\n";
         runTestCode(code);
         assertEquals("AND result is wrong.", registerFile.getValue("r0"), 0 & ~0xffffffff);
         assertEquals("Negative flag is wrong.", false, cpsr.isNegative());

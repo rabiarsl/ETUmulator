@@ -27,23 +27,23 @@ public class SubInstructionTest extends InstructionTester {
      */
     @Test
     public void testExitSub() {
-        char[] code = ("sub r0, r1, r2\n").toCharArray();
+        String code = "sub r0, r1, r2\n";
         runTestCode(code);
         assertEquals("Subtraction result is wrong.", registerFile.getValue("r0"), 0);
 
-        code = ("sub r0, r1, #1\n").toCharArray();
+        code = "sub r0, r1, #1\n";
         runTestCode(code);
         assertEquals("Subtraction result is wrong.", registerFile.getValue("r0"), -1);
 
-        code = ("mov r1, #2\n"
+        code = "mov r1, #2\n"
                 + "mov r2, #1\n"
-                + "sub r0, r1, r2\n").toCharArray();
+                + "sub r0, r1, r2\n";
         runTestCode(code);
         assertEquals("Subtraction result is wrong.", registerFile.getValue("r0"), 1);
 
-        code = ("mov r1, #0xf\n"
+        code = "mov r1, #0xf\n"
                 + "mov r2, 0xff\n"
-                + "sub r0, r1, r2\n").toCharArray();
+                + "sub r0, r1, r2\n";
         runTestCode(code);
         assertEquals("Subtraction result is wrong.", registerFile.getValue("r0"), -240);
     }

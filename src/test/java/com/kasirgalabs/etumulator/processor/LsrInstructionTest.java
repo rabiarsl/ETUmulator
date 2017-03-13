@@ -27,15 +27,15 @@ public class LsrInstructionTest extends InstructionTester {
      */
     @Test
     public void exitLsr() {
-        char[] code = ("mov r1, 1\n"
+        String code = "mov r1, 1\n"
                 + "mov r2, #1\n"
-                + "lsr r0, r1, r2\n").toCharArray();
+                + "lsr r0, r1, r2\n";
         runTestCode(code);
         assertEquals("Shift result is wrong.", registerFile.getValue("r0"), 0);
 
-        code = ("ldr r1, =#0xffffffff\n"
+        code = "ldr r1, =#0xffffffff\n"
                 + "mov r2, #1\n"
-                + "lsr r0, r1, r2\n").toCharArray();
+                + "lsr r0, r1, r2\n";
         runTestCode(code);
         assertEquals("Shift result is wrong.", registerFile.getValue("r0"), 0x7fffffff);
     }

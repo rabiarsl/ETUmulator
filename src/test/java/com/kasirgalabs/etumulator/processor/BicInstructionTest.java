@@ -27,20 +27,20 @@ public class BicInstructionTest extends InstructionTester {
      */
     @Test
     public void testExitBic() {
-        char[] code = ("mov r1, #0\n"
+        String code = "mov r1, #0\n"
                 + "mov r2, #1\n"
-                + "bic r0, r1, r2\n").toCharArray();
+                + "bic r0, r1, r2\n";
         runTestCode(code);
         assertEquals("AND result is wrong.", registerFile.getValue("r0"), 0 & ~1);
 
-        code = ("ldr r1, =0xffffffff\n"
-                + "bic r0, r1, 0\n").toCharArray();
+        code = "ldr r1, =0xffffffff\n"
+                + "bic r0, r1, 0\n";
         runTestCode(code);
         assertEquals("AND result is wrong.", registerFile.getValue("r0"), 0xffffffff & ~0);
 
-        code = ("ldr r1, =0x0f0f0f0f\n"
+        code = "ldr r1, =0x0f0f0f0f\n"
                 + "ldr r2, = 0xf0f0f0f0\n"
-                + "bic r0, r1, r2\n").toCharArray();
+                + "bic r0, r1, r2\n";
         runTestCode(code);
         assertEquals("AND result is wrong.", registerFile.getValue("r0"), 0x0f0f0f0f & ~0xf0f0f0f0);
     }

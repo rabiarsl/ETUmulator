@@ -28,30 +28,30 @@ public class AdcInstructionTest extends InstructionTester {
     @Test
     public void testExitAdc() {
         cpsr.setCarry(false);
-        char[] code = ("adc r1, r2, r3\n").toCharArray();
+        String code = "adc r1, r2, r3\n";
         runTestCode(code);
         assertEquals("Addition result is wrong.", registerFile.getValue("r1"), 0);
 
         cpsr.setCarry(true);
-        code = ("adc r0, r1, 0\n").toCharArray();
+        code = "adc r0, r1, 0\n";
         runTestCode(code);
         assertEquals("Addition result is wrong.", registerFile.getValue("r0"), 1);
 
         cpsr.setCarry(false);
-        code = ("adc r0, r1, 4\n").toCharArray();
+        code = "adc r0, r1, 4\n";
         runTestCode(code);
         assertEquals("Addition result is wrong.", registerFile.getValue("r0"), 4);
 
         cpsr.setCarry(true);
-        code = ("mov r1, #1\n"
+        code = "mov r1, #1\n"
                 + "mov r2, #2\n"
-                + "adc r0, r1, r2\n").toCharArray();
+                + "adc r0, r1, r2\n";
         runTestCode(code);
         assertEquals("Addition result is wrong.", registerFile.getValue("r0"), 4);
 
         cpsr.setCarry(true);
-        code = ("mov r0, #1\n"
-                + "adc r0, r0, r0\n").toCharArray();
+        code = "mov r0, #1\n"
+                + "adc r0, r0, r0\n";
         runTestCode(code);
         assertEquals("Addition result is wrong.", registerFile.getValue("r0"), 3);
     }

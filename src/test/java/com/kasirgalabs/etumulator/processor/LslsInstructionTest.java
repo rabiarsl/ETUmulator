@@ -27,18 +27,18 @@ public class LslsInstructionTest extends InstructionTester {
      */
     @Test
     public void exitLsls() {
-        char[] code = ("mov r1, 1\n"
+        String code = "mov r1, 1\n"
                 + "mov r2, #1\n"
-                + "lsls r0, r1, r2\n").toCharArray();
+                + "lsls r0, r1, r2\n";
         runTestCode(code);
         assertEquals("Shift result is wrong.", registerFile.getValue("r0"), 2);
         assertEquals("Negative flag is wrong.", false, cpsr.isNegative());
         assertEquals("Zero flag is wrong.", false, cpsr.isZero());
         assertEquals("Carry flag is wrong.", false, cpsr.isCarry());
 
-        code = ("ldr r1, =#0xffffffff\n"
+        code = "ldr r1, =#0xffffffff\n"
                 + "mov r2, #1\n"
-                + "lsls r0, r1, r2\n").toCharArray();
+                + "lsls r0, r1, r2\n";
         runTestCode(code);
         assertEquals("Shift result is wrong.", registerFile.getValue("r0"), 0xffffffff << 1);
         assertEquals("Negative flag is wrong.", true, cpsr.isNegative());

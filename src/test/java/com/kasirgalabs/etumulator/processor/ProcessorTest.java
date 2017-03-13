@@ -25,9 +25,9 @@ public class ProcessorTest extends InstructionTester {
      */
     @Test
     public void testRun() {
-        char[] code = ("nop\n"
+        String code = "nop\n"
                 + "nop\n"
-                + "nop\n").toCharArray();
+                + "nop\n";
         runTestCode(code);
     }
 }

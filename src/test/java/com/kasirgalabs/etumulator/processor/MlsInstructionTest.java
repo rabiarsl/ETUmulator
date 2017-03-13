@@ -27,14 +27,14 @@ public class MlsInstructionTest extends InstructionTester {
      */
     @Test
     public void testExitMla() {
-        char[] code = ("mls r0, r1, r3, r4\n").toCharArray();
+        String code = "mls r0, r1, r3, r4\n";
         runTestCode(code);
         assertEquals("Multiply result is wrong.", registerFile.getValue("r0"), 0);
 
-        code = ("mov r1, 4\n"
+        code = "mov r1, 4\n"
                 + "mov r2, 8\n"
                 + "mov r3, #2\n"
-                + "mls r0, r1, r2, r3\n").toCharArray();
+                + "mls r0, r1, r2, r3\n";
         runTestCode(code);
         assertEquals("Multiply result is wrong.", registerFile.getValue("r0"), -30);
     }

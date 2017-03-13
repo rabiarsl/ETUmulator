@@ -27,20 +27,20 @@ public class MvnInstructionTest extends InstructionTester {
      */
     @Test
     public void testExitMvn() {
-        char[] code = ("mvn r0, #0\n").toCharArray();
+        String code = "mvn r0, #0\n";
         runTestCode(code);
         assertEquals("Move result is wrong.", registerFile.getValue("r0"), ~0);
 
-        code = ("mvn r0, #4\n").toCharArray();
+        code = "mvn r0, #4\n";
         runTestCode(code);
         assertEquals("Move result is wrong.", registerFile.getValue("r0"), ~4);
 
-        code = ("mvn r0, 0xf\n").toCharArray();
+        code = "mvn r0, 0xf\n";
         runTestCode(code);
         assertEquals("Move result is wrong.", registerFile.getValue("r0"), ~0xf);
 
-        code = ("mov r1, 8\n"
-                + "mvn r0, r1\n").toCharArray();
+        code = "mov r1, 8\n"
+                + "mvn r0, r1\n";
         runTestCode(code);
         assertEquals("Move result is wrong.", registerFile.getValue("r0"), ~8);
     }
