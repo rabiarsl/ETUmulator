@@ -55,4 +55,8 @@ public class InstructionUnit {
     public boolean hasNext() {
         return pc < instructions.length;
     }
+
+    public int getPC() {
+        return pc;
+    }
 }

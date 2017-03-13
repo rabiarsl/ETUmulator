@@ -29,19 +29,19 @@ public class MvnInstructionTest extends InstructionTester {
     public void testExitMvn() {
         String code = "mvn r0, #0\n";
         runTestCode(code);
-        assertEquals("Move result is wrong.", registerFile.getValue("r0"), ~0);
+        assertEquals("Move result is wrong.", ~0, registerFile.getValue("r0"));
 
         code = "mvn r0, #4\n";
         runTestCode(code);
-        assertEquals("Move result is wrong.", registerFile.getValue("r0"), ~4);
+        assertEquals("Move result is wrong.", ~4, registerFile.getValue("r0"));
 
         code = "mvn r0, 0xf\n";
         runTestCode(code);
-        assertEquals("Move result is wrong.", registerFile.getValue("r0"), ~0xf);
+        assertEquals("Move result is wrong.", ~0xf, registerFile.getValue("r0"));
 
         code = "mov r1, 8\n"
                 + "mvn r0, r1\n";
         runTestCode(code);
-        assertEquals("Move result is wrong.", registerFile.getValue("r0"), ~8);
+        assertEquals("Move result is wrong.", ~8, registerFile.getValue("r0"));
     }
 }

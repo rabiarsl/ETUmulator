@@ -29,7 +29,7 @@ public class MlasInstructionTest extends InstructionTester {
     public void testExitMlas() {
         String code = "mlas r0, r1, r3, r4\n";
         runTestCode(code);
-        assertEquals("Multiply result is wrong.", registerFile.getValue("r0"), 0);
+        assertEquals("Multiply result is wrong.", 0, registerFile.getValue("r0"));
         assertEquals("Negative flag is wrong.", false, cpsr.isNegative());
         assertEquals("Zero flag is wrong.", true, cpsr.isZero());
 
@@ -38,7 +38,7 @@ public class MlasInstructionTest extends InstructionTester {
                 + "mov r3, #2\n"
                 + "mlas r0, r1, r2, r3\n";
         runTestCode(code);
-        assertEquals("Multiply result is wrong.", registerFile.getValue("r0"), 34);
+        assertEquals("Multiply result is wrong.", 34, registerFile.getValue("r0"));
         assertEquals("Negative flag is wrong.", false, cpsr.isNegative());
         assertEquals("Zero flag is wrong.", false, cpsr.isZero());
     }

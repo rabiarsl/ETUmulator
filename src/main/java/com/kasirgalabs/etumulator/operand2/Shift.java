@@ -23,7 +23,6 @@ public class Shift {
     public static final int LSL = 1;
     public static final int LSR = 2;
     public static final int ROR = 3;
-    public static final int RRX = 4;
     private int option;
     private int amount;
 
@@ -41,8 +40,6 @@ public class Shift {
             case "ror":
                 this.option = ROR;
                 break;
-            case "rrx":
-                this.option = RRX;
         }
     }
 

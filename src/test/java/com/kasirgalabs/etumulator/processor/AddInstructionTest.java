@@ -29,19 +29,19 @@ public class AddInstructionTest extends InstructionTester {
     public void testExitAdd() {
         String code = "add r1, r2, r3\n";
         runTestCode(code);
-        assertEquals("Addition result is wrong.", registerFile.getValue("r1"), 0);
+        assertEquals("Addition result is wrong.", 0, registerFile.getValue("r1"));
 
         code = "add r1, r2, #64\n";
         runTestCode(code);
-        assertEquals("Addition result is wrong.", registerFile.getValue("r1"), 64);
+        assertEquals("Addition result is wrong.", 64, registerFile.getValue("r1"));
 
         code = "add r1, r2, 0x0\n";
         runTestCode(code);
-        assertEquals("Addition result is wrong.", registerFile.getValue("r1"), 0);
+        assertEquals("Addition result is wrong.", 0, registerFile.getValue("r1"));
 
         code = "add r1, r2, #0xff\n"
                 + "add r1, r1, 0xff\n";
         runTestCode(code);
-        assertEquals("Addition result is wrong.", registerFile.getValue("r1"), 510);
+        assertEquals("Addition result is wrong.", 510, registerFile.getValue("r1"));
     }
 }

@@ -29,23 +29,23 @@ public class RsbInstructionTest extends InstructionTester {
     public void testExitRsb() {
         String code = "rsb r0, r2, r1\n";
         runTestCode(code);
-        assertEquals("Subtraction result is wrong.", registerFile.getValue("r0"), 0);
+        assertEquals("Subtraction result is wrong.", 0, registerFile.getValue("r0"));
 
         code = "mov r1, #1\n"
                 + "rsb r0, r1, #0\n";
         runTestCode(code);
-        assertEquals("Subtraction result is wrong.", registerFile.getValue("r0"), -1);
+        assertEquals("Subtraction result is wrong.", -1, registerFile.getValue("r0"));
 
         code = "mov r1, #2\n"
                 + "mov r2, #1\n"
                 + "rsb r0, r2, r1\n";
         runTestCode(code);
-        assertEquals("Subtraction result is wrong.", registerFile.getValue("r0"), 1);
+        assertEquals("Subtraction result is wrong.", 1, registerFile.getValue("r0"));
 
         code = "mov r1, #0xf\n"
                 + "mov r2, 0xff\n"
                 + "rsb r0, r2, r1\n";
         runTestCode(code);
-        assertEquals("Subtraction result is wrong.", registerFile.getValue("r0"), -240);
+        assertEquals("Subtraction result is wrong.", -240, registerFile.getValue("r0"));
     }
 }

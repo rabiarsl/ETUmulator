@@ -31,17 +31,17 @@ public class BicInstructionTest extends InstructionTester {
                 + "mov r2, #1\n"
                 + "bic r0, r1, r2\n";
         runTestCode(code);
-        assertEquals("AND result is wrong.", registerFile.getValue("r0"), 0 & ~1);
+        assertEquals("AND result is wrong.", 0 & ~1, registerFile.getValue("r0"));
 
         code = "ldr r1, =0xffffffff\n"
                 + "bic r0, r1, 0\n";
         runTestCode(code);
-        assertEquals("AND result is wrong.", registerFile.getValue("r0"), 0xffffffff & ~0);
+        assertEquals("AND result is wrong.", 0xffffffff & ~0, registerFile.getValue("r0"));
 
         code = "ldr r1, =0x0f0f0f0f\n"
                 + "ldr r2, = 0xf0f0f0f0\n"
                 + "bic r0, r1, r2\n";
         runTestCode(code);
-        assertEquals("AND result is wrong.", registerFile.getValue("r0"), 0x0f0f0f0f & ~0xf0f0f0f0);
+        assertEquals("AND result is wrong.", 0x0f0f0f0f & ~0xf0f0f0f0, registerFile.getValue("r0"));
     }
 }

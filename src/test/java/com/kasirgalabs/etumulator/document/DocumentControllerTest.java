@@ -16,11 +16,9 @@
  */
 package com.kasirgalabs.etumulator.document;
 
-import com.kasirgalabs.etumulator.JavaFXThread;
-import com.kasirgalabs.etumulator.document.DocumentController;
-
 import static org.junit.Assert.assertEquals;
 
+import com.kasirgalabs.etumulator.JavaFXThread;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;

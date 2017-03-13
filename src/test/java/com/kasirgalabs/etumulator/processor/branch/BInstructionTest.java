@@ -14,28 +14,32 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.kasirgalabs.etumulator.processor;
+package com.kasirgalabs.etumulator.processor.branch;
 
 import static org.junit.Assert.assertEquals;
 
 import com.kasirgalabs.etumulator.InstructionTester;
 import org.junit.Test;
 
-public class AndInstructionTest extends InstructionTester {
+public class BInstructionTest extends InstructionTester {
     /**
-     * Test of exitAnd method, of class Processor.
+     * Test of exitB method, of class Processor.
      */
     @Test
-    public void testExitAnd() {
-        String code = "mov r1, #0\n"
-                + "mov r2, #1\n"
-                + "and r0, r1, r2\n";
+    public void testExitB() {
+        String code = "mov r0, #1\n"
+                + "b target\n"
+                + "add r0, r0, r0\n"
+                + "target:\n";
         runTestCode(code);
-        assertEquals("AND result is wrong.", 0, registerFile.getValue("r0"));
+        assertEquals("Branch instruction does not work properly.", 1, registerFile.getValue("r0"));
 
-        code = "ldr r1, =0xffffffff\n"
-                + "and r0, r1, 0xf\n";
-        runTestCode(code);
-        assertEquals("AND result is wrong.", 0xf, registerFile.getValue("r0"));
+        runTestCode("target:\n"
+                + "cmp r0, #5\n"
+                + "beq target2\n"
+                + "add r0, r0, #1\n"
+                + "b target\n"
+                + "target2:\n");
+        assertEquals("Branch instruction does not work properly.", 5, registerFile.getValue("r0"));
     }
 }

@@ -29,22 +29,22 @@ public class AddsInstructionTest extends InstructionTester {
     public void testExitAdds() {
         String code = "adds r1, r2, #0\n";
         runTestCode(code);
-        assertEquals("Addition result is wrong.", registerFile.getValue("r1"), 0);
+        assertEquals("Addition result is wrong.", 0, registerFile.getValue("r1"));
 
         code = "adds r1, r2, 8\n";
         runTestCode(code);
-        assertEquals("Addition result is wrong.", registerFile.getValue("r1"), 8);
+        assertEquals("Addition result is wrong.", 8, registerFile.getValue("r1"));
 
         code = "add r0, r0, #0xf0\n"
                 + "adds r0, r0, 0xf0\n";
         runTestCode(code);
-        assertEquals("Addition result is wrong.", registerFile.getValue("r0"), 0x1e0);
+        assertEquals("Addition result is wrong.", 0x1e0, registerFile.getValue("r0"));
 
         code = "ldr r1, =#0x80000000\n"
                 + "ldr r2, =0xffffffff\n"
                 + "adds r0, r1, r2\n";
         runTestCode(code);
-        assertEquals("Addition result is wrong.", registerFile.getValue("r0"), Integer.MAX_VALUE);
+        assertEquals("Addition result is wrong.", Integer.MAX_VALUE, registerFile.getValue("r0"));
         assertEquals("Negative flag is wrong.", false, cpsr.isNegative());
         assertEquals("Zero flag is wrong.", false, cpsr.isZero());
         assertEquals("Overflow flag is wrong.", true, cpsr.isOverflow());

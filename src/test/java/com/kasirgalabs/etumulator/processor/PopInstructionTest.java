@@ -32,7 +32,7 @@ public class PopInstructionTest extends InstructionTester {
                 + "push {r0,r1}\n"
                 + "pop {r1, r0}\n";
         runTestCode(code);
-        assertEquals("Pop result is wrong.", registerFile.getValue("r0"), 4);
-        assertEquals("Pop result is wrong.", registerFile.getValue("r1"), 0xffffffff);
+        assertEquals("Pop result is wrong.", 4, registerFile.getValue("r0"));
+        assertEquals("Pop result is wrong.", 0xffffffff, registerFile.getValue("r1"));
     }
 }

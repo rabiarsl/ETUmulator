@@ -31,7 +31,7 @@ public class RorsInstructionTest extends InstructionTester {
                 + "mov r2, #1\n"
                 + "rors r0, r1, r2\n";
         runTestCode(code);
-        assertEquals("Shift result is wrong.", registerFile.getValue("r0"), 0x80000000);
+        assertEquals("Shift result is wrong.", 0x80000000, registerFile.getValue("r0"));
         assertEquals("Negative flag is wrong.", true, cpsr.isNegative());
         assertEquals("Zero flag is wrong.", false, cpsr.isZero());
         assertEquals("Carry flag is wrong.", true, cpsr.isCarry());
@@ -40,7 +40,7 @@ public class RorsInstructionTest extends InstructionTester {
                 + "mov r2, #4\n"
                 + "rors r0, r1, r2\n";
         runTestCode(code);
-        assertEquals("Shift result is wrong.", registerFile.getValue("r0"), 0);
+        assertEquals("Shift result is wrong.", 0, registerFile.getValue("r0"));
         assertEquals("Negative flag is wrong.", false, cpsr.isNegative());
         assertEquals("Zero flag is wrong.", true, cpsr.isZero());
         assertEquals("Carry flag is wrong.", false, cpsr.isCarry());
@@ -49,7 +49,7 @@ public class RorsInstructionTest extends InstructionTester {
                 + "mov r2, #1\n"
                 + "rors r0, r1, r2\n";
         runTestCode(code);
-        assertEquals("Shift result is wrong.", registerFile.getValue("r0"), 0xffffffff);
+        assertEquals("Shift result is wrong.", 0xffffffff, registerFile.getValue("r0"));
         assertEquals("Negative flag is wrong.", true, cpsr.isNegative());
         assertEquals("Zero flag is wrong.", false, cpsr.isZero());
         assertEquals("Carry flag is wrong.", true, cpsr.isCarry());

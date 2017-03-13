@@ -28,141 +28,145 @@ import org.antlr.v4.runtime.tree.ParseTreeWalker;
 
 public class Linker extends ArmBaseListener {
     private final InstructionUnit instructionUnit;
-    private final List<Label> unresolvedLabels;
-    private final List<Label> resolvedLabels;
+    private final List<Label> definedLabels;
+    private final List<Label> targetLabels;
 
     public Linker(InstructionUnit instructionUnit) {
         this.instructionUnit = instructionUnit;
-        unresolvedLabels = new ArrayList<>();
-        resolvedLabels = new ArrayList<>();
+        definedLabels = new ArrayList<>();
+        targetLabels = new ArrayList<>();
     }
 
     @Override
     public void exitLabel(ArmParser.LabelContext ctx) {
         Label label = new Label(ctx.LABEL().getText());
         label.setAddress(ctx.getStart().getLine() - 1);
-        if(unresolvedLabels.contains(label)) {
+        if(definedLabels.contains(label)) {
             return;
         }
-        unresolvedLabels.add(label);
+        definedLabels.add(label);
     }
 
     @Override
     public void exitB(ArmParser.BContext ctx) {
-        resolveLabel(new Label(ctx.LABEL().getText()));
+        targetLabels.add(new Label(ctx.LABEL().getText()));
     }
 
     @Override
     public void exitBeq(ArmParser.BeqContext ctx) {
-        resolveLabel(new Label(ctx.LABEL().getText()));
+        targetLabels.add(new Label(ctx.LABEL().getText()));
     }
 
     @Override
     public void exitBne(ArmParser.BneContext ctx) {
-        resolveLabel(new Label(ctx.LABEL().getText()));
+        targetLabels.add(new Label(ctx.LABEL().getText()));
     }
 
     @Override
     public void exitBcs(ArmParser.BcsContext ctx) {
-        resolveLabel(new Label(ctx.LABEL().getText()));
+        targetLabels.add(new Label(ctx.LABEL().getText()));
     }
 
     @Override
     public void exitBhs(ArmParser.BhsContext ctx) {
-        resolveLabel(new Label(ctx.LABEL().getText()));
+        targetLabels.add(new Label(ctx.LABEL().getText()));
     }
 
     @Override
     public void exitBcc(ArmParser.BccContext ctx) {
-        resolveLabel(new Label(ctx.LABEL().getText()));
+        targetLabels.add(new Label(ctx.LABEL().getText()));
     }
 
     @Override
     public void exitBlo(ArmParser.BloContext ctx) {
-        resolveLabel(new Label(ctx.LABEL().getText()));
+        targetLabels.add(new Label(ctx.LABEL().getText()));
     }
 
     @Override
     public void exitBmi(ArmParser.BmiContext ctx) {
-        resolveLabel(new Label(ctx.LABEL().getText()));
+        targetLabels.add(new Label(ctx.LABEL().getText()));
     }
 
     @Override
     public void exitBpl(ArmParser.BplContext ctx) {
-        resolveLabel(new Label(ctx.LABEL().getText()));
+        targetLabels.add(new Label(ctx.LABEL().getText()));
     }
 
     @Override
     public void exitBvs(ArmParser.BvsContext ctx) {
-        resolveLabel(new Label(ctx.LABEL().getText()));
+        targetLabels.add(new Label(ctx.LABEL().getText()));
     }
 
     @Override
     public void exitBvc(ArmParser.BvcContext ctx) {
-        resolveLabel(new Label(ctx.LABEL().getText()));
+        targetLabels.add(new Label(ctx.LABEL().getText()));
     }
 
     @Override
     public void exitBhi(ArmParser.BhiContext ctx) {
-        resolveLabel(new Label(ctx.LABEL().getText()));
+        targetLabels.add(new Label(ctx.LABEL().getText()));
     }
 
     @Override
     public void exitBls(ArmParser.BlsContext ctx) {
-        resolveLabel(new Label(ctx.LABEL().getText()));
+        targetLabels.add(new Label(ctx.LABEL().getText()));
     }
 
     @Override
     public void exitBge(ArmParser.BgeContext ctx) {
-        resolveLabel(new Label(ctx.LABEL().getText()));
+        targetLabels.add(new Label(ctx.LABEL().getText()));
     }
 
     @Override
     public void exitBlt(ArmParser.BltContext ctx) {
-        resolveLabel(new Label(ctx.LABEL().getText()));
+        targetLabels.add(new Label(ctx.LABEL().getText()));
     }
 
     @Override
     public void exitBgt(ArmParser.BgtContext ctx) {
-        resolveLabel(new Label(ctx.LABEL().getText()));
+        targetLabels.add(new Label(ctx.LABEL().getText()));
     }
 
     @Override
     public void exitBle(ArmParser.BleContext ctx) {
-        resolveLabel(new Label(ctx.LABEL().getText()));
+        targetLabels.add(new Label(ctx.LABEL().getText()));
     }
 
     @Override
     public void exitBal(ArmParser.BalContext ctx) {
-        resolveLabel(new Label(ctx.LABEL().getText()));
+        targetLabels.add(new Label(ctx.LABEL().getText()));
     }
 
     @Override
     public void exitBl(ArmParser.BlContext ctx) {
-        resolveLabel(new Label(ctx.LABEL().getText()));
+        targetLabels.add(new Label(ctx.LABEL().getText()));
     }
 
     public void linkAndLoad(String code) {
-        resolveLabels(code);
+        definedLabels.clear();
+        targetLabels.clear();
+        List<Label> resolvedLabels = resolveLabels(code);
         char[][] instructions = parseInstructions(code);
         instructionUnit.loadLabels(resolvedLabels);
         instructionUnit.loadInstructions(instructions);
     }
 
-    private void resolveLabels(String code) {
+    private List<Label> resolveLabels(String code) {
         ANTLRInputStream in = new ANTLRInputStream(code.toCharArray(), code.length());
         ArmLexer lexer = new ArmLexer(in);
         CommonTokenStream tokens = new CommonTokenStream(lexer);
         ArmParser parser = new ArmParser(tokens);
         ArmParser.ProgContext tree = parser.prog();
         ParseTreeWalker.DEFAULT.walk(this, tree);
-    }
-
-    private void resolveLabel(Label label) {
-        if(!unresolvedLabels.contains(label)) {
-            return;
+        List<Label> resolvedLabels = new ArrayList<Label>();
+        for(Label label : targetLabels) {
+            if(definedLabels.contains(label)) {
+                resolvedLabels.add(definedLabels.get(definedLabels.indexOf(label)));
+                continue;
+            }
+            return null;
         }
-        resolvedLabels.add(unresolvedLabels.get(unresolvedLabels.indexOf(label)));
+        return resolvedLabels;
     }
 
     private char[][] parseInstructions(String code) {

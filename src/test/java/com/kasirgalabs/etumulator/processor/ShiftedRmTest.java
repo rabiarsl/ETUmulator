@@ -32,65 +32,65 @@ public class ShiftedRmTest extends InstructionTester {
                 + "mov r3, #1\n"
                 + "add r0, r1, r2, lsl r3\n";
         runTestCode(code);
-        assertEquals("Shift result is wrong.", registerFile.getValue("r0"), 3);
+        assertEquals("Shift result is wrong.", 3, registerFile.getValue("r0"));
 
         code = "mov r1, #1\n"
                 + "mov r2, #1\n"
                 + "mov r3, #1\n"
                 + "add r0, r1, r2, lsr r3\n";
         runTestCode(code);
-        assertEquals("Shift result is wrong.", registerFile.getValue("r0"), 1);
+        assertEquals("Shift result is wrong.", 1, registerFile.getValue("r0"));
 
         code = "mov r1, #1\n"
                 + "ldr r2, =#0xffffffff\n"
                 + "mov r3, #1\n"
                 + "add r0, r1, r2, asr r3\n";
         runTestCode(code);
-        assertEquals("Shift result is wrong.", registerFile.getValue("r0"), 0);
+        assertEquals("Shift result is wrong.", 0, registerFile.getValue("r0"));
 
         code = "mov r1, #1\n"
                 + "ldr r2, =#0xffffffff\n"
                 + "mov r3, #1\n"
                 + "add r0, r1, r2, ror r3\n";
         runTestCode(code);
-        assertEquals("Shift result is wrong.", registerFile.getValue("r0"), 0);
+        assertEquals("Shift result is wrong.", 0, registerFile.getValue("r0"));
 
         code = "mov r1, #1\n"
                 + "mov r2, #1\n"
                 + "mov r3, #1\n"
                 + "add r0, r1, r2, ror r3\n";
         runTestCode(code);
-        assertEquals("Shift result is wrong.", registerFile.getValue("r0"), Integer.MIN_VALUE + 1);
+        assertEquals("Shift result is wrong.", Integer.MIN_VALUE + 1, registerFile.getValue("r0"));
 
         code = "mov r1, #1\n"
                 + "mov r2, #1\n"
                 + "add r0, r1, r2, lsl 1\n";
         runTestCode(code);
-        assertEquals("Shift result is wrong.", registerFile.getValue("r0"), 3);
+        assertEquals("Shift result is wrong.", 3, registerFile.getValue("r0"));
 
         code = "mov r1, #1\n"
                 + "mov r2, #1\n"
                 + "add r0, r1, r2, lsr #1\n";
         runTestCode(code);
-        assertEquals("Shift result is wrong.", registerFile.getValue("r0"), 1);
+        assertEquals("Shift result is wrong.", 1, registerFile.getValue("r0"));
 
         code = "mov r1, #1\n"
                 + "ldr r2, =#0xffffffff\n"
                 + "add r0, r1, r2, asr #0x1\n";
         runTestCode(code);
-        assertEquals("Shift result is wrong.", registerFile.getValue("r0"), 0);
+        assertEquals("Shift result is wrong.", 0, registerFile.getValue("r0"));
 
         code = "mov r1, #1\n"
                 + "ldr r2, =#0xffffffff\n"
                 + "add r0, r1, r2, ror 0x1\n";
         runTestCode(code);
-        assertEquals("Shift result is wrong.", registerFile.getValue("r0"), 0);
+        assertEquals("Shift result is wrong.", 0, registerFile.getValue("r0"));
 
         code = "mov r1, #1\n"
                 + "mov r2, #1\n"
                 + "mov r3, #1\n"
                 + "add r0, r1, r2, ror 1\n";
         runTestCode(code);
-        assertEquals("Shift result is wrong.", registerFile.getValue("r0"), Integer.MIN_VALUE + 1);
+        assertEquals("Shift result is wrong.", Integer.MIN_VALUE + 1, registerFile.getValue("r0"));
     }
 }

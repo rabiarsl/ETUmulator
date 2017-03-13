@@ -30,29 +30,29 @@ public class SbcInstructionTest extends InstructionTester {
         cpsr.setCarry(true);
         String code = "sbc r1, r2, r3\n";
         runTestCode(code);
-        assertEquals("Subtraction result is wrong.", registerFile.getValue("r1"), 0);
+        assertEquals("Subtraction result is wrong.", 0, registerFile.getValue("r1"));
 
         cpsr.setCarry(false);
         code = "sbc r0, r1, 0\n";
         runTestCode(code);
-        assertEquals("Subtraction result is wrong.", registerFile.getValue("r0"), -1);
+        assertEquals("Subtraction result is wrong.", -1, registerFile.getValue("r0"));
 
         cpsr.setCarry(true);
         code = "sbc r0, r1, 4\n";
         runTestCode(code);
-        assertEquals("Subtraction result is wrong.", registerFile.getValue("r0"), -4);
+        assertEquals("Subtraction result is wrong.", -4, registerFile.getValue("r0"));
 
         cpsr.setCarry(false);
         code = "mov r1, #1\n"
                 + "mov r2, #2\n"
                 + "sbc r0, r1, r2\n";
         runTestCode(code);
-        assertEquals("Subtraction result is wrong.", registerFile.getValue("r0"), -2);
+        assertEquals("Subtraction result is wrong.", -2, registerFile.getValue("r0"));
 
         cpsr.setCarry(false);
         code = "mov r0, #1\n"
                 + "sbc r0, r0, r0\n";
         runTestCode(code);
-        assertEquals("Subtraction result is wrong.", registerFile.getValue("r0"), -1);
+        assertEquals("Subtraction result is wrong.", -1, registerFile.getValue("r0"));
     }
 }

@@ -34,7 +34,7 @@ public class RegisterFileTest {
      */
     @Test
     public void testGetValue() {
-        assertEquals("Default register value is wrong.", registerFile.getValue("r0"), 0);
+        assertEquals("Default register value is wrong.", 0, registerFile.getValue("r0"));
     }
 
     /**
@@ -43,7 +43,7 @@ public class RegisterFileTest {
     @Test
     public void testUpdate() {
         registerFile.update("r0", 5);
-        assertEquals("Register value is wrong.", registerFile.getValue("r0"), 5);
+        assertEquals("Register value is wrong.", 5, registerFile.getValue("r0"));
     }
 
     /**

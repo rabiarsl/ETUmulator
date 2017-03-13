@@ -62,6 +62,7 @@ public class Processor extends ArmBaseListener {
     }
 
     public void run() {
+        int i = 0;
         while(instructionUnit.hasNext()) {
             execute(instructionUnit.fetchNext());
         }

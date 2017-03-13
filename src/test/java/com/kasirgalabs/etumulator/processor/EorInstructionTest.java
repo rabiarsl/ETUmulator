@@ -31,11 +31,11 @@ public class EorInstructionTest extends InstructionTester {
                 + "mov r2, #1\n"
                 + "eor r0, r1, r2\n";
         runTestCode(code);
-        assertEquals("XOR result is wrong.", registerFile.getValue("r0"), 1);
+        assertEquals("XOR result is wrong.", 1, registerFile.getValue("r0"));
 
         code = "ldr r1, =0xffffffff\n"
                 + "eor r0, r1, r1\n";
         runTestCode(code);
-        assertEquals("XOR result is wrong.", registerFile.getValue("r0"), 0);
+        assertEquals("XOR result is wrong.", 0, registerFile.getValue("r0"));
     }
 }

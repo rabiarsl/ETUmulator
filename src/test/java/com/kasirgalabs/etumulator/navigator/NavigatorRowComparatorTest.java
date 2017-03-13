@@ -27,21 +27,21 @@ public class NavigatorRowComparatorTest {
     @Test
     public void testCompare() {
         NavigatorRowComparator instance = new NavigatorRowComparator();
-        assertEquals("Compare result is wrong.", instance.compare("1", "10"), -1);
-        assertEquals("Compare result is wrong.", instance.compare("1", "11"), -1);
-        assertEquals("Compare result is wrong.", instance.compare("r1", "r10"), -1);
-        assertEquals("Compare result is wrong.", instance.compare("r1", "r11"), -1);
-        assertEquals("Compare result is wrong.", instance.compare("r1", "r0"), 1);
-        assertEquals("Compare result is wrong.", instance.compare("2", "1"), 1);
-        assertEquals("Compare result is wrong.", instance.compare("0", "123"), -1);
-        assertEquals("Compare result is wrong.", instance.compare("0xffffffff", "0x1"), -1);
-        assertEquals("Compare result is wrong.", instance.compare("0x0", "0x1"), -1);
-        assertEquals("Compare result is wrong.", instance.compare("0x6", "0x5"), 1);
-        assertEquals("Compare result is wrong.", instance.compare(
+        assertEquals("Compare result is wrong.", -1, instance.compare("1", "10"));
+        assertEquals("Compare result is wrong.", -1, instance.compare("1", "11"));
+        assertEquals("Compare result is wrong.", -1, instance.compare("r1", "r10"));
+        assertEquals("Compare result is wrong.", -1, instance.compare("r1", "r11"));
+        assertEquals("Compare result is wrong.", 1, instance.compare("r1", "r0"));
+        assertEquals("Compare result is wrong.", 1, instance.compare("2", "1"));
+        assertEquals("Compare result is wrong.", -1, instance.compare("0", "123"));
+        assertEquals("Compare result is wrong.", -1, instance.compare("0xffffffff", "0x1"));
+        assertEquals("Compare result is wrong.", -1, instance.compare("0x0", "0x1"));
+        assertEquals("Compare result is wrong.", 1, instance.compare("0x6", "0x5"));
+        assertEquals("Compare result is wrong.", -1, instance.compare(
                 "00000000000000000000000000000000",
-                "00000000000000000000000000000001"), -1);
-        assertEquals("Compare result is wrong.", instance.compare(
+                "00000000000000000000000000000001"));
+        assertEquals("Compare result is wrong.", 1, instance.compare(
                 "11111111111111111111111111111111",
-                "11111111111111111111111111111110"), 1);
+                "11111111111111111111111111111110"));
     }
 }

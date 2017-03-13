@@ -35,7 +35,7 @@ public class CPUStackTest {
     @Test
     public void testPushAndPop() {
         stack.push(1234);
-        assertEquals("Push and pop result is wrong.", stack.pop().intValue(), 1234);
+        assertEquals("Push and pop result is wrong.", 1234, stack.pop().intValue());
     }
 
     /**

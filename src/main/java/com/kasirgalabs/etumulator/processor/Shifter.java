@@ -29,18 +29,22 @@ public class Shifter {
         if(shiftAmount <= 0) {
             return value;
         }
+        int temp = value;
         switch(option) {
             case Shift.ASR:
-                return value >> shiftAmount;
+                temp = value >> shiftAmount;
+                break;
             case Shift.LSL:
-                return value << shiftAmount;
+                temp = value << shiftAmount;
+                break;
             case Shift.LSR:
-                return value >>> shiftAmount;
+                temp = value >>> shiftAmount;
+                break;
             case Shift.ROR:
-                return Integer.rotateRight(value, shiftAmount);
-            default:
-                return 0;
+                temp = Integer.rotateRight(value, shiftAmount);
+                break;
         }
+        return temp;
     }
 
     public int rrxShift(int value) {

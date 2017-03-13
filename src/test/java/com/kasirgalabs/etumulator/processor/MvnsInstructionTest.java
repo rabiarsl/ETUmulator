@@ -29,14 +29,14 @@ public class MvnsInstructionTest extends InstructionTester {
     public void testExitMvns() {
         String code = "mvns r0, #0\n";
         runTestCode(code);
-        assertEquals("Move result is wrong.", registerFile.getValue("r0"), ~0);
+        assertEquals("Move result is wrong.", ~0, registerFile.getValue("r0"));
         assertEquals("Negative flag is wrong.", true, cpsr.isNegative());
         assertEquals("Zero flag is wrong.", false, cpsr.isZero());
 
         code = "mov r1, 8\n"
                 + "mvns r0, r1\n";
         runTestCode(code);
-        assertEquals("Move result is wrong.", registerFile.getValue("r0"), ~8);
+        assertEquals("Move result is wrong.", ~8, registerFile.getValue("r0"));
         assertEquals("Negative flag is wrong.", true, cpsr.isNegative());
         assertEquals("Zero flag is wrong.", false, cpsr.isZero());
     }

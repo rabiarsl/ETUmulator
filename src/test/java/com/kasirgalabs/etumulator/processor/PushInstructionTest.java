@@ -31,7 +31,7 @@ public class PushInstructionTest extends InstructionTester {
                 + "ldr r1, =0xffffffff\n"
                 + "push {r0,r1}\n";
         runTestCode(code);
-        assertEquals("Push result is wrong.", stack.pop().intValue(), 0xffffffff);
-        assertEquals("Push result is wrong.", stack.pop().intValue(), 4);
+        assertEquals("Push result is wrong.", 0xffffffff, stack.pop().intValue());
+        assertEquals("Push result is wrong.", 4, stack.pop().intValue());
     }
 }
