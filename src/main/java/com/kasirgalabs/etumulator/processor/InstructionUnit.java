@@ -25,7 +25,12 @@ public class InstructionUnit {
     private List<Label> labels;
     private int pc;
 
-    public InstructionUnit() {
+    public void loadInstructions(char[][] instructions) {
+        this.instructions = new char[instructions.length][];
+        for(int i = 0; i < instructions.length; i++) {
+            this.instructions[i] = new char[instructions[i].length];
+            System.arraycopy(instructions[i], 0, this.instructions[i], 0, instructions[i].length);
+        }
         pc = 0;
     }
 
@@ -49,14 +54,5 @@ public class InstructionUnit {
 
     public boolean hasNext() {
         return pc < instructions.length;
-    }
-
-    public void loadInstructions(char[][] instructions) {
-        this.instructions = new char[instructions.length][];
-        for(int i = 0; i < instructions.length; i++) {
-            this.instructions[i] = new char[instructions[i].length];
-            System.arraycopy(instructions[i], 0, this.instructions[i], 0, instructions[i].length);
-        }
-        pc = 0;
     }
 }
