@@ -33,10 +33,6 @@ public class CPSR {
         return zero;
     }
 
-    public void setCarry(boolean carry) {
-        this.carry = carry;
-    }
-
     public boolean isCarry() {
         return carry;
     }

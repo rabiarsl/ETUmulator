@@ -172,19 +172,19 @@ public class CPSRTest {
         assertEquals("Zero flag is wrong.", false, cpsr.isZero());
         assertEquals("Carry flag is wrong.", true, cpsr.isCarry());
 
-        cpsr.setCarry(false);
+        cpsr.shiftUpdateNZC(1, 1, Shift.LSL);
         cpsr.rrxUpdateNZC(1);
         assertEquals("Negative flag is wrong.", false, cpsr.isNegative());
         assertEquals("Zero flag is wrong.", true, cpsr.isZero());
         assertEquals("Carry flag is wrong.", true, cpsr.isCarry());
 
-        cpsr.setCarry(true);
+        cpsr.shiftUpdateNZC(1, 1, Shift.LSR);
         cpsr.rrxUpdateNZC(1);
         assertEquals("Negative flag is wrong.", true, cpsr.isNegative());
         assertEquals("Zero flag is wrong.", false, cpsr.isZero());
         assertEquals("Carry flag is wrong.", true, cpsr.isCarry());
 
-        cpsr.setCarry(true);
+        cpsr.shiftUpdateNZC(1, 1, Shift.LSR);
         cpsr.rrxUpdateNZC(2);
         assertEquals("Negative flag is wrong.", true, cpsr.isNegative());
         assertEquals("Zero flag is wrong.", false, cpsr.isZero());
