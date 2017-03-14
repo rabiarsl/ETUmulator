@@ -21,25 +21,26 @@ import static org.junit.Assert.assertEquals;
 import com.kasirgalabs.etumulator.InstructionTester;
 import org.junit.Test;
 
-public class BInstructionTest extends InstructionTester {
+public class BmiInstructionTest extends InstructionTester {
     /**
-     * Test of exitB method, of class Processor.
+     * Test of exitBmi method, of class Processor.
      */
     @Test
-    public void testExitB() {
-        String code = "mov r0, #1\n"
-                + "b target\n"
-                + "add r0, r0, r0\n"
+    public void testExitBmi() {
+        String code = "ldr r0, =0xffffffff\n"
+                + "cmp r0, #0\n"
+                + "bmi target\n"
+                + "mov r0, #1\n"
+                + "target:\n";
+        runTestCode(code);
+        assertEquals("Branch instruction does not work properly.", 0xffffffff, registerFile.getValue("r0"));
+
+        code = "ldr r0, =0x7fffffff\n"
+                + "cmp r0, #0\n"
+                + "bmi target\n"
+                + "mov r0, #1\n"
                 + "target:\n";
         runTestCode(code);
         assertEquals("Branch instruction does not work properly.", 1, registerFile.getValue("r0"));
-
-        runTestCode("target:\n"
-                + "cmp r0, #5\n"
-                + "beq target2\n"
-                + "add r0, r0, #1\n"
-                + "b target\n"
-                + "target2:\n");
-        assertEquals("Branch instruction does not work properly.", 5, registerFile.getValue("r0"));
     }
 }

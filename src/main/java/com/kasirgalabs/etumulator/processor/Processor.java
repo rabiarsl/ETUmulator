@@ -575,14 +575,14 @@ public class Processor extends ArmBaseListener {
 
     @Override
     public void exitBgt(ArmParser.BgtContext ctx) {
-        if(!cpsr.isZero() && !(cpsr.isNegative() == cpsr.isOverflow())) {
+        if(!cpsr.isZero() && (cpsr.isNegative() == cpsr.isOverflow())) {
             instructionUnit.jumpToLabel(ctx.LABEL().getText());
         }
     }
 
     @Override
     public void exitBle(ArmParser.BleContext ctx) {
-        if(cpsr.isZero() || !(cpsr.isNegative() != cpsr.isOverflow())) {
+        if(cpsr.isZero() || (cpsr.isNegative() != cpsr.isOverflow())) {
             instructionUnit.jumpToLabel(ctx.LABEL().getText());
         }
     }
