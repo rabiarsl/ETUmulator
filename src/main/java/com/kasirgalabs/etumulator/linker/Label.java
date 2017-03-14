@@ -67,9 +67,4 @@ public class Label {
         hash = 67 * hash + Objects.hashCode(this.name);
         return hash;
     }
-
-    @Override
-    public String toString() {
-        return name + ":" + address;
-    }
 }

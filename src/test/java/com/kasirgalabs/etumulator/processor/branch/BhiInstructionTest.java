@@ -42,5 +42,13 @@ public class BhiInstructionTest extends InstructionTester {
                 + "target:\n";
         runTestCode(code);
         assertEquals("Branch instruction does not work properly.", 1, registerFile.getValue("r0"));
+
+        cpsr.setCarry(false);
+        code = "mov r0, #4\n"
+                + "bhi target\n"
+                + "mov r0, #1\n"
+                + "target:\n";
+        runTestCode(code);
+        assertEquals("Branch instruction does not work properly.", 1, registerFile.getValue("r0"));
     }
 }

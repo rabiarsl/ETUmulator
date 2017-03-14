@@ -17,6 +17,7 @@
 package com.kasirgalabs.etumulator;
 
 import com.kasirgalabs.etumulator.linker.Linker;
+import com.kasirgalabs.etumulator.processor.CPSR;
 import com.kasirgalabs.etumulator.processor.CPUStack;
 import com.kasirgalabs.etumulator.processor.InstructionUnit;
 import com.kasirgalabs.etumulator.processor.Processor;
@@ -25,14 +26,14 @@ import com.kasirgalabs.etumulator.processor.RegisterFile;
 public class InstructionTester {
     protected final RegisterFile registerFile;
     protected final CPUStack stack;
-    protected final CarryEditableCPSR cpsr;
+    protected final CPSR cpsr;
     private final InstructionUnit instructionUnit;
     private final Processor processor;
 
     public InstructionTester() {
         registerFile = new RegisterFile();
         stack = new CPUStack();
-        cpsr = new CarryEditableCPSR();
+        cpsr = new CPSR();
         instructionUnit = new InstructionUnit();
         processor = new Processor(registerFile, stack, cpsr, instructionUnit);
     }

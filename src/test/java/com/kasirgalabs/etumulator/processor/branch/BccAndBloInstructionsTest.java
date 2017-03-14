@@ -37,10 +37,26 @@ public class BccAndBloInstructionsTest extends InstructionTester {
 
         cpsr.setCarry(false);
         code = "mov r0, #4\n"
+                + "bcc target\n"
+                + "mov r0, #1\n"
+                + "target:\n";
+        runTestCode(code);
+        assertEquals("Branch instrucbtion does not work properly.", 4, registerFile.getValue("r0"));
+
+        cpsr.setCarry(false);
+        code = "mov r0, #4\n"
                 + "blo target\n"
                 + "mov r0, #1\n"
                 + "target:\n";
         runTestCode(code);
         assertEquals("Branch instruction does not work properly.", 4, registerFile.getValue("r0"));
+
+        cpsr.setCarry(true);
+        code = "mov r0, #4\n"
+                + "blo target\n"
+                + "mov r0, #1\n"
+                + "target:\n";
+        runTestCode(code);
+        assertEquals("Branch instruction does not work properly.", 1, registerFile.getValue("r0"));
     }
 }

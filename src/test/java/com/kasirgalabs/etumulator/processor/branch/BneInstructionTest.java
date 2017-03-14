@@ -34,5 +34,14 @@ public class BneInstructionTest extends InstructionTester {
                 + "target:\n";
         runTestCode(code);
         assertEquals("Branch instruction does not work properly.", 4, registerFile.getValue("r0"));
+
+        code = "mov r0, #4\n"
+                + "mov r1, #4\n"
+                + "cmp r0, r1\n"
+                + "bne target\n"
+                + "mov r0, #1\n"
+                + "target:\n";
+        runTestCode(code);
+        assertEquals("Branch instruction does not work properly.", 1, registerFile.getValue("r0"));
     }
 }

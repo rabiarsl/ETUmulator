@@ -33,8 +33,16 @@ public class CPSR {
         return zero;
     }
 
+    public void setZero(boolean zero) {
+        this.zero = zero;
+    }
+
     public boolean isCarry() {
         return carry;
+    }
+
+    public void setCarry(boolean carry) {
+        this.carry = carry;
     }
 
     public boolean isOverflow() {
