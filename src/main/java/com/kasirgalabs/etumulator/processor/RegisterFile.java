@@ -19,7 +19,6 @@ package com.kasirgalabs.etumulator.processor;
 import com.kasirgalabs.etumulator.pattern.Observable;
 import com.kasirgalabs.etumulator.pattern.Observer;
 import com.kasirgalabs.etumulator.register.IntegerRegister;
-import com.kasirgalabs.etumulator.register.Register;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -60,8 +59,7 @@ public class RegisterFile implements Observable {
     }
 
     public void reset() {
-        registers.values().forEach((object) -> {
-            Register register = object;
+        registers.values().forEach((register) -> {
             register.setValue(0);
         });
     }
