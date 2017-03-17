@@ -20,6 +20,7 @@ import com.kasirgalabs.etumulator.linker.Linker;
 import com.kasirgalabs.etumulator.processor.CPSR;
 import com.kasirgalabs.etumulator.processor.CPUStack;
 import com.kasirgalabs.etumulator.processor.InstructionUnit;
+import com.kasirgalabs.etumulator.processor.MemoryUnit;
 import com.kasirgalabs.etumulator.processor.Processor;
 import com.kasirgalabs.etumulator.processor.RegisterFile;
 
@@ -28,6 +29,7 @@ public class InstructionTester {
     protected final CPUStack stack;
     protected final CPSR cpsr;
     private final InstructionUnit instructionUnit;
+    private final MemoryUnit memoryUnit;
     private final Processor processor;
 
     public InstructionTester() {
@@ -35,12 +37,13 @@ public class InstructionTester {
         stack = new CPUStack();
         cpsr = new CPSR();
         instructionUnit = new InstructionUnit();
+        memoryUnit = new MemoryUnit();
         processor = new Processor(registerFile, stack, cpsr, instructionUnit);
     }
 
     protected final void runTestCode(String code) {
         registerFile.reset();
-        Linker linker = new Linker(instructionUnit);
+        Linker linker = new Linker(instructionUnit, memoryUnit);
         linker.linkAndLoad(code);
         processor.run();
     }

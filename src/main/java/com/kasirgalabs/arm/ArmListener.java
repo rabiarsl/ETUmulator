@@ -1087,4 +1087,24 @@ public interface ArmListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitLabel(ArmParser.LabelContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link ArmParser#data}.
+	 * @param ctx the parse tree
+	 */
+	void enterData(ArmParser.DataContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link ArmParser#data}.
+	 * @param ctx the parse tree
+	 */
+	void exitData(ArmParser.DataContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link ArmParser#asciz}.
+	 * @param ctx the parse tree
+	 */
+	void enterAsciz(ArmParser.AscizContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link ArmParser#asciz}.
+	 * @param ctx the parse tree
+	 */
+	void exitAsciz(ArmParser.AscizContext ctx);
 }

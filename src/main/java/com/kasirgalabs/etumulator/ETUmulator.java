@@ -24,6 +24,7 @@ import com.kasirgalabs.etumulator.pattern.Registry;
 import com.kasirgalabs.etumulator.processor.CPSR;
 import com.kasirgalabs.etumulator.processor.CPUStack;
 import com.kasirgalabs.etumulator.processor.InstructionUnit;
+import com.kasirgalabs.etumulator.processor.MemoryUnit;
 import com.kasirgalabs.etumulator.processor.Processor;
 import com.kasirgalabs.etumulator.processor.RegisterFile;
 import java.io.IOException;
@@ -46,6 +47,7 @@ public class ETUmulator extends Application {
         Registry.put(CPUStack.class, new CPUStack());
         Registry.put(CPSR.class, new CPSR());
         Registry.put(InstructionUnit.class, new InstructionUnit());
+        Registry.put(MemoryUnit.class, new MemoryUnit());
         Registry.put(Processor.class, new Processor(
                 Registry.get(RegisterFile.class),
                 Registry.get(CPUStack.class),

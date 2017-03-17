@@ -7,6 +7,7 @@ prog
 line
     : instruction
     | label
+    | data
     ;
 
 instruction
@@ -918,6 +919,26 @@ LABEL
     : [a-zA-Z0-9_]+
     ;
 
+data
+    : label asciz
+    ;
+
+asciz
+    : '.asciz' String
+    ;
+
+String
+	: DOUBLE_QUOTE Characters+ DOUBLE_QUOTE
+	;
+
+fragment Characters
+	: Character+
+	;
+
+fragment Character
+	: ~["\\]
+	;
+
 fragment A:('a'|'A');
 fragment B:('b'|'B');
 fragment C:('c'|'C');
@@ -945,6 +966,10 @@ fragment X:('x'|'X');
 fragment Y:('y'|'Y');
 fragment Z:('z'|'Z');
 
+DOUBLE_QUOTE
+    : '"'
+    ;
+
 ASSIGN
     : '='
     ;
@@ -968,6 +993,7 @@ RBRACE
 DASH
     : '#'
     ;
+
 COMMA
     : ','
     ;

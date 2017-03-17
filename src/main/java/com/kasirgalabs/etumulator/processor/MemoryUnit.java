@@ -16,36 +16,37 @@
  */
 package com.kasirgalabs.etumulator.processor;
 
-import com.kasirgalabs.etumulator.linker.Label;
+import com.kasirgalabs.etumulator.linker.Data;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 public class MemoryUnit {
-    private Map<Integer, Character> memory;
-    private List<Label> labels;
+    private Map<Integer, Byte> memory;
+    private List<Data> data;
 
     public MemoryUnit() {
         memory = new HashMap<>();
     }
 
-    public void loadLabels(List<Label> labels) {
-        this.labels = new ArrayList<>(labels.size());
-        labels.forEach((label) -> {
-            this.labels.add(new Label(label));
+    public void loadData(List<Data> data) {
+        this.data = new ArrayList<>(data.size());
+        data.forEach((item) -> {
+            this.data.add(new Data(item));
         });
     }
 
     public int getLabelAddress(String label) {
-        return labels.get(labels.indexOf(new Label(label))).getAddress();
+        int index = data.indexOf(new Data(label));
+        return data.get(index).getLabel().getAddress();
     }
 
-    public char getData(int address) {
+    public Byte getData(int address) {
         return memory.get(address);
     }
 
-    public void setData(int address, char data) {
+    public void setData(int address, Byte data) {
         memory.put(address, data);
     }
 }

@@ -658,4 +658,16 @@ public interface ArmVisitor<T> extends ParseTreeVisitor<T> {
 	 * @return the visitor result
 	 */
 	T visitLabel(ArmParser.LabelContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link ArmParser#data}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitData(ArmParser.DataContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link ArmParser#asciz}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitAsciz(ArmParser.AscizContext ctx);
 }

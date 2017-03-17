@@ -28,7 +28,7 @@ public class LinkerTest extends InstructionUnit {
     private List<Label> expectedLabel;
 
     public LinkerTest() {
-        linker = new Linker(this);
+        linker = new Linker(this, null);
         expectedLabel = new ArrayList<Label>();
     }
 
@@ -57,6 +57,15 @@ public class LinkerTest extends InstructionUnit {
                 + "mov r0, #0\n"
                 + "b target\n"
                 + "target2:\n");
+
+        expectedLabel.clear();
+        expectedLabel.add(new Label("target"));
+        linker.linkAndLoad("target:\n"
+                + "// comment\n"
+                + "mov r0, #0\n"
+                + "b target\n"
+                + "target2:\n"
+                + "test: .asciz \"asd\"\n");
     }
 
     @Override

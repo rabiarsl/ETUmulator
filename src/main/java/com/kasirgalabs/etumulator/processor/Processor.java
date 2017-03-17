@@ -310,8 +310,10 @@ public class Processor extends ArmBaseListener {
 
     @Override
     public void exitLdr(ArmParser.LdrContext ctx) {
-        rdRegister.setValue(number.getValue());
-        rdRegister.update();
+        if(ctx.LABEL() == null) {
+            rdRegister.setValue(number.getValue());
+            rdRegister.update();
+        }
     }
 
     @Override

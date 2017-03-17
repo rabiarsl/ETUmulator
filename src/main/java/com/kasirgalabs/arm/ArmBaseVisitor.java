@@ -767,4 +767,18 @@ public class ArmBaseVisitor<T> extends AbstractParseTreeVisitor<T> implements Ar
 	 * {@link #visitChildren} on {@code ctx}.</p>
 	 */
 	@Override public T visitLabel(ArmParser.LabelContext ctx) { return visitChildren(ctx); }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation returns the result of calling
+	 * {@link #visitChildren} on {@code ctx}.</p>
+	 */
+	@Override public T visitData(ArmParser.DataContext ctx) { return visitChildren(ctx); }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation returns the result of calling
+	 * {@link #visitChildren} on {@code ctx}.</p>
+	 */
+	@Override public T visitAsciz(ArmParser.AscizContext ctx) { return visitChildren(ctx); }
 }

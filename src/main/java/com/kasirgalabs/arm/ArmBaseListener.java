@@ -1307,6 +1307,30 @@ public class ArmBaseListener implements ArmListener {
 	 * <p>The default implementation does nothing.</p>
 	 */
 	@Override public void exitLabel(ArmParser.LabelContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterData(ArmParser.DataContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitData(ArmParser.DataContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterAsciz(ArmParser.AscizContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitAsciz(ArmParser.AscizContext ctx) { }
 
 	/**
 	 * {@inheritDoc}
