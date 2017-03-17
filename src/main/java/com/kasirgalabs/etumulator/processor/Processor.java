@@ -316,7 +316,7 @@ public class Processor extends ArmBaseListener {
             rdRegister.setValue(number.getValue());
         }
         else {
-            rdRegister.setValue(memoryUnit.getLabelAddress(ctx.LABEL().getText()) + 1);
+            rdRegister.setValue(memoryUnit.getLabelAddress(ctx.LABEL().getText()));
         }
         rdRegister.update();
     }

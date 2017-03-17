@@ -115,6 +115,15 @@ public class LinkerTest {
             fail("LabelError did not get thrown.");
         } catch(LabelError labelError) {
         }
+
+        EXPECTED_BRANCH_LABELS.clear();
+        EXPECTED_DATA.clear();
+        try {
+            linker.linkAndLoad("LABEL:\n"
+                    + "LABEL:\n");
+            fail("LabelError did not get thrown.");
+        } catch(LabelError labelError) {
+        }
     }
 
     private static class LinkerTestInstructionUnit extends InstructionUnit {

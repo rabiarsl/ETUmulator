@@ -38,5 +38,10 @@ public class LdrInstructionTest extends InstructionTester {
         code = "ldr r0, =#0x7fffffff\n";
         runTestCode(code);
         assertEquals("Load result is wrong.", Integer.MAX_VALUE, registerFile.getValue("r0"));
+
+        code = "ldr r0, =label\n"
+                + "label: .asciz \"DATA\"\n";
+        runTestCode(code);
+        assertEquals("Load result is wrong.", memoryUnit.getLabelAddress("label"), registerFile.getValue("r0"));
     }
 }

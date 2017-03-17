@@ -29,7 +29,7 @@ public class InstructionTester {
     protected final CPUStack stack;
     protected final CPSR cpsr;
     private final InstructionUnit instructionUnit;
-    private final MemoryUnit memoryUnit;
+    protected final MemoryUnit memoryUnit;
     private final Processor processor;
 
     public InstructionTester() {
