@@ -19,17 +19,19 @@ package com.kasirgalabs.etumulator.linker;
 import static org.junit.Assert.assertEquals;
 
 import com.kasirgalabs.etumulator.processor.InstructionUnit;
+import com.kasirgalabs.etumulator.processor.MemoryUnit;
 import java.util.ArrayList;
 import java.util.List;
 import org.junit.Test;
 
-public class LinkerTest extends InstructionUnit {
+public class LinkerTest {
+    private static final List<Label> EXPECTED_BRANCH_LABELS = new ArrayList<>();
+    private static final List<Data> EXPECTED_DATA = new ArrayList<>();
+
     private final Linker linker;
-    private List<Label> expectedLabel;
 
     public LinkerTest() {
-        linker = new Linker(this, null);
-        expectedLabel = new ArrayList<Label>();
+        linker = new Linker(new LinkerTestInstructionUnit(), new LinkerTestMemoryUnit());
     }
 
     /**
@@ -37,39 +39,68 @@ public class LinkerTest extends InstructionUnit {
      */
     @Test
     public void testLinkAndLoad() {
-        expectedLabel.add(new Label("target"));
+        EXPECTED_BRANCH_LABELS.add(new Label("target"));
         linker.linkAndLoad("b target\n"
                 + "// comment\n"
                 + "mov r0, #0\n"
                 + "target:\n");
 
-        expectedLabel.clear();
-        expectedLabel.add(new Label("target"));
+        EXPECTED_BRANCH_LABELS.clear();
+        EXPECTED_BRANCH_LABELS.add(new Label("target"));
         linker.linkAndLoad("target:\n"
                 + "// comment\n"
                 + "mov r0, #0\n"
                 + "b target\n");
 
-        expectedLabel.clear();
-        expectedLabel.add(new Label("target"));
+        EXPECTED_BRANCH_LABELS.clear();
+        EXPECTED_BRANCH_LABELS.add(new Label("target"));
         linker.linkAndLoad("target:\n"
                 + "// comment\n"
                 + "mov r0, #0\n"
                 + "b target\n"
                 + "target2:\n");
 
-        expectedLabel.clear();
-        expectedLabel.add(new Label("target"));
+        EXPECTED_BRANCH_LABELS.clear();
+        EXPECTED_BRANCH_LABELS.add(new Label("target"));
         linker.linkAndLoad("target:\n"
                 + "// comment\n"
                 + "mov r0, #0\n"
                 + "b target\n"
                 + "target2:\n"
                 + "test: .asciz \"asd\"\n");
+
+        EXPECTED_BRANCH_LABELS.clear();
+        EXPECTED_BRANCH_LABELS.add(new Label("target"));
+        EXPECTED_DATA.clear();
+        EXPECTED_DATA.add(new Data("test"));
+        linker.linkAndLoad("ldr r1, =test\n"
+                + "target:\n"
+                + "// comment\n"
+                + "mov r0, #0\n"
+                + "b target\n"
+                + "target2:\n"
+                + "test: .asciz \"asd\"\n");
+
+        EXPECTED_BRANCH_LABELS.clear();
+        EXPECTED_DATA.clear();
+        EXPECTED_DATA.add(new Data("test"));
+        linker.linkAndLoad("ldr r1, =test\n"
+                + "ldr r0, =test\n"
+                + "test: .asciz \"asd\"\n"
+                + "UNUSED_LABEL: .asciz \"xxx\"\n");
     }
 
-    @Override
-    public void loadLabels(List<Label> labels) {
-        assertEquals("Labels are not resolved correctly.", expectedLabel, labels);
+    private static class LinkerTestInstructionUnit extends InstructionUnit {
+        @Override
+        public void loadLabels(List<Label> labels) {
+            assertEquals("Labels are not resolved correctly.", EXPECTED_BRANCH_LABELS, labels);
+        }
+    }
+
+    private static class LinkerTestMemoryUnit extends MemoryUnit {
+        @Override
+        public void loadData(List<Data> data) {
+            assertEquals("Data are not resolved correctly.", EXPECTED_DATA, data);
+        }
     }
 }

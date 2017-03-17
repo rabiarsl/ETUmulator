@@ -19,11 +19,14 @@ package com.kasirgalabs.etumulator.linker;
 import com.kasirgalabs.arm.ArmBaseListener;
 import com.kasirgalabs.arm.ArmLexer;
 import com.kasirgalabs.arm.ArmParser;
+import com.kasirgalabs.etumulator.error.LabelError;
 import com.kasirgalabs.etumulator.processor.InstructionUnit;
 import com.kasirgalabs.etumulator.processor.MemoryUnit;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Random;
+import java.util.Set;
 import org.antlr.v4.runtime.ANTLRInputStream;
 import org.antlr.v4.runtime.CommonTokenStream;
 import org.antlr.v4.runtime.tree.ParseTreeWalker;
@@ -50,7 +53,7 @@ public class Linker extends ArmBaseListener {
         Label label = new Label(ctx.LABEL().getText());
         label.setAddress(ctx.getStart().getLine() - 1);
         if(definedBranchLabels.contains(label)) {
-            return;
+            throw new LabelError("\"" + label.getName() + "\" is already defined");
         }
         definedBranchLabels.add(label);
     }
@@ -157,7 +160,7 @@ public class Linker extends ArmBaseListener {
         Data data = new Data(new Label(label));
         data.setData(text);
         if(definedData.contains(data)) {
-            return;
+            throw new LabelError("\"" + data.getLabel().getName() + "\" is already defined");
         }
         definedData.add(data);
     }
@@ -170,9 +173,12 @@ public class Linker extends ArmBaseListener {
         }
     }
 
-    public void linkAndLoad(String code) {
+    public void linkAndLoad(String code) throws LabelError {
         definedBranchLabels.clear();
         targetBranchLabels.clear();
+        definedData.clear();
+        targetData.clear();
+
         inspectCode(code);
 
         char[][] instructions = parseInstructions(code);
@@ -181,9 +187,7 @@ public class Linker extends ArmBaseListener {
         instructionUnit.loadInstructions(instructions);
 
         List<Data> resolvedData = resolveData();
-        if(resolvedData.size() != 0) {
-            memoryUnit.loadData(resolvedData);
-        }
+        memoryUnit.loadData(resolvedData);
     }
 
     private void inspectCode(String code) {
@@ -211,9 +215,9 @@ public class Linker extends ArmBaseListener {
                 resolvedLabels.add(definedBranchLabels.get(definedBranchLabels.indexOf(label)));
                 continue;
             }
-            return null;
+            throw new LabelError("\"" + label.getName() + "\" is not defined");
         }
-        return resolvedLabels;
+        return distinctList(resolvedLabels);
     }
 
     private List<Data> resolveData() {
@@ -225,9 +229,9 @@ public class Linker extends ArmBaseListener {
                 resolvedData.add(temp);
                 continue;
             }
-            return null;
+            throw new LabelError("\"" + data.getLabel().getName() + "\" is not defined");
         }
-        return resolvedData;
+        return distinctList(resolvedData);
     }
 
     private void loadIntoMemory(Data data) {
@@ -246,5 +250,13 @@ public class Linker extends ArmBaseListener {
                 }
             }
         }
+    }
+
+    private <T> List<T> distinctList(List<T> al) {
+        Set<T> hs = new HashSet<>();
+        hs.addAll(al);
+        al.clear();
+        al.addAll(hs);
+        return al;
     }
 }
