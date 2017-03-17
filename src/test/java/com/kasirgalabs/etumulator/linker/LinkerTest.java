@@ -29,7 +29,6 @@ import org.junit.Test;
 public class LinkerTest {
     private static final List<Label> EXPECTED_BRANCH_LABELS = new ArrayList<>();
     private static final List<Data> EXPECTED_DATA = new ArrayList<>();
-
     private final Linker linker;
 
     public LinkerTest() {
@@ -103,6 +102,16 @@ public class LinkerTest {
         EXPECTED_DATA.clear();
         try {
             linker.linkAndLoad("ldr r1, =NON_DEFINED_LABEL\n");
+            fail("LabelError did not get thrown.");
+        } catch(LabelError labelError) {
+        }
+
+        EXPECTED_BRANCH_LABELS.clear();
+        EXPECTED_DATA.clear();
+        try {
+            linker.linkAndLoad("ldr r1, =LABEL\n"
+                    + "LABEL: .asciz \"SAME\"\n"
+                    + "LABEL: .asciz \"SAME\"\n");
             fail("LabelError did not get thrown.");
         } catch(LabelError labelError) {
         }

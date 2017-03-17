@@ -413,6 +413,12 @@ public class Processor extends ArmBaseListener {
 
     @Override
     public void exitRrx(ArmParser.RrxContext ctx) {
+        rdRegister.setValue(shifter.rrxShift(rmRegister.getValue()));
+        rdRegister.update();
+    }
+
+    @Override
+    public void exitRrxs(ArmParser.RrxsContext ctx) {
         rdRegister.setValue(cpsr.rrxUpdateNZC(rmRegister.getValue()));
         rdRegister.update();
     }
