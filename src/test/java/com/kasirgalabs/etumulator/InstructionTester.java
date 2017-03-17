@@ -38,7 +38,7 @@ public class InstructionTester {
         cpsr = new CPSR();
         instructionUnit = new InstructionUnit();
         memoryUnit = new MemoryUnit();
-        processor = new Processor(registerFile, stack, cpsr, instructionUnit);
+        processor = new Processor(registerFile, stack, cpsr, instructionUnit, memoryUnit);
     }
 
     protected final void runTestCode(String code) {

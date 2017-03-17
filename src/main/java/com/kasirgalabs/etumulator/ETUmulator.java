@@ -52,7 +52,8 @@ public class ETUmulator extends Application {
                 Registry.get(RegisterFile.class),
                 Registry.get(CPUStack.class),
                 Registry.get(CPSR.class),
-                Registry.get(InstructionUnit.class))
+                Registry.get(InstructionUnit.class),
+                Registry.get(MemoryUnit.class))
         );
 
         primaryStage.setTitle("ETUmulator");

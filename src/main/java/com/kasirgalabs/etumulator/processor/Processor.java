@@ -46,16 +46,18 @@ public class Processor extends ArmBaseListener {
     private final CPUStack stack;
     private final CPSR cpsr;
     private final InstructionUnit instructionUnit;
+    private final MemoryUnit memoryUnit;
     private final Shift shift;
     private final Shifter shifter;
     private ArrayList<String> regList;
 
     public Processor(RegisterFile registerFile, CPUStack stack, CPSR cpsr,
-            InstructionUnit instructionUnit) {
+            InstructionUnit instructionUnit, MemoryUnit memoryUnit) {
         this.stack = stack;
         this.registerFile = registerFile;
         this.cpsr = cpsr;
         this.instructionUnit = instructionUnit;
+        this.memoryUnit = memoryUnit;
         shift = new Shift();
         shifter = new Shifter();
         cpsr.setShifter(shifter);
@@ -312,8 +314,11 @@ public class Processor extends ArmBaseListener {
     public void exitLdr(ArmParser.LdrContext ctx) {
         if(ctx.LABEL() == null) {
             rdRegister.setValue(number.getValue());
-            rdRegister.update();
         }
+        else {
+            rdRegister.setValue(memoryUnit.getLabelAddress(ctx.LABEL().getText()) + 1);
+        }
+        rdRegister.update();
     }
 
     @Override

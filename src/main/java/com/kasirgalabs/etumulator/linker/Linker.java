@@ -222,7 +222,7 @@ public class Linker extends ArmBaseListener {
             if(definedData.contains(data)) {
                 Data temp = definedData.get(definedData.indexOf(data));
                 loadIntoMemory(temp);
-                resolvedData.add(definedData.get(definedData.indexOf(data)));
+                resolvedData.add(temp);
                 continue;
             }
             return null;
@@ -239,6 +239,7 @@ public class Linker extends ArmBaseListener {
                 if(memoryUnit.getData(address + i) != null) {
                     break;
                 }
+                data.getLabel().setAddress(address);
                 memoryUnit.setData(address + i, (byte) data.getData().charAt(i));
                 if(i == data.getData().length() - 1) {
                     addressNotFound = false;
