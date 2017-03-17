@@ -17,7 +17,9 @@
 package com.kasirgalabs.etumulator.linker;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.fail;
 
+import com.kasirgalabs.etumulator.error.LabelError;
 import com.kasirgalabs.etumulator.processor.InstructionUnit;
 import com.kasirgalabs.etumulator.processor.MemoryUnit;
 import java.util.ArrayList;
@@ -88,6 +90,22 @@ public class LinkerTest {
                 + "ldr r0, =test\n"
                 + "test: .asciz \"asd\"\n"
                 + "UNUSED_LABEL: .asciz \"xxx\"\n");
+
+        EXPECTED_BRANCH_LABELS.clear();
+        EXPECTED_DATA.clear();
+        try {
+            linker.linkAndLoad("beq NON_DEFINED_LABEL\n");
+            fail("LabelError did not get thrown.");
+        } catch(LabelError labelError) {
+        }
+
+        EXPECTED_BRANCH_LABELS.clear();
+        EXPECTED_DATA.clear();
+        try {
+            linker.linkAndLoad("ldr r1, =NON_DEFINED_LABEL\n");
+            fail("LabelError did not get thrown.");
+        } catch(LabelError labelError) {
+        }
     }
 
     private static class LinkerTestInstructionUnit extends InstructionUnit {
