@@ -38,10 +38,10 @@ public class BlsInstructionTest extends InstructionTester {
         code = "ldr r0, =#0x80000001\n"
                 + "lsls r0, r0, #1\n"
                 + "bls target\n"
-                + "mov r0, #2\n"
+                + "mov r0, #3\n"
                 + "target:\n";
         runTestCode(code);
-        assertEquals("Branch instruction does not work properly.", 2, registerFile.getValue("r0"));
+        assertEquals("Branch instruction does not work properly.", 3, registerFile.getValue("r0"));
 
         cpsr.setZero(false);
         code = "mov r0, #4\n"
@@ -51,13 +51,13 @@ public class BlsInstructionTest extends InstructionTester {
         runTestCode(code);
         assertEquals("Branch instruction does not work properly.", 1, registerFile.getValue("r0"));
 
-        cpsr.setCarry(true);
-        cpsr.setZero(false);
+        cpsr.setCarry(false);
+        cpsr.setZero(true);
         code = "mov r0, #4\n"
                 + "bls target\n"
                 + "mov r0, #1\n"
                 + "target:\n";
         runTestCode(code);
-        assertEquals("Branch instruction does not work properly.", 1, registerFile.getValue("r0"));
+        assertEquals("Branch instruction does not work properly.", 4, registerFile.getValue("r0"));
     }
 }

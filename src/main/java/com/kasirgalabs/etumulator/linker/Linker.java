@@ -158,7 +158,9 @@ public class Linker extends ArmBaseListener {
         String label = ctx.label().LABEL().getText();
         String text = ctx.asciz().getChild(1).getText();
         Data data = new Data(new Label(label));
-        data.setData(text);
+        data.setData(text
+                .replaceFirst("\"", "")
+                .replaceFirst("(?s)" + "\"" + "(?!.*?" + "\"" + ")", "") + "\n");
         if(definedData.contains(data)) {
             throw new LabelError("\"" + data.getLabel().getName() + "\" is already defined");
         }
