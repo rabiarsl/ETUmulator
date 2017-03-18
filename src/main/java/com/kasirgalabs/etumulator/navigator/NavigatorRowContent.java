@@ -19,7 +19,7 @@ package com.kasirgalabs.etumulator.navigator;
 public final class NavigatorRowContent {
     public static final int REGISTERS = 0;
     public static final int STACK = 1;
-    public static final int MEMORY = 2;
+    public static final int RAM = 2;
 
     private NavigatorRowContent() {
     }

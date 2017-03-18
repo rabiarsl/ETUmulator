@@ -17,17 +17,22 @@
 package com.kasirgalabs.etumulator.processor;
 
 import com.kasirgalabs.etumulator.linker.Data;
+import com.kasirgalabs.etumulator.pattern.Observable;
+import com.kasirgalabs.etumulator.pattern.Observer;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class MemoryUnit {
+public class MemoryUnit implements Observable {
     private Map<Integer, Byte> memory;
     private List<Data> data;
+    private final List<Observer> observers;
 
     public MemoryUnit() {
         memory = new HashMap<>();
+        data = new ArrayList<>();
+        observers = new ArrayList<>();
     }
 
     public void loadData(List<Data> data) {
@@ -35,6 +40,7 @@ public class MemoryUnit {
         data.forEach((item) -> {
             this.data.add(new Data(item));
         });
+        notifyObservers();
     }
 
     public int getLabelAddress(String label) {
@@ -48,5 +54,26 @@ public class MemoryUnit {
 
     public void setData(int address, Byte data) {
         memory.put(address, data);
+        notifyObservers();
+    }
+
+    public int size() {
+        return memory.size();
+    }
+
+    public Map<Integer, Byte> getAll() {
+        return new HashMap<>(memory);
+    }
+
+    @Override
+    public void addObserver(Observer observer) {
+        observers.add(observer);
+    }
+
+    @Override
+    public void notifyObservers() {
+        observers.forEach((observer) -> {
+            observer.update(MemoryUnit.class);
+        });
     }
 }

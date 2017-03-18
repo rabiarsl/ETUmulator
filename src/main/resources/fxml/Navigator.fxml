@@ -15,7 +15,7 @@
             <children>
                 <Button mnemonicParsing="false" onAction="#registersButtonOnAction" text="Registers" />
                 <Button mnemonicParsing="false" onAction="#stackButtonOnAction" text="Stack" />
-                <Button mnemonicParsing="false" text="Ram" />
+                <Button mnemonicParsing="false" onAction="#ramButtonOnAction" text="Ram" />
             <Pane prefWidth="100.0" />
                 <ComboBox fx:id="type" onAction="#typeOnAction" />
             </children>

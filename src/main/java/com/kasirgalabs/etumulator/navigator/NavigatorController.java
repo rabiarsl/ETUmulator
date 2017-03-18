@@ -19,8 +19,10 @@ package com.kasirgalabs.etumulator.navigator;
 import com.kasirgalabs.etumulator.pattern.Observer;
 import com.kasirgalabs.etumulator.pattern.Registry;
 import com.kasirgalabs.etumulator.processor.CPUStack;
+import com.kasirgalabs.etumulator.processor.MemoryUnit;
 import com.kasirgalabs.etumulator.processor.RegisterFile;
 import java.net.URL;
+import java.util.Map;
 import java.util.ResourceBundle;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -44,6 +46,7 @@ public class NavigatorController implements Initializable, Observer {
     private ComboBox<String> type;
     private RegisterFile registerFile;
     private CPUStack stack;
+    private MemoryUnit memoryUnit;
     private int previousContent;
 
     @Override
@@ -54,8 +57,7 @@ public class NavigatorController implements Initializable, Observer {
         previousContent = NavigatorRowContent.REGISTERS;
         NavigatorRow.setRowContent(NavigatorRowContent.REGISTERS);
         NavigatorRow.setRowType(NavigatorRowType.DECIMAL);
-        stack = Registry.get(CPUStack.class);
-        stack.addObserver(this);
+
         registerFile = Registry.get(RegisterFile.class);
         registerFile.addObserver(this);
         for(int i = 0; i < RegisterFile.NUM_OF_REGS; i++) {
@@ -63,10 +65,17 @@ public class NavigatorController implements Initializable, Observer {
             String registerValue = Integer.toString(registerFile.getValue(registerName));
             DATA.add(i, new NavigatorRow(registerName, registerValue));
         }
+
         property.setCellValueFactory(new PropertyValueFactory<>("property"));
         value.setCellValueFactory(new PropertyValueFactory<>("value"));
         property.setComparator(new NavigatorRowComparator());
         table.setItems(DATA);
+
+        stack = Registry.get(CPUStack.class);
+        stack.addObserver(this);
+
+        memoryUnit = Registry.get(MemoryUnit.class);
+        memoryUnit.addObserver(this);
     }
 
     @Override
@@ -78,6 +87,10 @@ public class NavigatorController implements Initializable, Observer {
         else if(clazz.equals(CPUStack.class)
                 && NavigatorRow.getRowContent() == NavigatorRowContent.STACK) {
             updateStackContent();
+        }
+        else if(clazz.equals(MemoryUnit.class)
+                && NavigatorRow.getRowContent() == NavigatorRowContent.RAM) {
+            updateRamContent();
         }
     }
 
@@ -96,15 +109,29 @@ public class NavigatorController implements Initializable, Observer {
     }
 
     @FXML
+    private void ramButtonOnAction(ActionEvent event) {
+        previousContent = NavigatorRow.getRowContent();
+        NavigatorRow.setRowContent(NavigatorRowContent.RAM);
+        updateRamContent();
+    }
+
+    @FXML
     private void typeOnAction(ActionEvent event) {
         previousContent = NavigatorRow.getRowContent();
         int rowType = type.getSelectionModel().getSelectedIndex();
         NavigatorRow.setRowType(rowType);
-        if(NavigatorRow.getRowContent() == NavigatorRowContent.REGISTERS) {
-            updateRegisterContent();
-        }
-        else {
-            updateStackContent();
+        switch(NavigatorRow.getRowContent()) {
+            case NavigatorRowContent.REGISTERS:
+                updateRegisterContent();
+                break;
+            case NavigatorRowContent.STACK:
+                updateStackContent();
+                break;
+            case NavigatorRowContent.RAM:
+                updateRamContent();
+                break;
+            default:
+                break;
         }
     }
 
@@ -120,7 +147,7 @@ public class NavigatorController implements Initializable, Observer {
             }
             return;
         }
-        DATA.removeAll(DATA.subList(0, DATA.size()));
+        DATA.clear();
         for(int i = 0; i < RegisterFile.NUM_OF_REGS; i++) {
             String registerName = "r" + Integer.toString(i);
             String registerValue = Integer.toString(registerFile.getValue(registerName));
@@ -144,11 +171,33 @@ public class NavigatorController implements Initializable, Observer {
             }
             return;
         }
-        DATA.removeAll(DATA.subList(0, DATA.size()));
+        DATA.clear();
         for(int i = 0; i < stack.size(); i++) {
             String index = Integer.toString(i);
             String number = Integer.toString(stack.get(i));
             DATA.add(i, new NavigatorRow(index, number));
         }
+    }
+
+    private void updateRamContent() {
+        property.setText("Address");
+        Map<Integer, Byte> memory = memoryUnit.getAll();
+        if(previousContent == NavigatorRow.getRowContent()) {
+            for(int i = 0; i < DATA.size(); i++) {
+                NavigatorRow navigatorRow = DATA.get(i);
+                DATA.remove(navigatorRow);
+                int address = Integer.parseInt(navigatorRow.getProperty());
+                String number = Byte.toString(memory.get(address));
+                memory.remove(address);
+                DATA.add(i, new NavigatorRow(navigatorRow.getProperty(), number));
+            }
+        }
+        else {
+            DATA.clear();
+        }
+        memory.keySet().forEach((address) -> {
+            String number = Integer.toString(memory.get(address));
+            DATA.add(new NavigatorRow(Integer.toString(address), number));
+        });
     }
 }

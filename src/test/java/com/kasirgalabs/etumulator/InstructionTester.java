@@ -28,8 +28,8 @@ public class InstructionTester {
     protected final RegisterFile registerFile;
     protected final CPUStack stack;
     protected final CPSR cpsr;
-    private final InstructionUnit instructionUnit;
     protected final MemoryUnit memoryUnit;
+    private final InstructionUnit instructionUnit;
     private final Processor processor;
 
     public InstructionTester() {
