@@ -167,11 +167,6 @@ public class ArmParser extends Parser {
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof ArmListener ) ((ArmListener)listener).exitProg(this);
 		}
-		@Override
-		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof ArmVisitor ) return ((ArmVisitor<? extends T>)visitor).visitProg(this);
-			else return visitor.visitChildren(this);
-		}
 	}
 
 	public final ProgContext prog() throws RecognitionException {
@@ -239,11 +234,6 @@ public class ArmParser extends Parser {
 		@Override
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof ArmListener ) ((ArmListener)listener).exitLine(this);
-		}
-		@Override
-		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof ArmVisitor ) return ((ArmVisitor<? extends T>)visitor).visitLine(this);
-			else return visitor.visitChildren(this);
 		}
 	}
 
@@ -561,11 +551,6 @@ public class ArmParser extends Parser {
 		@Override
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof ArmListener ) ((ArmListener)listener).exitInstruction(this);
-		}
-		@Override
-		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof ArmVisitor ) return ((ArmVisitor<? extends T>)visitor).visitInstruction(this);
-			else return visitor.visitChildren(this);
 		}
 	}
 
@@ -1227,11 +1212,6 @@ public class ArmParser extends Parser {
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof ArmListener ) ((ArmListener)listener).exitAdd(this);
 		}
-		@Override
-		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof ArmVisitor ) return ((ArmVisitor<? extends T>)visitor).visitAdd(this);
-			else return visitor.visitChildren(this);
-		}
 	}
 
 	public final AddContext add() throws RecognitionException {
@@ -1291,11 +1271,6 @@ public class ArmParser extends Parser {
 		@Override
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof ArmListener ) ((ArmListener)listener).exitAdds(this);
-		}
-		@Override
-		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof ArmVisitor ) return ((ArmVisitor<? extends T>)visitor).visitAdds(this);
-			else return visitor.visitChildren(this);
 		}
 	}
 
@@ -1357,11 +1332,6 @@ public class ArmParser extends Parser {
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof ArmListener ) ((ArmListener)listener).exitAdc(this);
 		}
-		@Override
-		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof ArmVisitor ) return ((ArmVisitor<? extends T>)visitor).visitAdc(this);
-			else return visitor.visitChildren(this);
-		}
 	}
 
 	public final AdcContext adc() throws RecognitionException {
@@ -1421,11 +1391,6 @@ public class ArmParser extends Parser {
 		@Override
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof ArmListener ) ((ArmListener)listener).exitAdcs(this);
-		}
-		@Override
-		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof ArmVisitor ) return ((ArmVisitor<? extends T>)visitor).visitAdcs(this);
-			else return visitor.visitChildren(this);
 		}
 	}
 
@@ -1487,11 +1452,6 @@ public class ArmParser extends Parser {
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof ArmListener ) ((ArmListener)listener).exitSub(this);
 		}
-		@Override
-		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof ArmVisitor ) return ((ArmVisitor<? extends T>)visitor).visitSub(this);
-			else return visitor.visitChildren(this);
-		}
 	}
 
 	public final SubContext sub() throws RecognitionException {
@@ -1551,11 +1511,6 @@ public class ArmParser extends Parser {
 		@Override
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof ArmListener ) ((ArmListener)listener).exitSubs(this);
-		}
-		@Override
-		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof ArmVisitor ) return ((ArmVisitor<? extends T>)visitor).visitSubs(this);
-			else return visitor.visitChildren(this);
 		}
 	}
 
@@ -1617,11 +1572,6 @@ public class ArmParser extends Parser {
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof ArmListener ) ((ArmListener)listener).exitSbc(this);
 		}
-		@Override
-		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof ArmVisitor ) return ((ArmVisitor<? extends T>)visitor).visitSbc(this);
-			else return visitor.visitChildren(this);
-		}
 	}
 
 	public final SbcContext sbc() throws RecognitionException {
@@ -1681,11 +1631,6 @@ public class ArmParser extends Parser {
 		@Override
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof ArmListener ) ((ArmListener)listener).exitSbcs(this);
-		}
-		@Override
-		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof ArmVisitor ) return ((ArmVisitor<? extends T>)visitor).visitSbcs(this);
-			else return visitor.visitChildren(this);
 		}
 	}
 
@@ -1747,11 +1692,6 @@ public class ArmParser extends Parser {
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof ArmListener ) ((ArmListener)listener).exitRsb(this);
 		}
-		@Override
-		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof ArmVisitor ) return ((ArmVisitor<? extends T>)visitor).visitRsb(this);
-			else return visitor.visitChildren(this);
-		}
 	}
 
 	public final RsbContext rsb() throws RecognitionException {
@@ -1811,11 +1751,6 @@ public class ArmParser extends Parser {
 		@Override
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof ArmListener ) ((ArmListener)listener).exitRsbs(this);
-		}
-		@Override
-		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof ArmVisitor ) return ((ArmVisitor<? extends T>)visitor).visitRsbs(this);
-			else return visitor.visitChildren(this);
 		}
 	}
 
@@ -1877,11 +1812,6 @@ public class ArmParser extends Parser {
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof ArmListener ) ((ArmListener)listener).exitRsc(this);
 		}
-		@Override
-		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof ArmVisitor ) return ((ArmVisitor<? extends T>)visitor).visitRsc(this);
-			else return visitor.visitChildren(this);
-		}
 	}
 
 	public final RscContext rsc() throws RecognitionException {
@@ -1941,11 +1871,6 @@ public class ArmParser extends Parser {
 		@Override
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof ArmListener ) ((ArmListener)listener).exitRscs(this);
-		}
-		@Override
-		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof ArmVisitor ) return ((ArmVisitor<? extends T>)visitor).visitRscs(this);
-			else return visitor.visitChildren(this);
 		}
 	}
 
@@ -2007,11 +1932,6 @@ public class ArmParser extends Parser {
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof ArmListener ) ((ArmListener)listener).exitMul(this);
 		}
-		@Override
-		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof ArmVisitor ) return ((ArmVisitor<? extends T>)visitor).visitMul(this);
-			else return visitor.visitChildren(this);
-		}
 	}
 
 	public final MulContext mul() throws RecognitionException {
@@ -2071,11 +1991,6 @@ public class ArmParser extends Parser {
 		@Override
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof ArmListener ) ((ArmListener)listener).exitMuls(this);
-		}
-		@Override
-		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof ArmVisitor ) return ((ArmVisitor<? extends T>)visitor).visitMuls(this);
-			else return visitor.visitChildren(this);
 		}
 	}
 
@@ -2139,11 +2054,6 @@ public class ArmParser extends Parser {
 		@Override
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof ArmListener ) ((ArmListener)listener).exitMla(this);
-		}
-		@Override
-		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof ArmVisitor ) return ((ArmVisitor<? extends T>)visitor).visitMla(this);
-			else return visitor.visitChildren(this);
 		}
 	}
 
@@ -2212,11 +2122,6 @@ public class ArmParser extends Parser {
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof ArmListener ) ((ArmListener)listener).exitMlas(this);
 		}
-		@Override
-		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof ArmVisitor ) return ((ArmVisitor<? extends T>)visitor).visitMlas(this);
-			else return visitor.visitChildren(this);
-		}
 	}
 
 	public final MlasContext mlas() throws RecognitionException {
@@ -2283,11 +2188,6 @@ public class ArmParser extends Parser {
 		@Override
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof ArmListener ) ((ArmListener)listener).exitMls(this);
-		}
-		@Override
-		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof ArmVisitor ) return ((ArmVisitor<? extends T>)visitor).visitMls(this);
-			else return visitor.visitChildren(this);
 		}
 	}
 
@@ -2356,11 +2256,6 @@ public class ArmParser extends Parser {
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof ArmListener ) ((ArmListener)listener).exitUmull(this);
 		}
-		@Override
-		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof ArmVisitor ) return ((ArmVisitor<? extends T>)visitor).visitUmull(this);
-			else return visitor.visitChildren(this);
-		}
 	}
 
 	public final UmullContext umull() throws RecognitionException {
@@ -2427,11 +2322,6 @@ public class ArmParser extends Parser {
 		@Override
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof ArmListener ) ((ArmListener)listener).exitUmulls(this);
-		}
-		@Override
-		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof ArmVisitor ) return ((ArmVisitor<? extends T>)visitor).visitUmulls(this);
-			else return visitor.visitChildren(this);
 		}
 	}
 
@@ -2500,11 +2390,6 @@ public class ArmParser extends Parser {
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof ArmListener ) ((ArmListener)listener).exitUmlal(this);
 		}
-		@Override
-		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof ArmVisitor ) return ((ArmVisitor<? extends T>)visitor).visitUmlal(this);
-			else return visitor.visitChildren(this);
-		}
 	}
 
 	public final UmlalContext umlal() throws RecognitionException {
@@ -2571,11 +2456,6 @@ public class ArmParser extends Parser {
 		@Override
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof ArmListener ) ((ArmListener)listener).exitUmlals(this);
-		}
-		@Override
-		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof ArmVisitor ) return ((ArmVisitor<? extends T>)visitor).visitUmlals(this);
-			else return visitor.visitChildren(this);
 		}
 	}
 
@@ -2644,11 +2524,6 @@ public class ArmParser extends Parser {
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof ArmListener ) ((ArmListener)listener).exitSmull(this);
 		}
-		@Override
-		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof ArmVisitor ) return ((ArmVisitor<? extends T>)visitor).visitSmull(this);
-			else return visitor.visitChildren(this);
-		}
 	}
 
 	public final SmullContext smull() throws RecognitionException {
@@ -2715,11 +2590,6 @@ public class ArmParser extends Parser {
 		@Override
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof ArmListener ) ((ArmListener)listener).exitSmulls(this);
-		}
-		@Override
-		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof ArmVisitor ) return ((ArmVisitor<? extends T>)visitor).visitSmulls(this);
-			else return visitor.visitChildren(this);
 		}
 	}
 
@@ -2788,11 +2658,6 @@ public class ArmParser extends Parser {
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof ArmListener ) ((ArmListener)listener).exitSmlal(this);
 		}
-		@Override
-		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof ArmVisitor ) return ((ArmVisitor<? extends T>)visitor).visitSmlal(this);
-			else return visitor.visitChildren(this);
-		}
 	}
 
 	public final SmlalContext smlal() throws RecognitionException {
@@ -2860,11 +2725,6 @@ public class ArmParser extends Parser {
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof ArmListener ) ((ArmListener)listener).exitSmlals(this);
 		}
-		@Override
-		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof ArmVisitor ) return ((ArmVisitor<? extends T>)visitor).visitSmlals(this);
-			else return visitor.visitChildren(this);
-		}
 	}
 
 	public final SmlalsContext smlals() throws RecognitionException {
@@ -2929,11 +2789,6 @@ public class ArmParser extends Parser {
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof ArmListener ) ((ArmListener)listener).exitSdiv(this);
 		}
-		@Override
-		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof ArmVisitor ) return ((ArmVisitor<? extends T>)visitor).visitSdiv(this);
-			else return visitor.visitChildren(this);
-		}
 	}
 
 	public final SdivContext sdiv() throws RecognitionException {
@@ -2994,11 +2849,6 @@ public class ArmParser extends Parser {
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof ArmListener ) ((ArmListener)listener).exitUdiv(this);
 		}
-		@Override
-		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof ArmVisitor ) return ((ArmVisitor<? extends T>)visitor).visitUdiv(this);
-			else return visitor.visitChildren(this);
-		}
 	}
 
 	public final UdivContext udiv() throws RecognitionException {
@@ -3053,11 +2903,6 @@ public class ArmParser extends Parser {
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof ArmListener ) ((ArmListener)listener).exitMov(this);
 		}
-		@Override
-		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof ArmVisitor ) return ((ArmVisitor<? extends T>)visitor).visitMov(this);
-			else return visitor.visitChildren(this);
-		}
 	}
 
 	public final MovContext mov() throws RecognitionException {
@@ -3107,11 +2952,6 @@ public class ArmParser extends Parser {
 		@Override
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof ArmListener ) ((ArmListener)listener).exitMovs(this);
-		}
-		@Override
-		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof ArmVisitor ) return ((ArmVisitor<? extends T>)visitor).visitMovs(this);
-			else return visitor.visitChildren(this);
 		}
 	}
 
@@ -3163,11 +3003,6 @@ public class ArmParser extends Parser {
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof ArmListener ) ((ArmListener)listener).exitMvn(this);
 		}
-		@Override
-		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof ArmVisitor ) return ((ArmVisitor<? extends T>)visitor).visitMvn(this);
-			else return visitor.visitChildren(this);
-		}
 	}
 
 	public final MvnContext mvn() throws RecognitionException {
@@ -3217,11 +3052,6 @@ public class ArmParser extends Parser {
 		@Override
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof ArmListener ) ((ArmListener)listener).exitMvns(this);
-		}
-		@Override
-		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof ArmVisitor ) return ((ArmVisitor<? extends T>)visitor).visitMvns(this);
-			else return visitor.visitChildren(this);
 		}
 	}
 
@@ -3278,11 +3108,6 @@ public class ArmParser extends Parser {
 		@Override
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof ArmListener ) ((ArmListener)listener).exitAsr(this);
-		}
-		@Override
-		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof ArmVisitor ) return ((ArmVisitor<? extends T>)visitor).visitAsr(this);
-			else return visitor.visitChildren(this);
 		}
 	}
 
@@ -3344,11 +3169,6 @@ public class ArmParser extends Parser {
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof ArmListener ) ((ArmListener)listener).exitAsrs(this);
 		}
-		@Override
-		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof ArmVisitor ) return ((ArmVisitor<? extends T>)visitor).visitAsrs(this);
-			else return visitor.visitChildren(this);
-		}
 	}
 
 	public final AsrsContext asrs() throws RecognitionException {
@@ -3408,11 +3228,6 @@ public class ArmParser extends Parser {
 		@Override
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof ArmListener ) ((ArmListener)listener).exitLsl(this);
-		}
-		@Override
-		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof ArmVisitor ) return ((ArmVisitor<? extends T>)visitor).visitLsl(this);
-			else return visitor.visitChildren(this);
 		}
 	}
 
@@ -3474,11 +3289,6 @@ public class ArmParser extends Parser {
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof ArmListener ) ((ArmListener)listener).exitLsls(this);
 		}
-		@Override
-		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof ArmVisitor ) return ((ArmVisitor<? extends T>)visitor).visitLsls(this);
-			else return visitor.visitChildren(this);
-		}
 	}
 
 	public final LslsContext lsls() throws RecognitionException {
@@ -3538,11 +3348,6 @@ public class ArmParser extends Parser {
 		@Override
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof ArmListener ) ((ArmListener)listener).exitLsr(this);
-		}
-		@Override
-		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof ArmVisitor ) return ((ArmVisitor<? extends T>)visitor).visitLsr(this);
-			else return visitor.visitChildren(this);
 		}
 	}
 
@@ -3604,11 +3409,6 @@ public class ArmParser extends Parser {
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof ArmListener ) ((ArmListener)listener).exitLsrs(this);
 		}
-		@Override
-		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof ArmVisitor ) return ((ArmVisitor<? extends T>)visitor).visitLsrs(this);
-			else return visitor.visitChildren(this);
-		}
 	}
 
 	public final LsrsContext lsrs() throws RecognitionException {
@@ -3668,11 +3468,6 @@ public class ArmParser extends Parser {
 		@Override
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof ArmListener ) ((ArmListener)listener).exitRor(this);
-		}
-		@Override
-		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof ArmVisitor ) return ((ArmVisitor<? extends T>)visitor).visitRor(this);
-			else return visitor.visitChildren(this);
 		}
 	}
 
@@ -3734,11 +3529,6 @@ public class ArmParser extends Parser {
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof ArmListener ) ((ArmListener)listener).exitRors(this);
 		}
-		@Override
-		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof ArmVisitor ) return ((ArmVisitor<? extends T>)visitor).visitRors(this);
-			else return visitor.visitChildren(this);
-		}
 	}
 
 	public final RorsContext rors() throws RecognitionException {
@@ -3793,11 +3583,6 @@ public class ArmParser extends Parser {
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof ArmListener ) ((ArmListener)listener).exitRrx(this);
 		}
-		@Override
-		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof ArmVisitor ) return ((ArmVisitor<? extends T>)visitor).visitRrx(this);
-			else return visitor.visitChildren(this);
-		}
 	}
 
 	public final RrxContext rrx() throws RecognitionException {
@@ -3847,11 +3632,6 @@ public class ArmParser extends Parser {
 		@Override
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof ArmListener ) ((ArmListener)listener).exitRrxs(this);
-		}
-		@Override
-		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof ArmVisitor ) return ((ArmVisitor<? extends T>)visitor).visitRrxs(this);
-			else return visitor.visitChildren(this);
 		}
 	}
 
@@ -3903,11 +3683,6 @@ public class ArmParser extends Parser {
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof ArmListener ) ((ArmListener)listener).exitCmp(this);
 		}
-		@Override
-		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof ArmVisitor ) return ((ArmVisitor<? extends T>)visitor).visitCmp(this);
-			else return visitor.visitChildren(this);
-		}
 	}
 
 	public final CmpContext cmp() throws RecognitionException {
@@ -3957,11 +3732,6 @@ public class ArmParser extends Parser {
 		@Override
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof ArmListener ) ((ArmListener)listener).exitCmn(this);
-		}
-		@Override
-		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof ArmVisitor ) return ((ArmVisitor<? extends T>)visitor).visitCmn(this);
-			else return visitor.visitChildren(this);
 		}
 	}
 
@@ -4013,11 +3783,6 @@ public class ArmParser extends Parser {
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof ArmListener ) ((ArmListener)listener).exitTst(this);
 		}
-		@Override
-		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof ArmVisitor ) return ((ArmVisitor<? extends T>)visitor).visitTst(this);
-			else return visitor.visitChildren(this);
-		}
 	}
 
 	public final TstContext tst() throws RecognitionException {
@@ -4067,11 +3832,6 @@ public class ArmParser extends Parser {
 		@Override
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof ArmListener ) ((ArmListener)listener).exitTeq(this);
-		}
-		@Override
-		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof ArmVisitor ) return ((ArmVisitor<? extends T>)visitor).visitTeq(this);
-			else return visitor.visitChildren(this);
 		}
 	}
 
@@ -4128,11 +3888,6 @@ public class ArmParser extends Parser {
 		@Override
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof ArmListener ) ((ArmListener)listener).exitAnd(this);
-		}
-		@Override
-		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof ArmVisitor ) return ((ArmVisitor<? extends T>)visitor).visitAnd(this);
-			else return visitor.visitChildren(this);
 		}
 	}
 
@@ -4194,11 +3949,6 @@ public class ArmParser extends Parser {
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof ArmListener ) ((ArmListener)listener).exitAnds(this);
 		}
-		@Override
-		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof ArmVisitor ) return ((ArmVisitor<? extends T>)visitor).visitAnds(this);
-			else return visitor.visitChildren(this);
-		}
 	}
 
 	public final AndsContext ands() throws RecognitionException {
@@ -4258,11 +4008,6 @@ public class ArmParser extends Parser {
 		@Override
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof ArmListener ) ((ArmListener)listener).exitEor(this);
-		}
-		@Override
-		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof ArmVisitor ) return ((ArmVisitor<? extends T>)visitor).visitEor(this);
-			else return visitor.visitChildren(this);
 		}
 	}
 
@@ -4324,11 +4069,6 @@ public class ArmParser extends Parser {
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof ArmListener ) ((ArmListener)listener).exitEors(this);
 		}
-		@Override
-		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof ArmVisitor ) return ((ArmVisitor<? extends T>)visitor).visitEors(this);
-			else return visitor.visitChildren(this);
-		}
 	}
 
 	public final EorsContext eors() throws RecognitionException {
@@ -4388,11 +4128,6 @@ public class ArmParser extends Parser {
 		@Override
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof ArmListener ) ((ArmListener)listener).exitOrr(this);
-		}
-		@Override
-		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof ArmVisitor ) return ((ArmVisitor<? extends T>)visitor).visitOrr(this);
-			else return visitor.visitChildren(this);
 		}
 	}
 
@@ -4454,11 +4189,6 @@ public class ArmParser extends Parser {
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof ArmListener ) ((ArmListener)listener).exitOrrs(this);
 		}
-		@Override
-		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof ArmVisitor ) return ((ArmVisitor<? extends T>)visitor).visitOrrs(this);
-			else return visitor.visitChildren(this);
-		}
 	}
 
 	public final OrrsContext orrs() throws RecognitionException {
@@ -4518,11 +4248,6 @@ public class ArmParser extends Parser {
 		@Override
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof ArmListener ) ((ArmListener)listener).exitOrn(this);
-		}
-		@Override
-		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof ArmVisitor ) return ((ArmVisitor<? extends T>)visitor).visitOrn(this);
-			else return visitor.visitChildren(this);
 		}
 	}
 
@@ -4584,11 +4309,6 @@ public class ArmParser extends Parser {
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof ArmListener ) ((ArmListener)listener).exitOrns(this);
 		}
-		@Override
-		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof ArmVisitor ) return ((ArmVisitor<? extends T>)visitor).visitOrns(this);
-			else return visitor.visitChildren(this);
-		}
 	}
 
 	public final OrnsContext orns() throws RecognitionException {
@@ -4648,11 +4368,6 @@ public class ArmParser extends Parser {
 		@Override
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof ArmListener ) ((ArmListener)listener).exitBic(this);
-		}
-		@Override
-		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof ArmVisitor ) return ((ArmVisitor<? extends T>)visitor).visitBic(this);
-			else return visitor.visitChildren(this);
 		}
 	}
 
@@ -4714,11 +4429,6 @@ public class ArmParser extends Parser {
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof ArmListener ) ((ArmListener)listener).exitBics(this);
 		}
-		@Override
-		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof ArmVisitor ) return ((ArmVisitor<? extends T>)visitor).visitBics(this);
-			else return visitor.visitChildren(this);
-		}
 	}
 
 	public final BicsContext bics() throws RecognitionException {
@@ -4767,11 +4477,6 @@ public class ArmParser extends Parser {
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof ArmListener ) ((ArmListener)listener).exitB(this);
 		}
-		@Override
-		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof ArmVisitor ) return ((ArmVisitor<? extends T>)visitor).visitB(this);
-			else return visitor.visitChildren(this);
-		}
 	}
 
 	public final BContext b() throws RecognitionException {
@@ -4811,11 +4516,6 @@ public class ArmParser extends Parser {
 		@Override
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof ArmListener ) ((ArmListener)listener).exitBeq(this);
-		}
-		@Override
-		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof ArmVisitor ) return ((ArmVisitor<? extends T>)visitor).visitBeq(this);
-			else return visitor.visitChildren(this);
 		}
 	}
 
@@ -4857,11 +4557,6 @@ public class ArmParser extends Parser {
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof ArmListener ) ((ArmListener)listener).exitBne(this);
 		}
-		@Override
-		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof ArmVisitor ) return ((ArmVisitor<? extends T>)visitor).visitBne(this);
-			else return visitor.visitChildren(this);
-		}
 	}
 
 	public final BneContext bne() throws RecognitionException {
@@ -4901,11 +4596,6 @@ public class ArmParser extends Parser {
 		@Override
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof ArmListener ) ((ArmListener)listener).exitBcs(this);
-		}
-		@Override
-		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof ArmVisitor ) return ((ArmVisitor<? extends T>)visitor).visitBcs(this);
-			else return visitor.visitChildren(this);
 		}
 	}
 
@@ -4947,11 +4637,6 @@ public class ArmParser extends Parser {
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof ArmListener ) ((ArmListener)listener).exitBhs(this);
 		}
-		@Override
-		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof ArmVisitor ) return ((ArmVisitor<? extends T>)visitor).visitBhs(this);
-			else return visitor.visitChildren(this);
-		}
 	}
 
 	public final BhsContext bhs() throws RecognitionException {
@@ -4991,11 +4676,6 @@ public class ArmParser extends Parser {
 		@Override
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof ArmListener ) ((ArmListener)listener).exitBcc(this);
-		}
-		@Override
-		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof ArmVisitor ) return ((ArmVisitor<? extends T>)visitor).visitBcc(this);
-			else return visitor.visitChildren(this);
 		}
 	}
 
@@ -5037,11 +4717,6 @@ public class ArmParser extends Parser {
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof ArmListener ) ((ArmListener)listener).exitBlo(this);
 		}
-		@Override
-		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof ArmVisitor ) return ((ArmVisitor<? extends T>)visitor).visitBlo(this);
-			else return visitor.visitChildren(this);
-		}
 	}
 
 	public final BloContext blo() throws RecognitionException {
@@ -5081,11 +4756,6 @@ public class ArmParser extends Parser {
 		@Override
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof ArmListener ) ((ArmListener)listener).exitBmi(this);
-		}
-		@Override
-		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof ArmVisitor ) return ((ArmVisitor<? extends T>)visitor).visitBmi(this);
-			else return visitor.visitChildren(this);
 		}
 	}
 
@@ -5127,11 +4797,6 @@ public class ArmParser extends Parser {
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof ArmListener ) ((ArmListener)listener).exitBpl(this);
 		}
-		@Override
-		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof ArmVisitor ) return ((ArmVisitor<? extends T>)visitor).visitBpl(this);
-			else return visitor.visitChildren(this);
-		}
 	}
 
 	public final BplContext bpl() throws RecognitionException {
@@ -5171,11 +4836,6 @@ public class ArmParser extends Parser {
 		@Override
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof ArmListener ) ((ArmListener)listener).exitBvs(this);
-		}
-		@Override
-		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof ArmVisitor ) return ((ArmVisitor<? extends T>)visitor).visitBvs(this);
-			else return visitor.visitChildren(this);
 		}
 	}
 
@@ -5217,11 +4877,6 @@ public class ArmParser extends Parser {
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof ArmListener ) ((ArmListener)listener).exitBvc(this);
 		}
-		@Override
-		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof ArmVisitor ) return ((ArmVisitor<? extends T>)visitor).visitBvc(this);
-			else return visitor.visitChildren(this);
-		}
 	}
 
 	public final BvcContext bvc() throws RecognitionException {
@@ -5261,11 +4916,6 @@ public class ArmParser extends Parser {
 		@Override
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof ArmListener ) ((ArmListener)listener).exitBhi(this);
-		}
-		@Override
-		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof ArmVisitor ) return ((ArmVisitor<? extends T>)visitor).visitBhi(this);
-			else return visitor.visitChildren(this);
 		}
 	}
 
@@ -5307,11 +4957,6 @@ public class ArmParser extends Parser {
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof ArmListener ) ((ArmListener)listener).exitBls(this);
 		}
-		@Override
-		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof ArmVisitor ) return ((ArmVisitor<? extends T>)visitor).visitBls(this);
-			else return visitor.visitChildren(this);
-		}
 	}
 
 	public final BlsContext bls() throws RecognitionException {
@@ -5351,11 +4996,6 @@ public class ArmParser extends Parser {
 		@Override
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof ArmListener ) ((ArmListener)listener).exitBge(this);
-		}
-		@Override
-		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof ArmVisitor ) return ((ArmVisitor<? extends T>)visitor).visitBge(this);
-			else return visitor.visitChildren(this);
 		}
 	}
 
@@ -5397,11 +5037,6 @@ public class ArmParser extends Parser {
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof ArmListener ) ((ArmListener)listener).exitBlt(this);
 		}
-		@Override
-		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof ArmVisitor ) return ((ArmVisitor<? extends T>)visitor).visitBlt(this);
-			else return visitor.visitChildren(this);
-		}
 	}
 
 	public final BltContext blt() throws RecognitionException {
@@ -5441,11 +5076,6 @@ public class ArmParser extends Parser {
 		@Override
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof ArmListener ) ((ArmListener)listener).exitBgt(this);
-		}
-		@Override
-		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof ArmVisitor ) return ((ArmVisitor<? extends T>)visitor).visitBgt(this);
-			else return visitor.visitChildren(this);
 		}
 	}
 
@@ -5487,11 +5117,6 @@ public class ArmParser extends Parser {
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof ArmListener ) ((ArmListener)listener).exitBle(this);
 		}
-		@Override
-		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof ArmVisitor ) return ((ArmVisitor<? extends T>)visitor).visitBle(this);
-			else return visitor.visitChildren(this);
-		}
 	}
 
 	public final BleContext ble() throws RecognitionException {
@@ -5532,11 +5157,6 @@ public class ArmParser extends Parser {
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof ArmListener ) ((ArmListener)listener).exitBal(this);
 		}
-		@Override
-		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof ArmVisitor ) return ((ArmVisitor<? extends T>)visitor).visitBal(this);
-			else return visitor.visitChildren(this);
-		}
 	}
 
 	public final BalContext bal() throws RecognitionException {
@@ -5576,11 +5196,6 @@ public class ArmParser extends Parser {
 		@Override
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof ArmListener ) ((ArmListener)listener).exitBl(this);
-		}
-		@Override
-		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof ArmVisitor ) return ((ArmVisitor<? extends T>)visitor).visitBl(this);
-			else return visitor.visitChildren(this);
 		}
 	}
 
@@ -5640,11 +5255,6 @@ public class ArmParser extends Parser {
 		@Override
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof ArmListener ) ((ArmListener)listener).exitLdr(this);
-		}
-		@Override
-		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof ArmVisitor ) return ((ArmVisitor<? extends T>)visitor).visitLdr(this);
-			else return visitor.visitChildren(this);
 		}
 	}
 
@@ -5788,11 +5398,6 @@ public class ArmParser extends Parser {
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof ArmListener ) ((ArmListener)listener).exitLdrb(this);
 		}
-		@Override
-		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof ArmVisitor ) return ((ArmVisitor<? extends T>)visitor).visitLdrb(this);
-			else return visitor.visitChildren(this);
-		}
 	}
 
 	public final LdrbContext ldrb() throws RecognitionException {
@@ -5902,11 +5507,6 @@ public class ArmParser extends Parser {
 		@Override
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof ArmListener ) ((ArmListener)listener).exitLdrsb(this);
-		}
-		@Override
-		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof ArmVisitor ) return ((ArmVisitor<? extends T>)visitor).visitLdrsb(this);
-			else return visitor.visitChildren(this);
 		}
 	}
 
@@ -6018,11 +5618,6 @@ public class ArmParser extends Parser {
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof ArmListener ) ((ArmListener)listener).exitLdrh(this);
 		}
-		@Override
-		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof ArmVisitor ) return ((ArmVisitor<? extends T>)visitor).visitLdrh(this);
-			else return visitor.visitChildren(this);
-		}
 	}
 
 	public final LdrhContext ldrh() throws RecognitionException {
@@ -6132,11 +5727,6 @@ public class ArmParser extends Parser {
 		@Override
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof ArmListener ) ((ArmListener)listener).exitLdrsh(this);
-		}
-		@Override
-		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof ArmVisitor ) return ((ArmVisitor<? extends T>)visitor).visitLdrsh(this);
-			else return visitor.visitChildren(this);
 		}
 	}
 
@@ -6248,11 +5838,6 @@ public class ArmParser extends Parser {
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof ArmListener ) ((ArmListener)listener).exitStr(this);
 		}
-		@Override
-		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof ArmVisitor ) return ((ArmVisitor<? extends T>)visitor).visitStr(this);
-			else return visitor.visitChildren(this);
-		}
 	}
 
 	public final StrContext str() throws RecognitionException {
@@ -6362,11 +5947,6 @@ public class ArmParser extends Parser {
 		@Override
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof ArmListener ) ((ArmListener)listener).exitStrb(this);
-		}
-		@Override
-		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof ArmVisitor ) return ((ArmVisitor<? extends T>)visitor).visitStrb(this);
-			else return visitor.visitChildren(this);
 		}
 	}
 
@@ -6478,11 +6058,6 @@ public class ArmParser extends Parser {
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof ArmListener ) ((ArmListener)listener).exitStrsb(this);
 		}
-		@Override
-		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof ArmVisitor ) return ((ArmVisitor<? extends T>)visitor).visitStrsb(this);
-			else return visitor.visitChildren(this);
-		}
 	}
 
 	public final StrsbContext strsb() throws RecognitionException {
@@ -6592,11 +6167,6 @@ public class ArmParser extends Parser {
 		@Override
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof ArmListener ) ((ArmListener)listener).exitStrh(this);
-		}
-		@Override
-		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof ArmVisitor ) return ((ArmVisitor<? extends T>)visitor).visitStrh(this);
-			else return visitor.visitChildren(this);
 		}
 	}
 
@@ -6708,11 +6278,6 @@ public class ArmParser extends Parser {
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof ArmListener ) ((ArmListener)listener).exitStrsh(this);
 		}
-		@Override
-		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof ArmVisitor ) return ((ArmVisitor<? extends T>)visitor).visitStrsh(this);
-			else return visitor.visitChildren(this);
-		}
 	}
 
 	public final StrshContext strsh() throws RecognitionException {
@@ -6813,11 +6378,6 @@ public class ArmParser extends Parser {
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof ArmListener ) ((ArmListener)listener).exitPush(this);
 		}
-		@Override
-		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof ArmVisitor ) return ((ArmVisitor<? extends T>)visitor).visitPush(this);
-			else return visitor.visitChildren(this);
-		}
 	}
 
 	public final PushContext push() throws RecognitionException {
@@ -6866,11 +6426,6 @@ public class ArmParser extends Parser {
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof ArmListener ) ((ArmListener)listener).exitPop(this);
 		}
-		@Override
-		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof ArmVisitor ) return ((ArmVisitor<? extends T>)visitor).visitPop(this);
-			else return visitor.visitChildren(this);
-		}
 	}
 
 	public final PopContext pop() throws RecognitionException {
@@ -6914,11 +6469,6 @@ public class ArmParser extends Parser {
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof ArmListener ) ((ArmListener)listener).exitNop(this);
 		}
-		@Override
-		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof ArmVisitor ) return ((ArmVisitor<? extends T>)visitor).visitNop(this);
-			else return visitor.visitChildren(this);
-		}
 	}
 
 	public final NopContext nop() throws RecognitionException {
@@ -6955,11 +6505,6 @@ public class ArmParser extends Parser {
 		@Override
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof ArmListener ) ((ArmListener)listener).exitRd(this);
-		}
-		@Override
-		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof ArmVisitor ) return ((ArmVisitor<? extends T>)visitor).visitRd(this);
-			else return visitor.visitChildren(this);
 		}
 	}
 
@@ -6998,11 +6543,6 @@ public class ArmParser extends Parser {
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof ArmListener ) ((ArmListener)listener).exitRn(this);
 		}
-		@Override
-		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof ArmVisitor ) return ((ArmVisitor<? extends T>)visitor).visitRn(this);
-			else return visitor.visitChildren(this);
-		}
 	}
 
 	public final RnContext rn() throws RecognitionException {
@@ -7039,11 +6579,6 @@ public class ArmParser extends Parser {
 		@Override
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof ArmListener ) ((ArmListener)listener).exitRm(this);
-		}
-		@Override
-		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof ArmVisitor ) return ((ArmVisitor<? extends T>)visitor).visitRm(this);
-			else return visitor.visitChildren(this);
 		}
 	}
 
@@ -7082,11 +6617,6 @@ public class ArmParser extends Parser {
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof ArmListener ) ((ArmListener)listener).exitRs(this);
 		}
-		@Override
-		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof ArmVisitor ) return ((ArmVisitor<? extends T>)visitor).visitRs(this);
-			else return visitor.visitChildren(this);
-		}
 	}
 
 	public final RsContext rs() throws RecognitionException {
@@ -7124,11 +6654,6 @@ public class ArmParser extends Parser {
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof ArmListener ) ((ArmListener)listener).exitRdlo(this);
 		}
-		@Override
-		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof ArmVisitor ) return ((ArmVisitor<? extends T>)visitor).visitRdlo(this);
-			else return visitor.visitChildren(this);
-		}
 	}
 
 	public final RdloContext rdlo() throws RecognitionException {
@@ -7165,11 +6690,6 @@ public class ArmParser extends Parser {
 		@Override
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof ArmListener ) ((ArmListener)listener).exitRdhi(this);
-		}
-		@Override
-		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof ArmVisitor ) return ((ArmVisitor<? extends T>)visitor).visitRdhi(this);
-			else return visitor.visitChildren(this);
 		}
 	}
 
@@ -7222,11 +6742,6 @@ public class ArmParser extends Parser {
 		@Override
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof ArmListener ) ((ArmListener)listener).exitReglist(this);
-		}
-		@Override
-		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof ArmVisitor ) return ((ArmVisitor<? extends T>)visitor).visitReglist(this);
-			else return visitor.visitChildren(this);
 		}
 	}
 
@@ -7306,11 +6821,6 @@ public class ArmParser extends Parser {
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof ArmListener ) ((ArmListener)listener).exitOperand2(this);
 		}
-		@Override
-		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof ArmVisitor ) return ((ArmVisitor<? extends T>)visitor).visitOperand2(this);
-			else return visitor.visitChildren(this);
-		}
 	}
 
 	public final Operand2Context operand2() throws RecognitionException {
@@ -7374,11 +6884,6 @@ public class ArmParser extends Parser {
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof ArmListener ) ((ArmListener)listener).exitShiftedRm(this);
 		}
-		@Override
-		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof ArmVisitor ) return ((ArmVisitor<? extends T>)visitor).visitShiftedRm(this);
-			else return visitor.visitChildren(this);
-		}
 	}
 
 	public final ShiftedRmContext shiftedRm() throws RecognitionException {
@@ -7425,11 +6930,6 @@ public class ArmParser extends Parser {
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof ArmListener ) ((ArmListener)listener).exitShift(this);
 		}
-		@Override
-		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof ArmVisitor ) return ((ArmVisitor<? extends T>)visitor).visitShift(this);
-			else return visitor.visitChildren(this);
-		}
 	}
 
 	public final ShiftContext shift() throws RecognitionException {
@@ -7471,11 +6971,6 @@ public class ArmParser extends Parser {
 		@Override
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof ArmListener ) ((ArmListener)listener).exitShiftOption(this);
-		}
-		@Override
-		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof ArmVisitor ) return ((ArmVisitor<? extends T>)visitor).visitShiftOption(this);
-			else return visitor.visitChildren(this);
 		}
 	}
 
@@ -7527,11 +7022,6 @@ public class ArmParser extends Parser {
 		@Override
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof ArmListener ) ((ArmListener)listener).exitShiftAmount(this);
-		}
-		@Override
-		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof ArmVisitor ) return ((ArmVisitor<? extends T>)visitor).visitShiftAmount(this);
-			else return visitor.visitChildren(this);
 		}
 	}
 
@@ -7588,11 +7078,6 @@ public class ArmParser extends Parser {
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof ArmListener ) ((ArmListener)listener).exitImm8m(this);
 		}
-		@Override
-		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof ArmVisitor ) return ((ArmVisitor<? extends T>)visitor).visitImm8m(this);
-			else return visitor.visitChildren(this);
-		}
 	}
 
 	public final Imm8mContext imm8m() throws RecognitionException {
@@ -7631,11 +7116,6 @@ public class ArmParser extends Parser {
 		@Override
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof ArmListener ) ((ArmListener)listener).exitOffset(this);
-		}
-		@Override
-		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof ArmVisitor ) return ((ArmVisitor<? extends T>)visitor).visitOffset(this);
-			else return visitor.visitChildren(this);
 		}
 	}
 
@@ -7678,11 +7158,6 @@ public class ArmParser extends Parser {
 		@Override
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof ArmListener ) ((ArmListener)listener).exitNumber(this);
-		}
-		@Override
-		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof ArmVisitor ) return ((ArmVisitor<? extends T>)visitor).visitNumber(this);
-			else return visitor.visitChildren(this);
 		}
 	}
 
@@ -7736,11 +7211,6 @@ public class ArmParser extends Parser {
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof ArmListener ) ((ArmListener)listener).exitDecimal(this);
 		}
-		@Override
-		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof ArmVisitor ) return ((ArmVisitor<? extends T>)visitor).visitDecimal(this);
-			else return visitor.visitChildren(this);
-		}
 	}
 
 	public final DecimalContext decimal() throws RecognitionException {
@@ -7777,11 +7247,6 @@ public class ArmParser extends Parser {
 		@Override
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof ArmListener ) ((ArmListener)listener).exitHex(this);
-		}
-		@Override
-		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof ArmVisitor ) return ((ArmVisitor<? extends T>)visitor).visitHex(this);
-			else return visitor.visitChildren(this);
 		}
 	}
 
@@ -7820,11 +7285,6 @@ public class ArmParser extends Parser {
 		@Override
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof ArmListener ) ((ArmListener)listener).exitLabel(this);
-		}
-		@Override
-		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof ArmVisitor ) return ((ArmVisitor<? extends T>)visitor).visitLabel(this);
-			else return visitor.visitChildren(this);
 		}
 	}
 
@@ -7870,11 +7330,6 @@ public class ArmParser extends Parser {
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof ArmListener ) ((ArmListener)listener).exitData(this);
 		}
-		@Override
-		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof ArmVisitor ) return ((ArmVisitor<? extends T>)visitor).visitData(this);
-			else return visitor.visitChildren(this);
-		}
 	}
 
 	public final DataContext data() throws RecognitionException {
@@ -7913,11 +7368,6 @@ public class ArmParser extends Parser {
 		@Override
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof ArmListener ) ((ArmListener)listener).exitAsciz(this);
-		}
-		@Override
-		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof ArmVisitor ) return ((ArmVisitor<? extends T>)visitor).visitAsciz(this);
-			else return visitor.visitChildren(this);
 		}
 	}
 
