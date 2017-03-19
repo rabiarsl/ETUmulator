@@ -16,43 +16,72 @@
  */
 package com.kasirgalabs.etumulator.document;
 
-import com.kasirgalabs.etumulator.pattern.Registry;
+import com.google.inject.Inject;
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileReader;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.stage.FileChooser;
+import javafx.stage.Window;
 
 public class DocumentMenuController implements Initializable {
-    private DocumentChooser documentChooser;
+    @Inject
+    private Document document;
+    private final FileChooser fileChooser;
+    private Window window;
+
+    public DocumentMenuController() {
+        this.fileChooser = new FileChooser();
+    }
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        documentChooser = Registry.get(DocumentChooser.class);
+    }
+
+    public void setWindow(Window window) {
+        this.window = window;
     }
 
     @FXML
     private void newOnAction(ActionEvent event) {
-        documentChooser.createDocument();
+        File file = fileChooser.showSaveDialog(window);
+        if(file != null) {
+            document.setTargetFile(file);
+            document.clear();
+        }
     }
 
     @FXML
     private void openOnAction(ActionEvent event) throws IOException {
-        documentChooser.openDocument();
+        File file = fileChooser.showOpenDialog(window);
+        if(file != null) {
+            StringBuilder text = new StringBuilder();
+            try(BufferedReader bf = new BufferedReader(new FileReader(file))) {
+                String line;
+                while((line = bf.readLine()) != null) {
+                    text.append(line + "\n");
+                }
+            } catch(IOException ex) {
+                throw ex;
+            }
+            document.setText(text.toString());
+            document.setTargetFile(file);
+        }
     }
 
     @FXML
     private void saveOnAction(ActionEvent event) throws IOException {
-        Document document = Registry.get(Document.class);
         document.saveDocument();
     }
 
     @FXML
     private void saveAsOnaction(ActionEvent event) throws IOException {
-        Document document = Registry.get(Document.class);
-        File file = documentChooser.chooseDocument();
+        File file = fileChooser.showSaveDialog(window);
         if(file == null) {
             return;
         }

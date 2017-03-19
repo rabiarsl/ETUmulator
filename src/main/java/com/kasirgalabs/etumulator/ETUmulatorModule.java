@@ -14,15 +14,17 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.kasirgalabs.etumulator.document;
+package com.kasirgalabs.etumulator;
 
-import java.io.File;
-import java.io.IOException;
+import com.google.inject.AbstractModule;
+import com.kasirgalabs.etumulator.document.Document;
+import com.kasirgalabs.etumulator.document.DocumentController;
+import com.kasirgalabs.etumulator.document.DocumentMenuController;
 
-public interface DocumentChooser {
-    void createDocument();
-
-    void openDocument() throws IOException;
-
-    File chooseDocument();
+public class ETUmulatorModule extends AbstractModule {
+    @Override
+    protected void configure() {
+        bind(DocumentMenuController.class);
+        bind(Document.class).to(DocumentController.class);
+    }
 }

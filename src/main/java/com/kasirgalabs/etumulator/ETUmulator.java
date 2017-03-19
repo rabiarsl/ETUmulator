@@ -18,8 +18,11 @@ package com.kasirgalabs.etumulator;
 
 import static javafx.application.Application.launch;
 
-import com.kasirgalabs.etumulator.document.DocumentChooser;
-import com.kasirgalabs.etumulator.document.GUIDocumentChooser;
+import com.google.inject.Guice;
+import com.google.inject.Inject;
+import com.google.inject.Injector;
+import com.google.inject.Module;
+import com.kasirgalabs.etumulator.document.DocumentMenuController;
 import com.kasirgalabs.etumulator.pattern.Registry;
 import com.kasirgalabs.etumulator.processor.CPSR;
 import com.kasirgalabs.etumulator.processor.CPUStack;
@@ -35,14 +38,18 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 public class ETUmulator extends Application {
+    @Inject
+    private DocumentMenuController documentMenuController;
+
     public static void main(String[] args) {
         launch(args);
     }
 
     @Override
     public void start(Stage primaryStage) throws IOException {
-        GUIDocumentChooser documentChooser = new GUIDocumentChooser();
-        Registry.put(DocumentChooser.class, documentChooser);
+        Module module = new ETUmulatorModule();
+        Injector injector = Guice.createInjector(module);
+
         Registry.put(RegisterFile.class, new RegisterFile());
         Registry.put(CPUStack.class, new CPUStack());
         Registry.put(CPSR.class, new CPSR());
@@ -59,11 +66,13 @@ public class ETUmulator extends Application {
         primaryStage.setTitle("ETUmulator");
         ClassLoader classLoader = ETUmulator.class.getClassLoader();
         FXMLLoader fxmlLoader = new FXMLLoader(classLoader.getResource("fxml/ETUmulator.fxml"));
+        fxmlLoader.setControllerFactory(injector::getInstance);
         Parent root = (Parent) fxmlLoader.load();
         Scene scene = new Scene(root);
         primaryStage.setScene(scene);
         primaryStage.show();
 
-        documentChooser.setWindow(primaryStage.getOwner());
+        injector.injectMembers(this);
+        documentMenuController.setWindow(primaryStage.getOwner());
     }
 }

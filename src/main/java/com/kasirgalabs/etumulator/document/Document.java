@@ -20,11 +20,11 @@ import java.io.File;
 import java.io.IOException;
 
 public interface Document {
+    void setText(String text);
+
     String getText();
 
     void clear();
-
-    void readFile(File file) throws IOException;
 
     void setTargetFile(File targetFile);
 

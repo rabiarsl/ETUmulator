@@ -31,18 +31,17 @@ import org.junit.Rule;
 import org.junit.Test;
 
 public class DocumentControllerTest {
-    private static DocumentController documentController;
-    private static File mockFile;
-
     @Rule
     public JavaFXThread javaFXThread = new JavaFXThread();
+    private Document document;
+    private File mockFile;
 
     @Before
     public void setUp() throws IOException {
         ClassLoader classLoader = DocumentControllerTest.class.getClassLoader();
         FXMLLoader fxmlLoader = new FXMLLoader(classLoader.getResource("fxml/Document.fxml"));
         fxmlLoader.load();
-        documentController = fxmlLoader.getController();
+        document = fxmlLoader.getController();
         mockFile = new File("DocumentControllerTest.txt");
     }
 
@@ -52,48 +51,13 @@ public class DocumentControllerTest {
     }
 
     /**
-     * Test of initialize method, of class DocumentController.
-     *
-     * @throws IOException Throws if an error occurs while loading "Document.fxml"
-     */
-    @Test
-    public void testInitialize() throws IOException {
-        ClassLoader classLoader = DocumentControllerTest.class.getClassLoader();
-        FXMLLoader fxmlLoader = new FXMLLoader(classLoader.getResource("fxml/Document.fxml"));
-        fxmlLoader.load();
-    }
-
-    /**
-     * Test of readFile and getText methods, of class DocumentController.
-     *
-     * @throws IOException If reading or writing to mock file produces an error.
-     */
-    @Test
-    public void testReadFileAndGetText() throws IOException {
-        String expResult = "testReadFileAndGetText";
-        try(PrintWriter writer = new PrintWriter(mockFile)) {
-            writer.println(expResult);
-        }
-        documentController.readFile(mockFile);
-        String result = documentController.getText();
-        // We expect to get newline appended to expected result.
-        assertEquals("Text is not same.", expResult + "\n", result);
-    }
-
-    /**
      * Test of setTargetFile and getTargetFile methods, of class DocumentController.
      */
     @Test
     public void testSetTargetFileandGetTargetFile() {
-        String defaultFileName = "untitled";
-        File result;
-        result = documentController.getTargetFile();
-        // Test getTargetFile without setting any target file.
-        assertEquals("Default file name is not same.", defaultFileName, result.getName());
         File expResult = new File("testSetTargetFileandGetTargetFile");
-        documentController.setTargetFile(expResult);
-        result = documentController.getTargetFile();
-        assertEquals("File is not same.", expResult, result);
+        document.setTargetFile(expResult);
+        assertEquals("File is not same.", expResult, document.getTargetFile());
     }
 
     /**
@@ -107,10 +71,10 @@ public class DocumentControllerTest {
         try(PrintWriter writer = new PrintWriter(mockFile)) {
             writer.println(expResult);
         }
-        documentController.readFile(mockFile);
+        readFileIntoDocument(mockFile);
         File targetFile = new File("DocumentControllerTestTarget.txt");
-        documentController.setTargetFile(targetFile);
-        documentController.saveDocument();
+        document.setTargetFile(targetFile);
+        document.saveDocument();
         String result;
         try(BufferedReader bf = new BufferedReader(new FileReader(targetFile))) {
             result = bf.readLine();
@@ -122,28 +86,37 @@ public class DocumentControllerTest {
     }
 
     /**
-     * Test of getTextProperty method, of class DocumentController.
+     * Test of getText and setText methods, of class DocumentController.
      */
     @Test
-    public void testGetTextProperty() throws IOException {
-        String result = documentController.getText();
-        assertEquals("Text is not empty.", "", result);
+    public void testGetTextAndSetText() throws IOException {
+        document.setText("TEST");
+        String result = document.getText();
+        assertEquals("Text is not empty.", "TEST", result);
     }
 
     /**
      * Test of clear method, of class DocumentController.
-     *
-     * @throws IOException If reading or writing to mock file produces an error.
      */
     @Test
     public void testClear() throws IOException {
-        String text = "testReadFileAndGetText";
-        try(PrintWriter writer = new PrintWriter(mockFile)) {
-            writer.println(text);
-        }
-        documentController.readFile(mockFile);
-        documentController.clear();
-        String result = documentController.getText();
+        String text = "TEST";
+        document.setText(text);
+        document.clear();
+        String result = document.getText();
         assertEquals("Text is not empty.", "", result);
+    }
+
+    private void readFileIntoDocument(File file) throws IOException {
+        StringBuilder text = new StringBuilder();
+        try(BufferedReader bf = new BufferedReader(new FileReader(file))) {
+            String line;
+            while((line = bf.readLine()) != null) {
+                text.append(line + "\n");
+            }
+        } catch(IOException ex) {
+            throw ex;
+        }
+        document.setText(text.toString());
     }
 }

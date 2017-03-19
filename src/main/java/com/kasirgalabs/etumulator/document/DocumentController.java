@@ -16,11 +16,9 @@
  */
 package com.kasirgalabs.etumulator.document;
 
-import com.kasirgalabs.etumulator.pattern.Registry;
-import java.io.BufferedReader;
+import com.google.inject.Singleton;
 import java.io.BufferedWriter;
 import java.io.File;
-import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.net.URL;
@@ -30,6 +28,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 
+@Singleton
 public class DocumentController implements Initializable, Document {
     private static final String DEFAULT_NAME = "untitled";
     @FXML
@@ -40,7 +39,6 @@ public class DocumentController implements Initializable, Document {
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        Registry.put(Document.class, this);
         targetFile = new File(DEFAULT_NAME);
         label.setText(DEFAULT_NAME);
     }
@@ -48,19 +46,6 @@ public class DocumentController implements Initializable, Document {
     @Override
     public String getText() {
         return textArea.getText();
-    }
-
-    @Override
-    public void readFile(File file) throws IOException {
-        textArea.clear();
-        try(BufferedReader bf = new BufferedReader(new FileReader(file))) {
-            String line;
-            while((line = bf.readLine()) != null) {
-                textArea.appendText(line + "\n");
-            }
-        } catch(IOException ex) {
-            throw ex;
-        }
     }
 
     @Override
@@ -87,5 +72,10 @@ public class DocumentController implements Initializable, Document {
     @Override
     public void clear() {
         textArea.clear();
+    }
+
+    @Override
+    public void setText(String text) {
+        textArea.setText(text);
     }
 }

@@ -16,6 +16,7 @@
  */
 package com.kasirgalabs.etumulator;
 
+import com.google.inject.Inject;
 import com.kasirgalabs.etumulator.console.Console;
 import com.kasirgalabs.etumulator.document.Document;
 import com.kasirgalabs.etumulator.linker.Linker;
@@ -39,6 +40,8 @@ public class ETUmulatorController implements Initializable, Console {
     private Button runButton;
     @FXML
     private TextArea textArea;
+    @Inject
+    private Document document;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -60,8 +63,7 @@ public class ETUmulatorController implements Initializable, Console {
     private void runButtonOnAction(ActionEvent event) {
         Linker linker = new Linker(Registry.get(InstructionUnit.class),
                 Registry.get(MemoryUnit.class));
-        String text = Registry.get(Document.class).getText();
-        linker.linkAndLoad(text + "\n");
+        linker.linkAndLoad(document.getText() + "\n");
         Registry.get(Processor.class).run();
     }
 }
