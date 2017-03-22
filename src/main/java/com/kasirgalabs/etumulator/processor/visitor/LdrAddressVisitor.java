@@ -34,6 +34,10 @@ public class LdrAddressVisitor extends ArmBaseVisitor<Integer> {
         numberVisitor = new NumberVisitor();
     }
 
+    public void setSymbols(Set<Symbol> symbols) {
+        this.symbols = symbols;
+    }
+
     @Override
     public Integer visitLdrAddress(ArmParser.LdrAddressContext ctx) {
         if(ctx.immediateOffset() != null) {
@@ -41,6 +45,15 @@ public class LdrAddressVisitor extends ArmBaseVisitor<Integer> {
         }
         if(ctx.postIndexedImmediate() != null) {
             return visit(ctx.postIndexedImmediate());
+        }
+        if(ctx.registerOffset() != null) {
+            return visit(ctx.registerOffset());
+        }
+        if(ctx.postIndexedRegister() != null) {
+            return visit(ctx.postIndexedRegister());
+        }
+        if(ctx.pcRelative() != null) {
+            return visit(ctx.pcRelative());
         }
         return null;
     }
@@ -85,5 +98,19 @@ public class LdrAddressVisitor extends ArmBaseVisitor<Integer> {
         }
         registerFile.setValue(srcRegister, value + offset);
         return value;
+    }
+
+    @Override
+    public Integer visitPcRelative(ArmParser.PcRelativeContext ctx) {
+        return addressOfSymbol(ctx.LABEL().getText());
+    }
+
+    private Integer addressOfSymbol(String name) {
+        for(Symbol symbol : symbols) {
+            if(symbol.getName().equals(name)) {
+                return symbol.getAddress();
+            }
+        }
+        return null;
     }
 }

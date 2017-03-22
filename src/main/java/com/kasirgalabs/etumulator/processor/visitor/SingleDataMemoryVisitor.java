@@ -18,8 +18,10 @@ package com.kasirgalabs.etumulator.processor.visitor;
 
 import com.kasirgalabs.arm.ArmBaseVisitor;
 import com.kasirgalabs.arm.ArmParser;
+import com.kasirgalabs.etumulator.linker.Symbol;
 import com.kasirgalabs.etumulator.processor.Memory;
 import com.kasirgalabs.etumulator.processor.RegisterFile;
+import java.util.Set;
 
 public class SingleDataMemoryVisitor extends ArmBaseVisitor<Void> {
     private final RegisterFile registerFile;
@@ -34,6 +36,10 @@ public class SingleDataMemoryVisitor extends ArmBaseVisitor<Void> {
         registerVisitor = new RegisterVisitor();
         this.numberVisitor = new NumberVisitor();
         this.ldrAddressVisitor = new LdrAddressVisitor(registerFile);
+    }
+
+    public void setSymbols(Set<Symbol> symbols) {
+        ldrAddressVisitor.setSymbols(symbols);
     }
 
     @Override

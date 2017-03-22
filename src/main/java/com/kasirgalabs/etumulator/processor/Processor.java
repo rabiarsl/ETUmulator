@@ -45,7 +45,7 @@ public class Processor extends ArmBaseVisitor<Void> {
     private final LogicalVisitor logicalVisitor;
     private final BranchVisitor branchVisitor;
     private final SingleDataMemoryVisitor singleDataMemoryVisitor;
-    private StackVisitor stackVisitor;
+    private final StackVisitor stackVisitor;
     private int pc;
 
     @Inject
@@ -114,6 +114,7 @@ public class Processor extends ArmBaseVisitor<Void> {
     public void run(String code, Set<Symbol> symbols) {
         pc = 0;
         branchVisitor.setSymbols(symbols);
+        singleDataMemoryVisitor.setSymbols(symbols);
         final char[][] instructions = parseInstructions(code);
         while(pc < instructions.length) {
             char[] instruction = instructions[pc];
