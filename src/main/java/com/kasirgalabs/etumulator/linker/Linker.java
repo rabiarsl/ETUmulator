@@ -16,12 +16,10 @@
  */
 package com.kasirgalabs.etumulator.linker;
 
-import com.kasirgalabs.arm.ArmBaseListener;
+import com.kasirgalabs.arm.ArmBaseVisitor;
 import com.kasirgalabs.arm.ArmLexer;
 import com.kasirgalabs.arm.ArmParser;
-import com.kasirgalabs.etumulator.error.LabelError;
-import com.kasirgalabs.etumulator.processor.InstructionUnit;
-import com.kasirgalabs.etumulator.processor.MemoryUnit;
+import com.kasirgalabs.etumulator.processor.Memory;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -29,176 +27,169 @@ import java.util.Random;
 import java.util.Set;
 import org.antlr.v4.runtime.ANTLRInputStream;
 import org.antlr.v4.runtime.CommonTokenStream;
-import org.antlr.v4.runtime.tree.ParseTreeWalker;
 
-public class Linker extends ArmBaseListener {
-    private final InstructionUnit instructionUnit;
-    private final MemoryUnit memoryUnit;
-    private final List<Label> definedBranchLabels;
-    private final List<Label> targetBranchLabels;
-    private final List<Data> definedData;
-    private final List<Data> targetData;
+public class Linker extends ArmBaseVisitor<Void> {
+    private final Memory memory;
+    private final List<String> targetSymbols;
+    private final List<Symbol> definedSymbols;
+    private final List<Symbol> dataSymbols;
 
-    public Linker(InstructionUnit instructionUnit, MemoryUnit memoryUnit) {
-        this.instructionUnit = instructionUnit;
-        this.memoryUnit = memoryUnit;
-        definedBranchLabels = new ArrayList<>();
-        targetBranchLabels = new ArrayList<>();
-        definedData = new ArrayList<>();
-        targetData = new ArrayList<>();
+    public Linker(Memory memory) {
+        this.memory = memory;
+        targetSymbols = new ArrayList<>();
+        definedSymbols = new ArrayList<>();
+        dataSymbols = new ArrayList<>();
     }
 
     @Override
-    public void exitLabel(ArmParser.LabelContext ctx) {
-        Label label = new Label(ctx.LABEL().getText());
-        label.setAddress(ctx.getStart().getLine() - 1);
-        if(definedBranchLabels.contains(label)) {
-            throw new LabelError("\"" + label.getName() + "\" is already defined");
-        }
-        definedBranchLabels.add(label);
+    public Void visitB(ArmParser.BContext ctx) {
+        targetSymbols.add(ctx.LABEL().getText());
+        return null;
     }
 
     @Override
-    public void exitB(ArmParser.BContext ctx) {
-        targetBranchLabels.add(new Label(ctx.LABEL().getText()));
+    public Void visitBeq(ArmParser.BeqContext ctx) {
+        targetSymbols.add(ctx.LABEL().getText());
+        return null;
     }
 
     @Override
-    public void exitBeq(ArmParser.BeqContext ctx) {
-        targetBranchLabels.add(new Label(ctx.LABEL().getText()));
+    public Void visitBne(ArmParser.BneContext ctx) {
+        targetSymbols.add(ctx.LABEL().getText());
+        return null;
     }
 
     @Override
-    public void exitBne(ArmParser.BneContext ctx) {
-        targetBranchLabels.add(new Label(ctx.LABEL().getText()));
+    public Void visitBcs(ArmParser.BcsContext ctx) {
+        targetSymbols.add(ctx.LABEL().getText());
+        return null;
     }
 
     @Override
-    public void exitBcs(ArmParser.BcsContext ctx) {
-        targetBranchLabels.add(new Label(ctx.LABEL().getText()));
+    public Void visitBhs(ArmParser.BhsContext ctx) {
+        targetSymbols.add(ctx.LABEL().getText());
+        return null;
     }
 
     @Override
-    public void exitBhs(ArmParser.BhsContext ctx) {
-        targetBranchLabels.add(new Label(ctx.LABEL().getText()));
+    public Void visitBcc(ArmParser.BccContext ctx) {
+        targetSymbols.add(ctx.LABEL().getText());
+        return null;
     }
 
     @Override
-    public void exitBcc(ArmParser.BccContext ctx) {
-        targetBranchLabels.add(new Label(ctx.LABEL().getText()));
+    public Void visitBlo(ArmParser.BloContext ctx) {
+        targetSymbols.add(ctx.LABEL().getText());
+        return null;
     }
 
     @Override
-    public void exitBlo(ArmParser.BloContext ctx) {
-        targetBranchLabels.add(new Label(ctx.LABEL().getText()));
+    public Void visitBmi(ArmParser.BmiContext ctx) {
+        targetSymbols.add(ctx.LABEL().getText());
+        return null;
     }
 
     @Override
-    public void exitBmi(ArmParser.BmiContext ctx) {
-        targetBranchLabels.add(new Label(ctx.LABEL().getText()));
+    public Void visitBpl(ArmParser.BplContext ctx) {
+        targetSymbols.add(ctx.LABEL().getText());
+        return null;
     }
 
     @Override
-    public void exitBpl(ArmParser.BplContext ctx) {
-        targetBranchLabels.add(new Label(ctx.LABEL().getText()));
+    public Void visitBvs(ArmParser.BvsContext ctx) {
+        targetSymbols.add(ctx.LABEL().getText());
+        return null;
     }
 
     @Override
-    public void exitBvs(ArmParser.BvsContext ctx) {
-        targetBranchLabels.add(new Label(ctx.LABEL().getText()));
+    public Void visitBvc(ArmParser.BvcContext ctx) {
+        targetSymbols.add(ctx.LABEL().getText());
+        return null;
     }
 
     @Override
-    public void exitBvc(ArmParser.BvcContext ctx) {
-        targetBranchLabels.add(new Label(ctx.LABEL().getText()));
+    public Void visitBhi(ArmParser.BhiContext ctx) {
+        targetSymbols.add(ctx.LABEL().getText());
+        return null;
     }
 
     @Override
-    public void exitBhi(ArmParser.BhiContext ctx) {
-        targetBranchLabels.add(new Label(ctx.LABEL().getText()));
+    public Void visitBls(ArmParser.BlsContext ctx) {
+        targetSymbols.add(ctx.LABEL().getText());
+        return null;
     }
 
     @Override
-    public void exitBls(ArmParser.BlsContext ctx) {
-        targetBranchLabels.add(new Label(ctx.LABEL().getText()));
+    public Void visitBge(ArmParser.BgeContext ctx) {
+        targetSymbols.add(ctx.LABEL().getText());
+        return null;
     }
 
     @Override
-    public void exitBge(ArmParser.BgeContext ctx) {
-        targetBranchLabels.add(new Label(ctx.LABEL().getText()));
+    public Void visitBlt(ArmParser.BltContext ctx) {
+        targetSymbols.add(ctx.LABEL().getText());
+        return visitChildren(ctx);
     }
 
     @Override
-    public void exitBlt(ArmParser.BltContext ctx) {
-        targetBranchLabels.add(new Label(ctx.LABEL().getText()));
+    public Void visitBgt(ArmParser.BgtContext ctx) {
+        targetSymbols.add(ctx.LABEL().getText());
+        return null;
     }
 
     @Override
-    public void exitBgt(ArmParser.BgtContext ctx) {
-        targetBranchLabels.add(new Label(ctx.LABEL().getText()));
+    public Void visitBle(ArmParser.BleContext ctx) {
+        targetSymbols.add(ctx.LABEL().getText());
+        return null;
     }
 
     @Override
-    public void exitBle(ArmParser.BleContext ctx) {
-        targetBranchLabels.add(new Label(ctx.LABEL().getText()));
+    public Void visitBal(ArmParser.BalContext ctx) {
+        targetSymbols.add(ctx.LABEL().getText());
+        return null;
     }
 
     @Override
-    public void exitBal(ArmParser.BalContext ctx) {
-        targetBranchLabels.add(new Label(ctx.LABEL().getText()));
+    public Void visitBl(ArmParser.BlContext ctx) {
+        targetSymbols.add(ctx.LABEL().getText());
+        return null;
     }
 
     @Override
-    public void exitBl(ArmParser.BlContext ctx) {
-        targetBranchLabels.add(new Label(ctx.LABEL().getText()));
+    public Void visitLabel(ArmParser.LabelContext ctx) {
+        Symbol symbol = new Symbol(ctx.LABEL().getText(), ctx.start.getLine() - 1);
+        definedSymbols.add(symbol);
+        return null;
     }
 
     @Override
-    public void exitData(ArmParser.DataContext ctx) {
-        String label = ctx.label().LABEL().getText();
-        String text = ctx.asciz().getChild(1).getText();
-        Data data = new Data(new Label(label));
-        data.setData(text
-                .replaceFirst("\"", "")
-                .replaceFirst("(?s)" + "\"" + "(?!.*?" + "\"" + ")", "") + "\n");
-        if(definedData.contains(data)) {
-            throw new LabelError("\"" + data.getLabel().getName() + "\" is already defined");
-        }
-        definedData.add(data);
+    public Void visitData(ArmParser.DataContext ctx) {
+        String name = ctx.label().LABEL().getText();
+        String asciz = ctx.asciz().STRING().getText().replaceAll("\"", "");
+        int address = loadDataIntoMemory(asciz + "\n");
+        Symbol symbol = new Symbol(name, address);
+        dataSymbols.add(symbol);
+        return visitChildren(ctx);
     }
 
-    @Override
-    public void exitLdr(ArmParser.LdrContext ctx) {
-        if(ctx.LABEL() != null) {
-            Label label = new Label(ctx.LABEL().getText());
-            targetData.add(new Data(label));
-        }
-    }
-
-    public void linkAndLoad(String code) throws LabelError {
-        definedBranchLabels.clear();
-        targetBranchLabels.clear();
-        definedData.clear();
-        targetData.clear();
+    public Set<Symbol> link(String code) {
+        definedSymbols.clear();
+        targetSymbols.clear();
 
         inspectCode(code);
-
         char[][] instructions = parseInstructions(code);
-        List<Label> resolvedBranchLabels = resolveBranchLabels();
-        instructionUnit.loadLabels(resolvedBranchLabels);
-        instructionUnit.loadInstructions(instructions);
-
-        List<Data> resolvedData = resolveData();
-        memoryUnit.loadData(resolvedData);
+        Set<Symbol> resolvedSymbols = resolveSymbols(instructions);
+        resolvedSymbols.addAll(dataSymbols);
+        return resolvedSymbols;
     }
 
     private void inspectCode(String code) {
-        ANTLRInputStream in = new ANTLRInputStream(code.toCharArray(), code.length());
+        ANTLRInputStream in = new ANTLRInputStream(code);
         ArmLexer lexer = new ArmLexer(in);
         CommonTokenStream tokens = new CommonTokenStream(lexer);
         ArmParser parser = new ArmParser(tokens);
         ArmParser.ProgContext tree = parser.prog();
-        ParseTreeWalker.DEFAULT.walk(this, tree);
+        visit(tree);
     }
 
     private char[][] parseInstructions(String code) {
@@ -210,55 +201,45 @@ public class Linker extends ArmBaseListener {
         return instructions;
     }
 
-    private List<Label> resolveBranchLabels() {
-        List<Label> resolvedLabels = new ArrayList<>();
-        for(Label label : targetBranchLabels) {
-            if(definedBranchLabels.contains(label)) {
-                resolvedLabels.add(definedBranchLabels.get(definedBranchLabels.indexOf(label)));
-                continue;
-            }
-            throw new LabelError("\"" + label.getName() + "\" is not defined");
-        }
-        return distinctList(resolvedLabels);
+    private Set<Symbol> resolveSymbols(char[][] instructions) {
+        Set<Symbol> resolvedSymbols = new HashSet<>();
+        targetSymbols.forEach((targetSymbol) -> {
+            definedSymbols.forEach((definedSymbol) -> {
+                if(definedSymbol.getName().equals(targetSymbol)) {
+                    resolvedSymbols.add(definedSymbol);
+                }
+            });
+        });
+        return resolvedSymbols;
     }
 
-    private List<Data> resolveData() {
-        List<Data> resolvedData = new ArrayList<>();
-        for(Data data : targetData) {
-            if(definedData.contains(data)) {
-                Data temp = definedData.get(definedData.indexOf(data));
-                loadIntoMemory(temp);
-                resolvedData.add(temp);
-                continue;
+    private int resolveAddress(String targetSymbol, char[][] instructions) {
+        int address = 0;
+        while(address < instructions.length) {
+            if(new String(instructions[address]).contains(targetSymbol)) {
+                return address;
             }
-            throw new LabelError("\"" + data.getLabel().getName() + "\" is not defined");
+            address++;
         }
-        return distinctList(resolvedData);
+        return address;
     }
 
-    private void loadIntoMemory(Data data) {
+    private int loadDataIntoMemory(String asciz) {
         boolean addressNotFound = true;
         Random rand = new Random();
+        int address = 0;
         while(addressNotFound) {
-            int address = rand.nextInt(Integer.MAX_VALUE - data.getData().length()) + 0;
-            for(int i = 0; i < data.getData().length(); i++) {
-                if(memoryUnit.getData(address + i) != null) {
+            address = rand.nextInt(Integer.MAX_VALUE - asciz.length());
+            for(int i = 0; i < asciz.length(); i++) {
+                if(!memory.isAddressEmpty(address + i)) {
                     break;
                 }
-                data.getLabel().setAddress(address);
-                memoryUnit.setData(address + i, (byte) data.getData().charAt(i));
-                if(i == data.getData().length() - 1) {
+                memory.set(address + i, (byte) asciz.charAt(i));
+                if(i == asciz.length() - 1) {
                     addressNotFound = false;
                 }
             }
         }
-    }
-
-    private <T> List<T> distinctList(List<T> al) {
-        Set<T> hs = new HashSet<>();
-        hs.addAll(al);
-        al.clear();
-        al.addAll(hs);
-        return al;
+        return address;
     }
 }

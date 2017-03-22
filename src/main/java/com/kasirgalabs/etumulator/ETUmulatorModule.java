@@ -17,14 +17,15 @@
 package com.kasirgalabs.etumulator;
 
 import com.google.inject.AbstractModule;
-import com.kasirgalabs.etumulator.document.Document;
-import com.kasirgalabs.etumulator.document.DocumentController;
-import com.kasirgalabs.etumulator.document.DocumentMenuController;
+import com.kasirgalabs.etumulator.processor.CPSR;
+import com.kasirgalabs.etumulator.processor.Processor;
+import com.kasirgalabs.etumulator.processor.RegisterFile;
 
 public class ETUmulatorModule extends AbstractModule {
     @Override
     protected void configure() {
-        bind(DocumentMenuController.class);
-        bind(Document.class).to(DocumentController.class);
+        bind(Processor.class);
+        bind(CPSR.class);
+        bind(RegisterFile.class);
     }
 }

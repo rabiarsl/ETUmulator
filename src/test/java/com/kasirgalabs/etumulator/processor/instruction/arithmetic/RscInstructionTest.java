@@ -27,29 +27,29 @@ public class RscInstructionTest extends InstructionTester {
      */
     @Test
     public void testExitRscAndExitRscs() {
-        cpsr.setCarry(false);
+        cpsr.setCarry(true);
         String code = "rsc r1, r2, r3\n";
         runTestCode(code);
         assertEquals("Subtraction result is wrong.", 0, registerFile.getValue("r1"));
 
-        cpsr.setCarry(true);
+        cpsr.setCarry(false);
         code = "rsc r0, r1, 0\n";
         runTestCode(code);
         assertEquals("Subtraction result is wrong.", -1, registerFile.getValue("r0"));
 
-        cpsr.setCarry(false);
+        cpsr.setCarry(true);
         code = "rsc r0, r1, 4\n";
         runTestCode(code);
         assertEquals("Subtraction result is wrong.", 4, registerFile.getValue("r0"));
 
-        cpsr.setCarry(true);
+        cpsr.setCarry(false);
         code = "mov r1, #1\n"
                 + "mov r2, #2\n"
                 + "rsc r0, r2, r1\n";
         runTestCode(code);
         assertEquals("Subtraction result is wrong.", -2, registerFile.getValue("r0"));
 
-        cpsr.setCarry(true);
+        cpsr.setCarry(false);
         code = "mov r0, #1\n"
                 + "rsc r0, r0, r0\n";
         runTestCode(code);

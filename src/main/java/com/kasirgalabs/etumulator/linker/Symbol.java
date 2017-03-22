@@ -18,33 +18,26 @@ package com.kasirgalabs.etumulator.linker;
 
 import java.util.Objects;
 
-public class Data {
-    private final Label label;
-    private String data;
+public final class Symbol {
+    private final String name;
+    private final int address;
 
-    public Data(Label label) {
-        this.label = label;
+    public Symbol() {
+        name = null;
+        address = 0;
     }
 
-    public Data(Data data) {
-        this.label = data.getLabel();
-        this.data = data.getData();
+    public Symbol(String name, int address) {
+        this.name = name;
+        this.address = address;
     }
 
-    public Data(String label) {
-        this.label = new Label(label);
+    public String getName() {
+        return name;
     }
 
-    public void setData(String data) {
-        this.data = data;
-    }
-
-    public String getData() {
-        return data;
-    }
-
-    public Label getLabel() {
-        return label;
+    public int getAddress() {
+        return address;
     }
 
     @Override
@@ -58,17 +51,17 @@ public class Data {
         if(this.getClass() != obj.getClass()) {
             return false;
         }
-        Data temp = (Data) obj;
-        if(this.hashCode() != temp.hashCode()) {
+        Symbol symbol = (Symbol) obj;
+        if(this.hashCode() != symbol.hashCode()) {
             return false;
         }
-        return this.label.getName().equals(temp.getLabel().getName());
+        return this.name.equals(symbol.getName());
     }
 
     @Override
     public int hashCode() {
         int hash = 3;
-        hash = 67 * hash + Objects.hashCode(this.label.getName());
+        hash = 67 * hash + Objects.hashCode(this.name);
         return hash;
     }
 }

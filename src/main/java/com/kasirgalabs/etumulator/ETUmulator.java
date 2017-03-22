@@ -16,63 +16,22 @@
  */
 package com.kasirgalabs.etumulator;
 
-import static javafx.application.Application.launch;
-
 import com.google.inject.Guice;
-import com.google.inject.Inject;
 import com.google.inject.Injector;
 import com.google.inject.Module;
-import com.kasirgalabs.etumulator.document.DocumentMenuController;
-import com.kasirgalabs.etumulator.pattern.Registry;
 import com.kasirgalabs.etumulator.processor.CPSR;
-import com.kasirgalabs.etumulator.processor.CPUStack;
-import com.kasirgalabs.etumulator.processor.InstructionUnit;
-import com.kasirgalabs.etumulator.processor.MemoryUnit;
 import com.kasirgalabs.etumulator.processor.Processor;
 import com.kasirgalabs.etumulator.processor.RegisterFile;
-import java.io.IOException;
-import javafx.application.Application;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
-import javafx.stage.Stage;
 
-public class ETUmulator extends Application {
-    @Inject
-    private DocumentMenuController documentMenuController;
-
+public class ETUmulator {
     public static void main(String[] args) {
-        launch(args);
-    }
-
-    @Override
-    public void start(Stage primaryStage) throws IOException {
         Module module = new ETUmulatorModule();
         Injector injector = Guice.createInjector(module);
-
-        Registry.put(RegisterFile.class, new RegisterFile());
-        Registry.put(CPUStack.class, new CPUStack());
-        Registry.put(CPSR.class, new CPSR());
-        Registry.put(InstructionUnit.class, new InstructionUnit());
-        Registry.put(MemoryUnit.class, new MemoryUnit());
-        Registry.put(Processor.class, new Processor(
-                Registry.get(RegisterFile.class),
-                Registry.get(CPUStack.class),
-                Registry.get(CPSR.class),
-                Registry.get(InstructionUnit.class),
-                Registry.get(MemoryUnit.class))
-        );
-
-        primaryStage.setTitle("ETUmulator");
-        ClassLoader classLoader = ETUmulator.class.getClassLoader();
-        FXMLLoader fxmlLoader = new FXMLLoader(classLoader.getResource("fxml/ETUmulator.fxml"));
-        fxmlLoader.setControllerFactory(injector::getInstance);
-        Parent root = (Parent) fxmlLoader.load();
-        Scene scene = new Scene(root);
-        primaryStage.setScene(scene);
-        primaryStage.show();
-
-        injector.injectMembers(this);
-        documentMenuController.setWindow(primaryStage.getOwner());
+        Processor processor = injector.getInstance(Processor.class);
+        RegisterFile registerFile = injector.getInstance(RegisterFile.class);
+        CPSR cpsr = injector.getInstance(CPSR.class);
+        cpsr.setCarry(true);
+        processor.run("add r0, r1, #0x7ffffffe\n"
+                + "adcs r2, r0, 1\n", null);
     }
 }

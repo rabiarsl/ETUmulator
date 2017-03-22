@@ -20,7 +20,7 @@ dependencies {
 }
 
 generateGrammarSource {
-    arguments += ["-package", "com.kasirgalabs.arm", "-long-messages"]
+    arguments += ["-package", "com.kasirgalabs.arm", "-visitor", "-no-listener", "-long-messages"]
     doLast {
         copy {
             from "build/generated-src/antlr/main/"

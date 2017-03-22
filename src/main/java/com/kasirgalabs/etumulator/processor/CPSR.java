@@ -16,17 +16,21 @@
  */
 package com.kasirgalabs.etumulator.processor;
 
-import com.kasirgalabs.etumulator.operand2.Shift;
+import com.google.inject.Singleton;
 
+@Singleton
 public class CPSR {
     private boolean negative;
     private boolean zero;
     private boolean carry;
     private boolean overflow;
-    private Shifter shifter;
 
     public boolean isNegative() {
         return negative;
+    }
+
+    public void setNegative(boolean negative) {
+        this.negative = negative;
     }
 
     public boolean isZero() {
@@ -49,67 +53,20 @@ public class CPSR {
         return overflow;
     }
 
-    public void setShifter(Shifter shifter) {
-        this.shifter = shifter;
+    public void setOverflow(boolean overflow) {
+        this.overflow = overflow;
     }
 
-    public int updateNZ(int value) {
-        negative = value < 0;
-        zero = value == 0;
-        return value;
+    public int updateNZ(int result) {
+        negative = result < 0;
+        zero = result == 0;
+        return result;
     }
 
-    public int additionUpdateNZV(int left, int right) {
-        int reuslt = left + right;
-        updateNZ(left + right);
-        try {
-            Math.addExact(left, right);
-            overflow = false;
-        } catch(ArithmeticException e) {
-            overflow = true;
-        }
-        return reuslt;
-    }
-
-    public int subtractionUpdateNZV(int left, int right) {
-        int reuslt = left - right;
-        updateNZ(left - right);
-        try {
-            Math.subtractExact(left, right);
-            overflow = false;
-        } catch(ArithmeticException e) {
-            overflow = true;
-        }
-        return reuslt;
-    }
-
-    public int shiftUpdateNZC(int value, int shiftAmount, int option) {
+    public void reset() {
+        negative = false;
+        zero = false;
         carry = false;
-        if(shiftAmount <= 0) {
-            return updateNZ(value);
-        }
-        int result = shifter.shift(value, shiftAmount - 1, option);
-        if(option == Shift.LSL) {
-            if(Integer.numberOfLeadingZeros(result) == 0) {
-                carry = true;
-            }
-        }
-        else {
-            if(Integer.numberOfTrailingZeros(result) == 0) {
-                carry = true;
-            }
-        }
-        result = shifter.shift(value, shiftAmount, option);
-        return updateNZ(result);
-    }
-
-    public int rrxUpdateNZC(int value) {
-        shifter.setCarry(carry);
-        carry = false;
-        if(Integer.numberOfTrailingZeros(value) == 0) {
-            carry = true;
-        }
-        int result = shifter.rrxShift(value);
-        return updateNZ(result);
+        overflow = false;
     }
 }

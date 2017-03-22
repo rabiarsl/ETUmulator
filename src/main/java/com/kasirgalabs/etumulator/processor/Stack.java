@@ -14,8 +14,29 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.kasirgalabs.etumulator.operand2;
+package com.kasirgalabs.etumulator.processor;
 
-public abstract class Imm8m implements Operand2 {
-    public abstract void setValue(int value);
+import com.google.inject.Singleton;
+import java.util.LinkedList;
+import java.util.List;
+
+@Singleton
+public class Stack {
+    private final LinkedList<Integer> list;
+
+    public Stack() {
+        list = new LinkedList<>();
+    }
+
+    public void push(Integer item) {
+        list.push(item);
+    }
+
+    public Integer pop() {
+        return list.pop();
+    }
+
+    public List<Integer> getAll() {
+        return list.subList(0, list.size());
+    }
 }

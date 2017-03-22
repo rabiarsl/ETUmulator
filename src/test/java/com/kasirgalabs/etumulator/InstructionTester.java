@@ -18,33 +18,28 @@ package com.kasirgalabs.etumulator;
 
 import com.kasirgalabs.etumulator.linker.Linker;
 import com.kasirgalabs.etumulator.processor.CPSR;
-import com.kasirgalabs.etumulator.processor.CPUStack;
-import com.kasirgalabs.etumulator.processor.InstructionUnit;
-import com.kasirgalabs.etumulator.processor.MemoryUnit;
+import com.kasirgalabs.etumulator.processor.Memory;
 import com.kasirgalabs.etumulator.processor.Processor;
 import com.kasirgalabs.etumulator.processor.RegisterFile;
+import com.kasirgalabs.etumulator.processor.Stack;
 
 public class InstructionTester {
     protected final RegisterFile registerFile;
-    protected final CPUStack stack;
     protected final CPSR cpsr;
-    protected final MemoryUnit memoryUnit;
-    private final InstructionUnit instructionUnit;
+    protected final Stack stack;
+    protected final Memory memory;
     private final Processor processor;
 
     public InstructionTester() {
         registerFile = new RegisterFile();
-        stack = new CPUStack();
         cpsr = new CPSR();
-        instructionUnit = new InstructionUnit();
-        memoryUnit = new MemoryUnit();
-        processor = new Processor(registerFile, stack, cpsr, instructionUnit, memoryUnit);
+        stack = new Stack();
+        memory = new Memory();
+        processor = new Processor(registerFile, cpsr, stack, memory);
     }
 
     protected final void runTestCode(String code) {
         registerFile.reset();
-        Linker linker = new Linker(instructionUnit, memoryUnit);
-        linker.linkAndLoad(code);
-        processor.run();
+        processor.run(code, new Linker(memory).link(code));
     }
 }

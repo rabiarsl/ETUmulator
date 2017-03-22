@@ -11,38 +11,53 @@ line
     ;
 
 instruction
+    : arithmetic
+    | multiplyAndDivide
+    | move
+    | shift
+    | compare
+    | logical
+    | branch
+    | singleDataMemory
+    | stack
+    | 'nop'
+    ;
+
+arithmetic
     : add
     | adds
     | adc
     | adcs
     | sub
+    | subs
     | sbc
     | sbcs
-    | subs
     | rsb
     | rsbs
     | rsc
     | rscs
-    | mul
+    ;
+
+multiplyAndDivide
+    : mul
     | muls
     | mla
     | mlas
     | mls
-    | umull
-    | umulls
-    | umlal
-    | umlals
-    | smull
-    | smulls
-    | smlal
-    | smlals
     | sdiv
     | udiv
-    | mov
+    ;
+
+move
+    : mov
     | movs
     | mvn
     | mvns
-    | asr
+    | movt
+    ;
+
+shift
+    : asr
     | asrs
     | lsl
     | lsls
@@ -52,9 +67,15 @@ instruction
     | rors
     | rrx
     | rrxs
-    | cmp
+    ;
+
+compare
+    : cmp
     | cmn
-    | tst
+    ;
+
+logical
+    : tst
     | teq
     | and
     | ands
@@ -66,7 +87,10 @@ instruction
     | orns
     | bic
     | bics
-    | b
+    ;
+
+branch
+    : b
     | beq
     | bne
     | bcs
@@ -85,7 +109,10 @@ instruction
     | ble
     | bal
     | bl
-    | ldr
+    ;
+
+singleDataMemory
+    : ldr
     | ldrb
     | ldrsb
     | ldrh
@@ -95,714 +122,370 @@ instruction
     | strsb
     | strh
     | strsh
-    | push
+    ;
+
+stack
+    : push
     | pop
-    | nop
     ;
 
 add
-    : ADD rd COMMA rn COMMA operand2
-    ;
-
-ADD
-    : A D D
+    : 'add' rd COMMA rn COMMA (imm12 | operand2)
     ;
 
 adds
-    : ADDS rd COMMA rn COMMA operand2
-    ;
-
-ADDS
-    : A D D S
+    : 'adds' rd COMMA rn COMMA operand2
     ;
 
 adc
-    : ADC rd COMMA rn COMMA operand2
-    ;
-
-ADC
-    : A D C
+    : 'adc' rd COMMA rn COMMA operand2
     ;
 
 adcs
-    : ADCS rd COMMA rn COMMA operand2
-    ;
-
-ADCS
-    : A D C S
+    : 'adcs' rd COMMA rn COMMA operand2
     ;
 
 sub
-    : SUB rd COMMA rn COMMA operand2
-    ;
-
-SUB
-    : S U B
+    : 'sub' rd COMMA rn COMMA (imm12 | operand2)
     ;
 
 subs
-    : SUBS rd COMMA rn COMMA operand2
-    ;
-
-SUBS
-    : S U B S
+    : 'subs' rd COMMA rn COMMA operand2
     ;
 
 sbc
-    : SBC rd COMMA rn COMMA operand2
-    ;
-
-SBC
-    : S B C
+    : 'sbc' rd COMMA rn COMMA operand2
     ;
 
 sbcs
-    : SBCS rd COMMA rn COMMA operand2
-    ;
-
-SBCS
-    : S B C S
+    : 'sbcs' rd COMMA rn COMMA operand2
     ;
 
 rsb
-    : RSB rd COMMA rn COMMA operand2
-    ;
-
-RSB
-    : R S B
+    : 'rsb' rd COMMA rn COMMA operand2
     ;
 
 rsbs
-    : RSBS rd COMMA rn COMMA operand2
-    ;
-
-RSBS
-    : R S B S
+    : 'rsbs' rd COMMA rn COMMA operand2
     ;
 
 rsc
-    : RSC rd COMMA rn COMMA operand2
-    ;
-
-RSC
-    : R S C
+    : 'rsc' rd COMMA rn COMMA operand2
     ;
 
 rscs
-    : RSCS rd COMMA rn COMMA operand2
-    ;
-
-RSCS
-    : R S C S
+    : 'rscs' rd COMMA rn COMMA operand2
     ;
 
 mul
-    : MUL rd COMMA rm COMMA rs
-    ;
-
-MUL
-    : M U L
+    : 'mul' rd COMMA rm COMMA rs
     ;
 
 muls
-    : MULS rd COMMA rm COMMA rs
-    ;
-
-MULS
-    : M U L S
+    : 'muls' rd COMMA rm COMMA rs
     ;
 
 mla
-    : MLA rd COMMA rm COMMA rs COMMA rn
-    ;
-
-MLA
-    : M L A
+    : 'mla' rd COMMA rm COMMA rs COMMA rn
     ;
 
 mlas
-    : MLAS rd COMMA rm COMMA rs COMMA rn
-    ;
-
-MLAS
-    : M L A S
+    : 'mlas' rd COMMA rm COMMA rs COMMA rn
     ;
 
 mls
-    : MLS rd COMMA rm COMMA rs COMMA rn
-    ;
-
-MLS
-    : M L S
-    ;
-
-umull
-    : UMULL rdlo COMMA rdhi COMMA rm COMMA rs
-    ;
-
-UMULL
-    : U M U L L
-    ;
-
-umulls
-    : UMULLS rdlo COMMA rdhi COMMA rm COMMA rs
-    ;
-
-UMULLS
-    : U M U L L S
-    ;
-
-umlal
-    : UMLAL rdlo COMMA rdhi COMMA rm COMMA rs
-    ;
-
-UMLAL
-    : U M L A L
-    ;
-
-umlals
-    : UMLALS rdlo COMMA rdhi COMMA rm COMMA rs
-    ;
-
-UMLALS
-    : U M L A L S
-    ;
-
-smull
-    : SMULL rdlo COMMA rdhi COMMA rm COMMA rs
-    ;
-
-SMULL
-    : S M U L L
-    ;
-
-smulls
-    : SMULLS rdlo COMMA rdhi COMMA rm COMMA rs
-    ;
-
-SMULLS
-    : S M U L L S
-    ;
-
-smlal
-    : SMLAL rdlo COMMA rdhi COMMA rm COMMA rs
-    ;
-
-SMLAL
-    : S M L A L
-    ;
-
-smlals
-    : SMLALS rdlo COMMA rdhi COMMA rm COMMA rs
-    ;
-
-SMLALS
-    : S M L A L S
+    : 'mls' rd COMMA rm COMMA rs COMMA rn
     ;
 
 sdiv
-    : SDIV rd COMMA rn COMMA rm
-    ;
-
-SDIV
-    : S D I V
+    : 'sdiv' rd COMMA rn COMMA rm
     ;
 
 udiv
-    : UDIV rd COMMA rn COMMA rm
-    ;
-
-UDIV
-    : U D I V
+    : 'udiv' rd COMMA rn COMMA rm
     ;
 
 mov
-    : MOV rd COMMA operand2
-    ;
-
-MOV
-    : M O V
+    : 'mov' rd COMMA (imm16 | operand2)
     ;
 
 movs
-    : MOVS rd COMMA operand2
-    ;
-
-MOVS
-    : M O V S
+    : 'movs' rd COMMA operand2
     ;
 
 mvn
-    : MVN rd COMMA operand2
-    ;
-
-MVN
-    : M V N
+    : 'mvn' rd COMMA operand2
     ;
 
 mvns
-    : MVNS rd COMMA operand2
+    : 'mvns' rd COMMA operand2
     ;
 
-MVNS
-    : M V N S
+movt
+    : 'movt' rd COMMA imm16
     ;
+
 asr
-    : ASR rd COMMA rm COMMA shiftAmount
-    ;
-
-ASR
-    : A S R
+    : 'asr' rd COMMA rm COMMA (rs | sh)
     ;
 
 asrs
-    : ASRS rd COMMA rm COMMA shiftAmount
-    ;
-
-ASRS
-    : A S R S
+    : 'asrs' rd COMMA rm COMMA (rs | sh)
     ;
 
 lsl
-    : LSL rd COMMA rm COMMA shiftAmount
-    ;
-
-LSL
-    : L S L
+    : 'lsl' rd COMMA rm COMMA (rs | sh)
     ;
 
 lsls
-    : LSLS rd COMMA rm COMMA shiftAmount
-    ;
-
-LSLS
-    : L S L S
+    : 'lsls' rd COMMA rm COMMA (rs | sh)
     ;
 
 lsr
-    : LSR rd COMMA rm COMMA shiftAmount
-    ;
-
-LSR
-    : L S R
+    : 'lsr' rd COMMA rm COMMA (rs | sh)
     ;
 
 lsrs
-    : LSRS rd COMMA rm COMMA shiftAmount
-    ;
-
-LSRS
-    : L S R S
+    : 'lsrs' rd COMMA rm COMMA (rs | sh)
     ;
 
 ror
-    : ROR rd COMMA rm COMMA shiftAmount
-    ;
-
-ROR
-    : R O R
+    : 'ror' rd COMMA rm COMMA (rs | sh)
     ;
 
 rors
-    : RORS rd COMMA rm COMMA shiftAmount
-    ;
-
-RORS
-    : R O R S
+    : 'rors' rd COMMA rm COMMA (rs | sh)
     ;
 
 rrx
-    : RRX rd COMMA rm
-    ;
-RRX
-    : R R X
+    : 'rrx' rd COMMA rm
     ;
 
 rrxs
-    : RRXS rd COMMA rm
-    ;
-
-RRXS
-    : R R X S
+    : 'rrxs' rd COMMA rm
     ;
 
 cmp
-    : CMP rn COMMA operand2
-    ;
-
-CMP
-    : C M P
+    : 'cmp' rn COMMA operand2
     ;
 
 cmn
-    : CMN rn COMMA operand2
-    ;
-
-CMN
-    : C M N
+    : 'cmn' rn COMMA operand2
     ;
 
 tst
-    : TST rn COMMA operand2
-    ;
-
-TST
-    : T S T
+    : 'tst' rn COMMA operand2
     ;
 
 teq
-    : TEQ rn COMMA operand2
-    ;
-
-TEQ
-    : T E Q
+    : 'teq' rn COMMA operand2
     ;
 
 and
-    : AND rd COMMA rn COMMA operand2
-    ;
-
-AND
-    : A N D
+    : 'and' rd COMMA rn COMMA operand2
     ;
 
 ands
-    : ANDS rd COMMA rn COMMA operand2
-    ;
-
-ANDS
-    : A N D S
+    : 'ands' rd COMMA rn COMMA operand2
     ;
 
 eor
-    : EOR rd COMMA rn COMMA operand2
-    ;
-
-EOR
-    : E O R
+    : 'eor' rd COMMA rn COMMA operand2
     ;
 
 eors
-    : EORS rd COMMA rn COMMA operand2
-    ;
-
-EORS
-    : E O R S
+    : 'eors' rd COMMA rn COMMA operand2
     ;
 
 orr
-    : ORR rd COMMA rn COMMA operand2
-    ;
-
-ORR
-    : O R R
+    : 'orr' rd COMMA rn COMMA operand2
     ;
 
 orrs
-    : ORRS rd COMMA rn COMMA operand2
-    ;
-
-ORRS
-    : O R R S
+    : 'orrs' rd COMMA rn COMMA operand2
     ;
 
 orn
-    : ORN rd COMMA rn COMMA operand2
-    ;
-
-ORN
-    : O R N
+    : 'orn' rd COMMA rn COMMA operand2
     ;
 
 orns
-    : ORNS rd COMMA rn COMMA operand2
-    ;
-
-ORNS
-    : O R N S
+    : 'orns' rd COMMA rn COMMA operand2
     ;
 
 bic
-    : BIC rd COMMA rn COMMA operand2
-    ;
-
-BIC
-    : B I C
+    : 'bic' rd COMMA rn COMMA operand2
     ;
 
 bics
-    : BICS rd COMMA rn COMMA operand2
-    ;
-
-BICS
-    : B I C S
+    : 'bics' rd COMMA rn COMMA operand2
     ;
 
 b
-    : NON_CONDITIONAL_BRANCH LABEL
-    ;
-
-NON_CONDITIONAL_BRANCH
-    : B
+    : 'b' LABEL
     ;
 
 beq
-    : BEQ LABEL
-    ;
-
-BEQ
-    : B E Q
+    : 'beq' LABEL
     ;
 
 bne
-    : BNE LABEL
-    ;
-
-BNE
-    : B N E
+    : 'bne' LABEL
     ;
 
 bcs
-    : BCS LABEL
-    ;
-
-BCS
-    : B C S
+    : 'bcs' LABEL
     ;
 
 bhs
-    : BHS LABEL
-    ;
-
-BHS
-    : B H S
+    : 'bhs' LABEL
     ;
 
 bcc
-    : BCC LABEL
-    ;
-
-BCC
-    : B C C
+    : 'bcc' LABEL
     ;
 
 blo
-    : BLO LABEL
-    ;
-
-BLO
-    : B L O
+    : 'blo' LABEL
     ;
 
 bmi
-    : BMI LABEL
-    ;
-
-BMI
-    : B M I
+    : 'bmi' LABEL
     ;
 
 bpl
-    : BPL LABEL
-    ;
-
-BPL
-    : B P L
+    : 'bpl' LABEL
     ;
 
 bvs
-    : BVS LABEL
-    ;
-
-BVS
-    : B V S
+    : 'bvs' LABEL
     ;
 
 bvc
-    : BVC LABEL
-    ;
-
-BVC
-    : B V C
+    : 'bvc' LABEL
     ;
 
 bhi
-    : BHI LABEL
-    ;
-
-BHI
-    : B H I
+    : 'bhi' LABEL
     ;
 
 bls
-    : BLS LABEL
-    ;
-
-BLS
-    : B L S
+    : 'bls' LABEL
     ;
 
 bge
-    : BGE LABEL
-    ;
-
-BGE
-    : B G E
+    : 'bge' LABEL
     ;
 
 blt
-    : BLT LABEL
-    ;
-
-BLT
-    : B L T
+    : 'blt' LABEL
     ;
 
 bgt
-    : BGT LABEL
-    ;
-
-BGT
-    : B G T
+    : 'bgt' LABEL
     ;
 
 ble
-    : BLE LABEL
-    ;
-
-BLE
-    : B L E
+    : 'ble' LABEL
     ;
 
 bal
-    : BAL LABEL
-    ;
-
-BAL
-    : B A L
+    : 'bal' LABEL
     ;
 
 bl
-    : BL LABEL
-    ;
-
-BL
-    : B L
+    : 'bl' LABEL
     ;
 
 ldr
-    : LDR rd COMMA LBRACK rn (COMMA offset)? RBRACK
-    | LDR rd COMMA LBRACK rn RBRACK (COMMA offset)?
-    | LDR rd COMMA ASSIGN (LABEL | number)
-    ;
-
-LDR
-    : L D R
+    : 'ldr' rd COMMA (ldrAddress | ASSIGN number)
     ;
 
 ldrb
-    : LDRB rd COMMA LBRACK rn (COMMA offset)? RBRACK
-    | LDRB rd COMMA LBRACK rn RBRACK (COMMA offset)?
-    ;
-
-LDRB
-    : L D R B
+    : 'ldrb' rd COMMA ldrAddress
     ;
 
 ldrsb
-    : LDRSB rd COMMA LBRACK rn (COMMA offset)? RBRACK
-    | LDRSB rd COMMA LBRACK rn RBRACK (COMMA offset)?
-    ;
-
-LDRSB
-    : L D R S B
+    : 'ldrsb' rd COMMA ldrAddress
     ;
 
 ldrh
-    : LDRH rd COMMA LBRACK rn (COMMA offset)? RBRACK
-    | LDRH rd COMMA LBRACK rn RBRACK (COMMA offset)?
+    : 'ldrh' rd COMMA ldrAddress
     ;
 
-LDRH
-    : L D R H
-    ;
 
 ldrsh
-    : LDRSH rd COMMA LBRACK rn (COMMA offset)? RBRACK
-    | LDRSH rd COMMA LBRACK rn RBRACK (COMMA offset)?
+    : 'ldrsh' rd COMMA ldrAddress
     ;
 
-LDRSH
-    : L D R S H
+ldrAddress
+    : immediateOffset
+    | postIndexedImmediate
+    | registerOffset
+    | postIndexedRegister
+    | pcRelative
+    ;
+
+immediateOffset
+    : LBRACK rn (COMMA offset)? RBRACK
+    ;
+
+postIndexedImmediate
+    : LBRACK rn RBRACK COMMA offset
+    ;
+
+registerOffset
+    : LBRACK rn COMMA rm (COMMA opsh)? RBRACK
+    ;
+
+postIndexedRegister
+    : LBRACK rn RBRACK COMMA rm (COMMA opsh)?
+    ;
+
+pcRelative
+    : ASSIGN LABEL
     ;
 
 str
-    : STR rd COMMA LBRACK rn (COMMA offset)? RBRACK
-    | STR rd COMMA LBRACK rn RBRACK (COMMA offset)?
-    ;
-
-STR
-    : S T R
+    : 'str' rd COMMA strOperationType
     ;
 
 strb
-    : STRB rd COMMA LBRACK rn (COMMA offset)? RBRACK
-    | STRB rd COMMA LBRACK rn RBRACK (COMMA offset)?
-    ;
-
-STRB
-    : S T R B
+    : 'strb' rd COMMA strOperationType
     ;
 
 strsb
-    : STRSB rd COMMA LBRACK rn (COMMA offset)? RBRACK
-    | STRSB rd COMMA LBRACK rn RBRACK (COMMA offset)?
+    : 'strsb' rd COMMA strOperationType
     ;
 
-STRSB
-    : S T R S B
-    ;
 
 strh
-    : STRH rd COMMA LBRACK rn (COMMA offset)? RBRACK
-    | STRH rd COMMA LBRACK rn RBRACK (COMMA offset)?
+    : 'strh' rd COMMA strOperationType
     ;
 
-STRH
-    : S T R H
-    ;
 
 strsh
-    : STRSH rd COMMA LBRACK rn (COMMA offset)? RBRACK
-    | STRSH rd COMMA LBRACK rn RBRACK (COMMA offset)?
+    : 'strsh' rd COMMA strOperationType
     ;
 
-STRSH
-    : S T R S H
+strOperationType
+    : LBRACK rn RBRACK
+    | LBRACK rn COMMA offset RBRACK
+    | LBRACK rn RBRACK COMMA offset
+    | LBRACK rn COMMA rm (COMMA opsh)? RBRACK
+    | LBRACK rn RBRACK COMMA rm (COMMA opsh)?
     ;
 
 push
-    : PUSH LBRACE reglist RBRACE
-    ;
-
-PUSH
-    : P U S H
+    : 'push' regList
     ;
 
 pop
-    : POP LBRACE reglist RBRACE
+    : 'pop' regList
     ;
 
-POP
-    : P O P
-    ;
-
-nop
-    : NOP
-    ;
-
-NOP
-    : N O P
+regList
+    : LBRACE REGISTER (COMMA REGISTER)* RBRACE
     ;
 
 rd
@@ -821,68 +504,33 @@ rs
     : REGISTER
     ;
 
-rdlo
-    : REGISTER
-    ;
-
-rdhi
-    : REGISTER
-    ;
-
-REGISTER
-    : R '0'
-    | R '1'
-    | R '2'
-    | R '3'
-    | R '4'
-    | R '5'
-    | R '6'
-    | R '7'
-    | R '8'
-    | R '9'
-    | R '10'
-    | R '11'
-    ;
-
-reglist
-    : (REGISTER | LR | PC) (COMMA (REGISTER | LR | PC))*
-    ;
-
-LR
-    : L R
-    ;
-
-PC
-    : P C
-    ;
-
 operand2
     : rm
-    | shiftedRm
+    | registerShiftedByRegister
+    | registerShiftedByConstant
     | imm8m
     ;
 
-shiftedRm
-    : rm COMMA shift
+registerShiftedByRegister
+    : rm COMMA shiftOption rs
     ;
 
-shift
-    : shiftOption shiftAmount
+registerShiftedByConstant
+    : rm COMMA shiftOption number
     ;
 
 shiftOption
-    : LSL
-    | LSR
-    | ASR
-    | ROR
+    : 'lsl'
+    | 'lsr'
+    | 'asr'
+    | 'ror'
     ;
 
-shiftAmount
-    : rs
-    | number
+opsh
+    : 'lsl' sh
     ;
 
-imm8m
+sh
     : number
     ;
 
@@ -890,25 +538,32 @@ offset
     : number
     ;
 
-number
-    : decimal
-    | hex
+imm16
+    : number
     ;
 
-decimal
-    : DECIMAL
+imm12
+    : number
     ;
 
-hex
-    : HEX
+imm8m
+    : number
     ;
 
-DECIMAL
-    : DASH? [0-9]+
-    ;
-
-HEX
-    : DASH? '0x' [0-9a-fA-F]+
+REGISTER
+    : 'r0'
+    | 'r1'
+    | 'r2'
+    | 'r3'
+    | 'r4'
+    | 'r5'
+    | 'r6'
+    | 'r7'
+    | 'r8'
+    | 'r9'
+    | 'r10'
+    | 'r11'
+    | 'r12'
     ;
 
 label
@@ -916,7 +571,7 @@ label
     ;
 
 LABEL
-    : [a-zA-Z0-9_]+
+    : [a-zA-Z_] [a-zA-Z0-9_]+
     ;
 
 data
@@ -924,50 +579,47 @@ data
     ;
 
 asciz
-    : '.asciz' String
+    : '.asciz' STRING
     ;
 
-String
-	: DOUBLE_QUOTE Characters+ DOUBLE_QUOTE
+STRING
+	: DOUBLE_QUOTE CHARACTERS+ DOUBLE_QUOTE
 	;
 
-fragment Characters
-	: Character+
+fragment CHARACTERS
+	: CHARACTER+
 	;
 
-fragment Character
-	: ~["\\]
+fragment CHARACTER
+	: [ a-zA-Z0-9]
 	;
 
-fragment A:('a'|'A');
-fragment B:('b'|'B');
-fragment C:('c'|'C');
-fragment D:('d'|'D');
-fragment E:('e'|'E');
-fragment F:('f'|'F');
-fragment G:('g'|'G');
-fragment H:('h'|'H');
-fragment I:('i'|'I');
-fragment J:('j'|'J');
-fragment K:('k'|'K');
-fragment L:('l'|'L');
-fragment M:('m'|'M');
-fragment N:('n'|'N');
-fragment O:('o'|'O');
-fragment P:('p'|'P');
-fragment Q:('q'|'Q');
-fragment R:('r'|'R');
-fragment S:('s'|'S');
-fragment T:('t'|'T');
-fragment U:('u'|'U');
-fragment V:('v'|'V');
-fragment W:('w'|'W');
-fragment X:('x'|'X');
-fragment Y:('y'|'Y');
-fragment Z:('z'|'Z');
+number
+    : DASH? (DECIMAL | HEX)
+    ;
+
+DECIMAL
+    : [0-9]+
+    ;
+
+HEX
+    : '0x' [0-9a-fA-F]+
+    ;
 
 DOUBLE_QUOTE
     : '"'
+    ;
+
+COLON
+    : ':'
+    ;
+
+LBRACE
+    : '{'
+    ;
+
+RBRACE
+    : '}'
     ;
 
 ASSIGN
@@ -982,14 +634,6 @@ RBRACK
     : ']'
     ;
 
-LBRACE
-    : '{'
-    ;
-
-RBRACE
-    : '}'
-    ;
-
 DASH
     : '#'
     ;
@@ -998,20 +642,8 @@ COMMA
     : ','
     ;
 
-COLON
-    : ':'
-    ;
-
-COMMENT
-    :   '/*' .*? '*/' -> skip
-    ;
-
-LINE_COMMENT
-    :   '//' ~[\r\n]* -> skip
-    ;
-
 WS
-    :[ \t\u000C]+ -> skip
+    : [ \t\u000C]+ -> skip
     ;
 
 EOL

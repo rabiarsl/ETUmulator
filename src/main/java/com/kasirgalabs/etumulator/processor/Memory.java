@@ -16,33 +16,34 @@
  */
 package com.kasirgalabs.etumulator.processor;
 
-import com.google.inject.Singleton;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Map.Entry;
+import java.util.Set;
 
-@Singleton
-public class RegisterFile {
-    private final Map<String, Integer> registers;
+public class Memory {
+    private Map<Integer, Byte> memory;
 
-    public RegisterFile() {
-        registers = new HashMap<>(13);
-        for(int i = 0; i < 13; i++) {
-            registers.put("r" + Integer.toString(i), 0);
+    public Memory() {
+        memory = new HashMap<>();
+    }
+
+    public Byte get(int address) {
+        if(memory.containsKey(address)) {
+            return memory.get(address);
         }
+        return (byte) (Math.random() * Byte.MAX_VALUE);
     }
 
-    public int getValue(String registerName) {
-        return registers.get(registerName);
+    public void set(int address, byte value) {
+        memory.put(address, value);
     }
 
-    public void setValue(String registerName, int value) {
-        registers.replace(registerName, value);
+    public boolean isAddressEmpty(int address) {
+        return memory.containsKey(address);
     }
 
-    public void reset() {
-        registers.clear();
-        for(int i = 0; i < 13; i++) {
-            registers.put("r" + Integer.toString(i), 0);
-        }
+    public Set<Entry<Integer, Byte>> entrySet() {
+        return memory.entrySet();
     }
 }

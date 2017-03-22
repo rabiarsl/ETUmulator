@@ -14,27 +14,29 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.kasirgalabs.etumulator.register;
+package com.kasirgalabs.etumulator.processor.visitor;
 
-import com.kasirgalabs.arm.ArmParser.RmContext;
-import com.kasirgalabs.etumulator.operand2.Operand2;
-import com.kasirgalabs.etumulator.processor.RegisterFile;
+import com.kasirgalabs.arm.ArmBaseVisitor;
+import com.kasirgalabs.arm.ArmParser;
 
-public class RmRegister implements Operand2 {
-    private final String registerName;
-    private int value;
-
-    public RmRegister(RmContext ctx, RegisterFile registerFile) {
-        registerName = ctx.getText();
-        value = registerFile.getValue(registerName);
-    }
-
-    public void setValue(int value) {
-        this.value = value;
+public class RegisterVisitor extends ArmBaseVisitor<String> {
+    @Override
+    public String visitRd(ArmParser.RdContext ctx) {
+        return ctx.REGISTER().getText();
     }
 
     @Override
-    public int getValue() {
-        return value;
+    public String visitRn(ArmParser.RnContext ctx) {
+        return ctx.REGISTER().getText();
+    }
+
+    @Override
+    public String visitRm(ArmParser.RmContext ctx) {
+        return ctx.REGISTER().getText();
+    }
+
+    @Override
+    public String visitRs(ArmParser.RsContext ctx) {
+        return ctx.REGISTER().getText();
     }
 }
