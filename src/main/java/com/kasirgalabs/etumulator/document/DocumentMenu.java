@@ -21,26 +21,19 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
-import java.net.URL;
-import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.Initializable;
 import javafx.stage.FileChooser;
 import javafx.stage.Window;
 
-public class DocumentMenuController implements Initializable {
+public class DocumentMenu {
     @Inject
     private Document document;
     private final FileChooser fileChooser;
     private Window window;
 
-    public DocumentMenuController() {
+    public DocumentMenu() {
         this.fileChooser = new FileChooser();
-    }
-
-    @Override
-    public void initialize(URL url, ResourceBundle rb) {
     }
 
     public void setWindow(Window window) {
@@ -64,7 +57,7 @@ public class DocumentMenuController implements Initializable {
             try(BufferedReader bf = new BufferedReader(new FileReader(file))) {
                 String line;
                 while((line = bf.readLine()) != null) {
-                    text.append(line + "\n");
+                    text.append(line).append("\n");
                 }
             } catch(IOException ex) {
                 throw ex;

@@ -49,6 +49,11 @@ public class DocumentController implements Initializable, Document {
     }
 
     @Override
+    public void setText(String text) {
+        textArea.setText(text);
+    }
+
+    @Override
     public void setTargetFile(File targetFile) {
         label.setText(targetFile.getName());
         this.targetFile = targetFile;
@@ -72,10 +77,5 @@ public class DocumentController implements Initializable, Document {
     @Override
     public void clear() {
         textArea.clear();
-    }
-
-    @Override
-    public void setText(String text) {
-        textArea.setText(text);
     }
 }

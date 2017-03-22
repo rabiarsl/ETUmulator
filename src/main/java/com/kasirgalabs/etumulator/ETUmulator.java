@@ -22,7 +22,7 @@ import com.google.inject.Guice;
 import com.google.inject.Inject;
 import com.google.inject.Injector;
 import com.google.inject.Module;
-import com.kasirgalabs.etumulator.document.DocumentMenuController;
+import com.kasirgalabs.etumulator.document.DocumentMenu;
 import java.io.IOException;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -32,7 +32,7 @@ import javafx.stage.Stage;
 
 public class ETUmulator extends Application {
     @Inject
-    private DocumentMenuController documentMenuController;
+    private DocumentMenu documentMenuController;
 
     public static void main(String[] args) {
         launch(args);

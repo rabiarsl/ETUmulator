@@ -17,42 +17,23 @@
 package com.kasirgalabs.etumulator.processor;
 
 import com.google.inject.Singleton;
-import com.kasirgalabs.etumulator.pattern.Observable;
-import com.kasirgalabs.etumulator.pattern.Observer;
-import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
 @Singleton
-public class Stack implements Observable {
+public class Stack {
     private final LinkedList<Integer> list;
-    private final List<Observer> observers;
 
     public Stack() {
         list = new LinkedList<>();
-        observers = new ArrayList<>();
-    }
-
-    @Override
-    public void addObserver(Observer observer) {
-        observers.add(observer);
-    }
-
-    @Override
-    public void notifyObservers() {
-        observers.forEach((observer) -> {
-            observer.update(Stack.class);
-        });
     }
 
     public void push(Integer item) {
         list.push(item);
-        notifyObservers();
     }
 
     public Integer pop() {
         Integer result = list.pop();
-        notifyObservers();
         return result;
     }
 

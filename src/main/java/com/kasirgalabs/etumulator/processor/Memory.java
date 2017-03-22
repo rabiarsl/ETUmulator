@@ -17,35 +17,17 @@
 package com.kasirgalabs.etumulator.processor;
 
 import com.google.inject.Singleton;
-import com.kasirgalabs.etumulator.pattern.Observable;
-import com.kasirgalabs.etumulator.pattern.Observer;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
 
 @Singleton
-public class Memory implements Observable {
-    private Map<Integer, Byte> memory;
-    private final List<Observer> observers;
+public class Memory {
+    private final Map<Integer, Byte> memory;
 
     public Memory() {
         memory = new HashMap<>();
-        observers = new ArrayList<>();
-    }
-
-    @Override
-    public void addObserver(Observer observer) {
-        observers.add(observer);
-    }
-
-    @Override
-    public void notifyObservers() {
-        observers.forEach((observer) -> {
-            observer.update(Memory.class);
-        });
     }
 
     public Byte get(int address) {
@@ -57,7 +39,6 @@ public class Memory implements Observable {
 
     public void set(int address, byte value) {
         memory.put(address, value);
-        notifyObservers();
     }
 
     public boolean isAddressEmpty(int address) {

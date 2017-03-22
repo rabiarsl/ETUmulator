@@ -19,7 +19,7 @@ package com.kasirgalabs.etumulator;
 import com.google.inject.AbstractModule;
 import com.kasirgalabs.etumulator.document.Document;
 import com.kasirgalabs.etumulator.document.DocumentController;
-import com.kasirgalabs.etumulator.document.DocumentMenuController;
+import com.kasirgalabs.etumulator.navigator.Navigator;
 import com.kasirgalabs.etumulator.processor.CPSR;
 import com.kasirgalabs.etumulator.processor.Memory;
 import com.kasirgalabs.etumulator.processor.Processor;
@@ -34,7 +34,7 @@ public class ETUmulatorModule extends AbstractModule {
         bind(RegisterFile.class);
         bind(Stack.class);
         bind(Memory.class);
-        bind(DocumentMenuController.class);
         bind(Document.class).to(DocumentController.class);
+        bind(Navigator.class);
     }
 }

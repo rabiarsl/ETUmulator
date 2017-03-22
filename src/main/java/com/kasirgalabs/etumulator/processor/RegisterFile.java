@@ -17,36 +17,19 @@
 package com.kasirgalabs.etumulator.processor;
 
 import com.google.inject.Singleton;
-import com.kasirgalabs.etumulator.pattern.Observable;
-import com.kasirgalabs.etumulator.pattern.Observer;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
+import java.util.Observable;
 
 @Singleton
-public class RegisterFile implements Observable {
+public class RegisterFile extends Observable {
     private final Map<String, Integer> registers;
-    private final List<Observer> observers;
 
     public RegisterFile() {
         registers = new HashMap<>(13);
-        observers = new ArrayList<>();
         for(int i = 0; i < 13; i++) {
             registers.put("r" + Integer.toString(i), 0);
         }
-    }
-
-    @Override
-    public void addObserver(Observer observer) {
-        observers.add(observer);
-    }
-
-    @Override
-    public void notifyObservers() {
-        observers.forEach((observer) -> {
-            observer.update(RegisterFile.class);
-        });
     }
 
     public int getValue(String registerName) {
@@ -55,6 +38,7 @@ public class RegisterFile implements Observable {
 
     public void setValue(String registerName, int value) {
         registers.replace(registerName, value);
+        setChanged();
         notifyObservers();
     }
 
@@ -63,5 +47,13 @@ public class RegisterFile implements Observable {
         for(int i = 0; i < 13; i++) {
             registers.put("r" + Integer.toString(i), 0);
         }
+    }
+
+    public Map<String, Integer> getAll() {
+        Map<String, Integer> copy = new HashMap<>();
+        registers.keySet().forEach((name) -> {
+            copy.put(name, registers.get(name));
+        });
+        return copy;
     }
 }
