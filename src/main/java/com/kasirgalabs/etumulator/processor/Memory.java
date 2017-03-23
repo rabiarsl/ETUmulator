@@ -19,11 +19,10 @@ package com.kasirgalabs.etumulator.processor;
 import com.google.inject.Singleton;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Map.Entry;
-import java.util.Set;
+import java.util.Observable;
 
 @Singleton
-public class Memory {
+public class Memory extends Observable {
     private final Map<Integer, Byte> memory;
 
     public Memory() {
@@ -39,17 +38,11 @@ public class Memory {
 
     public void set(int address, byte value) {
         memory.put(address, value);
+        setChanged();
+        notifyObservers(address);
     }
 
     public boolean isAddressEmpty(int address) {
         return !memory.containsKey(address);
-    }
-
-    public Set<Entry<Integer, Byte>> entrySet() {
-        return memory.entrySet();
-    }
-
-    public Map<Integer, Byte> getAll() {
-        return memory;
     }
 }

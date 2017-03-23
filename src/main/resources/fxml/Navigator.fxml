@@ -15,19 +15,7 @@
             <tabs>
                 <fx:include source="RegistersTab.fxml" />
                 <fx:include source="StackTab.fxml" />
-                <Tab closable="false" text="Memory">
-                    <content>
-                        <TableView>
-                            <columns>
-                                <TableColumn editable="false" minWidth="-1.0" prefWidth="-1.0" text="Address" />
-                                <TableColumn editable="false" minWidth="-1.0" prefWidth="-1.0" text="Value" />
-                            </columns>
-                            <columnResizePolicy>
-                                <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
-                            </columnResizePolicy>
-                        </TableView>
-                    </content>
-                </Tab>
+                <fx:include source="MemoryTab.fxml" />
             </tabs>
         </TabPane>
     </children>

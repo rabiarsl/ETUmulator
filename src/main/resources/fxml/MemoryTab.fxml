@@ -4,11 +4,11 @@
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 
-<Tab text="Stack" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.kasirgalabs.etumulator.navigator.StackTab">
+<Tab text="Memory" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.kasirgalabs.etumulator.navigator.MemoryTab">
     <content>
-        <TableView fx:id="table">
+        <TableView fx:id="table" prefHeight="200.0" prefWidth="200.0">
             <columns>
-                <TableColumn fx:id="property" editable="false" minWidth="-1.0" prefWidth="-1.0" text="Number" />
+                <TableColumn fx:id="property" editable="false" minWidth="-1.0" prefWidth="-1.0" text="Address" />
                 <TableColumn fx:id="value" editable="false" minWidth="-1.0" prefWidth="-1.0" text="Value" />
             </columns>
             <columnResizePolicy>
