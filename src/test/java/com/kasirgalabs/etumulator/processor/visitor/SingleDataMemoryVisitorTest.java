@@ -71,6 +71,12 @@ public class SingleDataMemoryVisitorTest {
         assertEquals("LDR operation does not work properly.", 'b', value);
 
         code = "ldr r0, =label\n"
+                + "ldr r1, [r0]\n"
+                + "label: .asciz \"abc\"\n";
+        processor.run(code, linker.link(code));
+        assertEquals("LDR operation does not work properly.", 'a', registerFile.getValue("r1"));
+
+        code = "ldr r0, =label\n"
                 + "ldr r1, [r0, #1]\n"
                 + "label: .asciz \"abc\"\n";
         processor.run(code, linker.link(code));

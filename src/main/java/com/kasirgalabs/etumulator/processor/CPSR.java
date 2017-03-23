@@ -29,10 +29,6 @@ public class CPSR {
         return negative;
     }
 
-    public void setNegative(boolean negative) {
-        this.negative = negative;
-    }
-
     public boolean isZero() {
         return zero;
     }
@@ -61,12 +57,5 @@ public class CPSR {
         negative = result < 0;
         zero = result == 0;
         return result;
-    }
-
-    public void reset() {
-        negative = false;
-        zero = false;
-        carry = false;
-        overflow = false;
     }
 }
