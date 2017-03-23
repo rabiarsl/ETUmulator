@@ -48,6 +48,7 @@ public class RegistersTab implements Initializable, Observer {
         registerFile.addObserver(this);
         navigator.addObserver(this);
         property.setCellValueFactory(new PropertyValueFactory<>("property"));
+        property.setComparator(new NavigatorRowComparator());
         value.setCellValueFactory(new PropertyValueFactory<>("value"));
         for(int i = 0; i < 13; i++) {
             String registerName = "r" + Integer.toString(i);

@@ -48,6 +48,7 @@ public class MemoryTab implements Initializable, Observer {
         memory.addObserver(this);
         navigator.addObserver(this);
         property.setCellValueFactory(new PropertyValueFactory<>("property"));
+        property.setComparator(new NavigatorRowComparator());
         value.setCellValueFactory(new PropertyValueFactory<>("value"));
         table.setItems(data);
     }
