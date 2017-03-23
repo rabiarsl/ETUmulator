@@ -17,6 +17,7 @@
 package com.kasirgalabs.etumulator;
 
 import com.kasirgalabs.etumulator.linker.Linker;
+import com.kasirgalabs.etumulator.processor.BaseProcessor;
 import com.kasirgalabs.etumulator.processor.CPSR;
 import com.kasirgalabs.etumulator.processor.Memory;
 import com.kasirgalabs.etumulator.processor.Processor;
@@ -35,7 +36,7 @@ public class InstructionTester {
         cpsr = new CPSR();
         stack = new Stack();
         memory = new Memory();
-        processor = new Processor(registerFile, cpsr, stack, memory);
+        processor = new BaseProcessor(registerFile, cpsr, stack, memory);
     }
 
     protected final void runTestCode(String code) {

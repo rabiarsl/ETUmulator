@@ -575,7 +575,7 @@ LABEL
     ;
 
 data
-    : label asciz
+    : LABEL COLON asciz
     ;
 
 asciz

@@ -14,11 +14,10 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.kasirgalabs.etumulator.processor;
+package com.kasirgalabs.etumulator.linker;
 
-import com.kasirgalabs.etumulator.linker.Symbol;
-import java.util.Set;
-
-public interface Processor {
-    void run(String code, Set<Symbol> symbols);
+public class LabelError extends Error {
+    public LabelError(String message) {
+        super(message);
+    }
 }

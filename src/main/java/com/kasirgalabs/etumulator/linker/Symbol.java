@@ -32,6 +32,11 @@ public final class Symbol {
         this.address = address;
     }
 
+    public Symbol(String name) {
+        this.name = name;
+        this.address = -1;
+    }
+
     public String getName() {
         return name;
     }
@@ -63,5 +68,10 @@ public final class Symbol {
         int hash = 3;
         hash = 67 * hash + Objects.hashCode(this.name);
         return hash;
+    }
+
+    @Override
+    public String toString() {
+        return name;
     }
 }

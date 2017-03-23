@@ -18,6 +18,7 @@ package com.kasirgalabs.etumulator.processor.visitor;
 
 import static org.junit.Assert.assertEquals;
 
+import com.kasirgalabs.etumulator.processor.BaseProcessor;
 import com.kasirgalabs.etumulator.processor.CPSR;
 import com.kasirgalabs.etumulator.processor.Memory;
 import com.kasirgalabs.etumulator.processor.Processor;
@@ -33,7 +34,7 @@ public class StackVisitorTest {
     public StackVisitorTest() {
         registerFile = new RegisterFile();
         stack = new Stack();
-        processor = new Processor(registerFile,
+        processor = new BaseProcessor(registerFile,
                 new CPSR(),
                 stack,
                 new Memory());

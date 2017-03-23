@@ -14,28 +14,38 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.kasirgalabs.etumulator;
+package com.kasirgalabs.etumulator.processor.visitor;
 
-import com.google.inject.AbstractModule;
-import com.kasirgalabs.etumulator.document.Document;
-import com.kasirgalabs.etumulator.document.DocumentController;
-import com.kasirgalabs.etumulator.navigator.Navigator;
+import com.kasirgalabs.etumulator.linker.Linker;
 import com.kasirgalabs.etumulator.processor.BaseProcessor;
 import com.kasirgalabs.etumulator.processor.CPSR;
 import com.kasirgalabs.etumulator.processor.Memory;
 import com.kasirgalabs.etumulator.processor.Processor;
 import com.kasirgalabs.etumulator.processor.RegisterFile;
 import com.kasirgalabs.etumulator.processor.Stack;
+import org.junit.Test;
 
-public class ETUmulatorModule extends AbstractModule {
-    @Override
-    protected void configure() {
-        bind(Processor.class).to(BaseProcessor.class);
-        bind(CPSR.class);
-        bind(RegisterFile.class);
-        bind(Stack.class);
-        bind(Memory.class);
-        bind(Document.class).to(DocumentController.class);
-        bind(Navigator.class);
+public class SingleDataMemoryVisitorTest {
+    private final RegisterFile registerFile;
+    private final Memory memory;
+    private final Processor processor;
+    private final Linker linker;
+
+    public SingleDataMemoryVisitorTest() {
+        registerFile = new RegisterFile();
+        memory = new Memory();
+        processor = new BaseProcessor(registerFile,
+                new CPSR(),
+                new Stack(),
+                memory);
+        linker = new Linker(memory);
+    }
+
+    /**
+     * Test of visitLdr method, of class SingleDataMemoryVisitor.
+     */
+    @Test
+    public void testVisitLdr() {
+
     }
 }

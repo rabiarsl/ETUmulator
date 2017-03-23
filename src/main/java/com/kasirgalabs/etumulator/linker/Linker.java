@@ -30,157 +30,173 @@ import org.antlr.v4.runtime.CommonTokenStream;
 
 public class Linker extends ArmBaseVisitor<Void> {
     private final Memory memory;
-    private final List<String> targetSymbols;
-    private final List<Symbol> definedSymbols;
-    private final List<Symbol> dataSymbols;
+    private final List<String> targetBranchSymbols;
+    private final List<Symbol> definedBranchSymbols;
+    private final List<String> targetDataSymbols;
+    private final List<Symbol> definedDataSymbols;
 
     public Linker(Memory memory) {
         this.memory = memory;
-        targetSymbols = new ArrayList<>();
-        definedSymbols = new ArrayList<>();
-        dataSymbols = new ArrayList<>();
+        targetBranchSymbols = new ArrayList<>();
+        definedBranchSymbols = new ArrayList<>();
+        targetDataSymbols = new ArrayList<>();
+        definedDataSymbols = new ArrayList<>();
     }
 
     @Override
     public Void visitB(ArmParser.BContext ctx) {
-        targetSymbols.add(ctx.LABEL().getText());
+        targetBranchSymbols.add(ctx.LABEL().getText());
         return null;
     }
 
     @Override
     public Void visitBeq(ArmParser.BeqContext ctx) {
-        targetSymbols.add(ctx.LABEL().getText());
+        targetBranchSymbols.add(ctx.LABEL().getText());
         return null;
     }
 
     @Override
     public Void visitBne(ArmParser.BneContext ctx) {
-        targetSymbols.add(ctx.LABEL().getText());
+        targetBranchSymbols.add(ctx.LABEL().getText());
         return null;
     }
 
     @Override
     public Void visitBcs(ArmParser.BcsContext ctx) {
-        targetSymbols.add(ctx.LABEL().getText());
+        targetBranchSymbols.add(ctx.LABEL().getText());
         return null;
     }
 
     @Override
     public Void visitBhs(ArmParser.BhsContext ctx) {
-        targetSymbols.add(ctx.LABEL().getText());
+        targetBranchSymbols.add(ctx.LABEL().getText());
         return null;
     }
 
     @Override
     public Void visitBcc(ArmParser.BccContext ctx) {
-        targetSymbols.add(ctx.LABEL().getText());
+        targetBranchSymbols.add(ctx.LABEL().getText());
         return null;
     }
 
     @Override
     public Void visitBlo(ArmParser.BloContext ctx) {
-        targetSymbols.add(ctx.LABEL().getText());
+        targetBranchSymbols.add(ctx.LABEL().getText());
         return null;
     }
 
     @Override
     public Void visitBmi(ArmParser.BmiContext ctx) {
-        targetSymbols.add(ctx.LABEL().getText());
+        targetBranchSymbols.add(ctx.LABEL().getText());
         return null;
     }
 
     @Override
     public Void visitBpl(ArmParser.BplContext ctx) {
-        targetSymbols.add(ctx.LABEL().getText());
+        targetBranchSymbols.add(ctx.LABEL().getText());
         return null;
     }
 
     @Override
     public Void visitBvs(ArmParser.BvsContext ctx) {
-        targetSymbols.add(ctx.LABEL().getText());
+        targetBranchSymbols.add(ctx.LABEL().getText());
         return null;
     }
 
     @Override
     public Void visitBvc(ArmParser.BvcContext ctx) {
-        targetSymbols.add(ctx.LABEL().getText());
+        targetBranchSymbols.add(ctx.LABEL().getText());
         return null;
     }
 
     @Override
     public Void visitBhi(ArmParser.BhiContext ctx) {
-        targetSymbols.add(ctx.LABEL().getText());
+        targetBranchSymbols.add(ctx.LABEL().getText());
         return null;
     }
 
     @Override
     public Void visitBls(ArmParser.BlsContext ctx) {
-        targetSymbols.add(ctx.LABEL().getText());
+        targetBranchSymbols.add(ctx.LABEL().getText());
         return null;
     }
 
     @Override
     public Void visitBge(ArmParser.BgeContext ctx) {
-        targetSymbols.add(ctx.LABEL().getText());
+        targetBranchSymbols.add(ctx.LABEL().getText());
         return null;
     }
 
     @Override
     public Void visitBlt(ArmParser.BltContext ctx) {
-        targetSymbols.add(ctx.LABEL().getText());
+        targetBranchSymbols.add(ctx.LABEL().getText());
         return visitChildren(ctx);
     }
 
     @Override
     public Void visitBgt(ArmParser.BgtContext ctx) {
-        targetSymbols.add(ctx.LABEL().getText());
+        targetBranchSymbols.add(ctx.LABEL().getText());
         return null;
     }
 
     @Override
     public Void visitBle(ArmParser.BleContext ctx) {
-        targetSymbols.add(ctx.LABEL().getText());
+        targetBranchSymbols.add(ctx.LABEL().getText());
         return null;
     }
 
     @Override
     public Void visitBal(ArmParser.BalContext ctx) {
-        targetSymbols.add(ctx.LABEL().getText());
+        targetBranchSymbols.add(ctx.LABEL().getText());
         return null;
     }
 
     @Override
     public Void visitBl(ArmParser.BlContext ctx) {
-        targetSymbols.add(ctx.LABEL().getText());
+        targetBranchSymbols.add(ctx.LABEL().getText());
         return null;
     }
 
     @Override
     public Void visitLabel(ArmParser.LabelContext ctx) {
         Symbol symbol = new Symbol(ctx.LABEL().getText(), ctx.start.getLine() - 1);
-        definedSymbols.add(symbol);
+        if(definedBranchSymbols.contains(symbol) || definedDataSymbols.contains(symbol)) {
+            throw new LabelError("\"" + symbol + "\" is already defined.");
+        }
+        definedBranchSymbols.add(symbol);
         return null;
     }
 
     @Override
     public Void visitData(ArmParser.DataContext ctx) {
-        String name = ctx.label().LABEL().getText();
+        String name = ctx.LABEL().getText();
         String asciz = ctx.asciz().STRING().getText().replaceAll("\"", "");
         int address = loadDataIntoMemory(asciz + "\n");
         Symbol symbol = new Symbol(name, address);
-        dataSymbols.add(symbol);
-        return visitChildren(ctx);
+        if(definedBranchSymbols.contains(symbol) || definedDataSymbols.contains(symbol)) {
+            throw new LabelError("\"" + symbol + "\" is already defined.");
+        }
+        definedDataSymbols.add(symbol);
+        return null;
+    }
+
+    @Override
+    public Void visitPcRelative(ArmParser.PcRelativeContext ctx) {
+        targetDataSymbols.add(ctx.LABEL().getText());
+        return null;
     }
 
     public Set<Symbol> link(String code) {
-        definedSymbols.clear();
-        targetSymbols.clear();
+        targetBranchSymbols.clear();
+        definedBranchSymbols.clear();
+        targetDataSymbols.clear();
+        definedDataSymbols.clear();
 
         inspectCode(code);
-        char[][] instructions = parseInstructions(code);
-        Set<Symbol> resolvedSymbols = resolveSymbols(instructions);
-        resolvedSymbols.addAll(dataSymbols);
-        return resolvedSymbols;
+        Set<Symbol> resolvedBranchSymbols = resolveSymbols(definedBranchSymbols, targetBranchSymbols);
+        Set<Symbol> resolvedDataSymbols = resolveSymbols(definedDataSymbols, targetDataSymbols);
+
+        return mergeSets(resolvedBranchSymbols, resolvedDataSymbols);
     }
 
     private void inspectCode(String code) {
@@ -192,25 +208,30 @@ public class Linker extends ArmBaseVisitor<Void> {
         visit(tree);
     }
 
-    private char[][] parseInstructions(String code) {
-        String[] parts = code.split("\\n");
-        char[][] instructions = new char[parts.length][];
-        for(int i = 0; i < instructions.length; i++) {
-            instructions[i] = (parts[i] + "\n").toCharArray();
+    private Set<Symbol> resolveSymbols(List<Symbol> definedSymbols, List<String> targetSymbols) {
+        Set<Symbol> resolvedSymbols = new HashSet<>();
+        for(String targetSymbol : targetSymbols) {
+            Symbol temp = new Symbol(targetSymbol);
+            if(definedSymbols.contains(temp)) {
+                int index = definedSymbols.indexOf(temp);
+                Symbol symbol = definedSymbols.get(index);
+                resolvedSymbols.add(symbol);
+                continue;
+            }
+            throw new LabelError("\"" + temp + "\" is not defined.");
         }
-        return instructions;
+        return resolvedSymbols;
     }
 
-    private Set<Symbol> resolveSymbols(char[][] instructions) {
-        Set<Symbol> resolvedSymbols = new HashSet<>();
-        targetSymbols.forEach((targetSymbol) -> {
-            definedSymbols.forEach((definedSymbol) -> {
-                if(definedSymbol.getName().equals(targetSymbol)) {
-                    resolvedSymbols.add(definedSymbol);
-                }
-            });
+    private Set<Symbol> mergeSets(Set<Symbol> resolvedBranchSymbols, Set<Symbol> resolvedDataSymbols) {
+        Set<Symbol> temp = new HashSet<Symbol>();
+        resolvedBranchSymbols.forEach((symbol) -> {
+            temp.add(symbol);
         });
-        return resolvedSymbols;
+        resolvedDataSymbols.forEach((symbol) -> {
+            temp.add(symbol);
+        });
+        return temp;
     }
 
     private int loadDataIntoMemory(String asciz) {

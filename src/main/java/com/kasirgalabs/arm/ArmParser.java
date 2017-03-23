@@ -6814,9 +6814,8 @@ public class ArmParser extends Parser {
 	}
 
 	public static class DataContext extends ParserRuleContext {
-		public LabelContext label() {
-			return getRuleContext(LabelContext.class,0);
-		}
+		public TerminalNode LABEL() { return getToken(ArmParser.LABEL, 0); }
+		public TerminalNode COLON() { return getToken(ArmParser.COLON, 0); }
 		public AscizContext asciz() {
 			return getRuleContext(AscizContext.class,0);
 		}
@@ -6838,8 +6837,10 @@ public class ArmParser extends Parser {
 			enterOuterAlt(_localctx, 1);
 			{
 			setState(947);
-			label();
+			match(LABEL);
 			setState(948);
+			match(COLON);
+			setState(949);
 			asciz();
 			}
 		}
@@ -6873,9 +6874,9 @@ public class ArmParser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(950);
-			match(T__80);
 			setState(951);
+			match(T__80);
+			setState(952);
 			match(STRING);
 			}
 		}
@@ -6912,17 +6913,17 @@ public class ArmParser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(954);
+			setState(955);
 			_errHandler.sync(this);
 			_la = _input.LA(1);
 			if (_la==DASH) {
 				{
-				setState(953);
+				setState(954);
 				match(DASH);
 				}
 			}
 
-			setState(956);
+			setState(957);
 			_la = _input.LA(1);
 			if ( !(_la==DECIMAL || _la==HEX) ) {
 			_errHandler.recoverInline(this);
@@ -6946,7 +6947,7 @@ public class ArmParser extends Parser {
 	}
 
 	public static final String _serializedATN =
-		"\3\u0430\ud6d1\u8206\uad2d\u4417\uaef1\u8d80\uaadd\3c\u03c1\4\2\t\2\4"+
+		"\3\u0430\ud6d1\u8206\uad2d\u4417\uaef1\u8d80\uaadd\3c\u03c2\4\2\t\2\4"+
 		"\3\t\3\4\4\t\4\4\5\t\5\4\6\t\6\4\7\t\7\4\b\t\b\4\t\t\t\4\n\t\n\4\13\t"+
 		"\13\4\f\t\f\4\r\t\r\4\16\t\16\4\17\t\17\4\20\t\20\4\21\t\21\4\22\t\22"+
 		"\4\23\t\23\4\24\t\24\4\25\t\25\4\26\t\26\4\27\t\27\4\30\t\30\4\31\t\31"+
@@ -7000,14 +7001,14 @@ public class ArmParser extends Parser {
 		"\3a\3a\3a\3a\3a\3a\3a\5a\u0377\na\5a\u0379\na\3b\3b\3b\3c\3c\3c\3d\3d"+
 		"\3d\3d\7d\u0385\nd\fd\16d\u0388\13d\3d\3d\3e\3e\3f\3f\3g\3g\3h\3h\3i\3"+
 		"i\3i\3i\5i\u0398\ni\3j\3j\3j\3j\3j\3k\3k\3k\3k\3k\3l\3l\3m\3m\3m\3n\3"+
-		"n\3o\3o\3p\3p\3q\3q\3r\3r\3s\3s\3s\3t\3t\3t\3u\3u\3u\3v\5v\u03bd\nv\3"+
-		"v\3v\3v\2\2w\2\4\6\b\n\f\16\20\22\24\26\30\32\34\36 \"$&(*,.\60\62\64"+
-		"\668:<>@BDFHJLNPRTVXZ\\^`bdfhjlnprtvxz|~\u0080\u0082\u0084\u0086\u0088"+
+		"n\3o\3o\3p\3p\3q\3q\3r\3r\3s\3s\3s\3t\3t\3t\3t\3u\3u\3u\3v\5v\u03be\n"+
+		"v\3v\3v\3v\2\2w\2\4\6\b\n\f\16\20\22\24\26\30\32\34\36 \"$&(*,.\60\62"+
+		"\64\668:<>@BDFHJLNPRTVXZ\\^`bdfhjlnprtvxz|~\u0080\u0082\u0084\u0086\u0088"+
 		"\u008a\u008c\u008e\u0090\u0092\u0094\u0096\u0098\u009a\u009c\u009e\u00a0"+
 		"\u00a2\u00a4\u00a6\u00a8\u00aa\u00ac\u00ae\u00b0\u00b2\u00b4\u00b6\u00b8"+
 		"\u00ba\u00bc\u00be\u00c0\u00c2\u00c4\u00c6\u00c8\u00ca\u00cc\u00ce\u00d0"+
 		"\u00d2\u00d4\u00d6\u00d8\u00da\u00dc\u00de\u00e0\u00e2\u00e4\u00e6\u00e8"+
-		"\u00ea\2\4\6\2\34\34\36\36  \"\"\3\2WX\u03bc\2\u00f0\3\2\2\2\4\u00f7\3"+
+		"\u00ea\2\4\6\2\34\34\36\36  \"\"\3\2WX\u03bd\2\u00f0\3\2\2\2\4\u00f7\3"+
 		"\2\2\2\6\u0103\3\2\2\2\b\u0111\3\2\2\2\n\u011a\3\2\2\2\f\u0121\3\2\2\2"+
 		"\16\u012d\3\2\2\2\20\u0131\3\2\2\2\22\u013f\3\2\2\2\24\u0154\3\2\2\2\26"+
 		"\u0160\3\2\2\2\30\u0164\3\2\2\2\32\u0166\3\2\2\2\34\u016f\3\2\2\2\36\u0176"+
@@ -7036,7 +7037,7 @@ public class ArmParser extends Parser {
 		"\u0397\3\2\2\2\u00d2\u0399\3\2\2\2\u00d4\u039e\3\2\2\2\u00d6\u03a3\3\2"+
 		"\2\2\u00d8\u03a5\3\2\2\2\u00da\u03a8\3\2\2\2\u00dc\u03aa\3\2\2\2\u00de"+
 		"\u03ac\3\2\2\2\u00e0\u03ae\3\2\2\2\u00e2\u03b0\3\2\2\2\u00e4\u03b2\3\2"+
-		"\2\2\u00e6\u03b5\3\2\2\2\u00e8\u03b8\3\2\2\2\u00ea\u03bc\3\2\2\2\u00ec"+
+		"\2\2\u00e6\u03b5\3\2\2\2\u00e8\u03b9\3\2\2\2\u00ea\u03bd\3\2\2\2\u00ec"+
 		"\u00ee\5\4\3\2\u00ed\u00ec\3\2\2\2\u00ed\u00ee\3\2\2\2\u00ee\u00ef\3\2"+
 		"\2\2\u00ef\u00f1\7c\2\2\u00f0\u00ed\3\2\2\2\u00f1\u00f2\3\2\2\2\u00f2"+
 		"\u00f0\3\2\2\2\u00f2\u00f3\3\2\2\2\u00f3\3\3\2\2\2\u00f4\u00f8\5\6\4\2"+
@@ -7273,14 +7274,14 @@ public class ArmParser extends Parser {
 		"\u03a9\5\u00eav\2\u03a9\u00db\3\2\2\2\u03aa\u03ab\5\u00eav\2\u03ab\u00dd"+
 		"\3\2\2\2\u03ac\u03ad\5\u00eav\2\u03ad\u00df\3\2\2\2\u03ae\u03af\5\u00ea"+
 		"v\2\u03af\u00e1\3\2\2\2\u03b0\u03b1\5\u00eav\2\u03b1\u00e3\3\2\2\2\u03b2"+
-		"\u03b3\7U\2\2\u03b3\u03b4\7Z\2\2\u03b4\u00e5\3\2\2\2\u03b5\u03b6\5\u00e4"+
-		"s\2\u03b6\u03b7\5\u00e8u\2\u03b7\u00e7\3\2\2\2\u03b8\u03b9\7S\2\2\u03b9"+
-		"\u03ba\7V\2\2\u03ba\u00e9\3\2\2\2\u03bb\u03bd\7`\2\2\u03bc\u03bb\3\2\2"+
-		"\2\u03bc\u03bd\3\2\2\2\u03bd\u03be\3\2\2\2\u03be\u03bf\t\3\2\2\u03bf\u00eb"+
-		"\3\2\2\2%\u00ed\u00f2\u00f7\u0103\u0111\u011a\u0121\u012d\u0131\u013f"+
-		"\u0154\u0160\u0164\u016d\u018b\u01fa\u0217\u0220\u0229\u0232\u023b\u0244"+
-		"\u024d\u0256\u02fb\u0316\u031c\u032c\u0337\u036b\u0376\u0378\u0386\u0397"+
-		"\u03bc";
+		"\u03b3\7U\2\2\u03b3\u03b4\7Z\2\2\u03b4\u00e5\3\2\2\2\u03b5\u03b6\7U\2"+
+		"\2\u03b6\u03b7\7Z\2\2\u03b7\u03b8\5\u00e8u\2\u03b8\u00e7\3\2\2\2\u03b9"+
+		"\u03ba\7S\2\2\u03ba\u03bb\7V\2\2\u03bb\u00e9\3\2\2\2\u03bc\u03be\7`\2"+
+		"\2\u03bd\u03bc\3\2\2\2\u03bd\u03be\3\2\2\2\u03be\u03bf\3\2\2\2\u03bf\u03c0"+
+		"\t\3\2\2\u03c0\u00eb\3\2\2\2%\u00ed\u00f2\u00f7\u0103\u0111\u011a\u0121"+
+		"\u012d\u0131\u013f\u0154\u0160\u0164\u016d\u018b\u01fa\u0217\u0220\u0229"+
+		"\u0232\u023b\u0244\u024d\u0256\u02fb\u0316\u031c\u032c\u0337\u036b\u0376"+
+		"\u0378\u0386\u0397\u03bd";
 	public static final ATN _ATN =
 		new ATNDeserializer().deserialize(_serializedATN.toCharArray());
 	static {
