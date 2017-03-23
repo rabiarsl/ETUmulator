@@ -17,7 +17,7 @@
 package com.kasirgalabs.etumulator.navigator;
 
 import com.google.inject.Inject;
-import com.kasirgalabs.etumulator.processor.RegisterFile;
+import com.kasirgalabs.etumulator.processor.Stack;
 import java.net.URL;
 import java.util.Observable;
 import java.util.Observer;
@@ -30,7 +30,7 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 
-public class RegistersTab implements Initializable, Observer {
+public class StackTab implements Initializable, Observer {
     @FXML
     private TableView<NavigatorRow> table;
     @FXML
@@ -38,33 +38,34 @@ public class RegistersTab implements Initializable, Observer {
     @FXML
     private TableColumn<NavigatorRow, String> value;
     @Inject
-    private RegisterFile registerFile;
+    private Stack stack;
     @Inject
     private Navigator navigator;
     private final ObservableList<NavigatorRow> data = FXCollections.observableArrayList();
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        registerFile.addObserver(this);
+        stack.addObserver(this);
         navigator.addObserver(this);
         property.setCellValueFactory(new PropertyValueFactory<>("property"));
         value.setCellValueFactory(new PropertyValueFactory<>("value"));
-        for(int i = 0; i < 13; i++) {
-            String registerName = "r" + Integer.toString(i);
-            data.add(new NavigatorRow(registerName, registerFile.getValue(registerName)));
-        }
         table.setItems(data);
     }
 
     @Override
     public void update(Observable o, Object arg) {
-        NavigatorRow.setValueType(Navigator.getValueType());
-        if(o.getClass().equals(RegisterFile.class)) {
-            String registerName = (String) arg;
-            for(int i = 0; i < data.size(); i++) {
-                NavigatorRow navigatorRow = data.get(i);
-                if(navigatorRow.getProperty().equals(registerName)) {
-                    navigatorRow.setValue(registerFile.getValue(registerName));
+        if(o.getClass().equals(Stack.class)) {
+            String operation = (String) arg;
+            if(operation.equals("push")) {
+                data.add(new NavigatorRow(data.size(), stack.peek()));
+            }
+            else {
+                for(int i = 0; i < data.size(); i++) {
+                    NavigatorRow navigatorRow = data.get(i);
+                    if(navigatorRow.getProperty().equals(Integer.toString(data.size() - 1))) {
+                        data.remove(i);
+                        break;
+                    }
                 }
             }
         }

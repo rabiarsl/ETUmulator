@@ -18,10 +18,10 @@ package com.kasirgalabs.etumulator.processor;
 
 import com.google.inject.Singleton;
 import java.util.LinkedList;
-import java.util.List;
+import java.util.Observable;
 
 @Singleton
-public class Stack {
+public class Stack extends Observable {
     private final LinkedList<Integer> list;
 
     public Stack() {
@@ -30,14 +30,18 @@ public class Stack {
 
     public void push(Integer item) {
         list.push(item);
+        setChanged();
+        notifyObservers("push");
     }
 
-    public Integer pop() {
-        Integer result = list.pop();
+    public int pop() {
+        int result = list.pop();
+        setChanged();
+        notifyObservers("pop");
         return result;
     }
 
-    public List<Integer> getAll() {
-        return list.subList(0, list.size());
+    public int peek() {
+        return list.peek();
     }
 }

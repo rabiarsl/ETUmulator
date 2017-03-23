@@ -10,23 +10,11 @@
 
 <VBox alignment="TOP_RIGHT" spacing="5.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.kasirgalabs.etumulator.navigator.Navigator">
     <children>
-        <ComboBox fx:id="valueTypeComboBox" onAction="#comboBoxOnAction" prefWidth="150.0" />
+        <ComboBox fx:id="valueTypeComboBox" onAction="#valueTypeOnAction" prefWidth="150.0" />
         <TabPane prefHeight="500.0" prefWidth="350.0" tabClosingPolicy="UNAVAILABLE">
             <tabs>
                 <fx:include source="RegistersTab.fxml" />
-                <Tab closable="false" text="Stack">
-                    <content>
-                        <TableView>
-                            <columns>
-                                <TableColumn editable="false" minWidth="-1.0" prefWidth="-1.0" text="Number" />
-                                <TableColumn editable="false" minWidth="-1.0" prefWidth="-1.0" text="Value" />
-                            </columns>
-                            <columnResizePolicy>
-                                <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
-                            </columnResizePolicy>
-                        </TableView>
-                    </content>
-                </Tab>
+                <fx:include source="StackTab.fxml" />
                 <Tab closable="false" text="Memory">
                     <content>
                         <TableView>

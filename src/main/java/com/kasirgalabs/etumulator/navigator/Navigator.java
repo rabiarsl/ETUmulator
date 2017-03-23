@@ -53,7 +53,7 @@ public class Navigator extends Observable implements Initializable {
     }
 
     @FXML
-    private void valueTypeComboBoxOnAction(ActionEvent event) {
+    private void valueTypeOnAction(ActionEvent event) {
         setValueType(valueTypeComboBox.getSelectionModel().getSelectedIndex());
         setChanged();
         notifyObservers();

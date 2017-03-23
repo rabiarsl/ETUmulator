@@ -39,7 +39,7 @@ public class RegisterFile extends Observable {
     public void setValue(String registerName, int value) {
         registers.replace(registerName, value);
         setChanged();
-        notifyObservers();
+        notifyObservers(registerName);
     }
 
     public void reset() {
@@ -47,13 +47,5 @@ public class RegisterFile extends Observable {
         for(int i = 0; i < 13; i++) {
             registers.put("r" + Integer.toString(i), 0);
         }
-    }
-
-    public Map<String, Integer> getAll() {
-        Map<String, Integer> copy = new HashMap<>();
-        registers.keySet().forEach((name) -> {
-            copy.put(name, registers.get(name));
-        });
-        return copy;
     }
 }
