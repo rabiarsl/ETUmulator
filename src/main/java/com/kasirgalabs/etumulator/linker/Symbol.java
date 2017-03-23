@@ -22,11 +22,6 @@ public final class Symbol {
     private final String name;
     private final int address;
 
-    public Symbol() {
-        name = null;
-        address = 0;
-    }
-
     public Symbol(String name, int address) {
         this.name = name;
         this.address = address;

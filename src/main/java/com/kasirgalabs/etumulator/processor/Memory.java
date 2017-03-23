@@ -29,7 +29,7 @@ public class Memory extends Observable {
         memory = new HashMap<>();
     }
 
-    public Byte get(int address) {
+    public byte get(int address) {
         if(memory.containsKey(address)) {
             return memory.get(address);
         }

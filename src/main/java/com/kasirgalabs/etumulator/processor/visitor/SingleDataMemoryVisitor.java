@@ -34,8 +34,8 @@ public class SingleDataMemoryVisitor extends ArmBaseVisitor<Void> {
         this.registerFile = registerFile;
         this.memory = memory;
         registerVisitor = new RegisterVisitor();
-        this.numberVisitor = new NumberVisitor();
-        this.ldrAddressVisitor = new LdrAddressVisitor(registerFile);
+        numberVisitor = new NumberVisitor();
+        ldrAddressVisitor = new LdrAddressVisitor(registerFile);
     }
 
     public void setSymbols(Set<Symbol> symbols) {
@@ -50,8 +50,12 @@ public class SingleDataMemoryVisitor extends ArmBaseVisitor<Void> {
         }
         else {
             int address = ldrAddressVisitor.visit(ctx.ldrAddress());
-            int value = memory.get(address);
-            registerFile.setValue(destRegister, value);
+            if(ctx.ldrAddress().pcRelative() == null) {
+                registerFile.setValue(destRegister, memory.get(address));
+            }
+            else {
+                registerFile.setValue(destRegister, address);
+            }
         }
         return null;
     }

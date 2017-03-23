@@ -116,5 +116,29 @@ public class LinkerTest {
             fail("Linker does not work properly.");
         } catch(LabelError le) {
         }
+
+        expectedSymbols.clear();
+        code = "ldr r1,= label\n"
+                + "nop\n"
+                + "nop\n"
+                + "label: .asciz \"asd\"\n"
+                + "label:\n";
+        try {
+            linker.link(code);
+            fail("Linker does not work properly.");
+        } catch(LabelError le) {
+        }
+
+        expectedSymbols.clear();
+        code = "ldr r1,= label\n"
+                + "nop\n"
+                + "nop\n"
+                + "label: .asciz \"asd\"\n"
+                + "label: .asciz \"te\"\n";
+        try {
+            linker.link(code);
+            fail("Linker does not work properly.");
+        } catch(LabelError le) {
+        }
     }
 }
