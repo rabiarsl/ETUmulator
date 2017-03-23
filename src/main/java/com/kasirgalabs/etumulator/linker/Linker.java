@@ -213,17 +213,6 @@ public class Linker extends ArmBaseVisitor<Void> {
         return resolvedSymbols;
     }
 
-    private int resolveAddress(String targetSymbol, char[][] instructions) {
-        int address = 0;
-        while(address < instructions.length) {
-            if(new String(instructions[address]).contains(targetSymbol)) {
-                return address;
-            }
-            address++;
-        }
-        return address;
-    }
-
     private int loadDataIntoMemory(String asciz) {
         boolean addressNotFound = true;
         Random rand = new Random();
