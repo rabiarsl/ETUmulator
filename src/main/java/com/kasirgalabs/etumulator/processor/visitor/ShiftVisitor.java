@@ -207,7 +207,6 @@ public class ShiftVisitor extends ArmBaseVisitor<Void> {
         }
         cpsr.setCarry(false);
         if(shiftAmount <= 0) {
-            cpsr.updateNZ(value);
             return value;
         }
         int result = shift(value, shiftOption, shiftAmount - 1);

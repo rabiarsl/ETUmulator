@@ -36,6 +36,11 @@ public class NumberVisitor extends ArmBaseVisitor<Integer> {
     }
 
     @Override
+    public Integer visitSh(ArmParser.ShContext ctx) {
+        return visitNumber(ctx.number());
+    }
+
+    @Override
     public Integer visitNumber(ArmParser.NumberContext ctx) {
         if(ctx.DECIMAL() != null) {
             return (int) Long.parseLong(ctx.DECIMAL().getText());

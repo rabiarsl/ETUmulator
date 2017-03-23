@@ -337,6 +337,7 @@ public class BranchVisitorTest {
         processor.run(code, linker.link(code));
         assertEquals("Branch instruction does not work properly.", 3, registerFile.getValue("r0"));
 
+        cpsr.setCarry(true);
         cpsr.setZero(false);
         code = "mov r0, #4\n"
                 + "bls target\n"
@@ -353,6 +354,15 @@ public class BranchVisitorTest {
                 + "target:\n";
         processor.run(code, linker.link(code));
         assertEquals("Branch instruction does not work properly.", 4, registerFile.getValue("r0"));
+
+        cpsr.setCarry(true);
+        cpsr.setZero(true);
+        code = "mov r0, #8\n"
+                + "bls target\n"
+                + "mov r0, #1\n"
+                + "target:\n";
+        processor.run(code, linker.link(code));
+        assertEquals("Branch instruction does not work properly.", 8, registerFile.getValue("r0"));
     }
 
     /**
