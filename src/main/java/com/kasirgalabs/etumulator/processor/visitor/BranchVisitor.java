@@ -23,7 +23,7 @@ import com.kasirgalabs.etumulator.processor.CPSR;
 import java.util.Set;
 
 public class BranchVisitor extends ArmBaseVisitor<Integer> {
-    private CPSR cpsr;
+    private final CPSR cpsr;
     private Set<Symbol> symbols;
 
     public BranchVisitor(CPSR cpsr) {
