@@ -79,7 +79,9 @@ public class MoveVisitor extends ArmBaseVisitor<Void> {
     @Override
     public Void visitMovt(ArmParser.MovtContext ctx) {
         String destRegister = registerVisitor.visit(ctx.rd());
-        int value = registerFile.getValue(destRegister) | numberVisitor.visit(ctx.imm16()) << 16;
+        int value = registerFile.getValue(destRegister);
+        value &= 0x0000ffff;
+        value |= numberVisitor.visit(ctx.imm16()) << 16;
         registerFile.setValue(destRegister, value);
         return null;
     }

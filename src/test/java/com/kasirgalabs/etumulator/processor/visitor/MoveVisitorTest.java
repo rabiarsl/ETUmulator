@@ -128,6 +128,14 @@ public class MoveVisitorTest {
      */
     @Test
     public void testVisitMovt() {
+        String code = "mov r0, #1\n"
+                + "movt r0, #0x0000ffff\n";
+        processor.run(code, null);
+        assertEquals("Move result is wrong.", (0x0000ffff << 16) + 1, registerFile.getValue("r0"));
 
+        code = "ldr r0, =#0xffffffff\n"
+                + "movt r0, #0\n";
+        processor.run(code, null);
+        assertEquals("Move result is wrong.", 0x0000ffff, registerFile.getValue("r0"));
     }
 }
