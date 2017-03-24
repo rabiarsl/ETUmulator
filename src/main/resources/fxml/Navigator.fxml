@@ -2,15 +2,23 @@
 
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.ComboBox?>
-<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TabPane?>
-<?import javafx.scene.control.TableColumn?>
-<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.VBox?>
 
 <VBox alignment="TOP_RIGHT" spacing="5.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.kasirgalabs.etumulator.navigator.Navigator">
     <children>
-        <ComboBox fx:id="valueTypeComboBox" onAction="#valueTypeOnAction" prefWidth="150.0" />
+        <HBox alignment="CENTER">
+            <children>
+                <Label text="CPSR" />
+                <Pane HBox.hgrow="ALWAYS" />
+                <ComboBox fx:id="valueTypeComboBox" onAction="#valueTypeOnAction" prefWidth="150.0" />
+            </children>
+        </HBox>
+        <fx:include source="CPSRStatus.fxml" />
         <TabPane prefHeight="500.0" prefWidth="350.0" tabClosingPolicy="UNAVAILABLE">
             <tabs>
                 <fx:include source="RegistersTab.fxml" />

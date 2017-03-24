@@ -48,14 +48,14 @@ public final class Symbol {
         if(this == obj) {
             return true;
         }
-        if(this.getClass() != obj.getClass()) {
+        if(getClass() != obj.getClass()) {
             return false;
         }
         Symbol symbol = (Symbol) obj;
-        if(this.hashCode() != symbol.hashCode()) {
+        if(hashCode() != symbol.hashCode()) {
             return false;
         }
-        return this.name.equals(symbol.getName());
+        return name.equals(symbol.getName());
     }
 
     @Override
