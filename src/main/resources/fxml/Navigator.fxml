@@ -4,7 +4,6 @@
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TabPane?>
-<?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.VBox?>
@@ -19,7 +18,7 @@
             </children>
         </HBox>
         <fx:include source="CPSRStatus.fxml" />
-        <TabPane prefHeight="500.0" prefWidth="350.0" tabClosingPolicy="UNAVAILABLE">
+        <TabPane prefHeight="500.0" prefWidth="350.0" tabClosingPolicy="UNAVAILABLE" VBox.vgrow="ALWAYS">
             <tabs>
                 <fx:include source="RegistersTab.fxml" />
                 <fx:include source="StackTab.fxml" />

@@ -17,48 +17,20 @@
 package com.kasirgalabs.etumulator;
 
 import com.google.inject.Inject;
-import com.kasirgalabs.etumulator.console.Console;
 import com.kasirgalabs.etumulator.document.Document;
 import com.kasirgalabs.etumulator.linker.Linker;
 import com.kasirgalabs.etumulator.processor.Memory;
 import com.kasirgalabs.etumulator.processor.Processor;
-import java.io.IOException;
-import java.io.OutputStream;
-import java.net.URL;
-import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.Initializable;
-import javafx.scene.control.Button;
-import javafx.scene.control.TextArea;
 
-public class ETUmulatorController implements Initializable, Console {
-    @FXML
-    private Button runButton;
-    @FXML
-    private TextArea textArea;
+public class ETUmulatorController {
     @Inject
     private Document document;
     @Inject
     private Processor processor;
     @Inject
     private Memory memory;
-
-    @Override
-    public void initialize(URL url, ResourceBundle rb) {
-        OutputStream out = new OutputStream() {
-            @Override
-            public void write(int b) throws IOException {
-                textArea.appendText(String.valueOf((char) b));
-            }
-        };
-        //System.setOut(new PrintStream(out, true));
-        //System.setErr(new PrintStream(out, true));
-    }
-
-    @Override
-    public void write(Object o) {
-    }
 
     @FXML
     private void runButtonOnAction(ActionEvent event) {

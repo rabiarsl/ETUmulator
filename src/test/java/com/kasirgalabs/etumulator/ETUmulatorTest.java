@@ -20,7 +20,6 @@ import static org.junit.Assert.assertTrue;
 
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javafx.application.Application;
 import org.junit.Test;
 
 public class ETUmulatorTest {
@@ -40,7 +39,7 @@ public class ETUmulatorTest {
             public void run() {
                 success = true;
                 try {
-                    Application.launch(ETUmulator.class); // Run JavaFX application.
+                    ETUmulator.main(new String[]{}); // Run JavaFX application.
                 } catch(Throwable t) {
                     Throwable cause = t.getCause();
                     if(cause != null && cause.getClass().equals(InterruptedException.class)) {
