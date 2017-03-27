@@ -112,7 +112,7 @@ public class DocumentControllerTest {
         try(BufferedReader bf = new BufferedReader(new FileReader(file))) {
             String line;
             while((line = bf.readLine()) != null) {
-                text.append(line + "\n");
+                text.append(line).append("\n");
             }
         } catch(IOException ex) {
             throw ex;

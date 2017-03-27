@@ -23,9 +23,14 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
+import java.util.function.IntFunction;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.geometry.Pos;
+import javafx.scene.Cursor;
+import javafx.scene.Node;
 import javafx.scene.control.Label;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import org.fxmisc.flowless.VirtualizedScrollPane;
 import org.fxmisc.richtext.CodeArea;
@@ -43,7 +48,15 @@ public class DocumentController implements Initializable, Document {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         document = new CodeArea();
-        document.setParagraphGraphicFactory(LineNumberFunction.applyTo(document));
+        IntFunction<Node> numberFunction = LineNumberFunction.applyTo(document);
+        IntFunction<Node> arrowFunction = new ArrowFunction(document.currentParagraphProperty());
+        IntFunction<Node> graphicFactory = line -> {
+            HBox hbox = new HBox(numberFunction.apply(line), arrowFunction.apply(line));
+            hbox.setCursor(Cursor.DEFAULT);
+            hbox.setAlignment(Pos.CENTER_LEFT);
+            return hbox;
+        };
+        document.setParagraphGraphicFactory(graphicFactory);
         stackPane.getChildren().add(new VirtualizedScrollPane<>(document));
         targetFile = new File(DEFAULT_NAME);
         label.setText(DEFAULT_NAME);
