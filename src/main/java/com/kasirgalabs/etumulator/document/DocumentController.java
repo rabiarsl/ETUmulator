@@ -26,7 +26,9 @@ import java.util.ResourceBundle;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
-import javafx.scene.control.TextArea;
+import javafx.scene.layout.StackPane;
+import org.fxmisc.flowless.VirtualizedScrollPane;
+import org.fxmisc.richtext.CodeArea;
 
 @Singleton
 public class DocumentController implements Initializable, Document {
@@ -34,23 +36,28 @@ public class DocumentController implements Initializable, Document {
     @FXML
     private Label label;
     @FXML
-    private TextArea textArea;
+    private StackPane stackPane;
     private File targetFile;
+    private CodeArea document;
 
     @Override
-    public void initialize(URL url, ResourceBundle rb) {
+    public void initialize(URL location, ResourceBundle resources) {
+        document = new CodeArea();
+        document.setParagraphGraphicFactory(LineNumberFunction.applyTo(document));
+        stackPane.getChildren().add(new VirtualizedScrollPane<>(document));
         targetFile = new File(DEFAULT_NAME);
         label.setText(DEFAULT_NAME);
     }
 
     @Override
     public String getText() {
-        return textArea.getText();
+        return document.getText();
     }
 
     @Override
     public void setText(String text) {
-        textArea.setText(text);
+        document.clear();
+        document.appendText(text);
     }
 
     @Override
@@ -66,7 +73,7 @@ public class DocumentController implements Initializable, Document {
 
     @Override
     public void saveDocument() throws IOException {
-        String text = textArea.getText();
+        String text = document.getText();
         try(BufferedWriter bw = new BufferedWriter(new FileWriter(targetFile))) {
             bw.write(text);
         } catch(IOException ex) {
@@ -76,6 +83,6 @@ public class DocumentController implements Initializable, Document {
 
     @Override
     public void clear() {
-        textArea.clear();
+        document.clear();
     }
 }
