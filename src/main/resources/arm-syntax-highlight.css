@@ -1,0 +1,9 @@
+.keyword {
+    -fx-fill: #0000E6;
+}
+.string {
+    -fx-fill: #CE7B00;
+}
+.comment {
+    -fx-fill: #969696;
+}

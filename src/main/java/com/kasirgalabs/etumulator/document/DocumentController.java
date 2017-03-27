@@ -29,6 +29,7 @@ import javafx.fxml.Initializable;
 import javafx.geometry.Pos;
 import javafx.scene.Cursor;
 import javafx.scene.Node;
+import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
@@ -56,6 +57,13 @@ public class DocumentController implements Initializable, Document {
             hbox.setAlignment(Pos.CENTER_LEFT);
             return hbox;
         };
+        document.richChanges().filter(ch -> !ch.getInserted().equals(ch.getRemoved()))
+                .subscribe(change -> {
+                    Scene scene = label.getScene();
+                    SyntaxHighlighter syntaxHighlighter
+                            = new SyntaxHighlighter(document);
+                    document.setStyleSpans(0, syntaxHighlighter.highlight(document.getText()));
+                });
         document.setParagraphGraphicFactory(graphicFactory);
         stackPane.getChildren().add(new VirtualizedScrollPane<>(document));
         targetFile = new File(DEFAULT_NAME);
