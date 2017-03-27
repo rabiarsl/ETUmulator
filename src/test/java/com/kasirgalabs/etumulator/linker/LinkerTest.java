@@ -18,16 +18,15 @@ package com.kasirgalabs.etumulator.linker;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.fail;
-
 import com.kasirgalabs.etumulator.processor.Memory;
 import java.util.HashSet;
 import java.util.Set;
 import org.junit.Test;
 
 public class LinkerTest {
+    private static final int NOT_USED = 0;
     private final Memory memory;
     private final Linker linker;
-    private static final int NOT_USED = 0;
 
     public LinkerTest() {
         memory = new Memory();
@@ -69,7 +68,8 @@ public class LinkerTest {
         try {
             linker.link(code);
             fail("Linker does not work properly.");
-        } catch(LabelError le) {
+        }
+        catch(LabelError le) {
         }
 
         expectedSymbols.clear();
@@ -81,7 +81,8 @@ public class LinkerTest {
         try {
             linker.link(code);
             fail("Linker does not work properly.");
-        } catch(LabelError le) {
+        }
+        catch(LabelError le) {
         }
 
         expectedSymbols.clear();
@@ -93,7 +94,8 @@ public class LinkerTest {
         try {
             linker.link(code);
             fail("Linker does not work properly.");
-        } catch(LabelError le) {
+        }
+        catch(LabelError le) {
         }
 
         expectedSymbols.clear();
@@ -114,7 +116,8 @@ public class LinkerTest {
         try {
             linker.link(code);
             fail("Linker does not work properly.");
-        } catch(LabelError le) {
+        }
+        catch(LabelError le) {
         }
 
         expectedSymbols.clear();
@@ -126,7 +129,8 @@ public class LinkerTest {
         try {
             linker.link(code);
             fail("Linker does not work properly.");
-        } catch(LabelError le) {
+        }
+        catch(LabelError le) {
         }
 
         expectedSymbols.clear();
@@ -138,7 +142,8 @@ public class LinkerTest {
         try {
             linker.link(code);
             fail("Linker does not work properly.");
-        } catch(LabelError le) {
+        }
+        catch(LabelError le) {
         }
     }
 }

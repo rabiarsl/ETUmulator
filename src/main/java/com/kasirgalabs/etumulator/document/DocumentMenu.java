@@ -34,6 +34,7 @@ public class DocumentMenu {
 
     public DocumentMenu() {
         this.fileChooser = new FileChooser();
+        fileChooser.setTitle("ETUmulator");
     }
 
     public void setWindow(Window window) {
@@ -59,7 +60,8 @@ public class DocumentMenu {
                 while((line = bf.readLine()) != null) {
                     text.append(line).append("\n");
                 }
-            } catch(IOException ex) {
+            }
+            catch(IOException ex) {
                 throw ex;
             }
             document.setText(text.toString());

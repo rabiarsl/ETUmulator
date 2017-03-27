@@ -1,10 +1,7 @@
 package com.kasirgalabs.etumulator.document;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.text.BreakIterator;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashSet;
@@ -38,38 +35,28 @@ public class SyntaxHighlighter {
             + "|(?<COMMENT>" + COMMENT_PATTERN + ")"
             + "|(?<LABEL>" + LABEL_PATTERN + ")"
     );
-    private static final Set<String> DICTIONARY = new HashSet<String>();
-    private final Parent parent;
+    private final Set<String> dictionary;
 
     public SyntaxHighlighter(Parent parent) {
-        this.parent = parent;
         parent.getStylesheets().add(SyntaxHighlighter.class.getClassLoader()
                 .getResource("styles/arm-syntax-highlight.css").toExternalForm());
         parent.getStylesheets().add(SyntaxHighlighter.class.getClassLoader()
                 .getResource("styles/spellchecking.css").toExternalForm());
-        try(InputStream input = SyntaxHighlighter.class.getClassLoader()
-                .getResourceAsStream("other/spellchecking.dict");
-                BufferedReader br = new BufferedReader(new InputStreamReader(input))) {
-            String line;
-            while((line = br.readLine()) != null) {
-                DICTIONARY.add(line);
-            }
-        } catch(IOException e) {
-            e.printStackTrace();
-        }
+        dictionary = new HashSet<>(KEYWORDS.length);
+        dictionary.addAll(Arrays.asList(KEYWORDS));
     }
 
-    public StyleSpans<Collection<String>> highlightSyntax(String text) {
+    public StyleSpans<Collection<String>> highlight(String text) {
         Matcher matcher = PATTERN.matcher(text);
         int lastKeywordEnd = 0;
         StyleSpansBuilder<Collection<String>> spansBuilder = new StyleSpansBuilder<>();
         while(matcher.find()) {
             String styleClass
-                    = matcher.group("KEYWORD") != null ? "keyword"
-                    : matcher.group("STRING") != null ? "string"
-                    : matcher.group("COMMENT") != null ? "comment"
-                    : matcher.group("LABEL") != null ? "label"
-                    : null;
+                    = matcher.group("KEYWORD") != null ? "keyword" :
+                    matcher.group("STRING") != null ? "string" :
+                    matcher.group("COMMENT") != null ? "comment" :
+                    matcher.group("LABEL") != null ? "label" :
+                    null;
             spansBuilder.add(Collections.emptyList(), matcher.start() - lastKeywordEnd);
             spansBuilder.add(Collections.singleton(styleClass), matcher.end() - matcher.start());
             lastKeywordEnd = matcher.end();
@@ -86,21 +73,21 @@ public class SyntaxHighlighter {
         BreakIterator wb = BreakIterator.getWordInstance();
         wb.setText(text);
         int lastIndex = wb.first();
-        int lastKwEnd = 0;
+        int lastKeywordEnd = 0;
         while(lastIndex != BreakIterator.DONE) {
             int firstIndex = lastIndex;
             lastIndex = wb.next();
             if(lastIndex != BreakIterator.DONE
                     && Character.isLetterOrDigit(text.charAt(firstIndex))) {
                 String word = text.substring(firstIndex, lastIndex).toLowerCase();
-                if(!DICTIONARY.contains(word)) {
-                    spansBuilder.add(Collections.emptyList(), firstIndex - lastKwEnd);
+                if(!dictionary.contains(word)) {
+                    spansBuilder.add(Collections.emptyList(), firstIndex - lastKeywordEnd);
                     spansBuilder.add(Collections.singleton("underlined"), lastIndex - firstIndex);
-                    lastKwEnd = lastIndex;
+                    lastKeywordEnd = lastIndex;
                 }
             }
         }
-        spansBuilder.add(Collections.emptyList(), text.length() - lastKwEnd);
+        spansBuilder.add(Collections.emptyList(), text.length() - lastKeywordEnd);
         return spansBuilder.create();
     }
 }

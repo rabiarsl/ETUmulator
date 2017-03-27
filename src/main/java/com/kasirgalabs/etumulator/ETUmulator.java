@@ -17,7 +17,6 @@
 package com.kasirgalabs.etumulator;
 
 import static javafx.application.Application.launch;
-
 import com.google.inject.Guice;
 import com.google.inject.Inject;
 import com.google.inject.Injector;

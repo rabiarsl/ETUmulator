@@ -18,8 +18,8 @@ package com.kasirgalabs.etumulator.processor.visitor;
 
 import com.kasirgalabs.arm.ArmBaseVisitor;
 import com.kasirgalabs.arm.ArmParser;
-import com.kasirgalabs.etumulator.processor.Stack;
 import com.kasirgalabs.etumulator.processor.RegisterFile;
+import com.kasirgalabs.etumulator.processor.Stack;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -52,7 +52,7 @@ public class StackVisitor extends ArmBaseVisitor<Void> {
         return null;
     }
 
-    private class RegListVisitor extends ArmBaseVisitor<List<String>> {
+    private static class RegListVisitor extends ArmBaseVisitor<List<String>> {
         @Override
         public List<String> visitRegList(ArmParser.RegListContext ctx) {
             List<String> regList = new ArrayList<>();

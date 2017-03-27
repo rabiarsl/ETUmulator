@@ -182,6 +182,7 @@ public class ArithmeticVisitor extends ArmBaseVisitor<Void> {
         return null;
     }
 
+    @Override
     public Void visitRscs(ArmParser.RscsContext ctx) {
         String destRegister = registerVisitor.visit(ctx.rd());
         int left = registerFile.getValue(registerVisitor.visit(ctx.rn()));
@@ -206,7 +207,8 @@ public class ArithmeticVisitor extends ArmBaseVisitor<Void> {
         try {
             result = Math.addExact(left, right);
             overflow = false;
-        } catch(ArithmeticException e) {
+        }
+        catch(ArithmeticException e) {
             overflow = true;
             result = left + right;
         }

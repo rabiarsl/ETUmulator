@@ -32,7 +32,6 @@ public class Navigator extends Observable implements Initializable {
     public static final int HEX = 1;
     public static final int ASCII = 2;
     public static final int BINARY = 3;
-
     private static int valueType;
     @FXML
     private ComboBox<String> valueTypeComboBox;
@@ -50,7 +49,7 @@ public class Navigator extends Observable implements Initializable {
 
     @FXML
     private void valueTypeOnAction(ActionEvent event) {
-        valueType = valueTypeComboBox.getSelectionModel().getSelectedIndex();
+        Navigator.valueType = valueTypeComboBox.getSelectionModel().getSelectedIndex();
         setChanged();
         notifyObservers();
     }

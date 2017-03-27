@@ -17,7 +17,6 @@
 package com.kasirgalabs.etumulator.processor.visitor;
 
 import static org.junit.Assert.assertEquals;
-
 import com.kasirgalabs.etumulator.processor.BaseProcessor;
 import com.kasirgalabs.etumulator.processor.CPSR;
 import com.kasirgalabs.etumulator.processor.Memory;
@@ -27,7 +26,6 @@ import com.kasirgalabs.etumulator.processor.Stack;
 import org.junit.Test;
 
 public class MultiplyAndDivideVisitorTest {
-
     private final RegisterFile registerFile;
     private final CPSR cpsr;
     private final Processor processor;
@@ -159,12 +157,13 @@ public class MultiplyAndDivideVisitorTest {
                 + "ldr r1, =0xffffffff\n"
                 + "udiv r0, r0, r1\n";
         processor.run(code, null);
-        assertEquals("Multiply result is wrong.", Integer.divideUnsigned(50, 0xffffffff), registerFile.getValue("r0"));
+        assertEquals("Multiply result is wrong.", Integer.divideUnsigned(50, 0xffff_ffff), registerFile
+                .getValue("r0"));
 
         code = "ldr r0, =0xffffffff\n"
                 + "mov r1, 1\n"
                 + "udiv r0, r0, r1\n";
         processor.run(code, null);
-        assertEquals("Multiply result is wrong.", 0xffffffff, registerFile.getValue("r0"));
+        assertEquals("Multiply result is wrong.", 0xffff_ffff, registerFile.getValue("r0"));
     }
 }

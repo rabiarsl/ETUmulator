@@ -27,7 +27,6 @@ public class ShiftVisitor extends ArmBaseVisitor<Void> {
     private static final int LSR = 2;
     private static final int ROR = 3;
     private static final int RRX = 4;
-
     private final RegisterFile registerFile;
     private final CPSR cpsr;
     private final RegisterVisitor registerVisitor;
@@ -195,7 +194,7 @@ public class ShiftVisitor extends ArmBaseVisitor<Void> {
             default:
                 int result = value >>> 1;
                 if(cpsr.isCarry()) {
-                    result |= 0x80000000;
+                    result |= 0x8000_0000;
                 }
                 return result;
         }

@@ -17,7 +17,6 @@
 package com.kasirgalabs.etumulator.processor.visitor;
 
 import static org.junit.Assert.assertEquals;
-
 import com.kasirgalabs.etumulator.processor.BaseProcessor;
 import com.kasirgalabs.etumulator.processor.CPSR;
 import com.kasirgalabs.etumulator.processor.Memory;
@@ -49,7 +48,7 @@ public class StackVisitorTest {
                 + "ldr r1, =0xffffffff\n"
                 + "push {r0,r1}\n";
         processor.run(code, null);
-        assertEquals("Push result is wrong.", 0xffffffff, stack.pop());
+        assertEquals("Push result is wrong.", 0xffff_ffff, stack.pop());
         assertEquals("Push result is wrong.", 4, stack.pop());
     }
 
@@ -64,6 +63,6 @@ public class StackVisitorTest {
                 + "pop {r1, r0}\n";
         processor.run(code, null);
         assertEquals("Pop result is wrong.", 4, registerFile.getValue("r0"));
-        assertEquals("Pop result is wrong.", 0xffffffff, registerFile.getValue("r1"));
+        assertEquals("Pop result is wrong.", 0xffff_ffff, registerFile.getValue("r1"));
     }
 }

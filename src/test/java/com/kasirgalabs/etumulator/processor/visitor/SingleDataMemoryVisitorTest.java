@@ -17,7 +17,6 @@
 package com.kasirgalabs.etumulator.processor.visitor;
 
 import static org.junit.Assert.assertEquals;
-
 import com.kasirgalabs.etumulator.linker.Linker;
 import com.kasirgalabs.etumulator.processor.BaseProcessor;
 import com.kasirgalabs.etumulator.processor.CPSR;
@@ -59,7 +58,7 @@ public class SingleDataMemoryVisitorTest {
 
         code = "ldr r0, =0xffffffff\n";
         processor.run(code, linker.link(code));
-        assertEquals("LDR operation does not work properly.", 0xffffffff,
+        assertEquals("LDR operation does not work properly.", 0xffff_ffff,
                 registerFile.getValue("r0"));
 
         code = "ldr r0, =label\n"

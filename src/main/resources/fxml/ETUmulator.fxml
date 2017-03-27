@@ -43,9 +43,9 @@
                 <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="Continue" />
                 <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="Step" />
             </children>
-         <GridPane.margin>
-            <Insets bottom="10.0" right="10.0" top="10.0" />
-         </GridPane.margin>
+            <GridPane.margin>
+                <Insets bottom="10.0" right="10.0" top="10.0" />
+            </GridPane.margin>
         </VBox>
         <TextArea prefHeight="150.0" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.rowIndex="2">
             <GridPane.margin>

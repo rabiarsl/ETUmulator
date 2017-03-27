@@ -27,7 +27,7 @@
     <opaqueInsets>
         <Insets />
     </opaqueInsets>
-   <padding>
-      <Insets bottom="10.0" left="10.0" />
-   </padding>
+    <padding>
+        <Insets bottom="10.0" left="10.0" />
+    </padding>
 </VBox>

@@ -17,7 +17,6 @@
 package com.kasirgalabs.etumulator.linker;
 
 import static org.junit.Assert.assertEquals;
-
 import org.junit.Test;
 
 public class SymbolTest {

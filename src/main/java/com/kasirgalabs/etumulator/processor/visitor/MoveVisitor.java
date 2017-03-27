@@ -62,7 +62,7 @@ public class MoveVisitor extends ArmBaseVisitor<Void> {
     @Override
     public Void visitMvn(ArmParser.MvnContext ctx) {
         String destRegister = registerVisitor.visit(ctx.rd());
-        int value = 0xffffffff ^ operand2Visitor.visit(ctx.operand2());
+        int value = 0xffff_ffff ^ operand2Visitor.visit(ctx.operand2());
         registerFile.setValue(destRegister, value);
         return null;
     }
@@ -70,7 +70,7 @@ public class MoveVisitor extends ArmBaseVisitor<Void> {
     @Override
     public Void visitMvns(ArmParser.MvnsContext ctx) {
         String destRegister = registerVisitor.visit(ctx.rd());
-        int value = 0xffffffff ^ operand2Visitor.visit(ctx.operand2());
+        int value = 0xffff_ffff ^ operand2Visitor.visit(ctx.operand2());
         cpsr.updateNZ(value);
         registerFile.setValue(destRegister, value);
         return null;
@@ -80,7 +80,7 @@ public class MoveVisitor extends ArmBaseVisitor<Void> {
     public Void visitMovt(ArmParser.MovtContext ctx) {
         String destRegister = registerVisitor.visit(ctx.rd());
         int value = registerFile.getValue(destRegister);
-        value &= 0x0000ffff;
+        value &= 0x0000_ffff;
         value |= numberVisitor.visit(ctx.imm16()) << 16;
         registerFile.setValue(destRegister, value);
         return null;

@@ -37,7 +37,7 @@ import org.fxmisc.flowless.VirtualizedScrollPane;
 import org.fxmisc.richtext.CodeArea;
 
 @Singleton
-public class DocumentController implements Initializable, Document {
+public class BaseDocument implements Initializable, Document {
     private static final String DEFAULT_NAME = "untitled";
     @FXML
     private Label label;
@@ -64,7 +64,7 @@ public class DocumentController implements Initializable, Document {
                     SyntaxHighlighter syntaxHighlighter
                             = new SyntaxHighlighter(document);
                     document.setStyleSpans(0,
-                            syntaxHighlighter.highlightSyntax(document.getText()));
+                            syntaxHighlighter.highlight(document.getText()));
                 });
         document.setParagraphGraphicFactory(graphicFactory);
         stackPane.getChildren().add(new VirtualizedScrollPane<>(document));
@@ -99,7 +99,8 @@ public class DocumentController implements Initializable, Document {
         String text = document.getText();
         try(BufferedWriter bw = new BufferedWriter(new FileWriter(targetFile))) {
             bw.write(text);
-        } catch(IOException ex) {
+        }
+        catch(IOException ex) {
             throw ex;
         }
     }

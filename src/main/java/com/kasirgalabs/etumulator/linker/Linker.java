@@ -193,7 +193,8 @@ public class Linker extends ArmBaseVisitor<Void> {
         definedDataSymbols.clear();
 
         inspectCode(code);
-        Set<Symbol> resolvedBranchSymbols = resolveSymbols(definedBranchSymbols, targetBranchSymbols);
+        Set<Symbol> resolvedBranchSymbols
+                = resolveSymbols(definedBranchSymbols, targetBranchSymbols);
         Set<Symbol> resolvedDataSymbols = resolveSymbols(definedDataSymbols, targetDataSymbols);
 
         return mergeSets(resolvedBranchSymbols, resolvedDataSymbols);
@@ -224,7 +225,7 @@ public class Linker extends ArmBaseVisitor<Void> {
     }
 
     private Set<Symbol> mergeSets(Set<Symbol> resolvedBranchSymbols, Set<Symbol> resolvedDataSymbols) {
-        Set<Symbol> temp = new HashSet<Symbol>();
+        Set<Symbol> temp = new HashSet<>();
         resolvedBranchSymbols.forEach((symbol) -> {
             temp.add(symbol);
         });

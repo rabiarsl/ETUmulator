@@ -25,7 +25,6 @@ public class ShiftedRegisterVisitor extends ArmBaseVisitor<Integer> {
     private static final int LSL = 1;
     private static final int LSR = 2;
     private static final int ROR = 3;
-
     private final RegisterFile registerFile;
     private final RegisterVisitor registerVisitor;
     private final NumberVisitor numberVisitor;

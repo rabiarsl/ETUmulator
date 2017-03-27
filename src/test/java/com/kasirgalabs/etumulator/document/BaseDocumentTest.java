@@ -17,7 +17,6 @@
 package com.kasirgalabs.etumulator.document;
 
 import static org.junit.Assert.assertEquals;
-
 import com.kasirgalabs.etumulator.JavaFXThread;
 import java.io.BufferedReader;
 import java.io.File;
@@ -30,7 +29,7 @@ import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 
-public class DocumentControllerTest {
+public class BaseDocumentTest {
     @Rule
     public JavaFXThread javaFXThread = new JavaFXThread();
     private Document document;
@@ -38,7 +37,7 @@ public class DocumentControllerTest {
 
     @Before
     public void setUp() throws IOException {
-        ClassLoader classLoader = DocumentControllerTest.class.getClassLoader();
+        ClassLoader classLoader = BaseDocumentTest.class.getClassLoader();
         FXMLLoader fxmlLoader = new FXMLLoader(classLoader.getResource("fxml/Document.fxml"));
         fxmlLoader.load();
         document = fxmlLoader.getController();
@@ -51,7 +50,7 @@ public class DocumentControllerTest {
     }
 
     /**
-     * Test of setTargetFile and getTargetFile methods, of class DocumentController.
+     * Test of setTargetFile and getTargetFile methods, of class BaseDocument.
      */
     @Test
     public void testSetTargetFileandGetTargetFile() {
@@ -61,7 +60,7 @@ public class DocumentControllerTest {
     }
 
     /**
-     * Test of saveDocument method, of class DocumentController.
+     * Test of saveDocument method, of class BaseDocument.
      *
      * @throws IOException If reading or writing to mock file produces an error.
      */
@@ -78,7 +77,8 @@ public class DocumentControllerTest {
         String result;
         try(BufferedReader bf = new BufferedReader(new FileReader(targetFile))) {
             result = bf.readLine();
-        } catch(IOException ex) {
+        }
+        catch(IOException ex) {
             throw ex;
         }
         targetFile.delete();
@@ -86,7 +86,9 @@ public class DocumentControllerTest {
     }
 
     /**
-     * Test of getText and setText methods, of class DocumentController.
+     * Test of getText and setText methods, of class BaseDocument.
+     *
+     * @throws java.io.IOException
      */
     @Test
     public void testGetTextAndSetText() throws IOException {
@@ -97,6 +99,8 @@ public class DocumentControllerTest {
 
     /**
      * Test of clear method, of class DocumentController.
+     *
+     * @throws java.io.IOException
      */
     @Test
     public void testClear() throws IOException {
@@ -114,7 +118,8 @@ public class DocumentControllerTest {
             while((line = bf.readLine()) != null) {
                 text.append(line).append("\n");
             }
-        } catch(IOException ex) {
+        }
+        catch(IOException ex) {
             throw ex;
         }
         document.setText(text.toString());

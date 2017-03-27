@@ -17,14 +17,12 @@
 package com.kasirgalabs.etumulator;
 
 import static org.junit.Assert.assertTrue;
-
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.junit.Test;
 
 public class ETUmulatorTest {
     private static final Logger LOG = Logger.getLogger(ETUmulatorTest.class.getName());
-
     private volatile boolean success;
 
     /**
@@ -40,7 +38,8 @@ public class ETUmulatorTest {
                 success = true;
                 try {
                     ETUmulator.main(new String[]{}); // Run JavaFX application.
-                } catch(Throwable t) {
+                }
+                catch(Throwable t) {
                     Throwable cause = t.getCause();
                     if(cause != null && cause.getClass().equals(InterruptedException.class)) {
                         // We expect to get this exception since we interrupted

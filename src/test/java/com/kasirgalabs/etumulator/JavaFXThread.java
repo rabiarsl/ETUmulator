@@ -16,7 +16,6 @@ import org.junit.runners.model.Statement;
  * {@literal @}Rule public JavaFXThreadingRule jfxRule = new JavaFXThreadingRule();
  */
 public class JavaFXThread implements TestRule {
-
     /**
      * Flag for setting up the JavaFX, we only need to do this once for all tests.
      */
@@ -45,7 +44,8 @@ public class JavaFXThread implements TestRule {
             Platform.runLater(() -> {
                 try {
                     statement.evaluate();
-                } catch(Throwable e) {
+                }
+                catch(Throwable e) {
                     rethrownException = e;
                 }
                 countDownLatch.countDown();

@@ -56,7 +56,8 @@ public class CompareVisitor extends ArmBaseVisitor<Void> {
         try {
             result = Math.addExact(left, right);
             overflow = false;
-        } catch(ArithmeticException e) {
+        }
+        catch(ArithmeticException e) {
             overflow = true;
             result = left + right;
         }

@@ -17,7 +17,6 @@
 package com.kasirgalabs.etumulator.processor.visitor;
 
 import static org.junit.Assert.assertEquals;
-
 import com.kasirgalabs.etumulator.processor.BaseProcessor;
 import com.kasirgalabs.etumulator.processor.CPSR;
 import com.kasirgalabs.etumulator.processor.Memory;
@@ -132,11 +131,11 @@ public class MoveVisitorTest {
         String code = "mov r0, #1\n"
                 + "movt r0, #0x0000ffff\n";
         processor.run(code, null);
-        assertEquals("Move result is wrong.", (0x0000ffff << 16) + 1, registerFile.getValue("r0"));
+        assertEquals("Move result is wrong.", (0x0000_ffff << 16) + 1, registerFile.getValue("r0"));
 
         code = "ldr r0, =#0xffffffff\n"
                 + "movt r0, #0\n";
         processor.run(code, null);
-        assertEquals("Move result is wrong.", 0x0000ffff, registerFile.getValue("r0"));
+        assertEquals("Move result is wrong.", 0x0000_ffff, registerFile.getValue("r0"));
     }
 }

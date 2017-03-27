@@ -26,14 +26,12 @@ public class LogicalVisitor extends ArmBaseVisitor<Void> {
     private final CPSR cpsr;
     private final RegisterVisitor registerVisitor;
     private final Operand2Visitor operand2Visitor;
-    private final NumberVisitor numberVisitor;
 
     public LogicalVisitor(RegisterFile registerFile, CPSR cpsr) {
         this.registerFile = registerFile;
         this.cpsr = cpsr;
         registerVisitor = new RegisterVisitor();
         operand2Visitor = new Operand2Visitor(registerFile);
-        numberVisitor = new NumberVisitor();
     }
 
     @Override

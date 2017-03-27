@@ -17,7 +17,6 @@
 package com.kasirgalabs.etumulator.processor.visitor;
 
 import static org.junit.Assert.assertEquals;
-
 import com.kasirgalabs.etumulator.linker.Linker;
 import com.kasirgalabs.etumulator.processor.BaseProcessor;
 import com.kasirgalabs.etumulator.processor.CPSR;
@@ -210,7 +209,8 @@ public class BranchVisitorTest {
                 + "mov r0, #1\n"
                 + "target:\n";
         processor.run(code, linker.link(code));
-        assertEquals("Branch instruction does not work properly.", 0xffffffff, registerFile.getValue("r0"));
+        assertEquals("Branch instruction does not work properly.", 0xffff_ffff, registerFile
+                .getValue("r0"));
 
         code = "ldr r0, =0x7fffffff\n"
                 + "cmp r0, #0\n"
@@ -240,7 +240,8 @@ public class BranchVisitorTest {
                 + "mov r0, #1\n"
                 + "target:\n";
         processor.run(code, linker.link(code));
-        assertEquals("Branch instruction does not work properly.", 0x7fffffff, registerFile.getValue("r0"));
+        assertEquals("Branch instruction does not work properly.", 0x7fff_ffff, registerFile
+                .getValue("r0"));
     }
 
     /**
@@ -254,7 +255,8 @@ public class BranchVisitorTest {
                 + "mov r0, #2\n"
                 + "target:\n";
         processor.run(code, linker.link(code));
-        assertEquals("Branch instruction does not work properly.", Integer.MIN_VALUE, registerFile.getValue("r0"));
+        assertEquals("Branch instruction does not work properly.", Integer.MIN_VALUE, registerFile
+                .getValue("r0"));
 
         code = "mov r0, #2\n"
                 + "cmp r0, #0\n"

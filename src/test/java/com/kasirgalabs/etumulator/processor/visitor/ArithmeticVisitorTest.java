@@ -17,7 +17,6 @@
 package com.kasirgalabs.etumulator.processor.visitor;
 
 import static org.junit.Assert.assertEquals;
-
 import com.kasirgalabs.etumulator.processor.BaseProcessor;
 import com.kasirgalabs.etumulator.processor.CPSR;
 import com.kasirgalabs.etumulator.processor.Memory;
@@ -271,7 +270,8 @@ public class ArithmeticVisitorTest {
         code = "ldr r1, =#0x80000000\n"
                 + "sbcs r0, r1, #1\n";
         processor.run(code, null);
-        assertEquals("Subtraction result is wrong.", Integer.MAX_VALUE - 1, registerFile.getValue("r0"));
+        assertEquals("Subtraction result is wrong.", Integer.MAX_VALUE - 1, registerFile
+                .getValue("r0"));
         assertEquals("Negative flag is wrong.", false, cpsr.isNegative());
         assertEquals("Zero flag is wrong.", false, cpsr.isZero());
         assertEquals("Overflow flag is wrong.", true, cpsr.isOverflow());
@@ -415,7 +415,8 @@ public class ArithmeticVisitorTest {
                 + "ldr r1, =#0x80000000\n"
                 + "rscs r0, r2, r1\n";
         processor.run(code, null);
-        assertEquals("Subtraction result is wrong.", Integer.MAX_VALUE - 1, registerFile.getValue("r0"));
+        assertEquals("Subtraction result is wrong.", Integer.MAX_VALUE - 1, registerFile
+                .getValue("r0"));
         assertEquals("Negative flag is wrong.", false, cpsr.isNegative());
         assertEquals("Zero flag is wrong.", false, cpsr.isZero());
         assertEquals("Overflow flag is wrong.", true, cpsr.isOverflow());
