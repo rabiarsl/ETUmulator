@@ -52,10 +52,7 @@ public class LdrAddressVisitor extends ArmBaseVisitor<Integer> {
         if(ctx.postIndexedRegister() != null) {
             return visit(ctx.postIndexedRegister());
         }
-        if(ctx.pcRelative() != null) {
-            return visit(ctx.pcRelative());
-        }
-        return null;
+        return visit(ctx.pcRelative());
     }
 
     @Override

@@ -49,6 +49,7 @@ public class DocumentController implements Initializable, Document {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         document = new CodeArea();
+        document.setCursor(Cursor.TEXT);
         IntFunction<Node> numberFunction = LineNumberFunction.applyTo(document);
         IntFunction<Node> arrowFunction = new ArrowFunction(document.currentParagraphProperty());
         IntFunction<Node> graphicFactory = line -> {
@@ -62,7 +63,8 @@ public class DocumentController implements Initializable, Document {
                     Scene scene = label.getScene();
                     SyntaxHighlighter syntaxHighlighter
                             = new SyntaxHighlighter(document);
-                    document.setStyleSpans(0, syntaxHighlighter.highlight(document.getText()));
+                    document.setStyleSpans(0,
+                            syntaxHighlighter.highlightSyntax(document.getText()));
                 });
         document.setParagraphGraphicFactory(graphicFactory);
         stackPane.getChildren().add(new VirtualizedScrollPane<>(document));

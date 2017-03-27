@@ -7,3 +7,6 @@
 .comment {
     -fx-fill: #969696;
 }
+.label {
+    -fx-fill: #009900;
+}

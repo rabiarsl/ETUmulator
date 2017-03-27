@@ -41,10 +41,6 @@ public class Navigator extends Observable implements Initializable {
         return valueType;
     }
 
-    private static void setValueType(int type) {
-        valueType = type;
-    }
-
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         valueTypeComboBox.setItems(FXCollections.observableArrayList(
@@ -54,7 +50,7 @@ public class Navigator extends Observable implements Initializable {
 
     @FXML
     private void valueTypeOnAction(ActionEvent event) {
-        setValueType(valueTypeComboBox.getSelectionModel().getSelectedIndex());
+        valueType = valueTypeComboBox.getSelectionModel().getSelectedIndex();
         setChanged();
         notifyObservers();
     }
