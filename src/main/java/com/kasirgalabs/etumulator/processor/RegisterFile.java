@@ -17,12 +17,12 @@
 package com.kasirgalabs.etumulator.processor;
 
 import com.google.inject.Singleton;
+import com.kasirgalabs.etumulator.util.GUISafeObservable;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Observable;
 
 @Singleton
-public class RegisterFile extends Observable {
+public class RegisterFile extends GUISafeObservable {
     private final Map<String, Integer> registers;
 
     public RegisterFile() {
@@ -38,7 +38,6 @@ public class RegisterFile extends Observable {
 
     public void setValue(String registerName, int value) {
         registers.replace(registerName, value);
-        setChanged();
         notifyObservers(registerName);
     }
 

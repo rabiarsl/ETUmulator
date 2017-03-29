@@ -17,11 +17,11 @@
 package com.kasirgalabs.etumulator.processor;
 
 import com.google.inject.Singleton;
+import com.kasirgalabs.etumulator.util.GUISafeObservable;
 import java.util.LinkedList;
-import java.util.Observable;
 
 @Singleton
-public class Stack extends Observable {
+public class Stack extends GUISafeObservable {
     private final LinkedList<Integer> list;
 
     public Stack() {
@@ -30,13 +30,11 @@ public class Stack extends Observable {
 
     public void push(Integer item) {
         list.push(item);
-        setChanged();
         notifyObservers("push");
     }
 
     public int pop() {
         int result = list.pop();
-        setChanged();
         notifyObservers("pop");
         return result;
     }

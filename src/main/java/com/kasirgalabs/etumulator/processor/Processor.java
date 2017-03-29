@@ -21,4 +21,6 @@ import java.util.Set;
 
 public interface Processor {
     void run(String code, Set<Symbol> symbols);
+
+    void stop();
 }

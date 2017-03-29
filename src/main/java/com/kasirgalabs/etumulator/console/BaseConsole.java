@@ -16,8 +16,11 @@
  */
 package com.kasirgalabs.etumulator.console;
 
-import com.google.inject.Singleton;
+import com.google.inject.Inject;
+import com.kasirgalabs.etumulator.processor.UART;
 import java.net.URL;
+import java.util.Observable;
+import java.util.Observer;
 import java.util.ResourceBundle;
 import java.util.concurrent.Semaphore;
 import java.util.logging.Level;
@@ -28,17 +31,26 @@ import javafx.scene.control.TextArea;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.VBox;
 
-@Singleton
-public class BaseConsole extends TextArea implements Initializable, Console {
+public class BaseConsole extends TextArea implements Initializable, Console, Observer {
     private static final Logger LOGGER = Logger.getLogger(BaseConsole.class.getName());
-    private final Semaphore semaphore;
+    private Semaphore semaphore;
     private volatile boolean readEnable;
     private volatile char readChar;
     @FXML
     private VBox vbox;
+    private final UART uart;
 
-    public BaseConsole() {
+    @Inject
+    public BaseConsole(UART uart) {
+        this.uart = uart;
+    }
+
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
+        uart.addObserver(this);
+        vbox.getChildren().add(this);
         semaphore = new Semaphore(0);
+        this.wrapTextProperty().set(true);
         addEventFilter(KeyEvent.ANY, (keyEvent) -> {
             if(keyEvent.getEventType().equals(KeyEvent.KEY_TYPED) && readEnable) {
                 readChar = keyEvent.getCharacter().charAt(0);
@@ -51,25 +63,12 @@ public class BaseConsole extends TextArea implements Initializable, Console {
     }
 
     @Override
-    public void initialize(URL location, ResourceBundle resources) {
-        vbox.getChildren().add(this);
-    }
-
-    @Override
-    public void replaceText(int start, int end, String text) {
-        String current = getText();
-        if(!current.substring(start).contains("\n")) {
-            super.replaceText(start, end, text);
+    public void update(Observable o, Object arg) {
+        if(arg == null) {
+            uart.feed(read());
+            return;
         }
-    }
-
-    @Override
-    public void replaceSelection(String text) {
-        String current = getText();
-        int selectionStart = getSelection().getStart();
-        if(!current.substring(selectionStart).contains("\n")) {
-            super.replaceSelection(text);
-        }
+        write((char) arg);
     }
 
     @Override
@@ -87,5 +86,22 @@ public class BaseConsole extends TextArea implements Initializable, Console {
             LOGGER.log(Level.SEVERE, null, ex);
         }
         return readChar;
+    }
+
+    @Override
+    public void replaceText(int start, int end, String text) {
+        String current = getText();
+        if(!current.substring(start).contains("\n")) {
+            super.replaceText(start, end, text);
+        }
+    }
+
+    @Override
+    public void replaceSelection(String text) {
+        String current = getText();
+        int selectionStart = getSelection().getStart();
+        if(!current.substring(selectionStart).contains("\n")) {
+            super.replaceSelection(text);
+        }
     }
 }

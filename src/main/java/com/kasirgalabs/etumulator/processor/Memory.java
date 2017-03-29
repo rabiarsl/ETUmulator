@@ -17,12 +17,12 @@
 package com.kasirgalabs.etumulator.processor;
 
 import com.google.inject.Singleton;
+import com.kasirgalabs.etumulator.util.GUISafeObservable;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Observable;
 
 @Singleton
-public class Memory extends Observable {
+public class Memory extends GUISafeObservable {
     private final Map<Integer, Byte> memory;
 
     public Memory() {
@@ -38,7 +38,6 @@ public class Memory extends Observable {
 
     public void set(int address, byte value) {
         memory.put(address, value);
-        setChanged();
         notifyObservers(address);
     }
 

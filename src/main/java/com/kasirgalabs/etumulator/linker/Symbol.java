@@ -18,7 +18,7 @@ package com.kasirgalabs.etumulator.linker;
 
 import java.util.Objects;
 
-public class Symbol {
+public final class Symbol {
     private final String name;
     private final int address;
 

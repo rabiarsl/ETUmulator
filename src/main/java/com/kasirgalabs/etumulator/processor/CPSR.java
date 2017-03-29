@@ -17,10 +17,10 @@
 package com.kasirgalabs.etumulator.processor;
 
 import com.google.inject.Singleton;
-import java.util.Observable;
+import com.kasirgalabs.etumulator.util.GUISafeObservable;
 
 @Singleton
-public class CPSR extends Observable {
+public class CPSR extends GUISafeObservable {
     private boolean negative;
     private boolean zero;
     private boolean carry;
@@ -36,7 +36,6 @@ public class CPSR extends Observable {
 
     public void setZero(boolean zero) {
         this.zero = zero;
-        setChanged();
         notifyObservers();
     }
 
@@ -46,7 +45,6 @@ public class CPSR extends Observable {
 
     public void setCarry(boolean carry) {
         this.carry = carry;
-        setChanged();
         notifyObservers();
     }
 
@@ -56,14 +54,12 @@ public class CPSR extends Observable {
 
     public void setOverflow(boolean overflow) {
         this.overflow = overflow;
-        setChanged();
         notifyObservers();
     }
 
     public int updateNZ(int result) {
         negative = result < 0;
         zero = result == 0;
-        setChanged();
         notifyObservers();
         return result;
     }

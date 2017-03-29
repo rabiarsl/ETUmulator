@@ -14,28 +14,32 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.kasirgalabs.etumulator.console;
+package com.kasirgalabs.etumulator.processor;
 
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
-import com.kasirgalabs.etumulator.processor.RegisterFile;
+import com.kasirgalabs.etumulator.util.GUISafeObservable;
 
 @Singleton
-public class Uart {
-    private final Console console;
+public class UART extends GUISafeObservable {
     private final RegisterFile registerFile;
+    private volatile char input;
 
     @Inject
-    public Uart(RegisterFile registerFile, Console console) {
+    public UART(RegisterFile registerFile) {
         this.registerFile = registerFile;
-        this.console = console;
     }
 
     public void read() {
-        registerFile.setValue("r0", console.read());
+        notifyObservers();
+        registerFile.setValue("r0", input);
     }
 
     public void write() {
-        console.write((char) registerFile.getValue("r0"));
+        notifyObservers((char) registerFile.getValue("r0"));
+    }
+
+    public void feed(char input) {
+        this.input = input;
     }
 }

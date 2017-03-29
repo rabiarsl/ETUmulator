@@ -21,7 +21,6 @@ import com.google.inject.Singleton;
 import com.kasirgalabs.arm.ArmBaseVisitor;
 import com.kasirgalabs.arm.ArmLexer;
 import com.kasirgalabs.arm.ArmParser;
-import com.kasirgalabs.etumulator.console.Uart;
 import com.kasirgalabs.etumulator.linker.Symbol;
 import com.kasirgalabs.etumulator.processor.visitor.ArithmeticVisitor;
 import com.kasirgalabs.etumulator.processor.visitor.BranchVisitor;
@@ -33,11 +32,15 @@ import com.kasirgalabs.etumulator.processor.visitor.ShiftVisitor;
 import com.kasirgalabs.etumulator.processor.visitor.SingleDataMemoryVisitor;
 import com.kasirgalabs.etumulator.processor.visitor.StackVisitor;
 import java.util.Set;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import javafx.application.Platform;
+import javax.swing.SwingUtilities;
 import org.antlr.v4.runtime.ANTLRInputStream;
 import org.antlr.v4.runtime.CommonTokenStream;
 
 @Singleton
-public class BaseProcessor extends ArmBaseVisitor<Void> implements Processor {
+public class BaseProcessor extends ArmBaseVisitor<Void> implements Processor, Runnable {
     private final ArithmeticVisitor arithmeticVisitor;
     private final MultiplyAndDivideVisitor multiplyAndDivideVisitor;
     private final MoveVisitor moveVisitor;
@@ -47,20 +50,30 @@ public class BaseProcessor extends ArmBaseVisitor<Void> implements Processor {
     private final BranchVisitor branchVisitor;
     private final SingleDataMemoryVisitor singleDataMemoryVisitor;
     private final StackVisitor stackVisitor;
+    private final ExecutorService executor;
     private volatile int pc;
+    private String code;
 
     @Inject
-    public BaseProcessor(RegisterFile registerFile, CPSR cpsr, Stack stack, Memory memory,
-            Uart uart) {
-        this.arithmeticVisitor = new ArithmeticVisitor(registerFile, cpsr);
-        this.multiplyAndDivideVisitor = new MultiplyAndDivideVisitor(registerFile, cpsr);
-        this.moveVisitor = new MoveVisitor(registerFile, cpsr);
-        this.shiftVisitor = new ShiftVisitor(registerFile, cpsr);
-        this.compareVisitor = new CompareVisitor(registerFile, cpsr);
-        this.logicalVisitor = new LogicalVisitor(registerFile, cpsr);
-        this.branchVisitor = new BranchVisitor(cpsr, uart);
-        this.singleDataMemoryVisitor = new SingleDataMemoryVisitor(registerFile, memory);
-        this.stackVisitor = new StackVisitor(registerFile, stack);
+    public BaseProcessor(ProcessorUnits processorUnits) {
+        arithmeticVisitor
+                = new ArithmeticVisitor(processorUnits.getRegisterFile(), processorUnits.getCPSR());
+        multiplyAndDivideVisitor = new MultiplyAndDivideVisitor(processorUnits
+                .getRegisterFile(), processorUnits.getCPSR());
+        moveVisitor = new MoveVisitor(processorUnits
+                .getRegisterFile(), processorUnits.getCPSR());
+        shiftVisitor = new ShiftVisitor(processorUnits
+                .getRegisterFile(), processorUnits.getCPSR());
+        compareVisitor = new CompareVisitor(processorUnits
+                .getRegisterFile(), processorUnits.getCPSR());
+        logicalVisitor = new LogicalVisitor(processorUnits
+                .getRegisterFile(), processorUnits.getCPSR());
+        branchVisitor = new BranchVisitor(processorUnits.getCPSR(), processorUnits.getUART());
+        singleDataMemoryVisitor = new SingleDataMemoryVisitor(processorUnits
+                .getRegisterFile(), processorUnits.getMemory());
+        stackVisitor = new StackVisitor(processorUnits
+                .getRegisterFile(), processorUnits.getStack());
+        executor = Executors.newSingleThreadExecutor();
         pc = 0;
     }
 
@@ -115,9 +128,24 @@ public class BaseProcessor extends ArmBaseVisitor<Void> implements Processor {
 
     @Override
     public void run(String code, Set<Symbol> symbols) {
+        this.code = code;
         pc = 0;
         branchVisitor.setSymbols(symbols);
         singleDataMemoryVisitor.setSymbols(symbols);
+        if(Platform.isFxApplicationThread() || SwingUtilities.isEventDispatchThread()) {
+            executor.submit(this);
+            return;
+        }
+        run();
+    }
+
+    @Override
+    public void stop() {
+        executor.shutdownNow();
+    }
+
+    @Override
+    public void run() {
         final char[][] instructions = parseInstructions(code);
         while(pc < instructions.length) {
             char[] instruction = instructions[pc];

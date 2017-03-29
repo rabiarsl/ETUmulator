@@ -17,15 +17,12 @@
 package com.kasirgalabs.etumulator.processor.visitor;
 
 import static org.junit.Assert.assertEquals;
-import com.kasirgalabs.etumulator.console.BaseConsole;
-import com.kasirgalabs.etumulator.console.Uart;
 import com.kasirgalabs.etumulator.linker.Linker;
 import com.kasirgalabs.etumulator.processor.BaseProcessor;
-import com.kasirgalabs.etumulator.processor.CPSR;
 import com.kasirgalabs.etumulator.processor.Memory;
 import com.kasirgalabs.etumulator.processor.Processor;
+import com.kasirgalabs.etumulator.processor.ProcessorUnits;
 import com.kasirgalabs.etumulator.processor.RegisterFile;
-import com.kasirgalabs.etumulator.processor.Stack;
 import org.junit.Test;
 
 public class SingleDataMemoryVisitorTest {
@@ -35,13 +32,10 @@ public class SingleDataMemoryVisitorTest {
     private final Linker linker;
 
     public SingleDataMemoryVisitorTest() {
-        registerFile = new RegisterFile();
-        memory = new Memory();
-        processor = new BaseProcessor(registerFile,
-                new CPSR(),
-                new Stack(),
-                memory,
-                new Uart(registerFile, new BaseConsole()));
+        ProcessorUnits processorUnits = new ProcessorUnits();
+        registerFile = processorUnits.getRegisterFile();
+        memory = processorUnits.getMemory();
+        processor = new BaseProcessor(processorUnits);
         linker = new Linker(memory);
     }
 
