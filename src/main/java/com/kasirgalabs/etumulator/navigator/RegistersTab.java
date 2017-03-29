@@ -37,11 +37,16 @@ public class RegistersTab implements Initializable, Observer {
     private TableColumn<NavigatorRow, String> property;
     @FXML
     private TableColumn<NavigatorRow, String> value;
+    private final RegisterFile registerFile;
+    private final Navigator navigator;
+    private final ObservableList<NavigatorRow> data;
+
     @Inject
-    private RegisterFile registerFile;
-    @Inject
-    private Navigator navigator;
-    private final ObservableList<NavigatorRow> data = FXCollections.observableArrayList();
+    public RegistersTab(RegisterFile registerFile, Navigator navigator) {
+        this.registerFile = registerFile;
+        this.navigator = navigator;
+        data = FXCollections.observableArrayList();
+    }
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {

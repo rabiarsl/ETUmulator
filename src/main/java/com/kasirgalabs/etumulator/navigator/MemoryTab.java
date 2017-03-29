@@ -37,11 +37,16 @@ public class MemoryTab implements Initializable, Observer {
     private TableColumn<NavigatorRow, String> property;
     @FXML
     private TableColumn<NavigatorRow, String> value;
+    private final Memory memory;
+    private final Navigator navigator;
+    private final ObservableList<NavigatorRow> data;
+
     @Inject
-    private Memory memory;
-    @Inject
-    private Navigator navigator;
-    private final ObservableList<NavigatorRow> data = FXCollections.observableArrayList();
+    public MemoryTab(Memory memory, Navigator navigator) {
+        this.memory = memory;
+        this.navigator = navigator;
+        data = FXCollections.observableArrayList();
+    }
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {

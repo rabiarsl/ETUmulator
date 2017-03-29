@@ -29,7 +29,6 @@ import javafx.fxml.Initializable;
 import javafx.geometry.Pos;
 import javafx.scene.Cursor;
 import javafx.scene.Node;
-import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
@@ -46,10 +45,8 @@ public class BaseDocument implements Initializable, Document {
     private File targetFile;
     private CodeArea document;
 
-    @Override
-    public void initialize(URL location, ResourceBundle resources) {
-        document = new CodeArea();
-        document.setCursor(Cursor.TEXT);
+    public BaseDocument() {
+        document = new ArmCodeArea();
         IntFunction<Node> numberFunction = LineNumberFunction.applyTo(document);
         IntFunction<Node> arrowFunction = new ArrowFunction(document.currentParagraphProperty());
         IntFunction<Node> graphicFactory = line -> {
@@ -58,15 +55,11 @@ public class BaseDocument implements Initializable, Document {
             hbox.setAlignment(Pos.CENTER_LEFT);
             return hbox;
         };
-        document.richChanges().filter(ch -> !ch.getInserted().equals(ch.getRemoved()))
-                .subscribe(change -> {
-                    Scene scene = label.getScene();
-                    SyntaxHighlighter syntaxHighlighter
-                            = new SyntaxHighlighter(document);
-                    document.setStyleSpans(0,
-                            syntaxHighlighter.highlight(document.getText()));
-                });
         document.setParagraphGraphicFactory(graphicFactory);
+    }
+
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
         stackPane.getChildren().add(new VirtualizedScrollPane<>(document));
         targetFile = new File(DEFAULT_NAME);
         label.setText(DEFAULT_NAME);

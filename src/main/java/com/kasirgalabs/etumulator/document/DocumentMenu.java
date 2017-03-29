@@ -27,12 +27,13 @@ import javafx.stage.FileChooser;
 import javafx.stage.Window;
 
 public class DocumentMenu {
-    @Inject
-    private Document document;
+    private final Document document;
     private final FileChooser fileChooser;
     private Window window;
 
-    public DocumentMenu() {
+    @Inject
+    public DocumentMenu(Document document) {
+        this.document = document;
         this.fileChooser = new FileChooser();
         fileChooser.setTitle("ETUmulator");
     }

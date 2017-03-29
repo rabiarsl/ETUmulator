@@ -8,7 +8,6 @@ import java.util.HashSet;
 import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-import javafx.scene.Parent;
 import org.fxmisc.richtext.model.StyleSpans;
 import org.fxmisc.richtext.model.StyleSpansBuilder;
 
@@ -37,11 +36,7 @@ public class SyntaxHighlighter {
     );
     private final Set<String> dictionary;
 
-    public SyntaxHighlighter(Parent parent) {
-        parent.getStylesheets().add(SyntaxHighlighter.class.getClassLoader()
-                .getResource("styles/arm-syntax-highlight.css").toExternalForm());
-        parent.getStylesheets().add(SyntaxHighlighter.class.getClassLoader()
-                .getResource("styles/spellchecking.css").toExternalForm());
+    public SyntaxHighlighter() {
         dictionary = new HashSet<>(KEYWORDS.length);
         dictionary.addAll(Arrays.asList(KEYWORDS));
     }

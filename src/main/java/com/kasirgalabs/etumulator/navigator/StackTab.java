@@ -37,11 +37,16 @@ public class StackTab implements Initializable, Observer {
     private TableColumn<NavigatorRow, String> property;
     @FXML
     private TableColumn<NavigatorRow, String> value;
+    private final Stack stack;
+    private final Navigator navigator;
+    private final ObservableList<NavigatorRow> data;
+
     @Inject
-    private Stack stack;
-    @Inject
-    private Navigator navigator;
-    private final ObservableList<NavigatorRow> data = FXCollections.observableArrayList();
+    public StackTab(Stack stack, Navigator navigator) {
+        this.stack = stack;
+        this.navigator = navigator;
+        data = FXCollections.observableArrayList();
+    }
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {

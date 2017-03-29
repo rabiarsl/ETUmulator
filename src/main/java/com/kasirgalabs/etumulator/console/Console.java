@@ -17,5 +17,7 @@
 package com.kasirgalabs.etumulator.console;
 
 public interface Console {
-    void write(Object o);
+    void write(char data);
+
+    char read();
 }
