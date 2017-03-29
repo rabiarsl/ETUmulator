@@ -17,16 +17,14 @@
 package com.kasirgalabs.etumulator.processor.visitor;
 
 import static org.junit.Assert.assertEquals;
+import com.kasirgalabs.etumulator.console.BaseConsole;
+import com.kasirgalabs.etumulator.console.Uart;
 import com.kasirgalabs.etumulator.processor.BaseProcessor;
 import com.kasirgalabs.etumulator.processor.CPSR;
 import com.kasirgalabs.etumulator.processor.Memory;
 import com.kasirgalabs.etumulator.processor.Processor;
 import com.kasirgalabs.etumulator.processor.RegisterFile;
 import com.kasirgalabs.etumulator.processor.Stack;
-import org.junit.After;
-import org.junit.AfterClass;
-import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
 
 public class CompareVisitorTest {
@@ -38,23 +36,8 @@ public class CompareVisitorTest {
         processor = new BaseProcessor(new RegisterFile(),
                 cpsr,
                 new Stack(),
-                new Memory());
-    }
-
-    @BeforeClass
-    public static void setUpClass() {
-    }
-
-    @AfterClass
-    public static void tearDownClass() {
-    }
-
-    @Before
-    public void setUp() {
-    }
-
-    @After
-    public void tearDown() {
+                new Memory(),
+                new Uart(new RegisterFile(), new BaseConsole()));
     }
 
     /**

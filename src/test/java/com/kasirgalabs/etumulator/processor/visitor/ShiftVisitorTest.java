@@ -17,6 +17,8 @@
 package com.kasirgalabs.etumulator.processor.visitor;
 
 import static org.junit.Assert.assertEquals;
+import com.kasirgalabs.etumulator.console.BaseConsole;
+import com.kasirgalabs.etumulator.console.Uart;
 import com.kasirgalabs.etumulator.processor.BaseProcessor;
 import com.kasirgalabs.etumulator.processor.CPSR;
 import com.kasirgalabs.etumulator.processor.Memory;
@@ -36,7 +38,8 @@ public class ShiftVisitorTest {
         processor = new BaseProcessor(registerFile,
                 cpsr,
                 new Stack(),
-                new Memory());
+                new Memory(),
+                new Uart(registerFile, new BaseConsole()));
     }
 
     /**

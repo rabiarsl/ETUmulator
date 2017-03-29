@@ -21,6 +21,7 @@ import com.google.inject.Singleton;
 import com.kasirgalabs.arm.ArmBaseVisitor;
 import com.kasirgalabs.arm.ArmLexer;
 import com.kasirgalabs.arm.ArmParser;
+import com.kasirgalabs.etumulator.console.Uart;
 import com.kasirgalabs.etumulator.linker.Symbol;
 import com.kasirgalabs.etumulator.processor.visitor.ArithmeticVisitor;
 import com.kasirgalabs.etumulator.processor.visitor.BranchVisitor;
@@ -46,17 +47,18 @@ public class BaseProcessor extends ArmBaseVisitor<Void> implements Processor {
     private final BranchVisitor branchVisitor;
     private final SingleDataMemoryVisitor singleDataMemoryVisitor;
     private final StackVisitor stackVisitor;
-    private int pc;
+    private volatile int pc;
 
     @Inject
-    public BaseProcessor(RegisterFile registerFile, CPSR cpsr, Stack stack, Memory memory) {
+    public BaseProcessor(RegisterFile registerFile, CPSR cpsr, Stack stack, Memory memory,
+            Uart uart) {
         this.arithmeticVisitor = new ArithmeticVisitor(registerFile, cpsr);
         this.multiplyAndDivideVisitor = new MultiplyAndDivideVisitor(registerFile, cpsr);
         this.moveVisitor = new MoveVisitor(registerFile, cpsr);
         this.shiftVisitor = new ShiftVisitor(registerFile, cpsr);
         this.compareVisitor = new CompareVisitor(registerFile, cpsr);
         this.logicalVisitor = new LogicalVisitor(registerFile, cpsr);
-        this.branchVisitor = new BranchVisitor(cpsr);
+        this.branchVisitor = new BranchVisitor(cpsr, uart);
         this.singleDataMemoryVisitor = new SingleDataMemoryVisitor(registerFile, memory);
         this.stackVisitor = new StackVisitor(registerFile, stack);
         pc = 0;

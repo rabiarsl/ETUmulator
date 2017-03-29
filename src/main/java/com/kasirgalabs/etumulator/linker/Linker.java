@@ -153,7 +153,6 @@ public class Linker extends ArmBaseVisitor<Void> {
 
     @Override
     public Void visitBl(ArmParser.BlContext ctx) {
-        targetBranchSymbols.add(ctx.LABEL().getText());
         return null;
     }
 

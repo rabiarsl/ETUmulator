@@ -17,6 +17,8 @@
 package com.kasirgalabs.etumulator.processor.visitor;
 
 import static org.junit.Assert.assertEquals;
+import com.kasirgalabs.etumulator.console.BaseConsole;
+import com.kasirgalabs.etumulator.console.Uart;
 import com.kasirgalabs.etumulator.linker.Linker;
 import com.kasirgalabs.etumulator.processor.BaseProcessor;
 import com.kasirgalabs.etumulator.processor.CPSR;
@@ -38,7 +40,8 @@ public class SingleDataMemoryVisitorTest {
         processor = new BaseProcessor(registerFile,
                 new CPSR(),
                 new Stack(),
-                memory);
+                memory,
+                new Uart(registerFile, new BaseConsole()));
         linker = new Linker(memory);
     }
 

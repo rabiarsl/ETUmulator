@@ -17,6 +17,8 @@
 package com.kasirgalabs.etumulator;
 
 import com.google.inject.AbstractModule;
+import com.kasirgalabs.etumulator.console.BaseConsole;
+import com.kasirgalabs.etumulator.console.Console;
 import com.kasirgalabs.etumulator.document.BaseDocument;
 import com.kasirgalabs.etumulator.document.Document;
 import com.kasirgalabs.etumulator.navigator.Navigator;
@@ -37,5 +39,6 @@ public class ETUmulatorModule extends AbstractModule {
         bind(Memory.class);
         bind(Document.class).to(BaseDocument.class);
         bind(Navigator.class);
+        bind(Console.class).to(BaseConsole.class);
     }
 }

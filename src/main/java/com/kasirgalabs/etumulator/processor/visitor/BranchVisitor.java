@@ -18,16 +18,19 @@ package com.kasirgalabs.etumulator.processor.visitor;
 
 import com.kasirgalabs.arm.ArmBaseVisitor;
 import com.kasirgalabs.arm.ArmParser;
+import com.kasirgalabs.etumulator.console.Uart;
 import com.kasirgalabs.etumulator.linker.Symbol;
 import com.kasirgalabs.etumulator.processor.CPSR;
 import java.util.Set;
 
 public class BranchVisitor extends ArmBaseVisitor<Integer> {
     private final CPSR cpsr;
+    private final Uart uart;
     private Set<Symbol> symbols;
 
-    public BranchVisitor(CPSR cpsr) {
+    public BranchVisitor(CPSR cpsr, Uart uart) {
         this.cpsr = cpsr;
+        this.uart = uart;
     }
 
     public void setSymbols(Set<Symbol> symbols) {
@@ -174,6 +177,10 @@ public class BranchVisitor extends ArmBaseVisitor<Integer> {
 
     @Override
     public Integer visitBl(ArmParser.BlContext ctx) {
+        String label = ctx.LABEL().getText();
+        if(label.equals("uart_write")) {
+            uart.write();
+        }
         return null;
     }
 
