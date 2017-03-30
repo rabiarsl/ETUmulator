@@ -30,7 +30,7 @@ public class Memory extends GUISafeObservable {
     }
 
     public byte get(int address) {
-        if(memory.containsKey(address)) {
+        if(!isAddressEmpty(address)) {
             return memory.get(address);
         }
         return (byte) (Math.random() * Byte.MAX_VALUE);

@@ -23,18 +23,23 @@ import com.kasirgalabs.etumulator.processor.CPSR;
 import com.kasirgalabs.etumulator.processor.Processor;
 import com.kasirgalabs.etumulator.processor.ProcessorUnits;
 import com.kasirgalabs.etumulator.processor.RegisterFile;
+import com.kasirgalabs.etumulator.processor.UART;
+import java.util.Observable;
 import org.junit.Test;
 
 public class BranchVisitorTest {
+    private final ProcessorUnits processorUnits;
     private final RegisterFile registerFile;
     private final CPSR cpsr;
+    private final UART uart;
     private final Processor processor;
     private final Linker linker;
 
     public BranchVisitorTest() {
-        ProcessorUnits processorUnits = new ProcessorUnits();
+        processorUnits = new ProcessorUnits();
         registerFile = processorUnits.getRegisterFile();
         cpsr = processorUnits.getCPSR();
+        uart = processorUnits.getUART();
         processor = new BaseProcessor(processorUnits);
         linker = new Linker(null);
     }
@@ -498,7 +503,8 @@ public class BranchVisitorTest {
         processor.run(code, linker.link(code));
         assertEquals("Branch instruction does not work properly.", 1, registerFile.getValue("r0"));
 
-        code = "target:\n"
+        code = "mov r0, #0\n"
+                + "target:\n"
                 + "cmp r0, #5\n"
                 + "beq target2\n"
                 + "add r0, r0, #1\n"
@@ -514,19 +520,24 @@ public class BranchVisitorTest {
     @Test
     public void testVisitBl() {
         String code = "mov r0, #1\n"
-                + "bal target\n"
-                + "add r0, r0, r0\n"
-                + "target:\n";
-        processor.run(code, linker.link(code));
-        assertEquals("Branch instruction does not work properly.", 1, registerFile.getValue("r0"));
-
-        code = "target:\n"
-                + "cmp r0, #5\n"
-                + "beq target2\n"
+                + "label:\n"
+                + "cmp r0, #100\n"
+                + "beq exit\n"
                 + "add r0, r0, #1\n"
-                + "bal target\n"
-                + "target2:\n";
+                + "bl uart_write\n"
+                + "b label\n"
+                + "exit:\n";
         processor.run(code, linker.link(code));
-        assertEquals("Branch instruction does not work properly.", 5, registerFile.getValue("r0"));
+        assertEquals("Branch instruction does not work properly.", 100, registerFile.getValue("r0"));
+
+        registerFile.reset();
+        char expResult = '5';
+        uart.addObserver((Observable o, Object arg) -> {
+            uart.feed(expResult);
+        });
+        code = "bl uart_read\n";
+        processor.run(code, linker.link(code));
+        assertEquals("Branch instruction does not work properly.", expResult, registerFile
+                .getValue("r0"));
     }
 }

@@ -48,6 +48,13 @@ public class CPSRStatusTest {
      */
     @Test
     public void testUpdate() {
-        cpsr.notifyObservers();
+        cpsr.setNegative(true);
+        cpsr.setNegative(false);
+        cpsr.setZero(true);
+        cpsr.setZero(false);
+        cpsr.setCarry(true);
+        cpsr.setCarry(false);
+        cpsr.setOverflow(true);
+        cpsr.setOverflow(false);
     }
 }

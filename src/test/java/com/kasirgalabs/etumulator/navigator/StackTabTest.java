@@ -53,6 +53,8 @@ public class StackTabTest {
         final int RANDOM = (int) (Math.random() * Integer.MAX_VALUE);
         stack.notifyObservers("pop");
         stack.push(RANDOM);
+        stack.push(RANDOM);
+        stack.pop();
         navigator.notifyObservers();
     }
 }

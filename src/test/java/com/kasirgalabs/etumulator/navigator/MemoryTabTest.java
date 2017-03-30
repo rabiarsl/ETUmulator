@@ -51,7 +51,9 @@ public class MemoryTabTest {
     @Test
     public void testUpdate() {
         final int RANDOM = (int) (Math.random() * Integer.MAX_VALUE);
-        memory.notifyObservers(RANDOM);
+        memory.set(RANDOM, (byte) 0);
+        memory.set(RANDOM, (byte) 1);
+        memory.notifyObservers(RANDOM + 1);
         navigator.notifyObservers();
     }
 }

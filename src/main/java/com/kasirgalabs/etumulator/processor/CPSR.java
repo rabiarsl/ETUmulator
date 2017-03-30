@@ -30,6 +30,10 @@ public class CPSR extends GUISafeObservable {
         return negative;
     }
 
+    public void setNegative(boolean negative) {
+        this.negative = negative;
+    }
+
     public boolean isZero() {
         return zero;
     }
