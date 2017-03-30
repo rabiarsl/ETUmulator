@@ -19,6 +19,10 @@ package com.kasirgalabs.etumulator.navigator;
 import com.kasirgalabs.etumulator.string.StringUtils;
 
 public class NavigatorRow {
+    public static final int DECIMAL = 0;
+    public static final int HEX = 1;
+    public static final int ASCII = 2;
+    public static final int BINARY = 3;
     private static int valueType;
     private final String property;
     private String value;
@@ -52,13 +56,13 @@ public class NavigatorRow {
 
     public String getValue() {
         switch(valueType) {
-            case Navigator.BINARY:
+            case BINARY:
                 return StringUtils.toBinaryString(value);
-            case Navigator.DECIMAL:
+            case DECIMAL:
                 return value;
-            case Navigator.HEX:
+            case HEX:
                 return StringUtils.toHexString(value);
-            case Navigator.ASCII:
+            case ASCII:
                 return StringUtils.toAsciiString(value);
             default:
                 return value;

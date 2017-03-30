@@ -60,7 +60,7 @@ public class GUISafeObservableTest {
      */
     @Test
     public void testNotifyObservers() {
-
+        observable.notifyObservers();
     }
 
     private static class TestObserver implements Observer {

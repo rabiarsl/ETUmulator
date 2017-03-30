@@ -35,8 +35,12 @@ public class CPSRStatus implements Initializable, Observer {
     private TextField carry;
     @FXML
     private TextField overflow;
+    private final CPSR cpsr;
+
     @Inject
-    private CPSR cpsr;
+    public CPSRStatus(CPSR cpsr) {
+        this.cpsr = cpsr;
+    }
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {

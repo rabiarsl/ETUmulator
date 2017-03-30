@@ -28,17 +28,8 @@ import javafx.scene.control.ComboBox;
 
 @Singleton
 public class Navigator extends Observable implements Initializable {
-    public static final int DECIMAL = 0;
-    public static final int HEX = 1;
-    public static final int ASCII = 2;
-    public static final int BINARY = 3;
-    private static int valueType;
     @FXML
     private ComboBox<String> valueTypeComboBox;
-
-    public static int getValueType() {
-        return valueType;
-    }
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -49,7 +40,8 @@ public class Navigator extends Observable implements Initializable {
 
     @FXML
     private void valueTypeOnAction(ActionEvent event) {
-        Navigator.valueType = valueTypeComboBox.getSelectionModel().getSelectedIndex();
+        int valueType = valueTypeComboBox.getSelectionModel().getSelectedIndex();
+        NavigatorRow.setValueType(valueType);
         setChanged();
         notifyObservers();
     }

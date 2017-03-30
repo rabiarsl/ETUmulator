@@ -64,7 +64,6 @@ public class RegistersTab implements Initializable, Observer {
 
     @Override
     public void update(Observable o, Object arg) {
-        NavigatorRow.setValueType(Navigator.getValueType());
         if(o.getClass().equals(RegisterFile.class)) {
             String registerName = (String) arg;
             for(int i = 0; i < data.size(); i++) {
