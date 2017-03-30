@@ -22,8 +22,8 @@ import com.kasirgalabs.etumulator.console.Console;
 import com.kasirgalabs.etumulator.document.BaseDocument;
 import com.kasirgalabs.etumulator.document.Document;
 import com.kasirgalabs.etumulator.navigator.Navigator;
-import com.kasirgalabs.etumulator.processor.BaseProcessor;
 import com.kasirgalabs.etumulator.processor.CPSR;
+import com.kasirgalabs.etumulator.processor.GUISafeProcessor;
 import com.kasirgalabs.etumulator.processor.Memory;
 import com.kasirgalabs.etumulator.processor.Processor;
 import com.kasirgalabs.etumulator.processor.RegisterFile;
@@ -32,7 +32,7 @@ import com.kasirgalabs.etumulator.processor.Stack;
 public class ETUmulatorModule extends AbstractModule {
     @Override
     protected void configure() {
-        bind(Processor.class).to(BaseProcessor.class);
+        bind(Processor.class).to(GUISafeProcessor.class);
         bind(CPSR.class);
         bind(RegisterFile.class);
         bind(Stack.class);

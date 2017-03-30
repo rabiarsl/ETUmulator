@@ -21,27 +21,34 @@ import java.util.concurrent.CountDownLatch;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.application.Platform;
+import javafx.stage.Stage;
 
-public abstract class GUISafeObservable extends Observable {
+public class GUISafeObservable extends Observable {
     private static final Logger LOGGER = Logger.getLogger(GUISafeObservable.class.getName());
+    private volatile CountDownLatch latch;
 
     @Override
     public void notifyObservers(Object object) {
-        final CountDownLatch latch = new CountDownLatch(1);
+        latch = new CountDownLatch(1);
         setChanged();
         try {
-            Platform.runLater(() -> {
-                super.notifyObservers(object);
-                latch.countDown();
-            });
-            try {
-                latch.await();
+            if(!Platform.isFxApplicationThread()) {
+                new Stage();
+                Platform.runLater(() -> {
+                    super.notifyObservers(object);
+                    latch.countDown();
+                });
+                try {
+                    latch.await();
+                }
+                catch(InterruptedException ex) {
+                    LOGGER.log(Level.SEVERE, null, ex);
+                }
+                return;
             }
-            catch(InterruptedException ex) {
-                LOGGER.log(Level.SEVERE, null, ex);
-            }
+            super.notifyObservers(object);
         }
-        catch(IllegalStateException ex) {
+        catch(IllegalStateException | ExceptionInInitializerError | NoClassDefFoundError ex) {
             super.notifyObservers(object);
         }
     }

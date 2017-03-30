@@ -32,15 +32,11 @@ import com.kasirgalabs.etumulator.processor.visitor.ShiftVisitor;
 import com.kasirgalabs.etumulator.processor.visitor.SingleDataMemoryVisitor;
 import com.kasirgalabs.etumulator.processor.visitor.StackVisitor;
 import java.util.Set;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-import javafx.application.Platform;
-import javax.swing.SwingUtilities;
 import org.antlr.v4.runtime.ANTLRInputStream;
 import org.antlr.v4.runtime.CommonTokenStream;
 
 @Singleton
-public class BaseProcessor extends ArmBaseVisitor<Void> implements Processor, Runnable {
+public class BaseProcessor extends ArmBaseVisitor<Void> implements Processor {
     private final ArithmeticVisitor arithmeticVisitor;
     private final MultiplyAndDivideVisitor multiplyAndDivideVisitor;
     private final MoveVisitor moveVisitor;
@@ -50,9 +46,7 @@ public class BaseProcessor extends ArmBaseVisitor<Void> implements Processor, Ru
     private final BranchVisitor branchVisitor;
     private final SingleDataMemoryVisitor singleDataMemoryVisitor;
     private final StackVisitor stackVisitor;
-    private final ExecutorService executor;
-    private volatile int pc;
-    private String code;
+    private int pc;
 
     @Inject
     public BaseProcessor(ProcessorUnits processorUnits) {
@@ -73,7 +67,6 @@ public class BaseProcessor extends ArmBaseVisitor<Void> implements Processor, Ru
                 .getRegisterFile(), processorUnits.getMemory());
         stackVisitor = new StackVisitor(processorUnits
                 .getRegisterFile(), processorUnits.getStack());
-        executor = Executors.newSingleThreadExecutor();
         pc = 0;
     }
 
@@ -128,30 +121,19 @@ public class BaseProcessor extends ArmBaseVisitor<Void> implements Processor, Ru
 
     @Override
     public void run(String code, Set<Symbol> symbols) {
-        this.code = code;
         pc = 0;
         branchVisitor.setSymbols(symbols);
         singleDataMemoryVisitor.setSymbols(symbols);
-        if(Platform.isFxApplicationThread() || SwingUtilities.isEventDispatchThread()) {
-            executor.submit(this);
-            return;
-        }
-        run();
-    }
-
-    @Override
-    public void stop() {
-        executor.shutdownNow();
-    }
-
-    @Override
-    public void run() {
         final char[][] instructions = parseInstructions(code);
         while(pc < instructions.length) {
             char[] instruction = instructions[pc];
             execute(instruction);
             pc++;
         }
+    }
+
+    @Override
+    public void stop() {
     }
 
     private char[][] parseInstructions(String code) {

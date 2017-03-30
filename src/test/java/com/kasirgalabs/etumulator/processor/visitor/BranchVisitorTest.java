@@ -507,4 +507,26 @@ public class BranchVisitorTest {
         processor.run(code, linker.link(code));
         assertEquals("Branch instruction does not work properly.", 5, registerFile.getValue("r0"));
     }
+
+    /**
+     * Test of visitBl method, of class BranchVisitor.
+     */
+    @Test
+    public void testVisitBl() {
+        String code = "mov r0, #1\n"
+                + "bal target\n"
+                + "add r0, r0, r0\n"
+                + "target:\n";
+        processor.run(code, linker.link(code));
+        assertEquals("Branch instruction does not work properly.", 1, registerFile.getValue("r0"));
+
+        code = "target:\n"
+                + "cmp r0, #5\n"
+                + "beq target2\n"
+                + "add r0, r0, #1\n"
+                + "bal target\n"
+                + "target2:\n";
+        processor.run(code, linker.link(code));
+        assertEquals("Branch instruction does not work properly.", 5, registerFile.getValue("r0"));
+    }
 }

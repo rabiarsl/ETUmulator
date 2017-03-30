@@ -31,7 +31,7 @@ import org.junit.Test;
 
 public class BaseDocumentTest {
     @Rule
-    public JavaFXThread javaFXThread = new JavaFXThread();
+    public final JavaFXThread javaFXThread = new JavaFXThread();
     private Document document;
     private File mockFile;
 
