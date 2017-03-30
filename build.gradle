@@ -20,6 +20,15 @@ dependencies {
     compile group: "org.fxmisc.richtext", name: "richtextfx", version: "0.7-M3"
 }
 
+test {
+    afterTest { desc, result ->
+        println "Executing test ${desc.name} [${desc.className}] with result: ${result.resultType}"
+    }
+    testLogging {
+        exceptionFormat "full"
+    }
+}
+
 generateGrammarSource {
     arguments += ["-package", "com.kasirgalabs.arm", "-visitor", "-no-listener", "-long-messages"]
     doLast {
