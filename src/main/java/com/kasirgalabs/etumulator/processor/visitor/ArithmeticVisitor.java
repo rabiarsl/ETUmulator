@@ -99,7 +99,7 @@ public class ArithmeticVisitor extends ArmBaseVisitor<Void> {
         int left = registerFile.getValue(registerVisitor.visit(ctx.rn()));
         int right;
         if(ctx.imm12() != null) {
-            right = numberVisitor.visit((ctx.imm12()));
+            right = numberVisitor.visit(ctx.imm12());
         }
         else {
             right = operand2Visitor.visit(ctx.operand2());

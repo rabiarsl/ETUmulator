@@ -20,10 +20,6 @@ before_script:
   - "sh -e /etc/init.d/xvfb start"
   - sleep 3 # give xvfb some time to start
 
-script:
-  - ./gradlew assemble --console rich
-  - ./gradlew check --console rich
-
 before_cache:
   - rm -f $HOME/.gradle/caches/modules-2/modules-2.lock
   - rm -fr $HOME/.gradle/caches/*/plugin-resolution/
@@ -35,5 +31,4 @@ cache:
 
 after_success:
   - ./gradlew jacocoTestReport
-  - bash <(curl -s https://codecov.io/bash) -t $CODECOV_TOKEN
   - ~/jpm/bin/codacy-coverage-reporter -l Java -r build/reports/jacoco/test/jacocoTestReport.xml

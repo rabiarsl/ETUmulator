@@ -156,7 +156,7 @@ public class BranchVisitor extends ArmBaseVisitor<Integer> {
 
     @Override
     public Integer visitBgt(ArmParser.BgtContext ctx) {
-        if(!cpsr.isZero() && (cpsr.isNegative() == cpsr.isOverflow())) {
+        if(!cpsr.isZero() && cpsr.isNegative() == cpsr.isOverflow()) {
             return addressOfSymbol(ctx.LABEL().getText());
         }
         return null;
@@ -164,7 +164,7 @@ public class BranchVisitor extends ArmBaseVisitor<Integer> {
 
     @Override
     public Integer visitBle(ArmParser.BleContext ctx) {
-        if(cpsr.isZero() || (cpsr.isNegative() != cpsr.isOverflow())) {
+        if(cpsr.isZero() || cpsr.isNegative() != cpsr.isOverflow()) {
             return addressOfSymbol(ctx.LABEL().getText());
         }
         return null;

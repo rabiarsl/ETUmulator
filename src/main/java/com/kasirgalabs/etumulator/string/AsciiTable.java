@@ -58,7 +58,7 @@ public final class AsciiTable {
     }
 
     private static boolean hasEscapeSequence(int code) {
-        return (code >= 7 && code <= 13) || code == NULL || code == ESCAPE;
+        return code >= 7 && code <= 13 || code == NULL || code == ESCAPE;
     }
 
     private static String escapeSequence(int code) {
@@ -87,6 +87,6 @@ public final class AsciiTable {
     }
 
     private static boolean isExtendedAscii(int code) {
-        return (code >= 0x80 && code <= 0xFF);
+        return code >= 0x80 && code <= 0xFF;
     }
 }

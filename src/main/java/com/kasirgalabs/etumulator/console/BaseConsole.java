@@ -51,7 +51,7 @@ public class BaseConsole extends TextArea implements Initializable, Console, Obs
         vbox.getChildren().add(this);
         semaphore = new Semaphore(0);
         this.wrapTextProperty().set(true);
-        addEventFilter(KeyEvent.ANY, (keyEvent) -> {
+        addEventFilter(KeyEvent.ANY, keyEvent -> {
             if(keyEvent.getEventType().equals(KeyEvent.KEY_TYPED) && readEnable) {
                 readChar = keyEvent.getCharacter().charAt(0);
                 readEnable = false;
