@@ -18,26 +18,29 @@ package com.kasirgalabs.etumulator.linker;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.fail;
+import com.kasirgalabs.etumulator.langtools.LabelError;
+import com.kasirgalabs.etumulator.langtools.LinkerAndLoader;
+import com.kasirgalabs.etumulator.langtools.Symbol;
 import com.kasirgalabs.etumulator.processor.Memory;
 import java.util.HashSet;
 import java.util.Set;
 import org.junit.Test;
 
-public class LinkerTest {
+public class LinkerAndLoaderTest {
     private static final int NOT_USED = 0;
     private final Memory memory;
-    private final Linker linker;
+    private final LinkerAndLoader linkerAndLoader;
 
-    public LinkerTest() {
+    public LinkerAndLoaderTest() {
         memory = new Memory();
-        linker = new Linker(memory);
+        linkerAndLoader = new LinkerAndLoader(memory);
     }
 
     /**
-     * Test of link method, of class Linker.
+     * Test of linkAndLoad method, of class LinkerAndLoader.
      */
     @Test
-    public void testLink() {
+    public void testLinkAndLoad() {
         final Set<Symbol> expectedSymbols = new HashSet<>();
         String code = "b label\n"
                 + "nop\n"
@@ -45,7 +48,8 @@ public class LinkerTest {
                 + "nop\n"
                 + "label:\n";
         expectedSymbols.add(new Symbol("label", NOT_USED));
-        assertEquals("Linker does not work properly.", expectedSymbols, linker.link(code));
+        assertEquals("Linker does not work properly.", expectedSymbols, linkerAndLoader
+                .linkAndLoad(code).getSymbols());
 
         expectedSymbols.clear();
         code = "b label0\n"
@@ -56,7 +60,8 @@ public class LinkerTest {
                 + "label1:\n";
         expectedSymbols.add(new Symbol("label0", NOT_USED));
         expectedSymbols.add(new Symbol("label1", NOT_USED));
-        assertEquals("Linker does not work properly.", expectedSymbols, linker.link(code));
+        assertEquals("Linker does not work properly.", expectedSymbols, linkerAndLoader
+                .linkAndLoad(code).getSymbols());
 
         expectedSymbols.clear();
         code = "b label\n"
@@ -66,7 +71,7 @@ public class LinkerTest {
                 + "label:\n"
                 + "label: .asciz \"asd\"\n";
         try {
-            linker.link(code);
+            linkerAndLoader.linkAndLoad(code);
             fail("Linker does not work properly.");
         }
         catch(LabelError le) {
@@ -79,7 +84,7 @@ public class LinkerTest {
                 + "nop\n"
                 + "label: .asciz \"asd\"\n";
         try {
-            linker.link(code);
+            linkerAndLoader.linkAndLoad(code);
             fail("Linker does not work properly.");
         }
         catch(LabelError le) {
@@ -92,7 +97,7 @@ public class LinkerTest {
                 + "nop\n"
                 + "label: .asciz \"asd\"\n";
         try {
-            linker.link(code);
+            linkerAndLoader.linkAndLoad(code);
             fail("Linker does not work properly.");
         }
         catch(LabelError le) {
@@ -105,7 +110,8 @@ public class LinkerTest {
                 + "nop\n"
                 + "label: .asciz \"asd\"\n";
         expectedSymbols.add(new Symbol("label", NOT_USED));
-        assertEquals("Linker does not work properly.", expectedSymbols, linker.link(code));
+        assertEquals("Linker does not work properly.", expectedSymbols, linkerAndLoader
+                .linkAndLoad(code).getSymbols());
 
         expectedSymbols.clear();
         code = "b abcde\n"
@@ -114,7 +120,7 @@ public class LinkerTest {
                 + "nop\n"
                 + "abcde: .asciz \"asd\"\n";
         try {
-            linker.link(code);
+            linkerAndLoader.linkAndLoad(code);
             fail("Linker does not work properly.");
         }
         catch(LabelError le) {
@@ -127,7 +133,7 @@ public class LinkerTest {
                 + "label: .asciz \"asd\"\n"
                 + "label:\n";
         try {
-            linker.link(code);
+            linkerAndLoader.linkAndLoad(code);
             fail("Linker does not work properly.");
         }
         catch(LabelError le) {
@@ -140,7 +146,7 @@ public class LinkerTest {
                 + "label: .asciz \"asd\"\n"
                 + "label: .asciz \"te\"\n";
         try {
-            linker.link(code);
+            linkerAndLoader.linkAndLoad(code);
             fail("Linker does not work properly.");
         }
         catch(LabelError le) {

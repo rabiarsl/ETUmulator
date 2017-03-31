@@ -18,7 +18,7 @@ package com.kasirgalabs.etumulator;
 
 import com.google.inject.Inject;
 import com.kasirgalabs.etumulator.document.Document;
-import com.kasirgalabs.etumulator.linker.Linker;
+import com.kasirgalabs.etumulator.langtools.LinkerAndLoader;
 import com.kasirgalabs.etumulator.processor.Memory;
 import com.kasirgalabs.etumulator.processor.Processor;
 import javafx.event.ActionEvent;
@@ -34,6 +34,7 @@ public class ETUmulatorController {
 
     @FXML
     private void runButtonOnAction(ActionEvent event) {
-        processor.run(document.getText() + "\n", new Linker(memory).link(document.getText() + "\n"));
+        LinkerAndLoader linkerAndLoader = new LinkerAndLoader(memory);
+        processor.run(linkerAndLoader.linkAndLoad(document.getText() + "\n"));
     }
 }

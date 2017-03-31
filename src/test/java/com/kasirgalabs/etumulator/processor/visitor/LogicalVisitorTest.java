@@ -17,6 +17,7 @@
 package com.kasirgalabs.etumulator.processor.visitor;
 
 import static org.junit.Assert.assertEquals;
+import com.kasirgalabs.etumulator.langtools.LinkerAndLoader;
 import com.kasirgalabs.etumulator.processor.BaseProcessor;
 import com.kasirgalabs.etumulator.processor.CPSR;
 import com.kasirgalabs.etumulator.processor.Processor;
@@ -25,12 +26,14 @@ import com.kasirgalabs.etumulator.processor.RegisterFile;
 import org.junit.Test;
 
 public class LogicalVisitorTest {
+    private final LinkerAndLoader linkerAndLoader;
     private final RegisterFile registerFile;
     private final CPSR cpsr;
     private final Processor processor;
 
     public LogicalVisitorTest() {
         ProcessorUnits processorUnits = new ProcessorUnits();
+        linkerAndLoader = new LinkerAndLoader(processorUnits.getMemory());
         registerFile = processorUnits.getRegisterFile();
         cpsr = processorUnits.getCPSR();
         processor = new BaseProcessor(processorUnits);
@@ -44,13 +47,13 @@ public class LogicalVisitorTest {
         String code = "mov r1, #0\n"
                 + "mov r2, #1\n"
                 + "tst r1, r2\n";
-        processor.run(code, null);
+        processor.run(linkerAndLoader.linkAndLoad(code));
         assertEquals("Negative flag is wrong.", false, cpsr.isNegative());
         assertEquals("Zero flag is wrong.", true, cpsr.isZero());
 
         code = "ldr r1, =0xffffffff\n"
                 + "tst r1, r1\n";
-        processor.run(code, null);
+        processor.run(linkerAndLoader.linkAndLoad(code));
         assertEquals("Negative flag is wrong.", true, cpsr.isNegative());
         assertEquals("Zero flag is wrong.", false, cpsr.isZero());
     }
@@ -63,19 +66,19 @@ public class LogicalVisitorTest {
         String code = "mov r1, #0\n"
                 + "mov r2, #1\n"
                 + "teq r1, r2\n";
-        processor.run(code, null);
+        processor.run(linkerAndLoader.linkAndLoad(code));
         assertEquals("Negative flag is wrong.", false, cpsr.isNegative());
         assertEquals("Zero flag is wrong.", false, cpsr.isZero());
 
         code = "ldr r1, =0xffffffff\n"
                 + "teq r1, r1\n";
-        processor.run(code, null);
+        processor.run(linkerAndLoader.linkAndLoad(code));
         assertEquals("Negative flag is wrong.", false, cpsr.isNegative());
         assertEquals("Zero flag is wrong.", true, cpsr.isZero());
 
         code = "ldr r1, =0xffffffff\n"
                 + "teq r1, 0\n";
-        processor.run(code, null);
+        processor.run(linkerAndLoader.linkAndLoad(code));
         assertEquals("Negative flag is wrong.", true, cpsr.isNegative());
         assertEquals("Zero flag is wrong.", false, cpsr.isZero());
     }
@@ -88,12 +91,12 @@ public class LogicalVisitorTest {
         String code = "mov r1, #0\n"
                 + "mov r2, #1\n"
                 + "and r0, r1, r2\n";
-        processor.run(code, null);
+        processor.run(linkerAndLoader.linkAndLoad(code));
         assertEquals("AND result is wrong.", 0, registerFile.getValue("r0"));
 
         code = "ldr r1, =0xffffffff\n"
                 + "and r0, r1, 0xf\n";
-        processor.run(code, null);
+        processor.run(linkerAndLoader.linkAndLoad(code));
         assertEquals("AND result is wrong.", 0xf, registerFile.getValue("r0"));
     }
 
@@ -105,14 +108,14 @@ public class LogicalVisitorTest {
         String code = "mov r1, #0\n"
                 + "mov r2, #1\n"
                 + "ands r0, r1, r2\n";
-        processor.run(code, null);
+        processor.run(linkerAndLoader.linkAndLoad(code));
         assertEquals("AND result is wrong.", 0, registerFile.getValue("r0"));
         assertEquals("Negative flag is wrong.", false, cpsr.isNegative());
         assertEquals("Zero flag is wrong.", true, cpsr.isZero());
 
         code = "ldr r1, =0xffffffff\n"
                 + "ands r0, r1, r1\n";
-        processor.run(code, null);
+        processor.run(linkerAndLoader.linkAndLoad(code));
         assertEquals("AND result is wrong.", -1, registerFile.getValue("r0"));
         assertEquals("Negative flag is wrong.", true, cpsr.isNegative());
         assertEquals("Zero flag is wrong.", false, cpsr.isZero());
@@ -126,12 +129,12 @@ public class LogicalVisitorTest {
         String code = "mov r1, #0\n"
                 + "mov r2, #1\n"
                 + "eor r0, r1, r2\n";
-        processor.run(code, null);
+        processor.run(linkerAndLoader.linkAndLoad(code));
         assertEquals("XOR result is wrong.", 1, registerFile.getValue("r0"));
 
         code = "ldr r1, =0xffffffff\n"
                 + "eor r0, r1, r1\n";
-        processor.run(code, null);
+        processor.run(linkerAndLoader.linkAndLoad(code));
         assertEquals("XOR result is wrong.", 0, registerFile.getValue("r0"));
     }
 
@@ -143,21 +146,21 @@ public class LogicalVisitorTest {
         String code = "mov r1, #0\n"
                 + "mov r2, #1\n"
                 + "eors r0, r1, r2\n";
-        processor.run(code, null);
+        processor.run(linkerAndLoader.linkAndLoad(code));
         assertEquals("XOR result is wrong.", 1, registerFile.getValue("r0"));
         assertEquals("Negative flag is wrong.", false, cpsr.isNegative());
         assertEquals("Zero flag is wrong.", false, cpsr.isZero());
 
         code = "ldr r1, =0xffffffff\n"
                 + "eors r0, r1, r1\n";
-        processor.run(code, null);
+        processor.run(linkerAndLoader.linkAndLoad(code));
         assertEquals("XOR result is wrong.", 0, registerFile.getValue("r0"));
         assertEquals("Negative flag is wrong.", false, cpsr.isNegative());
         assertEquals("Zero flag is wrong.", true, cpsr.isZero());
 
         code = "ldr r1, =0xffffffff\n"
                 + "eors r0, r1, 0\n";
-        processor.run(code, null);
+        processor.run(linkerAndLoader.linkAndLoad(code));
         assertEquals("XOR result is wrong.", -1, registerFile.getValue("r0"));
         assertEquals("Negative flag is wrong.", true, cpsr.isNegative());
         assertEquals("Zero flag is wrong.", false, cpsr.isZero());
@@ -171,18 +174,18 @@ public class LogicalVisitorTest {
         String code = "mov r1, #0\n"
                 + "mov r2, #1\n"
                 + "orr r0, r1, r2\n";
-        processor.run(code, null);
+        processor.run(linkerAndLoader.linkAndLoad(code));
         assertEquals("OR result is wrong.", 1, registerFile.getValue("r0"));
 
         code = "ldr r1, =0xffffffff\n"
                 + "orr r0, r1, 0\n";
-        processor.run(code, null);
+        processor.run(linkerAndLoader.linkAndLoad(code));
         assertEquals("OR result is wrong.", -1, registerFile.getValue("r0"));
 
         code = "ldr r1, =0x0f0f0f0f\n"
                 + "ldr r2, = 0xf0f0f0f0\n"
                 + "orr r0, r1, r2\n";
-        processor.run(code, null);
+        processor.run(linkerAndLoader.linkAndLoad(code));
         assertEquals("OR result is wrong.", -1, registerFile.getValue("r0"));
     }
 
@@ -194,14 +197,14 @@ public class LogicalVisitorTest {
         String code = "mov r1, #0\n"
                 + "mov r2, #1\n"
                 + "orrs r0, r1, r2\n";
-        processor.run(code, null);
+        processor.run(linkerAndLoader.linkAndLoad(code));
         assertEquals("OR result is wrong.", 1, registerFile.getValue("r0"));
         assertEquals("Negative flag is wrong.", false, cpsr.isNegative());
         assertEquals("Zero flag is wrong.", false, cpsr.isZero());
 
         code = "ldr r1, =0xffffffff\n"
                 + "orrs r0, r1, 0\n";
-        processor.run(code, null);
+        processor.run(linkerAndLoader.linkAndLoad(code));
         assertEquals("OR result is wrong.", -1, registerFile.getValue("r0"));
         assertEquals("Negative flag is wrong.", true, cpsr.isNegative());
         assertEquals("Zero flag is wrong.", false, cpsr.isZero());
@@ -209,7 +212,7 @@ public class LogicalVisitorTest {
         code = "ldr r1, =0x0f0f0f0f\n"
                 + "ldr r2, = 0xf0f0f0f0\n"
                 + "orrs r0, r1, r2\n";
-        processor.run(code, null);
+        processor.run(linkerAndLoader.linkAndLoad(code));
         assertEquals("OR result is wrong.", -1, registerFile.getValue("r0"));
         assertEquals("Negative flag is wrong.", true, cpsr.isNegative());
         assertEquals("Zero flag is wrong.", false, cpsr.isZero());
@@ -217,7 +220,7 @@ public class LogicalVisitorTest {
         code = "mov r1, 0\n"
                 + "mov r2, 0\n"
                 + "orrs r0, r1, r2\n";
-        processor.run(code, null);
+        processor.run(linkerAndLoader.linkAndLoad(code));
         assertEquals("OR result is wrong.", 0, registerFile.getValue("r0"));
         assertEquals("Negative flag is wrong.", false, cpsr.isNegative());
         assertEquals("Zero flag is wrong.", true, cpsr.isZero());
@@ -231,18 +234,18 @@ public class LogicalVisitorTest {
         String code = "mov r1, #0\n"
                 + "mov r2, #1\n"
                 + "orn r0, r1, r2\n";
-        processor.run(code, null);
+        processor.run(linkerAndLoader.linkAndLoad(code));
         assertEquals("OR result is wrong.", -2, registerFile.getValue("r0"));
 
         code = "ldr r1, =0xffffffff\n"
                 + "orn r0, r1, 0\n";
-        processor.run(code, null);
+        processor.run(linkerAndLoader.linkAndLoad(code));
         assertEquals("OR result is wrong.", 0xffff_ffff | ~0, registerFile.getValue("r0"));
 
         code = "ldr r1, =0x0f0f0f0f\n"
                 + "ldr r2, = 0xf0f0f0f0\n"
                 + "orn r0, r1, r2\n";
-        processor.run(code, null);
+        processor.run(linkerAndLoader.linkAndLoad(code));
         assertEquals("OR result is wrong.", 0x0f0f_0f0f, registerFile.getValue("r0"));
     }
 
@@ -254,28 +257,28 @@ public class LogicalVisitorTest {
         String code = "mov r1, #0\n"
                 + "mov r2, #1\n"
                 + "orns r0, r1, r2\n";
-        processor.run(code, null);
+        processor.run(linkerAndLoader.linkAndLoad(code));
         assertEquals("OR result is wrong.", -2, registerFile.getValue("r0"));
         assertEquals("Negative flag is wrong.", true, cpsr.isNegative());
         assertEquals("Zero flag is wrong.", false, cpsr.isZero());
 
         code = "ldr r1, =0xffffffff\n"
                 + "orns r0, r1, r1\n";
-        processor.run(code, null);
+        processor.run(linkerAndLoader.linkAndLoad(code));
         assertEquals("OR result is wrong.", 0xffff_ffff | ~0xffff_ffff, registerFile.getValue("r0"));
         assertEquals("Negative flag is wrong.", true, cpsr.isNegative());
         assertEquals("Zero flag is wrong.", false, cpsr.isZero());
 
         code = "ldr r1, =0xffffffff\n"
                 + "orns r0, r1, 0\n";
-        processor.run(code, null);
+        processor.run(linkerAndLoader.linkAndLoad(code));
         assertEquals("OR result is wrong.", -1, registerFile.getValue("r0"));
         assertEquals("Negative flag is wrong.", true, cpsr.isNegative());
         assertEquals("Zero flag is wrong.", false, cpsr.isZero());
 
         code = "mov r1, #0\n"
                 + "orns r0, r1, 0xffffffff\n";
-        processor.run(code, null);
+        processor.run(linkerAndLoader.linkAndLoad(code));
         assertEquals("OR result is wrong.", 0, registerFile.getValue("r0"));
         assertEquals("Negative flag is wrong.", false, cpsr.isNegative());
         assertEquals("Zero flag is wrong.", true, cpsr.isZero());
@@ -289,18 +292,18 @@ public class LogicalVisitorTest {
         String code = "mov r1, #0\n"
                 + "mov r2, #1\n"
                 + "bic r0, r1, r2\n";
-        processor.run(code, null);
+        processor.run(linkerAndLoader.linkAndLoad(code));
         assertEquals("AND result is wrong.", 0, registerFile.getValue("r0"));
 
         code = "ldr r1, =0xffffffff\n"
                 + "bic r0, r1, 0\n";
-        processor.run(code, null);
+        processor.run(linkerAndLoader.linkAndLoad(code));
         assertEquals("AND result is wrong.", 0xffff_ffff & ~0, registerFile.getValue("r0"));
 
         code = "ldr r1, =0x0f0f0f0f\n"
                 + "ldr r2, = 0xf0f0f0f0\n"
                 + "bic r0, r1, r2\n";
-        processor.run(code, null);
+        processor.run(linkerAndLoader.linkAndLoad(code));
         assertEquals("AND result is wrong.", 0x0f0f_0f0f & ~0xf0f0_f0f0, registerFile.getValue("r0"));
     }
 
@@ -312,27 +315,27 @@ public class LogicalVisitorTest {
         String code = "mov r1, #0\n"
                 + "mov r2, #1\n"
                 + "bics r0, r1, r2\n";
-        processor.run(code, null);
+        processor.run(linkerAndLoader.linkAndLoad(code));
         assertEquals("AND result is wrong.", 0, registerFile.getValue("r0"));
         assertEquals("Negative flag is wrong.", false, cpsr.isNegative());
         assertEquals("Zero flag is wrong.", true, cpsr.isZero());
 
         code = "ldr r1, =0xffffffff\n"
                 + "bics r0, r1, r1\n";
-        processor.run(code, null);
+        processor.run(linkerAndLoader.linkAndLoad(code));
         assertEquals("AND result is wrong.", 0xffff_ffff & ~0xffff_ffff, registerFile.getValue("r0"));
         assertEquals("Negative flag is wrong.", false, cpsr.isNegative());
         assertEquals("Zero flag is wrong.", true, cpsr.isZero());
 
         code = "ldr r1, =0xffffffff\n"
                 + "bics r0, r1, 0\n";
-        processor.run(code, null);
+        processor.run(linkerAndLoader.linkAndLoad(code));
         assertEquals("AND result is wrong.", 0xffff_ffff | ~0, registerFile.getValue("r0"));
         assertEquals("Negative flag is wrong.", true, cpsr.isNegative());
         assertEquals("Zero flag is wrong.", false, cpsr.isZero());
 
         code = "bics r0, r1, 0xffffffff\n";
-        processor.run(code, null);
+        processor.run(linkerAndLoader.linkAndLoad(code));
         assertEquals("AND result is wrong.", 0, registerFile.getValue("r0"));
         assertEquals("Negative flag is wrong.", false, cpsr.isNegative());
         assertEquals("Zero flag is wrong.", true, cpsr.isZero());

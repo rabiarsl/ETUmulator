@@ -17,6 +17,7 @@
 package com.kasirgalabs.etumulator.processor.visitor;
 
 import static org.junit.Assert.assertEquals;
+import com.kasirgalabs.etumulator.langtools.LinkerAndLoader;
 import com.kasirgalabs.etumulator.processor.BaseProcessor;
 import com.kasirgalabs.etumulator.processor.CPSR;
 import com.kasirgalabs.etumulator.processor.Processor;
@@ -25,12 +26,14 @@ import com.kasirgalabs.etumulator.processor.RegisterFile;
 import org.junit.Test;
 
 public class MoveVisitorTest {
+    private final LinkerAndLoader linkerAndLoader;
     private final RegisterFile registerFile;
     private final CPSR cpsr;
     private final Processor processor;
 
     public MoveVisitorTest() {
         ProcessorUnits processorUnits = new ProcessorUnits();
+        linkerAndLoader = new LinkerAndLoader(processorUnits.getMemory());
         registerFile = processorUnits.getRegisterFile();
         cpsr = processorUnits.getCPSR();
         processor = new BaseProcessor(processorUnits);
@@ -42,20 +45,20 @@ public class MoveVisitorTest {
     @Test
     public void testVisitMov() {
         String code = "mov r0, #0\n";
-        processor.run(code, null);
+        processor.run(linkerAndLoader.linkAndLoad(code));
         assertEquals("Move result is wrong.", 0, registerFile.getValue("r0"));
 
         code = "mov r0, #4\n";
-        processor.run(code, null);
+        processor.run(linkerAndLoader.linkAndLoad(code));
         assertEquals("Move result is wrong.", 4, registerFile.getValue("r0"));
 
         code = "mov r0, 0xf\n";
-        processor.run(code, null);
+        processor.run(linkerAndLoader.linkAndLoad(code));
         assertEquals("Move result is wrong.", 0xf, registerFile.getValue("r0"));
 
         code = "mov r1, 8\n"
                 + "mov r0, r1\n";
-        processor.run(code, null);
+        processor.run(linkerAndLoader.linkAndLoad(code));
         assertEquals("Move result is wrong.", 8, registerFile.getValue("r0"));
     }
 
@@ -65,14 +68,14 @@ public class MoveVisitorTest {
     @Test
     public void testVisitMovs() {
         String code = "movs r0, #0\n";
-        processor.run(code, null);
+        processor.run(linkerAndLoader.linkAndLoad(code));
         assertEquals("Move result is wrong.", 0, registerFile.getValue("r0"));
         assertEquals("Negative flag is wrong.", false, cpsr.isNegative());
         assertEquals("Zero flag is wrong.", true, cpsr.isZero());
 
         code = "mov r1, 8\n"
                 + "movs r0, r1\n";
-        processor.run(code, null);
+        processor.run(linkerAndLoader.linkAndLoad(code));
         assertEquals("Move result is wrong.", 8, registerFile.getValue("r0"));
         assertEquals("Negative flag is wrong.", false, cpsr.isNegative());
         assertEquals("Zero flag is wrong.", false, cpsr.isZero());
@@ -84,20 +87,20 @@ public class MoveVisitorTest {
     @Test
     public void testVisitMvn() {
         String code = "mvn r0, #0\n";
-        processor.run(code, null);
+        processor.run(linkerAndLoader.linkAndLoad(code));
         assertEquals("Move result is wrong.", ~0, registerFile.getValue("r0"));
 
         code = "mvn r0, #4\n";
-        processor.run(code, null);
+        processor.run(linkerAndLoader.linkAndLoad(code));
         assertEquals("Move result is wrong.", ~4, registerFile.getValue("r0"));
 
         code = "mvn r0, 0xf\n";
-        processor.run(code, null);
+        processor.run(linkerAndLoader.linkAndLoad(code));
         assertEquals("Move result is wrong.", ~0xf, registerFile.getValue("r0"));
 
         code = "mov r1, 8\n"
                 + "mvn r0, r1\n";
-        processor.run(code, null);
+        processor.run(linkerAndLoader.linkAndLoad(code));
         assertEquals("Move result is wrong.", ~8, registerFile.getValue("r0"));
     }
 
@@ -107,14 +110,14 @@ public class MoveVisitorTest {
     @Test
     public void testVisitMvns() {
         String code = "mvns r0, #0\n";
-        processor.run(code, null);
+        processor.run(linkerAndLoader.linkAndLoad(code));
         assertEquals("Move result is wrong.", ~0, registerFile.getValue("r0"));
         assertEquals("Negative flag is wrong.", true, cpsr.isNegative());
         assertEquals("Zero flag is wrong.", false, cpsr.isZero());
 
         code = "mov r1, 8\n"
                 + "mvns r0, r1\n";
-        processor.run(code, null);
+        processor.run(linkerAndLoader.linkAndLoad(code));
         assertEquals("Move result is wrong.", ~8, registerFile.getValue("r0"));
         assertEquals("Negative flag is wrong.", true, cpsr.isNegative());
         assertEquals("Zero flag is wrong.", false, cpsr.isZero());
@@ -127,12 +130,12 @@ public class MoveVisitorTest {
     public void testVisitMovt() {
         String code = "mov r0, #1\n"
                 + "movt r0, #0x0000ffff\n";
-        processor.run(code, null);
+        processor.run(linkerAndLoader.linkAndLoad(code));
         assertEquals("Move result is wrong.", (0x0000_ffff << 16) + 1, registerFile.getValue("r0"));
 
         code = "ldr r0, =#0xffffffff\n"
                 + "movt r0, #0\n";
-        processor.run(code, null);
+        processor.run(linkerAndLoader.linkAndLoad(code));
         assertEquals("Move result is wrong.", 0x0000_ffff, registerFile.getValue("r0"));
     }
 }

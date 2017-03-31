@@ -17,6 +17,7 @@
 package com.kasirgalabs.etumulator.processor.visitor;
 
 import static org.junit.Assert.assertEquals;
+import com.kasirgalabs.etumulator.langtools.LinkerAndLoader;
 import com.kasirgalabs.etumulator.processor.BaseProcessor;
 import com.kasirgalabs.etumulator.processor.Processor;
 import com.kasirgalabs.etumulator.processor.ProcessorUnits;
@@ -25,12 +26,14 @@ import com.kasirgalabs.etumulator.processor.Stack;
 import org.junit.Test;
 
 public class StackVisitorTest {
+    private final LinkerAndLoader linkerAndLoader;
     private final RegisterFile registerFile;
     private final Stack stack;
     private final Processor processor;
 
     public StackVisitorTest() {
         ProcessorUnits processorUnits = new ProcessorUnits();
+        linkerAndLoader = new LinkerAndLoader(processorUnits.getMemory());
         registerFile = processorUnits.getRegisterFile();
         stack = processorUnits.getStack();
         processor = new BaseProcessor(processorUnits);
@@ -44,7 +47,7 @@ public class StackVisitorTest {
         String code = "mov r0, #4\n"
                 + "ldr r1, =0xffffffff\n"
                 + "push {r0,r1}\n";
-        processor.run(code, null);
+        processor.run(linkerAndLoader.linkAndLoad(code));
         assertEquals("Push result is wrong.", 0xffff_ffff, stack.pop());
         assertEquals("Push result is wrong.", 4, stack.pop());
     }
@@ -58,7 +61,7 @@ public class StackVisitorTest {
                 + "ldr r1, =0xffffffff\n"
                 + "push {r0,r1}\n"
                 + "pop {r1, r0}\n";
-        processor.run(code, null);
+        processor.run(linkerAndLoader.linkAndLoad(code));
         assertEquals("Pop result is wrong.", 4, registerFile.getValue("r0"));
         assertEquals("Pop result is wrong.", 0xffff_ffff, registerFile.getValue("r1"));
     }

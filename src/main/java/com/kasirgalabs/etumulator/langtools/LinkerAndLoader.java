@@ -14,7 +14,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.kasirgalabs.etumulator.linker;
+package com.kasirgalabs.etumulator.langtools;
 
 import com.kasirgalabs.arm.ArmBaseVisitor;
 import com.kasirgalabs.arm.ArmLexer;
@@ -28,14 +28,14 @@ import java.util.Set;
 import org.antlr.v4.runtime.ANTLRInputStream;
 import org.antlr.v4.runtime.CommonTokenStream;
 
-public class Linker extends ArmBaseVisitor<Void> {
+public class LinkerAndLoader extends ArmBaseVisitor<Void> {
     private final Memory memory;
     private final List<String> targetBranchSymbols;
     private final List<Symbol> definedBranchSymbols;
     private final List<String> targetDataSymbols;
     private final List<Symbol> definedDataSymbols;
 
-    public Linker(Memory memory) {
+    public LinkerAndLoader(Memory memory) {
         this.memory = memory;
         targetBranchSymbols = new ArrayList<>();
         definedBranchSymbols = new ArrayList<>();
@@ -185,7 +185,7 @@ public class Linker extends ArmBaseVisitor<Void> {
         return null;
     }
 
-    public Set<Symbol> link(String code) {
+    public ExecutableCode linkAndLoad(String code) {
         targetBranchSymbols.clear();
         definedBranchSymbols.clear();
         targetDataSymbols.clear();
@@ -195,8 +195,8 @@ public class Linker extends ArmBaseVisitor<Void> {
         Set<Symbol> resolvedBranchSymbols
                 = resolveSymbols(definedBranchSymbols, targetBranchSymbols);
         Set<Symbol> resolvedDataSymbols = resolveSymbols(definedDataSymbols, targetDataSymbols);
-
-        return mergeSets(resolvedBranchSymbols, resolvedDataSymbols);
+        Set<Symbol> temp = mergeSets(resolvedBranchSymbols, resolvedDataSymbols);
+        return new ExecutableCode(code, temp);
     }
 
     private void inspectCode(String code) {
@@ -209,9 +209,10 @@ public class Linker extends ArmBaseVisitor<Void> {
     }
 
     private Set<Symbol> resolveSymbols(List<Symbol> definedSymbols, List<String> targetSymbols) {
+        final int NOT_USED = 0;
         Set<Symbol> resolvedSymbols = new HashSet<>();
         for(String targetSymbol : targetSymbols) {
-            Symbol temp = new Symbol(targetSymbol);
+            Symbol temp = new Symbol(targetSymbol, NOT_USED);
             if(definedSymbols.contains(temp)) {
                 int index = definedSymbols.indexOf(temp);
                 Symbol symbol = definedSymbols.get(index);

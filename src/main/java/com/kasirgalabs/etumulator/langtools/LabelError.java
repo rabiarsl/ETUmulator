@@ -14,7 +14,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.kasirgalabs.etumulator.linker;
+package com.kasirgalabs.etumulator.langtools;
 
 public class LabelError extends Error {
     public LabelError(String message) {

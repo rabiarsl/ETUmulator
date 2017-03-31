@@ -14,7 +14,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.kasirgalabs.etumulator.linker;
+package com.kasirgalabs.etumulator.langtools;
 
 import java.util.Objects;
 
@@ -27,9 +27,9 @@ public final class Symbol {
         this.address = address;
     }
 
-    public Symbol(String name) {
-        this.name = name;
-        this.address = -1;
+    public Symbol(Symbol symbol) {
+        this.name = symbol.getName();
+        this.address = symbol.getAddress();
     }
 
     public String getName() {

@@ -16,11 +16,8 @@
  */
 package com.kasirgalabs.etumulator.processor;
 
-import com.kasirgalabs.etumulator.linker.Symbol;
-import java.util.Set;
+import com.kasirgalabs.etumulator.langtools.ExecutableCode;
 
 public interface Processor {
-    void run(String code, Set<Symbol> symbols);
-
-    void stop();
+    void run(ExecutableCode executableCode);
 }

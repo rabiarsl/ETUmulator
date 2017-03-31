@@ -18,8 +18,7 @@ package com.kasirgalabs.etumulator.processor;
 
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
-import com.kasirgalabs.etumulator.linker.Symbol;
-import java.util.Set;
+import com.kasirgalabs.etumulator.langtools.ExecutableCode;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
@@ -32,8 +31,7 @@ import java.util.concurrent.TimeoutException;
 public class GUISafeProcessor extends BaseProcessor implements Callable<Void> {
     private final ExecutorService executor;
     private Future<Void> future;
-    private String code;
-    private Set<Symbol> symbols;
+    private ExecutableCode executableCode;
 
     @Inject
     public GUISafeProcessor(ProcessorUnits processorUnits) {
@@ -42,9 +40,8 @@ public class GUISafeProcessor extends BaseProcessor implements Callable<Void> {
     }
 
     @Override
-    public void run(String code, Set<Symbol> symbols) {
-        this.code = code;
-        this.symbols = symbols;
+    public void run(ExecutableCode executableCode) {
+        this.executableCode = executableCode;
         future = executor.submit(this);
     }
 
@@ -53,15 +50,13 @@ public class GUISafeProcessor extends BaseProcessor implements Callable<Void> {
         future.get(timeout, unit);
     }
 
-    @Override
     public void stop() {
-        super.stop();
         executor.shutdownNow();
     }
 
     @Override
     public Void call() throws Exception {
-        super.run(code, symbols);
+        super.run(executableCode);
         return null;
     }
 }

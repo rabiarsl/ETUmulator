@@ -17,7 +17,7 @@
 package com.kasirgalabs.etumulator.processor.visitor;
 
 import static org.junit.Assert.assertEquals;
-import com.kasirgalabs.etumulator.linker.Linker;
+import com.kasirgalabs.etumulator.langtools.LinkerAndLoader;
 import com.kasirgalabs.etumulator.processor.BaseProcessor;
 import com.kasirgalabs.etumulator.processor.Memory;
 import com.kasirgalabs.etumulator.processor.Processor;
@@ -29,14 +29,14 @@ public class SingleDataMemoryVisitorTest {
     private final RegisterFile registerFile;
     private final Memory memory;
     private final Processor processor;
-    private final Linker linker;
+    private final LinkerAndLoader linkerAndLoader;
 
     public SingleDataMemoryVisitorTest() {
         ProcessorUnits processorUnits = new ProcessorUnits();
         registerFile = processorUnits.getRegisterFile();
         memory = processorUnits.getMemory();
         processor = new BaseProcessor(processorUnits);
-        linker = new Linker(memory);
+        linkerAndLoader = new LinkerAndLoader(memory);
     }
 
     /**
@@ -46,7 +46,7 @@ public class SingleDataMemoryVisitorTest {
     public void testVisitLdr() {
         String code = "ldr r0, =label\n"
                 + "label: .asciz \"abc\"\n";
-        processor.run(code, linker.link(code));
+        processor.run(linkerAndLoader.linkAndLoad(code));
         int address = registerFile.getValue("r0");
         assertEquals("LDR operation does not work properly.", 'a', memory.get(address));
         assertEquals("LDR operation does not work properly.", 'b', memory.get(address + 1));
@@ -54,14 +54,14 @@ public class SingleDataMemoryVisitorTest {
         assertEquals("LDR operation does not work properly.", '\n', memory.get(address + 3));
 
         code = "ldr r0, =0xffffffff\n";
-        processor.run(code, linker.link(code));
+        processor.run(linkerAndLoader.linkAndLoad(code));
         assertEquals("LDR operation does not work properly.", 0xffff_ffff,
                 registerFile.getValue("r0"));
 
         code = "ldr r0, =label\n"
                 + "ldr r1, [r0], #1\n"
                 + "label: .asciz \"abc\"\n";
-        processor.run(code, linker.link(code));
+        processor.run(linkerAndLoader.linkAndLoad(code));
         assertEquals("LDR operation does not work properly.", 'a', registerFile.getValue("r1"));
         int value = memory.get(registerFile.getValue("r0"));
         assertEquals("LDR operation does not work properly.", 'b', value);
@@ -69,34 +69,34 @@ public class SingleDataMemoryVisitorTest {
         code = "ldr r0, =label\n"
                 + "ldr r1, [r0]\n"
                 + "label: .asciz \"abc\"\n";
-        processor.run(code, linker.link(code));
+        processor.run(linkerAndLoader.linkAndLoad(code));
         assertEquals("LDR operation does not work properly.", 'a', registerFile.getValue("r1"));
 
         code = "ldr r0, =label\n"
                 + "ldr r1, [r0, #1]\n"
                 + "label: .asciz \"abc\"\n";
-        processor.run(code, linker.link(code));
+        processor.run(linkerAndLoader.linkAndLoad(code));
         assertEquals("LDR operation does not work properly.", 'b', registerFile.getValue("r1"));
 
         code = "mov r1, #1\n"
                 + "ldr r0, =label\n"
                 + "ldr r1, [r0, r1, lsl #1]\n"
                 + "label: .asciz \"abc\"\n";
-        processor.run(code, linker.link(code));
+        processor.run(linkerAndLoader.linkAndLoad(code));
         assertEquals("LDR operation does not work properly.", 'c', registerFile.getValue("r1"));
 
         code = "mov r1, #2\n"
                 + "ldr r0, =label\n"
                 + "ldr r1, [r0, r1]\n"
                 + "label: .asciz \"abc\"\n";
-        processor.run(code, linker.link(code));
+        processor.run(linkerAndLoader.linkAndLoad(code));
         assertEquals("LDR operation does not work properly.", 'c', registerFile.getValue("r1"));
 
         code = "mov r1, #1\n"
                 + "ldr r0, =label\n"
                 + "ldr r1, [r0], r1\n"
                 + "label: .asciz \"abc\"\n";
-        processor.run(code, linker.link(code));
+        processor.run(linkerAndLoader.linkAndLoad(code));
         assertEquals("LDR operation does not work properly.", 'a', registerFile.getValue("r1"));
         value = memory.get(registerFile.getValue("r0"));
         assertEquals("LDR operation does not work properly.", 'b', value);
@@ -105,7 +105,7 @@ public class SingleDataMemoryVisitorTest {
                 + "ldr r0, =label\n"
                 + "ldr r1, [r0], r1, lsl #1\n"
                 + "label: .asciz \"abc\"\n";
-        processor.run(code, linker.link(code));
+        processor.run(linkerAndLoader.linkAndLoad(code));
         assertEquals("LDR operation does not work properly.", 'a', registerFile.getValue("r1"));
         value = memory.get(registerFile.getValue("r0"));
         assertEquals("LDR operation does not work properly.", 'c', value);

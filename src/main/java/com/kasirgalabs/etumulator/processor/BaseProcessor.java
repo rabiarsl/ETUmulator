@@ -21,7 +21,7 @@ import com.google.inject.Singleton;
 import com.kasirgalabs.arm.ArmBaseVisitor;
 import com.kasirgalabs.arm.ArmLexer;
 import com.kasirgalabs.arm.ArmParser;
-import com.kasirgalabs.etumulator.linker.Symbol;
+import com.kasirgalabs.etumulator.langtools.ExecutableCode;
 import com.kasirgalabs.etumulator.processor.visitor.ArithmeticVisitor;
 import com.kasirgalabs.etumulator.processor.visitor.BranchVisitor;
 import com.kasirgalabs.etumulator.processor.visitor.CompareVisitor;
@@ -31,7 +31,6 @@ import com.kasirgalabs.etumulator.processor.visitor.MultiplyAndDivideVisitor;
 import com.kasirgalabs.etumulator.processor.visitor.ShiftVisitor;
 import com.kasirgalabs.etumulator.processor.visitor.SingleDataMemoryVisitor;
 import com.kasirgalabs.etumulator.processor.visitor.StackVisitor;
-import java.util.Set;
 import org.antlr.v4.runtime.ANTLRInputStream;
 import org.antlr.v4.runtime.CommonTokenStream;
 
@@ -120,20 +119,16 @@ public class BaseProcessor extends ArmBaseVisitor<Void> implements Processor {
     }
 
     @Override
-    public void run(String code, Set<Symbol> symbols) {
+    public void run(ExecutableCode executableCode) {
         pc = 0;
-        branchVisitor.setSymbols(symbols);
-        singleDataMemoryVisitor.setSymbols(symbols);
-        final char[][] instructions = parseInstructions(code);
+        branchVisitor.setSymbols(executableCode.getSymbols());
+        singleDataMemoryVisitor.setSymbols(executableCode.getSymbols());
+        final char[][] instructions = parseInstructions(executableCode.getCode());
         while(pc < instructions.length) {
             char[] instruction = instructions[pc];
             execute(instruction);
             pc++;
         }
-    }
-
-    @Override
-    public void stop() {
     }
 
     private char[][] parseInstructions(String code) {
