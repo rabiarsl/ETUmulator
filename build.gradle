@@ -1,5 +1,5 @@
 apply plugin: "application"
-apply plugin: 'jacoco'
+apply plugin: "jacoco"
 apply plugin: "antlr"
 
 sourceCompatibility = "1.8"
@@ -20,12 +20,21 @@ dependencies {
     compile group: "org.fxmisc.richtext", name: "richtextfx", version: "0.7-M3"
 }
 
-test {
-    afterTest { desc, result ->
-        println "Executing test ${desc.name} [${desc.className}] with result: ${result.resultType}"
-    }
+tasks.withType(Test) {
     testLogging {
-        exceptionFormat "full"
+        events "FAILED", "PASSED", "SKIPPED", "STANDARD_ERROR"
+        showCauses = true
+        showExceptions = true
+        showStackTraces = true
+        showStandardStreams = true
+        afterSuite { desc, result ->
+            if(!desc.parent) {
+                def output = "Results: ${result.resultType} (${result.testCount} tests, ${result.successfulTestCount} successes, ${result.failedTestCount} failures, ${result.skippedTestCount} skipped)"
+                def startItem = "|  ", endItem = "  |"
+                def repeatLength = startItem.length() + output.length() + endItem.length()
+                println("\n" + ("-" * repeatLength) + "\n" + startItem + output + endItem + "\n" + ("-" * repeatLength))
+            }
+        }
     }
 }
 
