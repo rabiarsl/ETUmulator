@@ -14,13 +14,10 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.kasirgalabs.etumulator.linker;
+package com.kasirgalabs.etumulator.langtools;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.fail;
-import com.kasirgalabs.etumulator.langtools.LabelError;
-import com.kasirgalabs.etumulator.langtools.LinkerAndLoader;
-import com.kasirgalabs.etumulator.langtools.Symbol;
 import com.kasirgalabs.etumulator.processor.Memory;
 import java.util.HashSet;
 import java.util.Set;
@@ -28,12 +25,10 @@ import org.junit.Test;
 
 public class LinkerAndLoaderTest {
     private static final int NOT_USED = 0;
-    private final Memory memory;
     private final LinkerAndLoader linkerAndLoader;
 
     public LinkerAndLoaderTest() {
-        memory = new Memory();
-        linkerAndLoader = new LinkerAndLoader(memory);
+        linkerAndLoader = new LinkerAndLoader(new Memory());
     }
 
     /**

@@ -43,7 +43,7 @@ public class BaseDocument implements Initializable, Document {
     @FXML
     private StackPane stackPane;
     private File targetFile;
-    private CodeArea document;
+    private final CodeArea document;
 
     public BaseDocument() {
         document = new ArmCodeArea();
@@ -92,9 +92,6 @@ public class BaseDocument implements Initializable, Document {
         String text = document.getText();
         try(BufferedWriter bw = new BufferedWriter(new FileWriter(targetFile))) {
             bw.write(text);
-        }
-        catch(IOException ex) {
-            throw ex;
         }
     }
 

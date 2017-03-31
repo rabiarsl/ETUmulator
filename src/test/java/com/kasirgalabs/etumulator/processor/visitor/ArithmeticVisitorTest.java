@@ -17,6 +17,8 @@
 package com.kasirgalabs.etumulator.processor.visitor;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 import com.kasirgalabs.etumulator.langtools.LinkerAndLoader;
 import com.kasirgalabs.etumulator.processor.BaseProcessor;
 import com.kasirgalabs.etumulator.processor.CPSR;
@@ -85,9 +87,9 @@ public class ArithmeticVisitorTest {
                 + "adds r0, r1, r2\n";
         processor.run(linkerAndLoader.linkAndLoad(code));
         assertEquals("Addition result is wrong.", Integer.MAX_VALUE, registerFile.getValue("r0"));
-        assertEquals("Negative flag is wrong.", false, cpsr.isNegative());
-        assertEquals("Zero flag is wrong.", false, cpsr.isZero());
-        assertEquals("Overflow flag is wrong.", true, cpsr.isOverflow());
+        assertFalse("Negative flag is wrong.", cpsr.isNegative());
+        assertFalse("Zero flag is wrong.", cpsr.isZero());
+        assertTrue("Overflow flag is wrong.", cpsr.isOverflow());
     }
 
     /**
@@ -140,18 +142,18 @@ public class ArithmeticVisitorTest {
                 + "adcs r0, r1, r1\n";
         processor.run(linkerAndLoader.linkAndLoad(code));
         assertEquals("Addition result is wrong.", -1, registerFile.getValue("r0"));
-        assertEquals("Negative flag is wrong.", true, cpsr.isNegative());
-        assertEquals("Zero flag is wrong.", false, cpsr.isZero());
-        assertEquals("Overflow flag is wrong.", true, cpsr.isOverflow());
+        assertTrue("Negative flag is wrong.", cpsr.isNegative());
+        assertFalse("Zero flag is wrong.", cpsr.isZero());
+        assertTrue("Overflow flag is wrong.", cpsr.isOverflow());
 
         cpsr.setCarry(true);
         code = "ldr r1, =0x7fffffff\n"
                 + "adcs r0, r1, #0\n";
         processor.run(linkerAndLoader.linkAndLoad(code));
         assertEquals("Addition result is wrong.", Integer.MIN_VALUE, registerFile.getValue("r0"));
-        assertEquals("Negative flag is wrong.", true, cpsr.isNegative());
-        assertEquals("Zero flag is wrong.", false, cpsr.isZero());
-        assertEquals("Overflow flag is wrong.", true, cpsr.isOverflow());
+        assertTrue("Negative flag is wrong.", cpsr.isNegative());
+        assertFalse("Zero flag is wrong.", cpsr.isZero());
+        assertTrue("Overflow flag is wrong.", cpsr.isOverflow());
     }
 
     /**
@@ -188,34 +190,34 @@ public class ArithmeticVisitorTest {
         String code = "subs r0, r1, r2\n";
         processor.run(linkerAndLoader.linkAndLoad(code));
         assertEquals("Subtraction result is wrong.", 0, registerFile.getValue("r0"));
-        assertEquals("Negative flag is wrong.", false, cpsr.isNegative());
-        assertEquals("Zero flag is wrong.", true, cpsr.isZero());
-        assertEquals("Overflow flag is wrong.", false, cpsr.isOverflow());
+        assertFalse("Negative flag is wrong.", cpsr.isNegative());
+        assertTrue("Zero flag is wrong.", cpsr.isZero());
+        assertFalse("Overflow flag is wrong.", cpsr.isOverflow());
 
         code = "subs r0, r1, #1\n";
         processor.run(linkerAndLoader.linkAndLoad(code));
         assertEquals("Subtraction result is wrong.", -1, registerFile.getValue("r0"));
-        assertEquals("Negative flag is wrong.", true, cpsr.isNegative());
-        assertEquals("Zero flag is wrong.", false, cpsr.isZero());
-        assertEquals("Overflow flag is wrong.", false, cpsr.isOverflow());
+        assertTrue("Negative flag is wrong.", cpsr.isNegative());
+        assertFalse("Zero flag is wrong.", cpsr.isZero());
+        assertFalse("Overflow flag is wrong.", cpsr.isOverflow());
 
         code = "ldr r1, =0x80000000\n"
                 + "mov r2, #1\n"
                 + "subs r0, r1, r2\n";
         processor.run(linkerAndLoader.linkAndLoad(code));
         assertEquals("Subtraction result is wrong.", Integer.MAX_VALUE, registerFile.getValue("r0"));
-        assertEquals("Negative flag is wrong.", false, cpsr.isNegative());
-        assertEquals("Zero flag is wrong.", false, cpsr.isZero());
-        assertEquals("Overflow flag is wrong.", true, cpsr.isOverflow());
+        assertFalse("Negative flag is wrong.", cpsr.isNegative());
+        assertFalse("Zero flag is wrong.", cpsr.isZero());
+        assertTrue("Overflow flag is wrong.", cpsr.isOverflow());
 
         code = "mov r0, #0\n"
                 + "mov r1, #0xf\n"
                 + "subs r0, r0, r1\n";
         processor.run(linkerAndLoader.linkAndLoad(code));
         assertEquals("Subtraction result is wrong.", -0xf, registerFile.getValue("r0"));
-        assertEquals("Negative flag is wrong.", true, cpsr.isNegative());
-        assertEquals("Zero flag is wrong.", false, cpsr.isZero());
-        assertEquals("Overflow flag is wrong.", false, cpsr.isOverflow());
+        assertTrue("Negative flag is wrong.", cpsr.isNegative());
+        assertFalse("Zero flag is wrong.", cpsr.isZero());
+        assertFalse("Overflow flag is wrong.", cpsr.isOverflow());
     }
 
     /**
@@ -262,9 +264,9 @@ public class ArithmeticVisitorTest {
                 + "sbcs r0, r1, #1\n";
         processor.run(linkerAndLoader.linkAndLoad(code));
         assertEquals("Subtraction result is wrong.", Integer.MAX_VALUE, registerFile.getValue("r0"));
-        assertEquals("Negative flag is wrong.", false, cpsr.isNegative());
-        assertEquals("Zero flag is wrong.", false, cpsr.isZero());
-        assertEquals("Overflow flag is wrong.", true, cpsr.isOverflow());
+        assertFalse("Negative flag is wrong.", cpsr.isNegative());
+        assertFalse("Zero flag is wrong.", cpsr.isZero());
+        assertTrue("Overflow flag is wrong.", cpsr.isOverflow());
 
         cpsr.setCarry(false);
         code = "ldr r1, =#0x80000000\n"
@@ -272,27 +274,27 @@ public class ArithmeticVisitorTest {
         processor.run(linkerAndLoader.linkAndLoad(code));
         assertEquals("Subtraction result is wrong.", Integer.MAX_VALUE - 1, registerFile
                 .getValue("r0"));
-        assertEquals("Negative flag is wrong.", false, cpsr.isNegative());
-        assertEquals("Zero flag is wrong.", false, cpsr.isZero());
-        assertEquals("Overflow flag is wrong.", true, cpsr.isOverflow());
+        assertFalse("Negative flag is wrong.", cpsr.isNegative());
+        assertFalse("Zero flag is wrong.", cpsr.isZero());
+        assertTrue("Overflow flag is wrong.", cpsr.isOverflow());
 
         cpsr.setCarry(true);
         code = "mov r1, #0\n"
                 + "sbcs r0, r1, #0\n";
         processor.run(linkerAndLoader.linkAndLoad(code));
         assertEquals("Subtraction result is wrong.", 0, registerFile.getValue("r0"));
-        assertEquals("Negative flag is wrong.", false, cpsr.isNegative());
-        assertEquals("Zero flag is wrong.", true, cpsr.isZero());
-        assertEquals("Overflow flag is wrong.", false, cpsr.isOverflow());
+        assertFalse("Negative flag is wrong.", cpsr.isNegative());
+        assertTrue("Zero flag is wrong.", cpsr.isZero());
+        assertFalse("Overflow flag is wrong.", cpsr.isOverflow());
 
         cpsr.setCarry(false);
         code = "ldr r1, =#0x80000001\n"
                 + "sbcs r0, r1, #1\n";
         processor.run(linkerAndLoader.linkAndLoad(code));
         assertEquals("Subtraction result is wrong.", Integer.MAX_VALUE, registerFile.getValue("r0"));
-        assertEquals("Negative flag is wrong.", false, cpsr.isNegative());
-        assertEquals("Zero flag is wrong.", false, cpsr.isZero());
-        assertEquals("Overflow flag is wrong.", true, cpsr.isOverflow());
+        assertFalse("Negative flag is wrong.", cpsr.isNegative());
+        assertFalse("Zero flag is wrong.", cpsr.isZero());
+        assertTrue("Overflow flag is wrong.", cpsr.isOverflow());
     }
 
     /**
@@ -330,35 +332,35 @@ public class ArithmeticVisitorTest {
         String code = "rsbs r0, r1, r2\n";
         processor.run(linkerAndLoader.linkAndLoad(code));
         assertEquals("Subtraction result is wrong.", 0, registerFile.getValue("r0"));
-        assertEquals("Negative flag is wrong.", false, cpsr.isNegative());
-        assertEquals("Zero flag is wrong.", true, cpsr.isZero());
-        assertEquals("Overflow flag is wrong.", false, cpsr.isOverflow());
+        assertFalse("Negative flag is wrong.", cpsr.isNegative());
+        assertTrue("Zero flag is wrong.", cpsr.isZero());
+        assertFalse("Overflow flag is wrong.", cpsr.isOverflow());
 
         code = "mov r1, 0\n"
                 + "rsbs r0, r1, 1\n";
         processor.run(linkerAndLoader.linkAndLoad(code));
         assertEquals("Subtraction result is wrong.", 1, registerFile.getValue("r0"));
-        assertEquals("Negative flag is wrong.", false, cpsr.isNegative());
-        assertEquals("Zero flag is wrong.", false, cpsr.isZero());
-        assertEquals("Overflow flag is wrong.", false, cpsr.isOverflow());
+        assertFalse("Negative flag is wrong.", cpsr.isNegative());
+        assertFalse("Zero flag is wrong.", cpsr.isZero());
+        assertFalse("Overflow flag is wrong.", cpsr.isOverflow());
 
         code = "ldr r1, =0x80000000\n"
                 + "mov r2, #1\n"
                 + "rsbs r0, r2, r1\n";
         processor.run(linkerAndLoader.linkAndLoad(code));
         assertEquals("Subtraction result is wrong.", Integer.MAX_VALUE, registerFile.getValue("r0"));
-        assertEquals("Negative flag is wrong.", false, cpsr.isNegative());
-        assertEquals("Zero flag is wrong.", false, cpsr.isZero());
-        assertEquals("Overflow flag is wrong.", true, cpsr.isOverflow());
+        assertFalse("Negative flag is wrong.", cpsr.isNegative());
+        assertFalse("Zero flag is wrong.", cpsr.isZero());
+        assertTrue("Overflow flag is wrong.", cpsr.isOverflow());
 
         code = "mov r1, #0xf\n"
                 + "mov r0, #0\n"
                 + "rsbs r0, r1, r0\n";
         processor.run(linkerAndLoader.linkAndLoad(code));
         assertEquals("Subtraction result is wrong.", -0xf, registerFile.getValue("r0"));
-        assertEquals("Negative flag is wrong.", true, cpsr.isNegative());
-        assertEquals("Zero flag is wrong.", false, cpsr.isZero());
-        assertEquals("Overflow flag is wrong.", false, cpsr.isOverflow());
+        assertTrue("Negative flag is wrong.", cpsr.isNegative());
+        assertFalse("Zero flag is wrong.", cpsr.isZero());
+        assertFalse("Overflow flag is wrong.", cpsr.isOverflow());
     }
 
     /**
@@ -406,9 +408,9 @@ public class ArithmeticVisitorTest {
                 + "rscs r0, r2, r1\n";
         processor.run(linkerAndLoader.linkAndLoad(code));
         assertEquals("Subtraction result is wrong.", Integer.MAX_VALUE, registerFile.getValue("r0"));
-        assertEquals("Negative flag is wrong.", false, cpsr.isNegative());
-        assertEquals("Zero flag is wrong.", false, cpsr.isZero());
-        assertEquals("Overflow flag is wrong.", true, cpsr.isOverflow());
+        assertFalse("Negative flag is wrong.", cpsr.isNegative());
+        assertFalse("Zero flag is wrong.", cpsr.isZero());
+        assertTrue("Overflow flag is wrong.", cpsr.isOverflow());
 
         cpsr.setCarry(false);
         code = "mov r2, #1\n"
@@ -417,18 +419,18 @@ public class ArithmeticVisitorTest {
         processor.run(linkerAndLoader.linkAndLoad(code));
         assertEquals("Subtraction result is wrong.", Integer.MAX_VALUE - 1, registerFile
                 .getValue("r0"));
-        assertEquals("Negative flag is wrong.", false, cpsr.isNegative());
-        assertEquals("Zero flag is wrong.", false, cpsr.isZero());
-        assertEquals("Overflow flag is wrong.", true, cpsr.isOverflow());
+        assertFalse("Negative flag is wrong.", cpsr.isNegative());
+        assertFalse("Zero flag is wrong.", cpsr.isZero());
+        assertTrue("Overflow flag is wrong.", cpsr.isOverflow());
 
         cpsr.setCarry(true);
         code = "mov r1, #0\n"
                 + "rscs r0, r1, #0\n";
         processor.run(linkerAndLoader.linkAndLoad(code));
         assertEquals("Subtraction result is wrong.", 0, registerFile.getValue("r0"));
-        assertEquals("Negative flag is wrong.", false, cpsr.isNegative());
-        assertEquals("Zero flag is wrong.", true, cpsr.isZero());
-        assertEquals("Overflow flag is wrong.", false, cpsr.isOverflow());
+        assertFalse("Negative flag is wrong.", cpsr.isNegative());
+        assertTrue("Zero flag is wrong.", cpsr.isZero());
+        assertFalse("Overflow flag is wrong.", cpsr.isOverflow());
 
         cpsr.setCarry(false);
         code = "mov r2, #1\n"
@@ -436,8 +438,8 @@ public class ArithmeticVisitorTest {
                 + "rscs r0, r2, r1\n";
         processor.run(linkerAndLoader.linkAndLoad(code));
         assertEquals("Subtraction result is wrong.", Integer.MAX_VALUE, registerFile.getValue("r0"));
-        assertEquals("Negative flag is wrong.", false, cpsr.isNegative());
-        assertEquals("Zero flag is wrong.", false, cpsr.isZero());
-        assertEquals("Overflow flag is wrong.", true, cpsr.isOverflow());
+        assertFalse("Negative flag is wrong.", cpsr.isNegative());
+        assertFalse("Zero flag is wrong.", cpsr.isZero());
+        assertTrue("Overflow flag is wrong.", cpsr.isOverflow());
     }
 }

@@ -14,10 +14,10 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.kasirgalabs.etumulator.linkerAndLoader;
+package com.kasirgalabs.etumulator.langtools;
 
-import com.kasirgalabs.etumulator.langtools.Symbol;
-import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 import org.junit.Test;
 
 public class SymbolTest {
@@ -29,12 +29,10 @@ public class SymbolTest {
         Symbol symbol = new Symbol("symbol", 0);
         Symbol symbol2 = new Symbol("symbol2", 1);
         Symbol symbol3 = new Symbol("symbol", 2);
-        assertEquals("Symbol's equals method does not work properly.", false, symbol.equals(this));
-        assertEquals("Symbol's equals method does not work properly.", false, symbol.equals(null));
-        assertEquals("Symbol's equals method does not work properly.", true, symbol.equals(symbol));
-        assertEquals("Symbol's equals method does not work properly.", false,
-                symbol.equals(symbol2));
-        assertEquals("Symbol's equals method does not work properly.", true,
-                symbol.equals(symbol3));
+        assertFalse("Symbol's equals method does not work properly.", symbol.equals(this));
+        assertFalse("Symbol's equals method does not work properly.", symbol.equals(null));
+        assertTrue("Symbol's equals method does not work properly.", symbol.equals(symbol));
+        assertFalse("Symbol's equals method does not work properly.", symbol.equals(symbol2));
+        assertTrue("Symbol's equals method does not work properly.", symbol.equals(symbol3));
     }
 }

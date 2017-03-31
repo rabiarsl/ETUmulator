@@ -78,9 +78,6 @@ public class BaseDocumentTest {
         try(BufferedReader bf = new BufferedReader(new FileReader(targetFile))) {
             result = bf.readLine();
         }
-        catch(IOException ex) {
-            throw ex;
-        }
         targetFile.delete();
         assertEquals("Saved text is not same.", expResult, result);
     }
@@ -116,7 +113,7 @@ public class BaseDocumentTest {
         try(BufferedReader bf = new BufferedReader(new FileReader(file))) {
             String line;
             while((line = bf.readLine()) != null) {
-                text.append(line).append("\n");
+                text.append(line).append('\n');
             }
         }
         catch(IOException ex) {

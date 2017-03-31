@@ -49,13 +49,13 @@ public class CPSRStatus implements Initializable, Observer {
 
     @Override
     public void update(Observable o, Object arg) {
-        int n = cpsr.isNegative() == false ? 0 : 1;
+        int n = cpsr.isNegative() ? 0 : 1;
         negative.setText(Integer.toString(n));
-        int z = cpsr.isZero() == false ? 0 : 1;
+        int z = cpsr.isZero() ? 0 : 1;
         zero.setText(Integer.toString(z));
-        int c = cpsr.isCarry() == false ? 0 : 1;
+        int c = cpsr.isCarry() ? 0 : 1;
         carry.setText(Integer.toString(c));
-        int v = cpsr.isOverflow() == false ? 0 : 1;
+        int v = cpsr.isOverflow() ? 0 : 1;
         overflow.setText(Integer.toString(v));
     }
 }

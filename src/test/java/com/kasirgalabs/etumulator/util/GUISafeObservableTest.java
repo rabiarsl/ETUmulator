@@ -36,6 +36,10 @@ public class GUISafeObservableTest {
         observable.addObserver(new TestObserver());
     }
 
+    private static String getExpectedResult() {
+        return expResult;
+    }
+
     /**
      * Test of notifyObservers method, of class GUISafeObservable.
      */
@@ -67,7 +71,7 @@ public class GUISafeObservableTest {
         @Override
         public void update(Observable o, Object arg) {
             if(arg != null) {
-                assertEquals("Observable result is wrong.", expResult, arg);
+                assertEquals("Observable result is wrong.", getExpectedResult(), arg);
             }
         }
     }

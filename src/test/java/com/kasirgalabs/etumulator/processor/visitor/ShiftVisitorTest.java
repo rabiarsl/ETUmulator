@@ -17,6 +17,8 @@
 package com.kasirgalabs.etumulator.processor.visitor;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 import com.kasirgalabs.etumulator.langtools.LinkerAndLoader;
 import com.kasirgalabs.etumulator.processor.BaseProcessor;
 import com.kasirgalabs.etumulator.processor.CPSR;
@@ -72,26 +74,26 @@ public class ShiftVisitorTest {
                 + "asrs r0, r1, r2\n";
         processor.run(linkerAndLoader.linkAndLoad(code));
         assertEquals("Shift result is wrong.", 0, registerFile.getValue("r0"));
-        assertEquals("Negative flag is wrong.", false, cpsr.isNegative());
-        assertEquals("Zero flag is wrong.", true, cpsr.isZero());
-        assertEquals("Carry flag is wrong.", true, cpsr.isCarry());
+        assertFalse("Negative flag is wrong.", cpsr.isNegative());
+        assertTrue("Zero flag is wrong.", cpsr.isZero());
+        assertTrue("Carry flag is wrong.", cpsr.isCarry());
 
         code = "ldr r1, =#0xffffffff\n"
                 + "mov r2, #1\n"
                 + "asrs r0, r1, r2\n";
         processor.run(linkerAndLoader.linkAndLoad(code));
         assertEquals("Shift result is wrong.", 0xffff_ffff, registerFile.getValue("r0"));
-        assertEquals("Negative flag is wrong.", true, cpsr.isNegative());
-        assertEquals("Zero flag is wrong.", false, cpsr.isZero());
-        assertEquals("Carry flag is wrong.", true, cpsr.isCarry());
+        assertTrue("Negative flag is wrong.", cpsr.isNegative());
+        assertFalse("Zero flag is wrong.", cpsr.isZero());
+        assertTrue("Carry flag is wrong.", cpsr.isCarry());
 
         code = "ldr r1, =#0xffffffff\n"
                 + "asrs r0, r1, #2\n";
         processor.run(linkerAndLoader.linkAndLoad(code));
         assertEquals("Shift result is wrong.", 0xffff_ffff, registerFile.getValue("r0"));
-        assertEquals("Negative flag is wrong.", true, cpsr.isNegative());
-        assertEquals("Zero flag is wrong.", false, cpsr.isZero());
-        assertEquals("Carry flag is wrong.", true, cpsr.isCarry());
+        assertTrue("Negative flag is wrong.", cpsr.isNegative());
+        assertFalse("Zero flag is wrong.", cpsr.isZero());
+        assertTrue("Carry flag is wrong.", cpsr.isCarry());
     }
 
     /**
@@ -127,26 +129,26 @@ public class ShiftVisitorTest {
                 + "lsls r0, r1, r2\n";
         processor.run(linkerAndLoader.linkAndLoad(code));
         assertEquals("Shift result is wrong.", 2, registerFile.getValue("r0"));
-        assertEquals("Negative flag is wrong.", false, cpsr.isNegative());
-        assertEquals("Zero flag is wrong.", false, cpsr.isZero());
-        assertEquals("Carry flag is wrong.", false, cpsr.isCarry());
+        assertFalse("Negative flag is wrong.", cpsr.isNegative());
+        assertFalse("Zero flag is wrong.", cpsr.isZero());
+        assertFalse("Carry flag is wrong.", cpsr.isCarry());
 
         code = "ldr r1, =#0xffffffff\n"
                 + "mov r2, #1\n"
                 + "lsls r0, r1, r2\n";
         processor.run(linkerAndLoader.linkAndLoad(code));
         assertEquals("Shift result is wrong.", 0xffff_ffff << 1, registerFile.getValue("r0"));
-        assertEquals("Negative flag is wrong.", true, cpsr.isNegative());
-        assertEquals("Zero flag is wrong.", false, cpsr.isZero());
-        assertEquals("Carry flag is wrong.", true, cpsr.isCarry());
+        assertTrue("Negative flag is wrong.", cpsr.isNegative());
+        assertFalse("Zero flag is wrong.", cpsr.isZero());
+        assertTrue("Carry flag is wrong.", cpsr.isCarry());
 
         code = "ldr r1, =#0xffffffff\n"
                 + "lsls r0, r1, 2\n";
         processor.run(linkerAndLoader.linkAndLoad(code));
         assertEquals("Shift result is wrong.", 0xffff_ffff << 2, registerFile.getValue("r0"));
-        assertEquals("Negative flag is wrong.", true, cpsr.isNegative());
-        assertEquals("Zero flag is wrong.", false, cpsr.isZero());
-        assertEquals("Carry flag is wrong.", true, cpsr.isCarry());
+        assertTrue("Negative flag is wrong.", cpsr.isNegative());
+        assertFalse("Zero flag is wrong.", cpsr.isZero());
+        assertTrue("Carry flag is wrong.", cpsr.isCarry());
     }
 
     /**
@@ -182,26 +184,26 @@ public class ShiftVisitorTest {
                 + "lsrs r0, r1, r2\n";
         processor.run(linkerAndLoader.linkAndLoad(code));
         assertEquals("Shift result is wrong.", 0, registerFile.getValue("r0"));
-        assertEquals("Negative flag is wrong.", false, cpsr.isNegative());
-        assertEquals("Zero flag is wrong.", true, cpsr.isZero());
-        assertEquals("Carry flag is wrong.", true, cpsr.isCarry());
+        assertFalse("Negative flag is wrong.", cpsr.isNegative());
+        assertTrue("Zero flag is wrong.", cpsr.isZero());
+        assertTrue("Carry flag is wrong.", cpsr.isCarry());
 
         code = "ldr r1, =#0xffffffff\n"
                 + "mov r2, #1\n"
                 + "lsrs r0, r1, r2\n";
         processor.run(linkerAndLoader.linkAndLoad(code));
         assertEquals("Shift result is wrong.", 0x7fff_ffff, registerFile.getValue("r0"));
-        assertEquals("Negative flag is wrong.", false, cpsr.isNegative());
-        assertEquals("Zero flag is wrong.", false, cpsr.isZero());
-        assertEquals("Carry flag is wrong.", true, cpsr.isCarry());
+        assertFalse("Negative flag is wrong.", cpsr.isNegative());
+        assertFalse("Zero flag is wrong.", cpsr.isZero());
+        assertTrue("Carry flag is wrong.", cpsr.isCarry());
 
         code = "ldr r1, =#0xffffffff\n"
                 + "lsrs r0, r1, #2\n";
         processor.run(linkerAndLoader.linkAndLoad(code));
         assertEquals("Shift result is wrong.", 0xffff_ffff >>> 2, registerFile.getValue("r0"));
-        assertEquals("Negative flag is wrong.", false, cpsr.isNegative());
-        assertEquals("Zero flag is wrong.", false, cpsr.isZero());
-        assertEquals("Carry flag is wrong.", true, cpsr.isCarry());
+        assertFalse("Negative flag is wrong.", cpsr.isNegative());
+        assertFalse("Zero flag is wrong.", cpsr.isZero());
+        assertTrue("Carry flag is wrong.", cpsr.isCarry());
     }
 
     /**
@@ -239,27 +241,27 @@ public class ShiftVisitorTest {
                 + "rors r0, r1, r2\n";
         processor.run(linkerAndLoader.linkAndLoad(code));
         assertEquals("Shift result is wrong.", 0x8000_0000, registerFile.getValue("r0"));
-        assertEquals("Negative flag is wrong.", true, cpsr.isNegative());
-        assertEquals("Zero flag is wrong.", false, cpsr.isZero());
-        assertEquals("Carry flag is wrong.", true, cpsr.isCarry());
+        assertTrue("Negative flag is wrong.", cpsr.isNegative());
+        assertFalse("Zero flag is wrong.", cpsr.isZero());
+        assertTrue("Carry flag is wrong.", cpsr.isCarry());
 
         code = "mov r1, 0\n"
                 + "mov r2, #4\n"
                 + "rors r0, r1, r2\n";
         processor.run(linkerAndLoader.linkAndLoad(code));
         assertEquals("Shift result is wrong.", 0, registerFile.getValue("r0"));
-        assertEquals("Negative flag is wrong.", false, cpsr.isNegative());
-        assertEquals("Zero flag is wrong.", true, cpsr.isZero());
-        assertEquals("Carry flag is wrong.", false, cpsr.isCarry());
+        assertFalse("Negative flag is wrong.", cpsr.isNegative());
+        assertTrue("Zero flag is wrong.", cpsr.isZero());
+        assertFalse("Carry flag is wrong.", cpsr.isCarry());
 
         code = "ldr r1, =#0xffffffff\n"
                 + "mov r2, #1\n"
                 + "rors r0, r1, r2\n";
         processor.run(linkerAndLoader.linkAndLoad(code));
         assertEquals("Shift result is wrong.", 0xffff_ffff, registerFile.getValue("r0"));
-        assertEquals("Negative flag is wrong.", true, cpsr.isNegative());
-        assertEquals("Zero flag is wrong.", false, cpsr.isZero());
-        assertEquals("Carry flag is wrong.", true, cpsr.isCarry());
+        assertTrue("Negative flag is wrong.", cpsr.isNegative());
+        assertFalse("Zero flag is wrong.", cpsr.isZero());
+        assertTrue("Carry flag is wrong.", cpsr.isCarry());
 
         code = "ldr r1, =#0xfffff0ff\n"
                 + "mov r2, #1\n"
@@ -267,9 +269,9 @@ public class ShiftVisitorTest {
         processor.run(linkerAndLoader.linkAndLoad(code));
         assertEquals("Shift result is wrong.", Integer.rotateRight(0xffff_f0ff, 3),
                 registerFile.getValue("r0"));
-        assertEquals("Negative flag is wrong.", true, cpsr.isNegative());
-        assertEquals("Zero flag is wrong.", false, cpsr.isZero());
-        assertEquals("Carry flag is wrong.", true, cpsr.isCarry());
+        assertTrue("Negative flag is wrong.", cpsr.isNegative());
+        assertFalse("Zero flag is wrong.", cpsr.isZero());
+        assertTrue("Carry flag is wrong.", cpsr.isCarry());
     }
 
     /**
@@ -293,35 +295,35 @@ public class ShiftVisitorTest {
                 + "rrxs r0, r1\n";
         processor.run(linkerAndLoader.linkAndLoad(code));
         assertEquals("Shift result is wrong.", 0xffff_ffff, registerFile.getValue("r0"));
-        assertEquals("Negative flag is wrong.", true, cpsr.isNegative());
-        assertEquals("Zero flag is wrong.", false, cpsr.isZero());
-        assertEquals("Carry flag is wrong.", true, cpsr.isCarry());
+        assertTrue("Negative flag is wrong.", cpsr.isNegative());
+        assertFalse("Zero flag is wrong.", cpsr.isZero());
+        assertTrue("Carry flag is wrong.", cpsr.isCarry());
 
         cpsr.setCarry(false);
         code = "ldr r1, =#0xffffffff\n"
                 + "rrxs r0, r1\n";
         processor.run(linkerAndLoader.linkAndLoad(code));
         assertEquals("Shift result is wrong.", Integer.MAX_VALUE, registerFile.getValue("r0"));
-        assertEquals("Negative flag is wrong.", false, cpsr.isNegative());
-        assertEquals("Zero flag is wrong.", false, cpsr.isZero());
-        assertEquals("Carry flag is wrong.", true, cpsr.isCarry());
+        assertFalse("Negative flag is wrong.", cpsr.isNegative());
+        assertFalse("Zero flag is wrong.", cpsr.isZero());
+        assertTrue("Carry flag is wrong.", cpsr.isCarry());
 
         cpsr.setCarry(false);
         code = "mov r1, 0\n"
                 + "rrxs r0, r1\n";
         processor.run(linkerAndLoader.linkAndLoad(code));
         assertEquals("Shift result is wrong.", 0, registerFile.getValue("r0"));
-        assertEquals("Negative flag is wrong.", false, cpsr.isNegative());
-        assertEquals("Zero flag is wrong.", true, cpsr.isZero());
-        assertEquals("Carry flag is wrong.", false, cpsr.isCarry());
+        assertFalse("Negative flag is wrong.", cpsr.isNegative());
+        assertTrue("Zero flag is wrong.", cpsr.isZero());
+        assertFalse("Carry flag is wrong.", cpsr.isCarry());
 
         cpsr.setCarry(false);
         code = "mov r1, 1\n"
                 + "rrxs r0, r1\n";
         processor.run(linkerAndLoader.linkAndLoad(code));
         assertEquals("Shift result is wrong.", 0, registerFile.getValue("r0"));
-        assertEquals("Negative flag is wrong.", false, cpsr.isNegative());
-        assertEquals("Zero flag is wrong.", true, cpsr.isZero());
-        assertEquals("Carry flag is wrong.", true, cpsr.isCarry());
+        assertFalse("Negative flag is wrong.", cpsr.isNegative());
+        assertTrue("Zero flag is wrong.", cpsr.isZero());
+        assertTrue("Carry flag is wrong.", cpsr.isCarry());
     }
 }

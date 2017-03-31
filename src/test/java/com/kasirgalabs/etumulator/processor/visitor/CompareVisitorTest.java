@@ -17,6 +17,8 @@
 package com.kasirgalabs.etumulator.processor.visitor;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 import com.kasirgalabs.etumulator.langtools.LinkerAndLoader;
 import com.kasirgalabs.etumulator.processor.BaseProcessor;
 import com.kasirgalabs.etumulator.processor.CPSR;
@@ -43,30 +45,30 @@ public class CompareVisitorTest {
     public void testVisitCmp() {
         String code = "cmp r2, #0\n";
         processor.run(linkerAndLoader.linkAndLoad(code));
-        assertEquals("Negative flag is wrong.", false, cpsr.isNegative());
-        assertEquals("Zero flag is wrong.", true, cpsr.isZero());
-        assertEquals("Overflow flag is wrong.", false, cpsr.isOverflow());
+        assertFalse("Negative flag is wrong.", cpsr.isNegative());
+        assertTrue("Zero flag is wrong.", cpsr.isZero());
+        assertFalse("Overflow flag is wrong.", cpsr.isOverflow());
 
         code = "cmp r2, 8\n";
         processor.run(linkerAndLoader.linkAndLoad(code));
-        assertEquals("Negative flag is wrong.", true, cpsr.isNegative());
-        assertEquals("Zero flag is wrong.", false, cpsr.isZero());
-        assertEquals("Overflow flag is wrong.", false, cpsr.isOverflow());
+        assertTrue("Negative flag is wrong.", cpsr.isNegative());
+        assertFalse("Zero flag is wrong.", cpsr.isZero());
+        assertFalse("Overflow flag is wrong.", cpsr.isOverflow());
 
         code = "mov r0, #0xf0\n"
                 + "cmp r0, 0xf0\n";
         processor.run(linkerAndLoader.linkAndLoad(code));
-        assertEquals("Negative flag is wrong.", false, cpsr.isNegative());
-        assertEquals("Zero flag is wrong.", true, cpsr.isZero());
-        assertEquals("Overflow flag is wrong.", false, cpsr.isOverflow());
+        assertFalse("Negative flag is wrong.", cpsr.isNegative());
+        assertTrue("Zero flag is wrong.", cpsr.isZero());
+        assertFalse("Overflow flag is wrong.", cpsr.isOverflow());
 
         code = "ldr r1, =#0x80000000\n"
                 + "ldr r2, =0xffffffff\n"
                 + "cmp r1, r2\n";
         processor.run(linkerAndLoader.linkAndLoad(code));
-        assertEquals("Negative flag is wrong.", true, cpsr.isNegative());
-        assertEquals("Zero flag is wrong.", false, cpsr.isZero());
-        assertEquals("Overflow flag is wrong.", false, cpsr.isOverflow());
+        assertTrue("Negative flag is wrong.", cpsr.isNegative());
+        assertFalse("Zero flag is wrong.", cpsr.isZero());
+        assertFalse("Overflow flag is wrong.", cpsr.isOverflow());
     }
 
     /**
@@ -76,22 +78,22 @@ public class CompareVisitorTest {
     public void testVisitCmn() {
         String code = "cmn r1,  #0\n";
         processor.run(linkerAndLoader.linkAndLoad(code));
-        assertEquals("Negative flag is wrong.", false, cpsr.isNegative());
-        assertEquals("Zero flag is wrong.", true, cpsr.isZero());
-        assertEquals("Overflow flag is wrong.", false, cpsr.isOverflow());
+        assertFalse("Negative flag is wrong.", cpsr.isNegative());
+        assertTrue("Zero flag is wrong.", cpsr.isZero());
+        assertFalse("Overflow flag is wrong.", cpsr.isOverflow());
 
         code = "cmn r2, 8\n";
         processor.run(linkerAndLoader.linkAndLoad(code));
-        assertEquals("Negative flag is wrong.", false, cpsr.isNegative());
-        assertEquals("Zero flag is wrong.", false, cpsr.isZero());
-        assertEquals("Overflow flag is wrong.", false, cpsr.isOverflow());
+        assertFalse("Negative flag is wrong.", cpsr.isNegative());
+        assertFalse("Zero flag is wrong.", cpsr.isZero());
+        assertFalse("Overflow flag is wrong.", cpsr.isOverflow());
 
         code = "ldr r1, =#0x80000000\n"
                 + "ldr r2, =0xffffffff\n"
                 + "cmn r1, r2\n";
         processor.run(linkerAndLoader.linkAndLoad(code));
-        assertEquals("Negative flag is wrong.", false, cpsr.isNegative());
-        assertEquals("Zero flag is wrong.", false, cpsr.isZero());
-        assertEquals("Overflow flag is wrong.", true, cpsr.isOverflow());
+        assertFalse("Negative flag is wrong.", cpsr.isNegative());
+        assertFalse("Zero flag is wrong.", cpsr.isZero());
+        assertTrue("Overflow flag is wrong.", cpsr.isOverflow());
     }
 }

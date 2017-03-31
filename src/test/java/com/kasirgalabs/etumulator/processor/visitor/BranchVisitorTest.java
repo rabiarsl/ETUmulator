@@ -28,7 +28,6 @@ import java.util.Observable;
 import org.junit.Test;
 
 public class BranchVisitorTest {
-    private final ProcessorUnits processorUnits;
     private final RegisterFile registerFile;
     private final CPSR cpsr;
     private final UART uart;
@@ -36,7 +35,7 @@ public class BranchVisitorTest {
     private final LinkerAndLoader linkerAndLoader;
 
     public BranchVisitorTest() {
-        processorUnits = new ProcessorUnits();
+        ProcessorUnits processorUnits = new ProcessorUnits();
         registerFile = processorUnits.getRegisterFile();
         cpsr = processorUnits.getCPSR();
         uart = processorUnits.getUART();

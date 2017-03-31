@@ -17,6 +17,8 @@
 package com.kasirgalabs.etumulator.processor.visitor;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 import com.kasirgalabs.etumulator.langtools.LinkerAndLoader;
 import com.kasirgalabs.etumulator.processor.BaseProcessor;
 import com.kasirgalabs.etumulator.processor.CPSR;
@@ -63,16 +65,16 @@ public class MultiplyAndDivideVisitorTest {
         String code = "muls r0, r1, r3\n";
         processor.run(linkerAndLoader.linkAndLoad(code));
         assertEquals("Multiply result is wrong.", 0, registerFile.getValue("r0"));
-        assertEquals("Negative flag is wrong.", false, cpsr.isNegative());
-        assertEquals("Zero flag is wrong.", true, cpsr.isZero());
+        assertFalse("Negative flag is wrong.", cpsr.isNegative());
+        assertTrue("Zero flag is wrong.", cpsr.isZero());
 
         code = "mov r1, 4\n"
                 + "mov r2, 8\n"
                 + "muls r0, r1, r2\n";
         processor.run(linkerAndLoader.linkAndLoad(code));
         assertEquals("Multiply result is wrong.", 32, registerFile.getValue("r0"));
-        assertEquals("Negative flag is wrong.", false, cpsr.isNegative());
-        assertEquals("Zero flag is wrong.", false, cpsr.isZero());
+        assertFalse("Negative flag is wrong.", cpsr.isNegative());
+        assertFalse("Zero flag is wrong.", cpsr.isZero());
     }
 
     /**
@@ -100,8 +102,8 @@ public class MultiplyAndDivideVisitorTest {
         String code = "mlas r0, r1, r3, r4\n";
         processor.run(linkerAndLoader.linkAndLoad(code));
         assertEquals("Multiply result is wrong.", 0, registerFile.getValue("r0"));
-        assertEquals("Negative flag is wrong.", false, cpsr.isNegative());
-        assertEquals("Zero flag is wrong.", true, cpsr.isZero());
+        assertFalse("Negative flag is wrong.", cpsr.isNegative());
+        assertTrue("Zero flag is wrong.", cpsr.isZero());
 
         code = "mov r1, 4\n"
                 + "mov r2, 8\n"
@@ -109,8 +111,8 @@ public class MultiplyAndDivideVisitorTest {
                 + "mlas r0, r1, r2, r3\n";
         processor.run(linkerAndLoader.linkAndLoad(code));
         assertEquals("Multiply result is wrong.", 34, registerFile.getValue("r0"));
-        assertEquals("Negative flag is wrong.", false, cpsr.isNegative());
-        assertEquals("Zero flag is wrong.", false, cpsr.isZero());
+        assertFalse("Negative flag is wrong.", cpsr.isNegative());
+        assertFalse("Zero flag is wrong.", cpsr.isZero());
     }
 
     /**

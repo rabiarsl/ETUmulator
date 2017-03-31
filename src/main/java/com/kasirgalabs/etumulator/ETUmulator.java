@@ -31,7 +31,7 @@ import javafx.stage.Stage;
 
 public class ETUmulator extends Application {
     @Inject
-    private DocumentMenu documentMenuController;
+    private DocumentMenu documentMenu;
 
     public static void main(String[] args) {
         launch(args);
@@ -52,6 +52,6 @@ public class ETUmulator extends Application {
         primaryStage.show();
 
         injector.injectMembers(this);
-        documentMenuController.setWindow(primaryStage.getOwner());
+        documentMenu.setWindow(primaryStage.getOwner());
     }
 }

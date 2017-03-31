@@ -18,9 +18,9 @@ package com.kasirgalabs.etumulator.processor.visitor;
 
 import com.kasirgalabs.arm.ArmBaseVisitor;
 import com.kasirgalabs.arm.ArmParser;
-import com.kasirgalabs.etumulator.processor.UART;
 import com.kasirgalabs.etumulator.langtools.Symbol;
 import com.kasirgalabs.etumulator.processor.CPSR;
+import com.kasirgalabs.etumulator.processor.UART;
 import java.util.Set;
 
 public class BranchVisitor extends ArmBaseVisitor<Integer> {
@@ -178,10 +178,10 @@ public class BranchVisitor extends ArmBaseVisitor<Integer> {
     @Override
     public Integer visitBl(ArmParser.BlContext ctx) {
         String label = ctx.LABEL().getText();
-        if(label.equals("uart_read")) {
+        if("uart_read".equalsIgnoreCase(label)) {
             uart.read();
         }
-        else if(label.equals("uart_write")) {
+        else if("uart_write".equalsIgnoreCase(label)) {
             uart.write();
         }
         return null;

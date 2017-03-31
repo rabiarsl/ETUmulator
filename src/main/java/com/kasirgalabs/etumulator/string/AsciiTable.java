@@ -16,7 +16,7 @@
  */
 package com.kasirgalabs.etumulator.string;
 
-public class AsciiTable {
+public final class AsciiTable {
     private static final int NULL = 0;
     private static final int BELL = 7;
     private static final int BACKSPACE = 8;
@@ -48,20 +48,17 @@ public class AsciiTable {
     }
 
     public static String getAscii(int code) {
-        if(code > 255) {
-            return "Non-ASCII";
-        }
         if(hasEscapeSequence(code)) {
             return escapeSequence(code);
         }
         if(isExtendedAscii(code)) {
             return Character.toString(EXTENDED_ASCII_TABLE[code - 0x80]);
         }
-        return Character.toString((char) code);
+        return "Non-ASCII";
     }
 
     private static boolean hasEscapeSequence(int code) {
-        return (code >= 7 && code <= 13) || code == 0 || code == 27;
+        return (code >= 7 && code <= 13) || code == NULL || code == ESCAPE;
     }
 
     private static String escapeSequence(int code) {

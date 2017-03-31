@@ -62,7 +62,7 @@ public class StackTab implements Initializable, Observer {
     public void update(Observable o, Object arg) {
         if(o.getClass().equals(Stack.class)) {
             String operation = (String) arg;
-            if(operation.equals("push")) {
+            if("push".equals(operation)) {
                 data.add(new NavigatorRow(data.size(), stack.peek()));
             }
             else {

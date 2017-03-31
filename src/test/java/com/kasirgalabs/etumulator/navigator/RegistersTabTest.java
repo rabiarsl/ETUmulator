@@ -21,7 +21,6 @@ import com.kasirgalabs.etumulator.document.BaseDocumentTest;
 import com.kasirgalabs.etumulator.processor.RegisterFile;
 import java.io.IOException;
 import javafx.fxml.FXMLLoader;
-import javafx.stage.FileChooser;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
@@ -51,7 +50,6 @@ public class RegistersTabTest {
      */
     @Test
     public void testUpdate() {
-        FileChooser test = new FileChooser();
         registerFile.notifyObservers("r0");
         navigator.notifyObservers();
     }

@@ -59,11 +59,8 @@ public class DocumentMenu {
             try(BufferedReader bf = new BufferedReader(new FileReader(file))) {
                 String line;
                 while((line = bf.readLine()) != null) {
-                    text.append(line).append("\n");
+                    text.append(line).append('\n');
                 }
-            }
-            catch(IOException ex) {
-                throw ex;
             }
             document.setText(text.toString());
             document.setTargetFile(file);

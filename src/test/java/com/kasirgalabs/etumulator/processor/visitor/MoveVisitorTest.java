@@ -17,6 +17,8 @@
 package com.kasirgalabs.etumulator.processor.visitor;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 import com.kasirgalabs.etumulator.langtools.LinkerAndLoader;
 import com.kasirgalabs.etumulator.processor.BaseProcessor;
 import com.kasirgalabs.etumulator.processor.CPSR;
@@ -70,15 +72,15 @@ public class MoveVisitorTest {
         String code = "movs r0, #0\n";
         processor.run(linkerAndLoader.linkAndLoad(code));
         assertEquals("Move result is wrong.", 0, registerFile.getValue("r0"));
-        assertEquals("Negative flag is wrong.", false, cpsr.isNegative());
-        assertEquals("Zero flag is wrong.", true, cpsr.isZero());
+        assertFalse("Negative flag is wrong.", cpsr.isNegative());
+        assertTrue("Zero flag is wrong.", cpsr.isZero());
 
         code = "mov r1, 8\n"
                 + "movs r0, r1\n";
         processor.run(linkerAndLoader.linkAndLoad(code));
         assertEquals("Move result is wrong.", 8, registerFile.getValue("r0"));
-        assertEquals("Negative flag is wrong.", false, cpsr.isNegative());
-        assertEquals("Zero flag is wrong.", false, cpsr.isZero());
+        assertFalse("Negative flag is wrong.", cpsr.isNegative());
+        assertFalse("Zero flag is wrong.", cpsr.isZero());
     }
 
     /**
@@ -112,15 +114,15 @@ public class MoveVisitorTest {
         String code = "mvns r0, #0\n";
         processor.run(linkerAndLoader.linkAndLoad(code));
         assertEquals("Move result is wrong.", ~0, registerFile.getValue("r0"));
-        assertEquals("Negative flag is wrong.", true, cpsr.isNegative());
-        assertEquals("Zero flag is wrong.", false, cpsr.isZero());
+        assertTrue("Negative flag is wrong.", cpsr.isNegative());
+        assertFalse("Zero flag is wrong.", cpsr.isZero());
 
         code = "mov r1, 8\n"
                 + "mvns r0, r1\n";
         processor.run(linkerAndLoader.linkAndLoad(code));
         assertEquals("Move result is wrong.", ~8, registerFile.getValue("r0"));
-        assertEquals("Negative flag is wrong.", true, cpsr.isNegative());
-        assertEquals("Zero flag is wrong.", false, cpsr.isZero());
+        assertTrue("Negative flag is wrong.", cpsr.isNegative());
+        assertFalse("Zero flag is wrong.", cpsr.isZero());
     }
 
     /**

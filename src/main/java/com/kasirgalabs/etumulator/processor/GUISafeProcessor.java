@@ -55,7 +55,7 @@ public class GUISafeProcessor extends BaseProcessor implements Callable<Void> {
     }
 
     @Override
-    public Void call() throws Exception {
+    public Void call() {
         super.run(executableCode);
         return null;
     }

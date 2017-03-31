@@ -41,7 +41,7 @@ public class MoveVisitor extends ArmBaseVisitor<Void> {
         String destRegister = registerVisitor.visit(ctx.rd());
         int value;
         if(ctx.imm16() != null) {
-            value = numberVisitor.visit((ctx.imm16()));
+            value = numberVisitor.visit(ctx.imm16());
         }
         else {
             value = operand2Visitor.visit(ctx.operand2());
