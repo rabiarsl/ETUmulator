@@ -20,20 +20,21 @@ import com.kasirgalabs.etumulator.JavaFXThread;
 import com.kasirgalabs.etumulator.document.BaseDocumentTest;
 import com.kasirgalabs.etumulator.processor.Stack;
 import java.io.IOException;
+import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
-import org.junit.Before;
-import org.junit.Rule;
+import org.junit.ClassRule;
 import org.junit.Test;
 
 public class StackTabTest {
-    private static Stack stack;
-    private static Navigator navigator;
-    private static StackTab stackTab;
-    @Rule
-    public final JavaFXThread javaFXThread = new JavaFXThread();
+    @ClassRule
+    public static final JavaFXThread javaFXThread = new JavaFXThread();
+    private final Stack stack;
+    private final Navigator navigator;
+    private final StackTab stackTab;
 
-    @Before
-    public void setUp() throws IOException {
+    public StackTabTest() throws IOException {
+        assert Platform.isFxApplicationThread();
+
         stack = new Stack();
         navigator = new Navigator();
         stackTab = new StackTab(stack, navigator);
@@ -50,6 +51,8 @@ public class StackTabTest {
      */
     @Test
     public void testUpdate() {
+        assert Platform.isFxApplicationThread();
+
         final int RANDOM = (int) (Math.random() * Integer.MAX_VALUE);
         stack.notifyObservers("pop");
         stack.push(RANDOM);

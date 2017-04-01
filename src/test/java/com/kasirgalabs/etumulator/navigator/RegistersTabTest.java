@@ -20,20 +20,21 @@ import com.kasirgalabs.etumulator.JavaFXThread;
 import com.kasirgalabs.etumulator.document.BaseDocumentTest;
 import com.kasirgalabs.etumulator.processor.RegisterFile;
 import java.io.IOException;
+import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
-import org.junit.Before;
-import org.junit.Rule;
+import org.junit.ClassRule;
 import org.junit.Test;
 
 public class RegistersTabTest {
-    private static RegisterFile registerFile;
-    private static Navigator navigator;
-    private static RegistersTab registersTab;
-    @Rule
-    public final JavaFXThread javaFXThread = new JavaFXThread();
+    @ClassRule
+    public static final JavaFXThread javaFXThread = new JavaFXThread();
+    private final RegisterFile registerFile;
+    private final Navigator navigator;
+    private final RegistersTab registersTab;
 
-    @Before
-    public void setUp() throws IOException {
+    public RegistersTabTest() throws IOException {
+        assert Platform.isFxApplicationThread();
+
         registerFile = new RegisterFile();
         navigator = new Navigator();
         registersTab = new RegistersTab(registerFile, navigator);
@@ -50,6 +51,8 @@ public class RegistersTabTest {
      */
     @Test
     public void testUpdate() {
+        assert Platform.isFxApplicationThread();
+
         registerFile.notifyObservers("r0");
         navigator.notifyObservers();
     }

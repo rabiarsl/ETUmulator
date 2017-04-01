@@ -17,23 +17,20 @@
 package com.kasirgalabs.etumulator.processor;
 
 import static org.junit.Assert.assertEquals;
-import com.kasirgalabs.etumulator.JavaFXThread;
 import com.kasirgalabs.etumulator.langtools.LinkerAndLoader;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
+import javafx.embed.swing.JFXPanel;
 import org.junit.After;
-import org.junit.Rule;
 import org.junit.Test;
 
 public class GUISafeProcessorTest {
-    @Rule
-    public final JavaFXThread javaFXThread = new JavaFXThread();
-    private final ProcessorUnits processorUnits;
     private final GUISafeProcessor processor;
+    private final ProcessorUnits processorUnits;
     private final LinkerAndLoader linkerAndLoader;
 
-    public GUISafeProcessorTest() {
+    public GUISafeProcessorTest() throws InterruptedException {
         processorUnits = new ProcessorUnits();
         processor = new GUISafeProcessor(processorUnits);
         linkerAndLoader = new LinkerAndLoader(processorUnits.getMemory());
@@ -53,11 +50,12 @@ public class GUISafeProcessorTest {
      */
     @Test
     public void testRun() throws InterruptedException, ExecutionException, TimeoutException {
+        new JFXPanel();
         String code = "nop\n"
                 + "nop\n"
                 + "nop\n";
         processor.run(linkerAndLoader.linkAndLoad(code));
-        processor.waitForComplete(1, TimeUnit.SECONDS);
+        processor.waitForComplete(5, TimeUnit.SECONDS);
 
         code = "mov r0, #1\n"
                 + "label:\n"
@@ -68,7 +66,7 @@ public class GUISafeProcessorTest {
                 + "b label\n"
                 + "exit:\n";
         processor.run(linkerAndLoader.linkAndLoad(code));
-        processor.waitForComplete(2, TimeUnit.SECONDS);
+        processor.waitForComplete(5, TimeUnit.SECONDS);
         assertEquals("GUISafeProcessor does not work properly.", 100, processorUnits
                 .getRegisterFile().getValue("r0"));
 
@@ -81,7 +79,7 @@ public class GUISafeProcessorTest {
                 + "b label\n"
                 + "exit:\n";
         processor.run(linkerAndLoader.linkAndLoad(code));
-        processor.waitForComplete(2, TimeUnit.SECONDS);
+        processor.waitForComplete(5, TimeUnit.SECONDS);
         assertEquals("GUISafeProcessor does not work properly.", 100, processorUnits
                 .getStack().peek());
     }

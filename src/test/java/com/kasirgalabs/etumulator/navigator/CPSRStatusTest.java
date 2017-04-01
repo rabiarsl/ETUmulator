@@ -20,19 +20,20 @@ import com.kasirgalabs.etumulator.JavaFXThread;
 import com.kasirgalabs.etumulator.document.BaseDocumentTest;
 import com.kasirgalabs.etumulator.processor.CPSR;
 import java.io.IOException;
+import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
-import org.junit.Before;
-import org.junit.Rule;
+import org.junit.ClassRule;
 import org.junit.Test;
 
 public class CPSRStatusTest {
-    private static CPSR cpsr;
-    private static CPSRStatus cpsrStatus;
-    @Rule
-    public final JavaFXThread javaFXThread = new JavaFXThread();
+    @ClassRule
+    public static final JavaFXThread javaFXThread = new JavaFXThread();
+    private final CPSR cpsr;
+    private final CPSRStatus cpsrStatus;
 
-    @Before
-    public void setUp() throws IOException {
+    public CPSRStatusTest() throws IOException {
+        assert Platform.isFxApplicationThread();
+
         cpsr = new CPSR();
         cpsrStatus = new CPSRStatus(cpsr);
         ClassLoader classLoader = BaseDocumentTest.class.getClassLoader();
@@ -48,6 +49,8 @@ public class CPSRStatusTest {
      */
     @Test
     public void testUpdate() {
+        assert Platform.isFxApplicationThread();
+
         cpsr.setNegative(true);
         cpsr.setNegative(false);
         cpsr.setZero(true);

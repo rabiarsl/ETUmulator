@@ -20,20 +20,21 @@ import com.kasirgalabs.etumulator.JavaFXThread;
 import com.kasirgalabs.etumulator.document.BaseDocumentTest;
 import com.kasirgalabs.etumulator.processor.Memory;
 import java.io.IOException;
+import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
-import org.junit.Before;
-import org.junit.Rule;
+import org.junit.ClassRule;
 import org.junit.Test;
 
 public class MemoryTabTest {
-    private static Memory memory;
-    private static Navigator navigator;
-    private static MemoryTab memoryTab;
-    @Rule
-    public final JavaFXThread javaFXThread = new JavaFXThread();
+    @ClassRule
+    public static final JavaFXThread javaFXThread = new JavaFXThread();
+    private final Memory memory;
+    private final Navigator navigator;
+    private final MemoryTab memoryTab;
 
-    @Before
-    public void setUp() throws IOException {
+    public MemoryTabTest() throws IOException {
+        assert Platform.isFxApplicationThread();
+
         memory = new Memory();
         navigator = new Navigator();
         memoryTab = new MemoryTab(memory, navigator);
@@ -50,6 +51,8 @@ public class MemoryTabTest {
      */
     @Test
     public void testUpdate() {
+        assert Platform.isFxApplicationThread();
+
         final int RANDOM = (int) (Math.random() * Integer.MAX_VALUE);
         memory.set(RANDOM, (byte) 0);
         memory.set(RANDOM, (byte) 1);

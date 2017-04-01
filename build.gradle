@@ -42,7 +42,7 @@ tasks.withType(Test) {
 pmd {
     consoleOutput = true
     ignoreFailures = true
-    ruleSetFiles = files("config/pmd/ruleset.xml")
+    ruleSetFiles = files("config/pmd/kasirgalabs-pmd.xml")
 }
 
 generateGrammarSource {

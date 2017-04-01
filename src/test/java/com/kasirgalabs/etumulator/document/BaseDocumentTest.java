@@ -23,6 +23,7 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.PrintWriter;
+import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
 import org.junit.After;
 import org.junit.Before;
@@ -37,6 +38,8 @@ public class BaseDocumentTest {
 
     @Before
     public void setUp() throws IOException {
+        assert Platform.isFxApplicationThread();
+
         ClassLoader classLoader = BaseDocumentTest.class.getClassLoader();
         FXMLLoader fxmlLoader = new FXMLLoader(classLoader.getResource("fxml/Document.fxml"));
         fxmlLoader.load();
@@ -46,6 +49,8 @@ public class BaseDocumentTest {
 
     @After
     public void tearDown() {
+        assert Platform.isFxApplicationThread();
+
         mockFile.delete();
     }
 
@@ -54,6 +59,8 @@ public class BaseDocumentTest {
      */
     @Test
     public void testSetTargetFileandGetTargetFile() {
+        assert Platform.isFxApplicationThread();
+
         File expResult = new File("testSetTargetFileandGetTargetFile");
         document.setTargetFile(expResult);
         assertEquals("File is not same.", expResult, document.getTargetFile());
@@ -66,6 +73,8 @@ public class BaseDocumentTest {
      */
     @Test
     public void testSaveDocument() throws IOException {
+        assert Platform.isFxApplicationThread();
+
         String expResult = "testReadFileAndGetText";
         try(PrintWriter writer = new PrintWriter(mockFile)) {
             writer.println(expResult);
@@ -89,6 +98,8 @@ public class BaseDocumentTest {
      */
     @Test
     public void testGetTextAndSetText() throws IOException {
+        assert Platform.isFxApplicationThread();
+
         document.setText("TEST");
         String result = document.getText();
         assertEquals("Text is not empty.", "TEST", result);
@@ -101,6 +112,8 @@ public class BaseDocumentTest {
      */
     @Test
     public void testClear() throws IOException {
+        assert Platform.isFxApplicationThread();
+
         String text = "TEST";
         document.setText(text);
         document.clear();
@@ -109,6 +122,8 @@ public class BaseDocumentTest {
     }
 
     private void readFileIntoDocument(File file) throws IOException {
+        assert Platform.isFxApplicationThread();
+
         StringBuilder text = new StringBuilder();
         try(BufferedReader bf = new BufferedReader(new FileReader(file))) {
             String line;
