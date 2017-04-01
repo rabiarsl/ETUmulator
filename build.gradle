@@ -12,9 +12,12 @@ mainClassName = "com.kasirgalabs.etumulator.ETUmulator"
 
 repositories {
     mavenCentral()
-    maven {
-        url "http://dl.bintray.com/typesafe/maven-releases"
-    }
+    maven { url "http://dl.bintray.com/typesafe/maven-releases" }
+}
+
+configurations {
+    providedRuntime
+    codacy
 }
 
 dependencies {
@@ -22,7 +25,7 @@ dependencies {
     testCompile group: "junit", name: "junit", version: "4.12"
     compile group: "com.google.inject", name: "guice", version: "4.1.0"
     compile group: "org.fxmisc.richtext", name: "richtextfx", version: "0.7-M3"
-    compile group: "com.codacy", name: "codacy-coverage-reporter", version: "1.0.13"
+    codacy group: "com.codacy", name: "codacy-coverage-reporter", version: "1.0.13"
 }
 
 tasks.withType(Test) {
@@ -61,14 +64,15 @@ generateGrammarSource {
     }
 }
 
-configurations {
-    codacy
-}
-
-task sendCoverageToCodacy(type: JavaExec, dependsOn: jacocoTestReport) {
+task uploadCoverageToCodacy(type: JavaExec, dependsOn : jacocoTestReport) {
     main = "com.codacy.CodacyCoverageReporter"
     classpath = configurations.codacy
-    args = ["-l", "Java", "-r", "${buildDir}/reports/jacoco/test/jacocoTestReport.xml"]
+    args = [
+            "-l",
+            "Java",
+            "-r",
+            "${buildDir}/reports/jacoco/test/jacocoTestReport.xml"
+    ]
 }
 
 jar {
