@@ -26,5 +26,4 @@ cache:
     - codacy-coverage-reporter-assembly-1.0.5.jar
 
 after_success:
-  - ./gradlew jacocoTestReport sendCoverageToCodacy
-  
+  - ./gradlew uploadCoverageToCodacy
