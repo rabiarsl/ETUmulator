@@ -26,6 +26,5 @@ cache:
     - codacy-coverage-reporter-assembly-1.0.5.jar
 
 after_success:
-  - ./gradlew jacocoTestReport
-  - wget https://github.com/codacy/codacy-coverage-reporter/releases/download/1.0.13/codacy-coverage-reporter-assembly-1.0.5.jar
-  - java -cp codacy-coverage-reporter-assembly-1.0.5.jar com.codacy.CodacyCoverageReporter -l Java -r build/reports/jacoco/test/jacocoTestReport.xml
+  - ./gradlew jacocoTestReport sendCoverageToCodacy
+  
