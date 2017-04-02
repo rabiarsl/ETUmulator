@@ -50,8 +50,8 @@ public class NavigatorRow {
         return property;
     }
 
-    public void setValue(int value) {
-        this.value = Integer.toString(value);
+    public void setValue(String value) {
+        this.value = value;
     }
 
     public String getValue() {
@@ -69,7 +69,7 @@ public class NavigatorRow {
         }
     }
 
-    public void setValue(String value) {
-        this.value = value;
+    public void setValue(int value) {
+        this.value = Integer.toString(value);
     }
 }

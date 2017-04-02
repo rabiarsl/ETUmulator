@@ -131,8 +131,6 @@ public class BaseDocumentTest {
             while((line = bf.readLine()) != null) {
                 text.append(line).append('\n');
             }
-        } catch(IOException ex) {
-            throw ex;
         }
         document.setText(text.toString());
     }

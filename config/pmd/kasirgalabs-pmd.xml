@@ -19,8 +19,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
          xmlns="http://pmd.sourceforge.net/ruleset/2.0.0"
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://pmd.sourceforge.net/ruleset/2.0.0 http://pmd.sourceforge.net/ruleset_2_0_0.xsd">
-    <rule ref="rulesets/java/braces.xml">
-    </rule>
+    <rule ref="rulesets/java/braces.xml"/>
     <rule ref="rulesets/java/braces.xml"/>
     <rule ref="rulesets/java/clone.xml"/>
     <rule ref="rulesets/java/codesize.xml">
@@ -42,6 +41,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
         <exclude name="UseVarargs"/>
         <exclude name="ConfusingTernary"/>
         <exclude name="InstantiationToGetClass"/>
+        <exclude name="ClassWithOnlyPrivateConstructorsShouldBeFinal"/>
+        <exclude name="UseLocaleWithCaseConversions"/>
     </rule>
     <rule ref="rulesets/java/empty.xml"/>
     <rule ref="rulesets/java/finalizers.xml"/>
@@ -49,6 +50,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     <rule ref="rulesets/java/j2ee.xml">
         <exclude name="UseProperClassLoader"/>
         <exclude name="DoNotUseThreads"/>
+        <exclude name="DoNotCallSystemExit"/>
     </rule>
     <rule ref="rulesets/java/javabeans.xml">
         <exclude name="BeanMembersShouldSerialize"/>
@@ -65,6 +67,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     <rule ref="rulesets/java/migrating_to_junit4.xml"/>
     <rule ref="rulesets/java/naming.xml">
         <exclude name="ShortVariable"/>
+        <exclude name="AvoidFieldNameMatchingTypeName"/>
+        <exclude name="AvoidFieldNameMatchingMethodName"/>
     </rule>
     <rule ref="rulesets/java/optimizations.xml">
         <exclude name="MethodArgumentCouldBeFinal"/>
@@ -88,6 +92,11 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     <rule ref="rulesets/java/naming.xml/LongVariable">
         <properties>
             <property name="minimum" value="20"/>
+        </properties>
+    </rule>
+    <rule ref="rulesets/java/naming.xml/ShortClassName">
+        <properties>
+            <property name="minimum" value="4"/>
         </properties>
     </rule>
     <rule ref="rulesets/java/coupling.xml/ExcessiveImports">

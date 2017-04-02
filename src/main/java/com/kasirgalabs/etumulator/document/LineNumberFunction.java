@@ -30,8 +30,8 @@ import org.reactfx.value.Val;
 
 public class LineNumberFunction implements IntFunction<Node> {
     private static final Insets DEFAULT_INSETS = new Insets(0.0, 5.0, 0.0, 5.0);
-    private static final Background DEFAULT_BACKGROUND = new Background(
-            new BackgroundFill(Color.web("#ddd"), null, null));
+    private static final Background DEFAULT_BACKGROUND = new Background(new BackgroundFill(Color
+            .web("#ddd"), null, null));
     private final Val<Integer> paragraphs;
     private final IntFunction<String> format;
 
