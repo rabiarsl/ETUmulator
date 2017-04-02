@@ -36,7 +36,8 @@ public class RegistersTabTest {
     private Navigator navigator;
     private RegistersTab registersTab;
 
-    public RegistersTabTest() throws IOException, InterruptedException, ExecutionException, TimeoutException {
+    public RegistersTabTest() throws IOException, InterruptedException, ExecutionException,
+            TimeoutException {
         assert !Platform.isFxApplicationThread();
         new JFXPanel();
 
@@ -45,7 +46,8 @@ public class RegistersTabTest {
             navigator = new Navigator();
             registersTab = new RegistersTab(registerFile, navigator);
             ClassLoader classLoader = BaseDocumentTest.class.getClassLoader();
-            FXMLLoader fxmlLoader = new FXMLLoader(classLoader.getResource("fxml/RegistersTab.fxml"));
+            FXMLLoader fxmlLoader
+                    = new FXMLLoader(classLoader.getResource("fxml/RegistersTab.fxml"));
             fxmlLoader.setControllerFactory((Class<?> param) -> {
                 return registersTab;
             });

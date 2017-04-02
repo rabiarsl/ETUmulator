@@ -35,7 +35,8 @@ public class CPSRStatusTest {
     private CPSR cpsr;
     private CPSRStatus cpsrStatus;
 
-    public CPSRStatusTest() throws IOException, InterruptedException, ExecutionException, TimeoutException {
+    public CPSRStatusTest() throws IOException, InterruptedException, ExecutionException,
+            TimeoutException {
         assert !Platform.isFxApplicationThread();
         new JFXPanel();
 

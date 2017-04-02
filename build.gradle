@@ -2,6 +2,7 @@ apply plugin: "application"
 apply plugin: "jacoco"
 apply plugin: "antlr"
 apply plugin: "pmd"
+apply plugin: "findbugs"
 
 sourceCompatibility = "1.8"
 targetCompatibility = "1.8"
@@ -51,6 +52,28 @@ pmd {
     consoleOutput = true
     ignoreFailures = true
     ruleSetFiles = files("config/pmd/kasirgalabs-pmd.xml")
+}
+
+tasks.withType(Pmd) {
+    reports {
+        html.enabled true
+        xml.enabled true
+    }
+}
+
+findbugs {
+    toolVersion = "3.0.1"
+    ignoreFailures = true
+    effort = "max"
+    reportLevel = "low"
+}
+
+tasks.withType(FindBugs) {
+    reports {
+        html.enabled = true
+        xml.enabled = false
+        xml.withMessages = true
+    }
 }
 
 generateGrammarSource {

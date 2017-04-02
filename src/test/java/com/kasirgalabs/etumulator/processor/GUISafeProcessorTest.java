@@ -27,6 +27,7 @@ import org.junit.After;
 import org.junit.Test;
 
 public class GUISafeProcessorTest {
+
     private final GUISafeProcessor processor;
     private final ProcessorUnits processorUnits;
     private final LinkerAndLoader linkerAndLoader;

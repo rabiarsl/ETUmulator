@@ -37,7 +37,8 @@ public class StackTabTest {
     private Navigator navigator;
     private StackTab stackTab;
 
-    public StackTabTest() throws IOException, InterruptedException, ExecutionException, TimeoutException {
+    public StackTabTest() throws IOException, InterruptedException, ExecutionException,
+            TimeoutException {
         assert !Platform.isFxApplicationThread();
         new JFXPanel();
 
