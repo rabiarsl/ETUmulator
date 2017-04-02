@@ -18,6 +18,7 @@ package com.kasirgalabs.etumulator.langtools;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.fail;
+
 import com.kasirgalabs.etumulator.processor.Memory;
 import java.util.HashSet;
 import java.util.Set;
@@ -68,8 +69,7 @@ public class LinkerAndLoaderTest {
         try {
             linkerAndLoader.linkAndLoad(code);
             fail("Linker does not work properly.");
-        }
-        catch(LabelError le) {
+        } catch(LabelError le) {
         }
 
         expectedSymbols.clear();
@@ -81,8 +81,7 @@ public class LinkerAndLoaderTest {
         try {
             linkerAndLoader.linkAndLoad(code);
             fail("Linker does not work properly.");
-        }
-        catch(LabelError le) {
+        } catch(LabelError le) {
         }
 
         expectedSymbols.clear();
@@ -94,8 +93,7 @@ public class LinkerAndLoaderTest {
         try {
             linkerAndLoader.linkAndLoad(code);
             fail("Linker does not work properly.");
-        }
-        catch(LabelError le) {
+        } catch(LabelError le) {
         }
 
         expectedSymbols.clear();
@@ -117,8 +115,7 @@ public class LinkerAndLoaderTest {
         try {
             linkerAndLoader.linkAndLoad(code);
             fail("Linker does not work properly.");
-        }
-        catch(LabelError le) {
+        } catch(LabelError le) {
         }
 
         expectedSymbols.clear();
@@ -130,8 +127,7 @@ public class LinkerAndLoaderTest {
         try {
             linkerAndLoader.linkAndLoad(code);
             fail("Linker does not work properly.");
-        }
-        catch(LabelError le) {
+        } catch(LabelError le) {
         }
 
         expectedSymbols.clear();
@@ -143,8 +139,7 @@ public class LinkerAndLoaderTest {
         try {
             linkerAndLoader.linkAndLoad(code);
             fail("Linker does not work properly.");
-        }
-        catch(LabelError le) {
+        } catch(LabelError le) {
         }
     }
 }

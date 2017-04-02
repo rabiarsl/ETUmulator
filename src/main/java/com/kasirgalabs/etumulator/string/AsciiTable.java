@@ -16,7 +16,7 @@
  */
 package com.kasirgalabs.etumulator.string;
 
-public final class AsciiTable {
+public class AsciiTable {
     private static final int NULL = 0;
     private static final int BELL = 7;
     private static final int BACKSPACE = 8;

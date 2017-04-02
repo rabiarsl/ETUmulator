@@ -29,8 +29,8 @@ public class NavigatorRowComparator implements Comparator<String> {
         }
         if(o1.contains("0x")) {
             return (int) Long.parseLong(o1.substring(2), 16)
-                    < (int) Long.parseLong(o2.substring(2), 16) ?
-                    -1 : 1;
+                    < (int) Long.parseLong(o2.substring(2), 16)
+                    ? -1 : 1;
         }
         if(o1.length() == 32) {
             return (int) Long.parseLong(o1, 2) < (int) Long.parseLong(o2, 2) ? -1 : 1;

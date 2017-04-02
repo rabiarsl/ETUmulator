@@ -5,7 +5,7 @@
 
 
 <VBox fx:id="vbox" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.kasirgalabs.etumulator.console.BaseConsole">
-   <children>
-      <Label text="Console" />
-   </children>
+    <children>
+        <Label text="Console" />
+    </children>
 </VBox>

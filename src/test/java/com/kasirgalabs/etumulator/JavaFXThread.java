@@ -44,8 +44,7 @@ public class JavaFXThread implements TestRule {
             Platform.runLater(() -> {
                 try {
                     statement.evaluate();
-                }
-                catch(Throwable e) {
+                } catch(Throwable e) {
                     rethrownException = e;
                 }
                 countDownLatch.countDown();

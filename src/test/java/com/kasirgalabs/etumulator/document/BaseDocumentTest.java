@@ -17,6 +17,7 @@
 package com.kasirgalabs.etumulator.document;
 
 import static org.junit.Assert.assertEquals;
+
 import com.kasirgalabs.etumulator.JavaFXThread;
 import java.io.BufferedReader;
 import java.io.File;
@@ -130,8 +131,7 @@ public class BaseDocumentTest {
             while((line = bf.readLine()) != null) {
                 text.append(line).append('\n');
             }
-        }
-        catch(IOException ex) {
+        } catch(IOException ex) {
             throw ex;
         }
         document.setText(text.toString());

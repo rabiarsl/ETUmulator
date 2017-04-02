@@ -19,6 +19,7 @@ package com.kasirgalabs.etumulator.processor.visitor;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
+
 import com.kasirgalabs.etumulator.langtools.LinkerAndLoader;
 import com.kasirgalabs.etumulator.processor.BaseProcessor;
 import com.kasirgalabs.etumulator.processor.CPSR;
@@ -159,8 +160,9 @@ public class MultiplyAndDivideVisitorTest {
                 + "ldr r1, =0xffffffff\n"
                 + "udiv r0, r0, r1\n";
         processor.run(linkerAndLoader.linkAndLoad(code));
-        assertEquals("Multiply result is wrong.", Integer.divideUnsigned(50, 0xffff_ffff), registerFile
-                .getValue("r0"));
+        assertEquals("Multiply result is wrong.", Integer.divideUnsigned(50, 0xffff_ffff),
+                registerFile
+                        .getValue("r0"));
 
         code = "ldr r0, =0xffffffff\n"
                 + "mov r1, 1\n"

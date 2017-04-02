@@ -17,6 +17,7 @@
 package com.kasirgalabs.etumulator.processor;
 
 import static org.junit.Assert.assertEquals;
+
 import com.kasirgalabs.etumulator.langtools.LinkerAndLoader;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeUnit;

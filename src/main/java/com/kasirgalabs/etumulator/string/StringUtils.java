@@ -16,7 +16,7 @@
  */
 package com.kasirgalabs.etumulator.string;
 
-public final class StringUtils {
+public class StringUtils {
     private static final int BIT_WIDTH = 32;
 
     private StringUtils() {

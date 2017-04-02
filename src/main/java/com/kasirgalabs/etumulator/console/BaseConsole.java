@@ -81,8 +81,7 @@ public class BaseConsole extends TextArea implements Initializable, Console, Obs
         readEnable = true;
         try {
             semaphore.acquire();
-        }
-        catch(InterruptedException ex) {
+        } catch(InterruptedException ex) {
             LOGGER.log(Level.SEVERE, null, ex);
         }
         return readChar;

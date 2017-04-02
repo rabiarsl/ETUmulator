@@ -17,33 +17,37 @@
 package com.kasirgalabs.etumulator.util;
 
 import static org.junit.Assert.assertEquals;
+
 import java.util.Observable;
 import java.util.Observer;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
+import javafx.application.Platform;
 import javafx.embed.swing.JFXPanel;
 import org.junit.Test;
 
-public class GUISafeObservableTest {
-    private static CountDownLatch latch;
-    private static String expResult;
+public class GUISafeObservableTest implements Observer {
+    private CountDownLatch latch;
+    private String expResult;
     private final GUISafeObservable observable;
 
     public GUISafeObservableTest() {
         observable = new GUISafeObservable();
-        observable.addObserver(new TestObserver());
-    }
-
-    private static String getExpectedResult() {
-        return expResult;
     }
 
     /**
      * Test of notifyObservers method, of class GUISafeObservable.
+     *
+     * @throws java.lang.InterruptedException
      */
     @Test
     public void testNotifyObservers_Object() throws InterruptedException {
+        assert !Platform.isFxApplicationThread();
         new JFXPanel();
+        if(observable.countObservers() == 0) {
+            observable.addObserver(this);
+        }
+
         expResult = "test0";
         latch = new CountDownLatch(1);
         observable.notifyObservers(expResult);
@@ -68,19 +72,22 @@ public class GUISafeObservableTest {
      */
     @Test
     public void testNotifyObservers() throws InterruptedException {
+        assert !Platform.isFxApplicationThread();
         new JFXPanel();
+        if(observable.countObservers() == 0) {
+            observable.addObserver(this);
+        }
+
         latch = new CountDownLatch(1);
         observable.notifyObservers();
         latch.await(5, TimeUnit.SECONDS);
     }
 
-    private static class TestObserver implements Observer {
-        @Override
-        public void update(Observable o, Object arg) {
-            if(arg != null) {
-                assertEquals("Observable result is wrong.", getExpectedResult(), arg);
-            }
-            latch.countDown();
+    @Override
+    public void update(Observable o, Object arg) {
+        if(arg != null) {
+            assertEquals("Observable result is wrong.", expResult, arg);
         }
+        latch.countDown();
     }
 }

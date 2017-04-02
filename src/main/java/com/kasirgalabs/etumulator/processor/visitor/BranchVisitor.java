@@ -21,6 +21,7 @@ import com.kasirgalabs.arm.ArmParser;
 import com.kasirgalabs.etumulator.langtools.Symbol;
 import com.kasirgalabs.etumulator.processor.CPSR;
 import com.kasirgalabs.etumulator.processor.UART;
+import java.util.HashSet;
 import java.util.Set;
 
 public class BranchVisitor extends ArmBaseVisitor<Integer> {
@@ -31,6 +32,7 @@ public class BranchVisitor extends ArmBaseVisitor<Integer> {
     public BranchVisitor(CPSR cpsr, UART uart) {
         this.cpsr = cpsr;
         this.uart = uart;
+        symbols = new HashSet<>(0);
     }
 
     public void setSymbols(Set<Symbol> symbols) {

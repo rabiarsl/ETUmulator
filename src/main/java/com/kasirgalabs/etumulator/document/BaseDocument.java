@@ -37,6 +37,7 @@ import org.fxmisc.richtext.CodeArea;
 
 @Singleton
 public class BaseDocument implements Initializable, Document {
+
     private static final String DEFAULT_NAME = "untitled";
     @FXML
     private Label label;

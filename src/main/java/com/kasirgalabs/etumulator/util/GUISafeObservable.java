@@ -38,14 +38,11 @@ public class GUISafeObservable extends Observable {
                 if(!Platform.isFxApplicationThread()) {
                     latch.await();
                 }
-            }
-            catch(InterruptedException ex) {
+            } catch(InterruptedException ex) {
                 LOGGER.log(Level.SEVERE, null, ex);
                 System.exit(-1);
             }
-            return;
-        }
-        catch(IllegalStateException ex) {
+        } catch(IllegalStateException ex) {
             super.notifyObservers(object);
         }
     }

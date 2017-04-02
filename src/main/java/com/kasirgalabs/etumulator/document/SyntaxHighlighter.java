@@ -47,11 +47,11 @@ public class SyntaxHighlighter {
         StyleSpansBuilder<Collection<String>> spansBuilder = new StyleSpansBuilder<>();
         while(matcher.find()) {
             String styleClass
-                    = matcher.group("KEYWORD") != null ? "keyword" :
-                    matcher.group("STRING") != null ? "string" :
-                    matcher.group("COMMENT") != null ? "comment" :
-                    matcher.group("LABEL") != null ? "label" :
-                    null;
+                    = matcher.group("KEYWORD") != null ? "keyword"
+                    : matcher.group("STRING") != null ? "string"
+                    : matcher.group("COMMENT") != null ? "comment"
+                    : matcher.group("LABEL") != null ? "label"
+                    : null;
             spansBuilder.add(Collections.emptyList(), matcher.start() - lastKeywordEnd);
             spansBuilder.add(Collections.singleton(styleClass), matcher.end() - matcher.start());
             lastKeywordEnd = matcher.end();

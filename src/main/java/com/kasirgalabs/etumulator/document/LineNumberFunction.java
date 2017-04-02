@@ -28,7 +28,7 @@ import org.fxmisc.richtext.StyledTextArea;
 import org.reactfx.collection.LiveList;
 import org.reactfx.value.Val;
 
-public final class LineNumberFunction implements IntFunction<Node> {
+public class LineNumberFunction implements IntFunction<Node> {
     private static final Insets DEFAULT_INSETS = new Insets(0.0, 5.0, 0.0, 5.0);
     private static final Background DEFAULT_BACKGROUND = new Background(
             new BackgroundFill(Color.web("#ddd"), null, null));
