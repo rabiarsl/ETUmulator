@@ -17,14 +17,15 @@
 package com.kasirgalabs.etumulator.processor.visitor;
 
 import static org.junit.Assert.assertEquals;
+
 import com.kasirgalabs.etumulator.langtools.LinkerAndLoader;
 import com.kasirgalabs.etumulator.processor.BaseProcessor;
+import com.kasirgalabs.etumulator.processor.BaseProcessorUnits;
 import com.kasirgalabs.etumulator.processor.CPSR;
 import com.kasirgalabs.etumulator.processor.Processor;
 import com.kasirgalabs.etumulator.processor.ProcessorUnits;
 import com.kasirgalabs.etumulator.processor.RegisterFile;
 import com.kasirgalabs.etumulator.processor.UART;
-import java.util.Observable;
 import org.junit.Test;
 
 public class BranchVisitorTest {
@@ -35,7 +36,7 @@ public class BranchVisitorTest {
     private final LinkerAndLoader linkerAndLoader;
 
     public BranchVisitorTest() {
-        ProcessorUnits processorUnits = new ProcessorUnits();
+        ProcessorUnits processorUnits = new BaseProcessorUnits();
         registerFile = processorUnits.getRegisterFile();
         cpsr = processorUnits.getCPSR();
         uart = processorUnits.getUART();
@@ -531,7 +532,7 @@ public class BranchVisitorTest {
 
         registerFile.reset();
         char expResult = '5';
-        uart.addObserver((Observable o, Object arg) -> {
+        uart.addObserver((Class<?> clazz, Object arg) -> {
             uart.feed(expResult);
         });
         code = "bl uart_read\n";

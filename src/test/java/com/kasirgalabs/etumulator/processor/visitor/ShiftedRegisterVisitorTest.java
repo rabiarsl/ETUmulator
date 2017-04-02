@@ -17,8 +17,10 @@
 package com.kasirgalabs.etumulator.processor.visitor;
 
 import static org.junit.Assert.assertEquals;
+
 import com.kasirgalabs.etumulator.langtools.LinkerAndLoader;
 import com.kasirgalabs.etumulator.processor.BaseProcessor;
+import com.kasirgalabs.etumulator.processor.BaseProcessorUnits;
 import com.kasirgalabs.etumulator.processor.Processor;
 import com.kasirgalabs.etumulator.processor.ProcessorUnits;
 import com.kasirgalabs.etumulator.processor.RegisterFile;
@@ -30,7 +32,7 @@ public class ShiftedRegisterVisitorTest {
     private final Processor processor;
 
     public ShiftedRegisterVisitorTest() {
-        ProcessorUnits processorUnits = new ProcessorUnits();
+        ProcessorUnits processorUnits = new BaseProcessorUnits();
         linkerAndLoader = new LinkerAndLoader(processorUnits.getMemory());
         registerFile = processorUnits.getRegisterFile();
         processor = new BaseProcessor(processorUnits);

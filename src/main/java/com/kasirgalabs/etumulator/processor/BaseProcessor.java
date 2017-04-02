@@ -16,8 +16,6 @@
  */
 package com.kasirgalabs.etumulator.processor;
 
-import com.google.inject.Inject;
-import com.google.inject.Singleton;
 import com.kasirgalabs.arm.ArmBaseVisitor;
 import com.kasirgalabs.arm.ArmLexer;
 import com.kasirgalabs.arm.ArmParser;
@@ -34,7 +32,6 @@ import com.kasirgalabs.etumulator.processor.visitor.StackVisitor;
 import org.antlr.v4.runtime.ANTLRInputStream;
 import org.antlr.v4.runtime.CommonTokenStream;
 
-@Singleton
 public class BaseProcessor extends ArmBaseVisitor<Void> implements Processor {
     private final ArithmeticVisitor arithmeticVisitor;
     private final MultiplyAndDivideVisitor multiplyAndDivideVisitor;
@@ -47,7 +44,6 @@ public class BaseProcessor extends ArmBaseVisitor<Void> implements Processor {
     private final StackVisitor stackVisitor;
     private int pc;
 
-    @Inject
     public BaseProcessor(ProcessorUnits processorUnits) {
         arithmeticVisitor
                 = new ArithmeticVisitor(processorUnits.getRegisterFile(), processorUnits.getCPSR());

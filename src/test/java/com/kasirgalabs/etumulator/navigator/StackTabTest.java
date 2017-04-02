@@ -18,6 +18,7 @@ package com.kasirgalabs.etumulator.navigator;
 
 import com.kasirgalabs.etumulator.document.BaseDocumentTest;
 import com.kasirgalabs.etumulator.processor.Stack;
+import com.kasirgalabs.etumulator.util.GUISafeDispatcher;
 import java.io.IOException;
 import java.util.Random;
 import java.util.concurrent.ExecutionException;
@@ -43,7 +44,7 @@ public class StackTabTest {
         new JFXPanel();
 
         FutureTask<Void> futureTask = new FutureTask<>(() -> {
-            stack = new Stack();
+            stack = new Stack(new GUISafeDispatcher());
             navigator = new Navigator();
             stackTab = new StackTab(stack, navigator);
             ClassLoader classLoader = BaseDocumentTest.class.getClassLoader();
@@ -74,11 +75,13 @@ public class StackTabTest {
         Future<Void> future = executor.submit(() -> {
             Random random = new Random();
             final int RANDOM = random.nextInt(Integer.MAX_VALUE);
-            stack.notifyObservers("pop");
+            stack.push(5);
             stack.push(RANDOM);
             stack.push(RANDOM);
             stack.pop();
-            navigator.notifyObservers();
+            stack.pop();
+            stack.pop();
+            navigator.notifyObservers(Navigator.class);
             return null;
         });
         future.get(5, TimeUnit.SECONDS);

@@ -27,13 +27,12 @@ import org.junit.After;
 import org.junit.Test;
 
 public class GUISafeProcessorTest {
-
     private final GUISafeProcessor processor;
-    private final ProcessorUnits processorUnits;
+    private final GUISafeProcessorUnits processorUnits;
     private final LinkerAndLoader linkerAndLoader;
 
     public GUISafeProcessorTest() throws InterruptedException {
-        processorUnits = new ProcessorUnits();
+        processorUnits = new GUISafeProcessorUnits();
         processor = new GUISafeProcessor(processorUnits);
         linkerAndLoader = new LinkerAndLoader(processorUnits.getMemory());
     }

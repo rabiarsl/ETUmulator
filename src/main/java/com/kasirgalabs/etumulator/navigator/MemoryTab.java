@@ -18,9 +18,8 @@ package com.kasirgalabs.etumulator.navigator;
 
 import com.google.inject.Inject;
 import com.kasirgalabs.etumulator.processor.Memory;
+import com.kasirgalabs.etumulator.util.Observer;
 import java.net.URL;
-import java.util.Observable;
-import java.util.Observer;
 import java.util.ResourceBundle;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -59,8 +58,8 @@ public class MemoryTab implements Initializable, Observer {
     }
 
     @Override
-    public void update(Observable o, Object arg) {
-        if(o.getClass().equals(Memory.class)) {
+    public void update(Class<?> clazz, Object arg) {
+        if(clazz.equals(Memory.class)) {
             int address = (int) arg;
             boolean dataNotContainsAddress = true;
             for(int i = 0; i < data.size(); i++) {

@@ -16,39 +16,33 @@
  */
 package com.kasirgalabs.etumulator.util;
 
-import java.util.Observable;
 import java.util.concurrent.CountDownLatch;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.application.Platform;
 
-public class GUISafeObservable extends Observable {
-    private static final Logger LOGGER = Logger.getLogger(GUISafeObservable.class.getName());
+public class GUISafeDispatcher extends BaseDispatcher {
+    private static final Logger LOGGER = Logger.getLogger(GUISafeDispatcher.class.getName());
 
     @Override
-    public void notifyObservers(Object object) {
+    public void notifyObservers(Class<?> clazz, Object arg) {
         final CountDownLatch latch = new CountDownLatch(1);
-        setChanged();
+        Platform.runLater(() -> {
+            super.notifyObservers(clazz, arg);
+            latch.countDown();
+        });
         try {
-            Platform.runLater(() -> {
-                super.notifyObservers(object);
-                latch.countDown();
-            });
-            try {
-                if(!Platform.isFxApplicationThread()) {
-                    latch.await();
-                }
-            } catch(InterruptedException ex) {
-                LOGGER.log(Level.SEVERE, null, ex);
-                System.exit(-1);
+            if(!Platform.isFxApplicationThread()) {
+                latch.await();
             }
-        } catch(IllegalStateException ex) {
-            super.notifyObservers(object);
+        } catch(InterruptedException ex) {
+            LOGGER.log(Level.SEVERE, null, ex);
+            System.exit(-1);
         }
     }
 
     @Override
-    public void notifyObservers() {
-        notifyObservers(null);
+    public void notifyObservers(Class<?> clazz) {
+        notifyObservers(clazz, null);
     }
 }

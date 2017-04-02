@@ -16,17 +16,32 @@
  */
 package com.kasirgalabs.etumulator.processor;
 
+import com.google.inject.Inject;
 import com.google.inject.Singleton;
-import com.kasirgalabs.etumulator.util.GUISafeObservable;
+import com.kasirgalabs.etumulator.util.BaseDispatcher;
+import com.kasirgalabs.etumulator.util.Dispatcher;
+import com.kasirgalabs.etumulator.util.Observable;
+import com.kasirgalabs.etumulator.util.Observer;
 import java.util.HashMap;
 import java.util.Map;
 
 @Singleton
-public class Memory extends GUISafeObservable {
-    private final Map<Integer, Byte> memory;
+public class Memory implements Observable {
+    private final Map<Integer, Byte> memory = new HashMap<>();
+    private final Dispatcher dispatcher;
 
     public Memory() {
-        memory = new HashMap<>();
+        this.dispatcher = new BaseDispatcher();
+    }
+
+    @Inject
+    public Memory(Dispatcher dispatcher) {
+        this.dispatcher = dispatcher;
+    }
+
+    @Override
+    public void addObserver(Observer listener) {
+        dispatcher.addObserver(listener);
     }
 
     public byte get(int address) {
@@ -38,7 +53,7 @@ public class Memory extends GUISafeObservable {
 
     public void set(int address, byte value) {
         memory.put(address, value);
-        notifyObservers(address);
+        dispatcher.notifyObservers(Memory.class, address);
     }
 
     public boolean isAddressEmpty(int address) {

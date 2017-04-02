@@ -17,14 +17,31 @@
 package com.kasirgalabs.etumulator.processor;
 
 import com.google.inject.Singleton;
-import com.kasirgalabs.etumulator.util.GUISafeObservable;
+import com.kasirgalabs.etumulator.util.BaseDispatcher;
+import com.kasirgalabs.etumulator.util.Dispatcher;
+import com.kasirgalabs.etumulator.util.Observable;
+import com.kasirgalabs.etumulator.util.Observer;
 
 @Singleton
-public class CPSR extends GUISafeObservable {
+public class CPSR implements Observable {
     private boolean negative;
     private boolean zero;
     private boolean carry;
     private boolean overflow;
+    private final Dispatcher dispatcher;
+
+    public CPSR() {
+        this.dispatcher = new BaseDispatcher();
+    }
+
+    public CPSR(Dispatcher dispatcher) {
+        this.dispatcher = dispatcher;
+    }
+
+    @Override
+    public void addObserver(Observer listener) {
+        dispatcher.addObserver(listener);
+    }
 
     public boolean isNegative() {
         return negative;
@@ -32,7 +49,7 @@ public class CPSR extends GUISafeObservable {
 
     public void setNegative(boolean negative) {
         this.negative = negative;
-        notifyObservers();
+        dispatcher.notifyObservers(CPSR.class);
     }
 
     public boolean isZero() {
@@ -41,7 +58,7 @@ public class CPSR extends GUISafeObservable {
 
     public void setZero(boolean zero) {
         this.zero = zero;
-        notifyObservers();
+        dispatcher.notifyObservers(CPSR.class);
     }
 
     public boolean isCarry() {
@@ -50,7 +67,7 @@ public class CPSR extends GUISafeObservable {
 
     public void setCarry(boolean carry) {
         this.carry = carry;
-        notifyObservers();
+        dispatcher.notifyObservers(CPSR.class);
     }
 
     public boolean isOverflow() {
@@ -59,13 +76,13 @@ public class CPSR extends GUISafeObservable {
 
     public void setOverflow(boolean overflow) {
         this.overflow = overflow;
-        notifyObservers();
+        dispatcher.notifyObservers(CPSR.class);
     }
 
     public int updateNZ(int result) {
         negative = result < 0;
         zero = result == 0;
-        notifyObservers();
+        dispatcher.notifyObservers(CPSR.class);
         return result;
     }
 }

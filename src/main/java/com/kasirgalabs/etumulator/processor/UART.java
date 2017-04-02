@@ -18,25 +18,40 @@ package com.kasirgalabs.etumulator.processor;
 
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
-import com.kasirgalabs.etumulator.util.GUISafeObservable;
+import com.kasirgalabs.etumulator.util.BaseDispatcher;
+import com.kasirgalabs.etumulator.util.Dispatcher;
+import com.kasirgalabs.etumulator.util.Observable;
+import com.kasirgalabs.etumulator.util.Observer;
 
 @Singleton
-public class UART extends GUISafeObservable {
+public class UART implements Observable {
     private final RegisterFile registerFile;
     private volatile char input;
+    private final Dispatcher dispatcher;
 
-    @Inject
     public UART(RegisterFile registerFile) {
         this.registerFile = registerFile;
+        this.dispatcher = new BaseDispatcher();
+    }
+
+    @Inject
+    public UART(RegisterFile registerFile, Dispatcher dispatcher) {
+        this.registerFile = registerFile;
+        this.dispatcher = dispatcher;
+    }
+
+    @Override
+    public void addObserver(Observer listener) {
+        dispatcher.addObserver(listener);
     }
 
     public void read() {
-        notifyObservers();
+        dispatcher.notifyObservers(UART.class);
         registerFile.setValue("r0", input);
     }
 
     public void write() {
-        notifyObservers((char) registerFile.getValue("r0"));
+        dispatcher.notifyObservers(UART.class, (char) registerFile.getValue("r0"));
     }
 
     public void feed(char input) {

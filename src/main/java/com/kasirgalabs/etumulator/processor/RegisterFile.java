@@ -16,20 +16,38 @@
  */
 package com.kasirgalabs.etumulator.processor;
 
+import com.google.inject.Inject;
 import com.google.inject.Singleton;
-import com.kasirgalabs.etumulator.util.GUISafeObservable;
+import com.kasirgalabs.etumulator.util.BaseDispatcher;
+import com.kasirgalabs.etumulator.util.Dispatcher;
+import com.kasirgalabs.etumulator.util.Observable;
+import com.kasirgalabs.etumulator.util.Observer;
 import java.util.HashMap;
 import java.util.Map;
 
 @Singleton
-public class RegisterFile extends GUISafeObservable {
-    private final Map<String, Integer> registers;
+public class RegisterFile implements Observable {
+    private final Map<String, Integer> registers = new HashMap<>(13);
+    private final Dispatcher dispatcher;
 
     public RegisterFile() {
-        registers = new HashMap<>(13);
         for(int i = 0; i < 13; i++) {
             registers.put("r" + Integer.toString(i), 0);
         }
+        this.dispatcher = new BaseDispatcher();
+    }
+
+    @Inject
+    public RegisterFile(Dispatcher dispatcher) {
+        for(int i = 0; i < 13; i++) {
+            registers.put("r" + Integer.toString(i), 0);
+        }
+        this.dispatcher = dispatcher;
+    }
+
+    @Override
+    public void addObserver(Observer listener) {
+        dispatcher.addObserver(listener);
     }
 
     public int getValue(String registerName) {
@@ -38,7 +56,7 @@ public class RegisterFile extends GUISafeObservable {
 
     public void setValue(String registerName, int value) {
         registers.replace(registerName, value);
-        notifyObservers(registerName);
+        dispatcher.notifyObservers(RegisterFile.class, registerName);
     }
 
     public void reset() {

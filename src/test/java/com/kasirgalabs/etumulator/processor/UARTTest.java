@@ -18,8 +18,7 @@ package com.kasirgalabs.etumulator.processor;
 
 import static org.junit.Assert.assertEquals;
 
-import java.util.Observable;
-import java.util.Observer;
+import com.kasirgalabs.etumulator.util.Observer;
 import org.junit.Test;
 
 public class UARTTest implements Observer {
@@ -38,9 +37,7 @@ public class UARTTest implements Observer {
      */
     @Test
     public void testRead() {
-        if(uart.countObservers() == 0) {
-            uart.addObserver(this);
-        }
+        uart.addObserver(this);
         mockInput = '5';
         uart.read();
         assertEquals("UART read result is wrong.", mockInput, registerFile.getValue("r0"));
@@ -79,9 +76,7 @@ public class UARTTest implements Observer {
      */
     @Test
     public void testWrite() {
-        if(uart.countObservers() == 0) {
-            uart.addObserver(this);
-        }
+        uart.addObserver(this);
         mockInput = '5';
         registerFile.setValue("r0", mockInput);
         uart.write();
@@ -124,7 +119,7 @@ public class UARTTest implements Observer {
     }
 
     @Override
-    public void update(Observable o, Object arg) {
+    public void update(Class<?> clazz, Object arg) {
         if(arg == null) {
             uart.feed(mockInput);
             return;

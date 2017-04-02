@@ -18,9 +18,8 @@ package com.kasirgalabs.etumulator.console;
 
 import com.google.inject.Inject;
 import com.kasirgalabs.etumulator.processor.UART;
+import com.kasirgalabs.etumulator.util.Observer;
 import java.net.URL;
-import java.util.Observable;
-import java.util.Observer;
 import java.util.ResourceBundle;
 import java.util.concurrent.Semaphore;
 import java.util.logging.Level;
@@ -63,7 +62,7 @@ public class BaseConsole extends TextArea implements Initializable, Console, Obs
     }
 
     @Override
-    public void update(Observable o, Object arg) {
+    public void update(Class<?> clazz, Object arg) {
         if(arg == null) {
             uart.feed(read());
             return;

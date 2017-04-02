@@ -16,26 +16,41 @@
  */
 package com.kasirgalabs.etumulator.processor;
 
+import com.google.inject.Inject;
 import com.google.inject.Singleton;
-import com.kasirgalabs.etumulator.util.GUISafeObservable;
+import com.kasirgalabs.etumulator.util.BaseDispatcher;
+import com.kasirgalabs.etumulator.util.Dispatcher;
+import com.kasirgalabs.etumulator.util.Observable;
+import com.kasirgalabs.etumulator.util.Observer;
 import java.util.LinkedList;
 
 @Singleton
-public class Stack extends GUISafeObservable {
-    private final LinkedList<Integer> list;
+public class Stack implements Observable {
+    private final LinkedList<Integer> list = new LinkedList<>();
+    private final Dispatcher dispatcher;
 
     public Stack() {
-        list = new LinkedList<>();
+        this.dispatcher = new BaseDispatcher();
+    }
+
+    @Inject
+    public Stack(Dispatcher dispatcher) {
+        this.dispatcher = dispatcher;
+    }
+
+    @Override
+    public void addObserver(Observer listener) {
+        dispatcher.addObserver(listener);
     }
 
     public void push(Integer item) {
         list.push(item);
-        notifyObservers("push");
+        dispatcher.notifyObservers(Stack.class, "push");
     }
 
     public int pop() {
         int result = list.pop();
-        notifyObservers("pop");
+        dispatcher.notifyObservers(Stack.class, "pop");
         return result;
     }
 

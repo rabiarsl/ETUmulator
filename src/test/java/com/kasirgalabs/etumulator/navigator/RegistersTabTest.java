@@ -18,6 +18,7 @@ package com.kasirgalabs.etumulator.navigator;
 
 import com.kasirgalabs.etumulator.document.BaseDocumentTest;
 import com.kasirgalabs.etumulator.processor.RegisterFile;
+import com.kasirgalabs.etumulator.util.GUISafeDispatcher;
 import java.io.IOException;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
@@ -42,7 +43,7 @@ public class RegistersTabTest {
         new JFXPanel();
 
         FutureTask<Void> futureTask = new FutureTask<>(() -> {
-            registerFile = new RegisterFile();
+            registerFile = new RegisterFile(new GUISafeDispatcher());
             navigator = new Navigator();
             registersTab = new RegistersTab(registerFile, navigator);
             ClassLoader classLoader = BaseDocumentTest.class.getClassLoader();
@@ -72,8 +73,8 @@ public class RegistersTabTest {
 
         ExecutorService executor = Executors.newSingleThreadExecutor();
         Future<Void> future = executor.submit(() -> {
-            registerFile.notifyObservers("r0");
-            navigator.notifyObservers();
+            registerFile.setValue("r0", 5);
+            navigator.notifyObservers(Navigator.class);
             return null;
         });
         future.get(5, TimeUnit.SECONDS);

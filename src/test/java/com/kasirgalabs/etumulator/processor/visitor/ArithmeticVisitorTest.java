@@ -22,6 +22,7 @@ import static org.junit.Assert.assertTrue;
 
 import com.kasirgalabs.etumulator.langtools.LinkerAndLoader;
 import com.kasirgalabs.etumulator.processor.BaseProcessor;
+import com.kasirgalabs.etumulator.processor.BaseProcessorUnits;
 import com.kasirgalabs.etumulator.processor.CPSR;
 import com.kasirgalabs.etumulator.processor.Processor;
 import com.kasirgalabs.etumulator.processor.ProcessorUnits;
@@ -35,7 +36,7 @@ public class ArithmeticVisitorTest {
     private final Processor processor;
 
     public ArithmeticVisitorTest() {
-        ProcessorUnits processorUnits = new ProcessorUnits();
+        ProcessorUnits processorUnits = new BaseProcessorUnits();
         linkerAndLoader = new LinkerAndLoader(processorUnits.getMemory());
         registerFile = processorUnits.getRegisterFile();
         cpsr = processorUnits.getCPSR();

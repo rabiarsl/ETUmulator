@@ -34,7 +34,7 @@ public class GUISafeProcessor extends BaseProcessor implements Callable<Void> {
     private ExecutableCode executableCode;
 
     @Inject
-    public GUISafeProcessor(ProcessorUnits processorUnits) {
+    public GUISafeProcessor(GUISafeProcessorUnits processorUnits) {
         super(processorUnits);
         executor = Executors.newSingleThreadExecutor();
     }

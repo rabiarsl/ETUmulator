@@ -21,24 +21,20 @@ import com.kasirgalabs.etumulator.console.BaseConsole;
 import com.kasirgalabs.etumulator.console.Console;
 import com.kasirgalabs.etumulator.document.BaseDocument;
 import com.kasirgalabs.etumulator.document.Document;
-import com.kasirgalabs.etumulator.navigator.Navigator;
-import com.kasirgalabs.etumulator.processor.CPSR;
 import com.kasirgalabs.etumulator.processor.GUISafeProcessor;
-import com.kasirgalabs.etumulator.processor.Memory;
+import com.kasirgalabs.etumulator.processor.GUISafeProcessorUnits;
 import com.kasirgalabs.etumulator.processor.Processor;
-import com.kasirgalabs.etumulator.processor.RegisterFile;
-import com.kasirgalabs.etumulator.processor.Stack;
+import com.kasirgalabs.etumulator.processor.ProcessorUnits;
+import com.kasirgalabs.etumulator.util.Dispatcher;
+import com.kasirgalabs.etumulator.util.GUISafeDispatcher;
 
 public class ETUmulatorModule extends AbstractModule {
     @Override
     protected void configure() {
         bind(Processor.class).to(GUISafeProcessor.class);
-        bind(CPSR.class);
-        bind(RegisterFile.class);
-        bind(Stack.class);
-        bind(Memory.class);
+        bind(ProcessorUnits.class).to(GUISafeProcessorUnits.class);
         bind(Document.class).to(BaseDocument.class);
-        bind(Navigator.class);
         bind(Console.class).to(BaseConsole.class);
+        bind(Dispatcher.class).to(GUISafeDispatcher.class);
     }
 }

@@ -17,8 +17,9 @@
 package com.kasirgalabs.etumulator.navigator;
 
 import com.google.inject.Singleton;
+import com.kasirgalabs.etumulator.util.BaseDispatcher;
+import com.kasirgalabs.etumulator.util.Observable;
 import java.net.URL;
-import java.util.Observable;
 import java.util.ResourceBundle;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
@@ -27,7 +28,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.ComboBox;
 
 @Singleton
-public class Navigator extends Observable implements Initializable {
+public class Navigator extends BaseDispatcher implements Initializable, Observable {
     @FXML
     private ComboBox<String> valueTypeComboBox;
 
@@ -42,7 +43,6 @@ public class Navigator extends Observable implements Initializable {
     private void valueTypeOnAction(ActionEvent event) {
         int valueType = valueTypeComboBox.getSelectionModel().getSelectedIndex();
         NavigatorRow.setValueType(valueType);
-        setChanged();
-        notifyObservers();
+        notifyObservers(Navigator.class);
     }
 }

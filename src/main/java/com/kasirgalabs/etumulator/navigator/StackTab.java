@@ -18,9 +18,8 @@ package com.kasirgalabs.etumulator.navigator;
 
 import com.google.inject.Inject;
 import com.kasirgalabs.etumulator.processor.Stack;
+import com.kasirgalabs.etumulator.util.Observer;
 import java.net.URL;
-import java.util.Observable;
-import java.util.Observer;
 import java.util.ResourceBundle;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -59,8 +58,8 @@ public class StackTab implements Initializable, Observer {
     }
 
     @Override
-    public void update(Observable o, Object arg) {
-        if(o.getClass().equals(Stack.class)) {
+    public void update(Class<?> clazz, Object arg) {
+        if(clazz.equals(Stack.class)) {
             String operation = (String) arg;
             if("push".equals(operation)) {
                 data.add(new NavigatorRow(data.size(), stack.peek()));

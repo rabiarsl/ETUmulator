@@ -22,6 +22,7 @@ import com.kasirgalabs.etumulator.processor.CPSR;
 import com.kasirgalabs.etumulator.processor.RegisterFile;
 
 public class CompareVisitor extends ArmBaseVisitor<Void> {
+
     private final RegisterFile registerFile;
     private final CPSR cpsr;
     private final RegisterVisitor registerVisitor;

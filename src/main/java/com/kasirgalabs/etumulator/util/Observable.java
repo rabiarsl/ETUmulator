@@ -14,16 +14,8 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.kasirgalabs.etumulator.processor;
+package com.kasirgalabs.etumulator.util;
 
-public interface ProcessorUnits {
-    RegisterFile getRegisterFile();
-
-    CPSR getCPSR();
-
-    Stack getStack();
-
-    Memory getMemory();
-
-    UART getUART();
+public interface Observable {
+    void addObserver(Observer listener);
 }

@@ -18,25 +18,23 @@ package com.kasirgalabs.etumulator.util;
 
 import static org.junit.Assert.assertEquals;
 
-import java.util.Observable;
-import java.util.Observer;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
 import javafx.application.Platform;
 import javafx.embed.swing.JFXPanel;
 import org.junit.Test;
 
-public class GUISafeObservableTest implements Observer {
+public class GUISafeDispatcherTest implements Observer {
     private CountDownLatch latch;
     private String expResult;
-    private final GUISafeObservable observable;
+    private final Dispatcher dispatcher;
 
-    public GUISafeObservableTest() {
-        observable = new GUISafeObservable();
+    public GUISafeDispatcherTest() {
+        dispatcher = new GUISafeDispatcher();
     }
 
     /**
-     * Test of notifyObservers method, of class GUISafeObservable.
+     * Test of notifyObservers method, of class GUISafeDispatcher.
      *
      * @throws java.lang.InterruptedException
      */
@@ -44,29 +42,27 @@ public class GUISafeObservableTest implements Observer {
     public void testNotifyObservers_Object() throws InterruptedException {
         assert !Platform.isFxApplicationThread();
         new JFXPanel();
-        if(observable.countObservers() == 0) {
-            observable.addObserver(this);
-        }
+        dispatcher.addObserver(this);
 
         expResult = "test0";
         latch = new CountDownLatch(1);
-        observable.notifyObservers(expResult);
+        dispatcher.notifyObservers(null, expResult);
         latch.await(5, TimeUnit.SECONDS);
 
         latch = new CountDownLatch(1);
         expResult = "test1";
-        observable.notifyObservers(expResult);
+        dispatcher.notifyObservers(null, expResult);
         latch.await(5, TimeUnit.SECONDS);
 
         latch = new CountDownLatch(1);
         expResult = "test2";
-        observable.notifyObservers(expResult);
+        dispatcher.notifyObservers(null, expResult);
         latch.await(5, TimeUnit.SECONDS);
 
     }
 
     /**
-     * Test of notifyObservers method, of class GUISafeObservable.
+     * Test of notifyObservers method, of class GUISafeDispatcher.
      *
      * @throws java.lang.InterruptedException
      */
@@ -74,17 +70,15 @@ public class GUISafeObservableTest implements Observer {
     public void testNotifyObservers() throws InterruptedException {
         assert !Platform.isFxApplicationThread();
         new JFXPanel();
-        if(observable.countObservers() == 0) {
-            observable.addObserver(this);
-        }
+        dispatcher.addObserver(this);
 
         latch = new CountDownLatch(1);
-        observable.notifyObservers();
+        dispatcher.notifyObservers(null);
         latch.await(5, TimeUnit.SECONDS);
     }
 
     @Override
-    public void update(Observable o, Object arg) {
+    public void update(Class<?> clazz, Object arg) {
         if(arg != null) {
             assertEquals("Observable result is wrong.", expResult, arg);
         }

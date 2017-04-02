@@ -18,6 +18,7 @@ package com.kasirgalabs.etumulator.navigator;
 
 import com.kasirgalabs.etumulator.document.BaseDocumentTest;
 import com.kasirgalabs.etumulator.processor.Memory;
+import com.kasirgalabs.etumulator.util.GUISafeDispatcher;
 import java.util.Random;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
@@ -41,7 +42,7 @@ public class MemoryTabTest {
         new JFXPanel();
 
         FutureTask<Void> futureTask = new FutureTask<>(() -> {
-            memory = new Memory();
+            memory = new Memory(new GUISafeDispatcher());
             navigator = new Navigator();
             memoryTab = new MemoryTab(memory, navigator);
             ClassLoader classLoader = BaseDocumentTest.class.getClassLoader();
@@ -81,6 +82,7 @@ public class MemoryTabTest {
             memory.set(ADDRESS + 3, (byte) 1);
             memory.set(ADDRESS + 4, (byte) 1);
             memory.set(ADDRESS, (byte) 4);
+            memory.get(ADDRESS - 1);
             return null;
         });
         future.get(5, TimeUnit.SECONDS);

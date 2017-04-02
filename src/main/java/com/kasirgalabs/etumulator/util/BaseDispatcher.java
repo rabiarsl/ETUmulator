@@ -14,16 +14,32 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.kasirgalabs.etumulator.processor;
+package com.kasirgalabs.etumulator.util;
 
-public interface ProcessorUnits {
-    RegisterFile getRegisterFile();
+import java.util.ArrayList;
+import java.util.List;
 
-    CPSR getCPSR();
+public class BaseDispatcher implements Dispatcher {
+    private List<Observer> observers;
 
-    Stack getStack();
+    public BaseDispatcher() {
+        observers = new ArrayList<>();
+    }
 
-    Memory getMemory();
+    @Override
+    public void addObserver(Observer listener) {
+        observers.add(listener);
+    }
 
-    UART getUART();
+    @Override
+    public void notifyObservers(Class<?> clazz, Object arg) {
+        for(int i = 0; i < observers.size(); i++) {
+            observers.get(i).update(clazz, arg);
+        }
+    }
+
+    @Override
+    public void notifyObservers(Class<?> clazz) {
+        notifyObservers(clazz, null);
+    }
 }

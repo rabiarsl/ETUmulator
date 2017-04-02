@@ -18,6 +18,7 @@ package com.kasirgalabs.etumulator.navigator;
 
 import com.kasirgalabs.etumulator.document.BaseDocumentTest;
 import com.kasirgalabs.etumulator.processor.CPSR;
+import com.kasirgalabs.etumulator.util.GUISafeDispatcher;
 import java.io.IOException;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
@@ -41,7 +42,7 @@ public class CPSRStatusTest {
         new JFXPanel();
 
         FutureTask<Void> futureTask = new FutureTask<>(() -> {
-            cpsr = new CPSR();
+            cpsr = new CPSR(new GUISafeDispatcher());
             cpsrStatus = new CPSRStatus(cpsr);
             ClassLoader classLoader = BaseDocumentTest.class.getClassLoader();
             FXMLLoader fxmlLoader = new FXMLLoader(classLoader.getResource("fxml/CPSRStatus.fxml"));
