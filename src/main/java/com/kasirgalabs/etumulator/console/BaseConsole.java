@@ -22,7 +22,6 @@ import com.kasirgalabs.etumulator.util.Observer;
 import java.net.URL;
 import java.util.ResourceBundle;
 import java.util.concurrent.Semaphore;
-import java.util.logging.Logger;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.TextArea;
@@ -30,13 +29,12 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.VBox;
 
 public class BaseConsole extends TextArea implements Initializable, Console, Observer {
-    private static final Logger LOGGER = Logger.getLogger(BaseConsole.class.getName());
-    private final Semaphore semaphore;
-    private volatile boolean readEnable;
-    private volatile char readChar;
     @FXML
     private VBox vbox;
     private final UART uart;
+    private final Semaphore semaphore;
+    private volatile boolean readEnable;
+    private volatile char readChar;
 
     @Inject
     public BaseConsole(UART uart) {
