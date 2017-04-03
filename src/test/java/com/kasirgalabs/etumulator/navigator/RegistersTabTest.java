@@ -74,7 +74,6 @@ public class RegistersTabTest {
         ExecutorService executor = Executors.newSingleThreadExecutor();
         Future<Void> future = executor.submit(() -> {
             registerFile.setValue("r0", 5);
-            navigator.notifyObservers(Navigator.class);
             return null;
         });
         future.get(5, TimeUnit.SECONDS);

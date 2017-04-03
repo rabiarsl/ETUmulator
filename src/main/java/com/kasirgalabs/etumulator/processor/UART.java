@@ -25,7 +25,7 @@ import com.kasirgalabs.etumulator.util.Observer;
 
 @Singleton
 public class UART implements Observable {
-    private final RegisterFile registerFile;
+    private RegisterFile registerFile;
     private volatile char input;
     private final Dispatcher dispatcher;
 
@@ -38,6 +38,10 @@ public class UART implements Observable {
     public UART(RegisterFile registerFile, Dispatcher dispatcher) {
         this.registerFile = registerFile;
         this.dispatcher = dispatcher;
+    }
+
+    public void setRegisterFile(RegisterFile registerFile) {
+        this.registerFile = registerFile;
     }
 
     @Override

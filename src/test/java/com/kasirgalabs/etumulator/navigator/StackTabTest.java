@@ -81,7 +81,6 @@ public class StackTabTest {
             stack.pop();
             stack.pop();
             stack.pop();
-            navigator.notifyObservers(Navigator.class);
             return null;
         });
         future.get(5, TimeUnit.SECONDS);

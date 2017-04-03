@@ -22,7 +22,6 @@ import com.kasirgalabs.etumulator.util.Observer;
 import java.net.URL;
 import java.util.ResourceBundle;
 import java.util.concurrent.Semaphore;
-import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -32,7 +31,7 @@ import javafx.scene.layout.VBox;
 
 public class BaseConsole extends TextArea implements Initializable, Console, Observer {
     private static final Logger LOGGER = Logger.getLogger(BaseConsole.class.getName());
-    private Semaphore semaphore;
+    private final Semaphore semaphore;
     private volatile boolean readEnable;
     private volatile char readChar;
     @FXML
@@ -42,14 +41,19 @@ public class BaseConsole extends TextArea implements Initializable, Console, Obs
     @Inject
     public BaseConsole(UART uart) {
         this.uart = uart;
+        semaphore = new Semaphore(0);
+    }
+
+    public BaseConsole(UART uart, Semaphore semaphore) {
+        this.uart = uart;
+        this.semaphore = semaphore;
     }
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         uart.addObserver(this);
         vbox.getChildren().add(this);
-        semaphore = new Semaphore(0);
-        this.wrapTextProperty().set(true);
+        wrapTextProperty().set(true);
         addEventFilter(KeyEvent.ANY, keyEvent -> {
             if(keyEvent.getEventType().equals(KeyEvent.KEY_TYPED) && readEnable) {
                 readChar = keyEvent.getCharacter().charAt(0);
@@ -64,7 +68,11 @@ public class BaseConsole extends TextArea implements Initializable, Console, Obs
     @Override
     public void update(Class<?> clazz, Object arg) {
         if(arg == null) {
-            uart.feed(read());
+            try {
+                uart.feed(read());
+            } catch(InterruptedException ex) {
+                System.exit(0);
+            }
             return;
         }
         write((char) arg);
@@ -76,13 +84,9 @@ public class BaseConsole extends TextArea implements Initializable, Console, Obs
     }
 
     @Override
-    public char read() {
+    public char read() throws InterruptedException {
         readEnable = true;
-        try {
-            semaphore.acquire();
-        } catch(InterruptedException ex) {
-            LOGGER.log(Level.SEVERE, null, ex);
-        }
+        semaphore.acquire();
         return readChar;
     }
 

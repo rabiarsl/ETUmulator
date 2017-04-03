@@ -17,7 +17,6 @@
 package com.kasirgalabs.etumulator.util;
 
 import java.util.concurrent.CountDownLatch;
-import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.application.Platform;
 
@@ -36,7 +35,6 @@ public class GUISafeDispatcher extends BaseDispatcher {
                 latch.await();
             }
         } catch(InterruptedException ex) {
-            LOGGER.log(Level.SEVERE, null, ex);
             System.exit(-1);
         }
     }

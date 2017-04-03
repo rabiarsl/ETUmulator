@@ -19,5 +19,5 @@ package com.kasirgalabs.etumulator.console;
 public interface Console {
     void write(char data);
 
-    char read();
+    char read() throws InterruptedException;
 }

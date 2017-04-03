@@ -22,14 +22,13 @@ import com.kasirgalabs.etumulator.util.GUISafeDispatcher;
 
 @Singleton
 public class GUISafeProcessorUnits extends BaseProcessorUnits {
-    private static final RegisterFile REGISTER_FILE = new RegisterFile(new GUISafeDispatcher());
-
     public GUISafeProcessorUnits() {
-        super(REGISTER_FILE,
+        super(new RegisterFile(new GUISafeDispatcher()),
                 new CPSR(new GUISafeDispatcher()),
                 new Stack(new GUISafeDispatcher()),
                 new Memory(new GUISafeDispatcher()),
-                new UART(REGISTER_FILE, new GUISafeDispatcher()));
+                new UART(null, new GUISafeDispatcher()));
+        super.getUART().setRegisterFile(super.getRegisterFile());
     }
 
     @Inject
