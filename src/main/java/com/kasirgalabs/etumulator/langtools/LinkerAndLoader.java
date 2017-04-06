@@ -190,8 +190,9 @@ public class LinkerAndLoader extends ArmBaseVisitor<Void> {
         definedBranchSymbols.clear();
         targetDataSymbols.clear();
         definedDataSymbols.clear();
-
-        inspectCode(code);
+        if(!inspectCode(code)) {
+            return null;
+        }
         Set<Symbol> resolvedBranchSymbols
                 = resolveSymbols(definedBranchSymbols, targetBranchSymbols);
         Set<Symbol> resolvedDataSymbols = resolveSymbols(definedDataSymbols, targetDataSymbols);
@@ -199,13 +200,17 @@ public class LinkerAndLoader extends ArmBaseVisitor<Void> {
         return new ExecutableCode(code, temp);
     }
 
-    private void inspectCode(String code) {
+    private boolean inspectCode(String code) {
         ANTLRInputStream in = new ANTLRInputStream(code);
         ArmLexer lexer = new ArmLexer(in);
         CommonTokenStream tokens = new CommonTokenStream(lexer);
         ArmParser parser = new ArmParser(tokens);
         ArmParser.ProgContext tree = parser.prog();
+        if(parser.getNumberOfSyntaxErrors() > 0) {
+            return false;
+        }
         visit(tree);
+        return true;
     }
 
     private Set<Symbol> resolveSymbols(List<Symbol> definedSymbols, List<String> targetSymbols) {

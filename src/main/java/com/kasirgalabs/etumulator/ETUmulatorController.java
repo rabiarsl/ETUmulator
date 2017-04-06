@@ -18,6 +18,7 @@ package com.kasirgalabs.etumulator;
 
 import com.google.inject.Inject;
 import com.kasirgalabs.etumulator.document.Document;
+import com.kasirgalabs.etumulator.langtools.ExecutableCode;
 import com.kasirgalabs.etumulator.langtools.LinkerAndLoader;
 import com.kasirgalabs.etumulator.processor.Memory;
 import com.kasirgalabs.etumulator.processor.Processor;
@@ -35,6 +36,10 @@ public class ETUmulatorController {
     @FXML
     private void runButtonOnAction(ActionEvent event) {
         LinkerAndLoader linkerAndLoader = new LinkerAndLoader(memory);
-        processor.run(linkerAndLoader.linkAndLoad(document.getText() + "\n"));
+        ExecutableCode executableCode = linkerAndLoader.linkAndLoad(document.getText() + "\n");
+        if(executableCode == null) {
+            return;
+        }
+        processor.run(executableCode);
     }
 }

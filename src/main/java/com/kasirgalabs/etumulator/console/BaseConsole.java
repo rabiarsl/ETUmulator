@@ -17,15 +17,21 @@
 package com.kasirgalabs.etumulator.console;
 
 import com.google.inject.Inject;
+import com.google.inject.Singleton;
 import com.kasirgalabs.etumulator.processor.UART;
 import com.kasirgalabs.etumulator.util.Observer;
+import java.io.IOException;
+import java.io.OutputStream;
+import java.io.PrintStream;
 import java.net.URL;
 import java.util.ResourceBundle;
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.TextArea;
 import javafx.scene.layout.VBox;
 
+@Singleton
 public class BaseConsole extends TextArea implements Initializable, Console, Observer {
     private final String userName;
     private boolean readEnable;
@@ -42,6 +48,14 @@ public class BaseConsole extends TextArea implements Initializable, Console, Obs
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        System.setErr(new PrintStream(new OutputStream() {
+            @Override
+            public void write(int b) throws IOException {
+                Platform.runLater(() -> {
+                    BaseConsole.this.write((char) b);
+                });
+            }
+        }));
         readEnable = false;
         setText(userName + "@ETUmulator: ");
         uart.addObserver(this);
