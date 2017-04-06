@@ -34,7 +34,7 @@ import org.junit.Test;
 public class BaseDocumentTest {
     @Rule
     public final JavaFXThread javaFXThread = new JavaFXThread();
-    private Document document;
+    private BaseDocument baseDocument;
     private File mockFile;
 
     @Before
@@ -44,7 +44,7 @@ public class BaseDocumentTest {
         ClassLoader classLoader = BaseDocumentTest.class.getClassLoader();
         FXMLLoader fxmlLoader = new FXMLLoader(classLoader.getResource("fxml/Document.fxml"));
         fxmlLoader.load();
-        document = fxmlLoader.getController();
+        baseDocument = fxmlLoader.getController();
         mockFile = new File("DocumentControllerTest.txt");
     }
 
@@ -63,8 +63,8 @@ public class BaseDocumentTest {
         assert Platform.isFxApplicationThread();
 
         File expResult = new File("testSetTargetFileandGetTargetFile");
-        document.setTargetFile(expResult);
-        assertEquals("File is not same.", expResult, document.getTargetFile());
+        baseDocument.setTargetFile(expResult);
+        assertEquals("File is not same.", expResult, baseDocument.getTargetFile());
     }
 
     /**
@@ -82,8 +82,8 @@ public class BaseDocumentTest {
         }
         readFileIntoDocument(mockFile);
         File targetFile = new File("DocumentControllerTestTarget.txt");
-        document.setTargetFile(targetFile);
-        document.saveDocument();
+        baseDocument.setTargetFile(targetFile);
+        baseDocument.saveDocument();
         String result;
         try(BufferedReader bf = new BufferedReader(new FileReader(targetFile))) {
             result = bf.readLine();
@@ -101,8 +101,8 @@ public class BaseDocumentTest {
     public void testGetTextAndSetText() throws IOException {
         assert Platform.isFxApplicationThread();
 
-        document.setText("TEST");
-        String result = document.getText();
+        baseDocument.setText("TEST");
+        String result = baseDocument.getText();
         assertEquals("Text is not empty.", "TEST", result);
     }
 
@@ -116,9 +116,9 @@ public class BaseDocumentTest {
         assert Platform.isFxApplicationThread();
 
         String text = "TEST";
-        document.setText(text);
-        document.clear();
-        String result = document.getText();
+        baseDocument.setText(text);
+        baseDocument.clear();
+        String result = baseDocument.getText();
         assertEquals("Text is not empty.", "", result);
     }
 
@@ -132,6 +132,6 @@ public class BaseDocumentTest {
                 text.append(line).append('\n');
             }
         }
-        document.setText(text.toString());
+        baseDocument.setText(text.toString());
     }
 }
