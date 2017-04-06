@@ -205,9 +205,6 @@ public class ShiftVisitor extends ArmBaseVisitor<Void> {
             return rrxUpdateCPSR(value);
         }
         cpsr.setCarry(false);
-        if(shiftAmount <= 0) {
-            return value;
-        }
         int result = shift(value, shiftOption, shiftAmount - 1);
         if(shiftOption == LSL) {
             if(Integer.numberOfLeadingZeros(result) == 0) {

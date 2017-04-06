@@ -22,6 +22,7 @@ import static org.junit.Assert.fail;
 import com.kasirgalabs.etumulator.processor.Memory;
 import java.util.HashSet;
 import java.util.Set;
+import org.junit.Assert;
 import org.junit.Test;
 
 public class LinkerAndLoaderTest {
@@ -141,5 +142,9 @@ public class LinkerAndLoaderTest {
             fail("Linker does not work properly.");
         } catch(LabelError le) {
         }
+
+        code = "Erroneous input";
+        linkerAndLoader.linkAndLoad(code);
+        Assert.assertNull("Linker does not work properly.", linkerAndLoader.linkAndLoad(code));
     }
 }

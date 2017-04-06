@@ -66,9 +66,6 @@ public class ShiftedRegisterVisitor extends ArmBaseVisitor<Integer> {
     }
 
     private int shift(int value, int shiftOption, int shiftAmount) {
-        if(shiftAmount <= 0) {
-            return value;
-        }
         switch(shiftOption) {
             case ASR:
                 return value >> shiftAmount;

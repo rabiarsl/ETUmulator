@@ -23,6 +23,7 @@ import com.google.inject.Inject;
 import com.google.inject.Injector;
 import com.google.inject.Module;
 import com.kasirgalabs.etumulator.document.DocumentMenu;
+import com.kasirgalabs.etumulator.processor.GUISafeProcessor;
 import java.io.IOException;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -33,6 +34,8 @@ import javafx.stage.Stage;
 public class ETUmulator extends Application {
     @Inject
     private DocumentMenu documentMenu;
+    @Inject
+    private GUISafeProcessor processor;
 
     public static void main(String[] args) {
         launch(args);
@@ -54,5 +57,16 @@ public class ETUmulator extends Application {
 
         injector.injectMembers(this);
         documentMenu.setWindow(primaryStage.getOwner());
+
+        Runtime.getRuntime().addShutdownHook(new Thread() {
+            @Override
+            public void run() {
+                processor.stop();
+            }
+        });
+        primaryStage.setOnCloseRequest((event) -> {
+            processor.stop();
+            primaryStage.close();
+        });
     }
 }

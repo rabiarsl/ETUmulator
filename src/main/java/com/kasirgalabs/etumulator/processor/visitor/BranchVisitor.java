@@ -21,7 +21,9 @@ import com.kasirgalabs.arm.ArmParser;
 import com.kasirgalabs.etumulator.langtools.Symbol;
 import com.kasirgalabs.etumulator.processor.CPSR;
 import com.kasirgalabs.etumulator.processor.UART;
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 public class BranchVisitor extends ArmBaseVisitor<Integer> {
@@ -194,11 +196,8 @@ public class BranchVisitor extends ArmBaseVisitor<Integer> {
     }
 
     private Integer addressOfSymbol(String name) {
-        for(Symbol symbol : symbols) {
-            if(symbol.getName().equals(name)) {
-                return symbol.getAddress();
-            }
-        }
-        return null;
+        List<Symbol> list = new ArrayList<>(symbols);
+        int index = list.indexOf(new Symbol(name, 0));
+        return list.get(index).getAddress();
     }
 }
