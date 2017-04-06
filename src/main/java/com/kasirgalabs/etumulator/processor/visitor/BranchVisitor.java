@@ -181,7 +181,11 @@ public class BranchVisitor extends ArmBaseVisitor<Integer> {
     public Integer visitBl(ArmParser.BlContext ctx) {
         String label = ctx.LABEL().getText();
         if("uart_read".equalsIgnoreCase(label)) {
-            uart.read();
+            try {
+                uart.read();
+            } catch(InterruptedException ex) {
+                System.exit(0);
+            }
         }
         else if("uart_write".equalsIgnoreCase(label)) {
             uart.write();

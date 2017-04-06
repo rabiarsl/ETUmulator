@@ -19,5 +19,7 @@ package com.kasirgalabs.etumulator.console;
 public interface Console {
     void write(char data);
 
-    char read() throws InterruptedException;
+    char read();
+
+    String getText();
 }

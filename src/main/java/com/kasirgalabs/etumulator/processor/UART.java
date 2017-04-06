@@ -22,12 +22,14 @@ import com.kasirgalabs.etumulator.util.BaseDispatcher;
 import com.kasirgalabs.etumulator.util.Dispatcher;
 import com.kasirgalabs.etumulator.util.Observable;
 import com.kasirgalabs.etumulator.util.Observer;
+import java.util.concurrent.CountDownLatch;
 
 @Singleton
 public class UART implements Observable {
     private RegisterFile registerFile;
-    private volatile char input;
+    private char input;
     private final Dispatcher dispatcher;
+    private CountDownLatch latch;
 
     public UART(RegisterFile registerFile) {
         this.registerFile = registerFile;
@@ -49,8 +51,10 @@ public class UART implements Observable {
         dispatcher.addObserver(listener);
     }
 
-    public void read() {
-        dispatcher.notifyObservers(UART.class);
+    public void read() throws InterruptedException {
+        latch = new CountDownLatch(1);
+        dispatcher.notifyObservers(UART.class, "read");
+        latch.await();
         registerFile.setValue("r0", input);
     }
 
@@ -60,5 +64,6 @@ public class UART implements Observable {
 
     public void feed(char input) {
         this.input = input;
+        latch.countDown();
     }
 }

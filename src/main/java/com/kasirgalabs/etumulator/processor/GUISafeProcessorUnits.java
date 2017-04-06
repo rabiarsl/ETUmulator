@@ -18,6 +18,7 @@ package com.kasirgalabs.etumulator.processor;
 
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
+import com.kasirgalabs.etumulator.util.BaseDispatcher;
 import com.kasirgalabs.etumulator.util.GUISafeDispatcher;
 
 @Singleton
@@ -27,7 +28,7 @@ public class GUISafeProcessorUnits extends BaseProcessorUnits {
                 new CPSR(new GUISafeDispatcher()),
                 new Stack(new GUISafeDispatcher()),
                 new Memory(new GUISafeDispatcher()),
-                new UART(null, new GUISafeDispatcher()));
+                new UART(null, new BaseDispatcher()));
         super.getUART().setRegisterFile(super.getRegisterFile());
     }
 

@@ -21,58 +21,38 @@ import com.kasirgalabs.etumulator.processor.UART;
 import com.kasirgalabs.etumulator.util.Observer;
 import java.net.URL;
 import java.util.ResourceBundle;
-import java.util.concurrent.Semaphore;
-import java.util.logging.Logger;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.TextArea;
-import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.VBox;
 
 public class BaseConsole extends TextArea implements Initializable, Console, Observer {
-    private static final Logger LOGGER = Logger.getLogger(BaseConsole.class.getName());
-    private final Semaphore semaphore;
-    private volatile boolean readEnable;
-    private volatile char readChar;
+    private final String userName;
+    private boolean readEnable;
+    private char readChar;
     @FXML
     private VBox vbox;
     private final UART uart;
 
     @Inject
     public BaseConsole(UART uart) {
+        userName = System.getProperty("user.name");
         this.uart = uart;
-        semaphore = new Semaphore(0);
-    }
-
-    public BaseConsole(UART uart, Semaphore semaphore) {
-        this.uart = uart;
-        this.semaphore = semaphore;
     }
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        readEnable = false;
+        setText(userName + "@ETUmulator: ");
         uart.addObserver(this);
         vbox.getChildren().add(this);
         wrapTextProperty().set(true);
-        addEventFilter(KeyEvent.ANY, keyEvent -> {
-            if(keyEvent.getEventType().equals(KeyEvent.KEY_TYPED) && readEnable) {
-                readChar = keyEvent.getCharacter().charAt(0);
-                readEnable = false;
-                semaphore.release();
-                return;
-            }
-            keyEvent.consume();
-        });
     }
 
     @Override
     public void update(Class<?> clazz, Object arg) {
-        if(arg == null) {
-            try {
-                uart.feed(read());
-            } catch(InterruptedException ex) {
-                System.exit(0);
-            }
+        if(arg.equals("read")) {
+            readEnable = true;
             return;
         }
         write((char) arg);
@@ -80,30 +60,28 @@ public class BaseConsole extends TextArea implements Initializable, Console, Obs
 
     @Override
     public void write(char data) {
-        appendText(Character.toString(data));
+        readChar = data;
+        if(data == '\n') {
+            super.replaceText(getText().length(), getText().length(),
+                    "\n" + userName + "@ETUmulator: ");
+        }
+        else {
+            super.replaceText(getText().length(), getText().length(), Character.toString(data));
+        }
     }
 
     @Override
-    public char read() throws InterruptedException {
+    public char read() {
         readEnable = true;
-        semaphore.acquire();
         return readChar;
     }
 
     @Override
     public void replaceText(int start, int end, String text) {
-        String current = getText();
-        if(!current.substring(start).contains("\n")) {
-            super.replaceText(start, end, text);
+        if(!readEnable || text.isEmpty()) {
+            return;
         }
-    }
-
-    @Override
-    public void replaceSelection(String text) {
-        String current = getText();
-        int selectionStart = getSelection().getStart();
-        if(!current.substring(selectionStart).contains("\n")) {
-            super.replaceSelection(text);
-        }
+        uart.feed(text.charAt(0));
+        readEnable = false;
     }
 }

@@ -17,12 +17,9 @@
 package com.kasirgalabs.etumulator.util;
 
 import java.util.concurrent.CountDownLatch;
-import java.util.logging.Logger;
 import javafx.application.Platform;
 
 public class GUISafeDispatcher extends BaseDispatcher {
-    private static final Logger LOGGER = Logger.getLogger(GUISafeDispatcher.class.getName());
-
     @Override
     public void notifyObservers(Class<?> clazz, Object arg) {
         final CountDownLatch latch = new CountDownLatch(1);

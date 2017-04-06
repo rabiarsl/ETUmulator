@@ -19,6 +19,15 @@ package com.kasirgalabs.etumulator.processor;
 import static org.junit.Assert.assertEquals;
 
 import com.kasirgalabs.etumulator.util.Observer;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.ScheduledFuture;
+import java.util.concurrent.Semaphore;
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.TimeoutException;
 import org.junit.Test;
 
 public class UARTTest implements Observer {
@@ -34,40 +43,28 @@ public class UARTTest implements Observer {
 
     /**
      * Test of read method, of class UART.
+     *
+     * @throws java.lang.InterruptedException
+     * @throws java.util.concurrent.ExecutionException
+     * @throws java.util.concurrent.TimeoutException
      */
     @Test
-    public void testRead() {
-        uart.addObserver(this);
+    public void testRead() throws InterruptedException, ExecutionException, TimeoutException {
+        ExecutorService executor = Executors.newSingleThreadExecutor();
+        Semaphore semaphore = new Semaphore(0);
         mockInput = '5';
-        uart.read();
-        assertEquals("UART read result is wrong.", mockInput, registerFile.getValue("r0"));
-
-        mockInput = 'A';
-        uart.read();
-        assertEquals("UART read result is wrong.", mockInput, registerFile.getValue("r0"));
-
-        mockInput = '\n';
-        uart.read();
-        assertEquals("UART read result is wrong.", mockInput, registerFile.getValue("r0"));
-
-        mockInput = '\0';
-        uart.read();
-        assertEquals("UART read result is wrong.", mockInput, registerFile.getValue("r0"));
-
-        mockInput = '?';
-        uart.read();
-        assertEquals("UART read result is wrong.", mockInput, registerFile.getValue("r0"));
-
-        mockInput = 'Z';
-        uart.read();
-        assertEquals("UART read result is wrong.", mockInput, registerFile.getValue("r0"));
-
-        mockInput = Character.MAX_VALUE;
-        uart.read();
-        assertEquals("UART read result is wrong.", mockInput, registerFile.getValue("r0"));
-
-        mockInput = Character.MIN_SURROGATE;
-        uart.read();
+        Future<Void> future = executor.submit(() -> {
+            ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(1);
+            ScheduledFuture<?> releaserHandle = scheduler.schedule(() -> {
+                semaphore.release();
+            }, 5, TimeUnit.SECONDS);
+            uart.read();
+            releaserHandle.get(5, TimeUnit.SECONDS);
+            return null;
+        });
+        semaphore.tryAcquire(15, TimeUnit.SECONDS);
+        uart.feed(mockInput);
+        future.get(25, TimeUnit.SECONDS);
         assertEquals("UART read result is wrong.", mockInput, registerFile.getValue("r0"));
     }
 
@@ -120,10 +117,6 @@ public class UARTTest implements Observer {
 
     @Override
     public void update(Class<?> clazz, Object arg) {
-        if(arg == null) {
-            uart.feed(mockInput);
-            return;
-        }
         output = (char) arg;
     }
 }
