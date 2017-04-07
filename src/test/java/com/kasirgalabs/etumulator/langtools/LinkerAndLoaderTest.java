@@ -70,7 +70,7 @@ public class LinkerAndLoaderTest {
         try {
             linkerAndLoader.linkAndLoad(code);
             fail("Linker does not work properly.");
-        } catch(LabelError le) {
+        } catch(LabelError ex) {
         }
 
         expectedSymbols.clear();
@@ -82,7 +82,7 @@ public class LinkerAndLoaderTest {
         try {
             linkerAndLoader.linkAndLoad(code);
             fail("Linker does not work properly.");
-        } catch(LabelError le) {
+        } catch(LabelError ex) {
         }
 
         expectedSymbols.clear();
@@ -94,7 +94,7 @@ public class LinkerAndLoaderTest {
         try {
             linkerAndLoader.linkAndLoad(code);
             fail("Linker does not work properly.");
-        } catch(LabelError le) {
+        } catch(LabelError ex) {
         }
 
         expectedSymbols.clear();
@@ -116,7 +116,7 @@ public class LinkerAndLoaderTest {
         try {
             linkerAndLoader.linkAndLoad(code);
             fail("Linker does not work properly.");
-        } catch(LabelError le) {
+        } catch(LabelError ex) {
         }
 
         expectedSymbols.clear();
@@ -128,7 +128,7 @@ public class LinkerAndLoaderTest {
         try {
             linkerAndLoader.linkAndLoad(code);
             fail("Linker does not work properly.");
-        } catch(LabelError le) {
+        } catch(LabelError ex) {
         }
 
         expectedSymbols.clear();
@@ -140,7 +140,15 @@ public class LinkerAndLoaderTest {
         try {
             linkerAndLoader.linkAndLoad(code);
             fail("Linker does not work properly.");
-        } catch(LabelError le) {
+        } catch(LabelError ex) {
+        }
+
+        expectedSymbols.clear();
+        code = "bl UNSUPPORTED\n";
+        try {
+            linkerAndLoader.linkAndLoad(code);
+            fail("Linker does not work properly.");
+        } catch(UnsupportedInstructionError ex) {
         }
 
         code = "Erroneous input";

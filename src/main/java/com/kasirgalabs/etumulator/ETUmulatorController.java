@@ -19,7 +19,9 @@ package com.kasirgalabs.etumulator;
 import com.google.inject.Inject;
 import com.kasirgalabs.etumulator.document.Document;
 import com.kasirgalabs.etumulator.langtools.ExecutableCode;
+import com.kasirgalabs.etumulator.langtools.LabelError;
 import com.kasirgalabs.etumulator.langtools.LinkerAndLoader;
+import com.kasirgalabs.etumulator.langtools.UnsupportedInstructionError;
 import com.kasirgalabs.etumulator.processor.Memory;
 import com.kasirgalabs.etumulator.processor.Processor;
 import javafx.event.ActionEvent;
@@ -36,8 +38,14 @@ public class ETUmulatorController {
     @FXML
     private void runButtonOnAction(ActionEvent event) {
         LinkerAndLoader linkerAndLoader = new LinkerAndLoader(memory);
-        ExecutableCode executableCode = linkerAndLoader.linkAndLoad(document.getText() + "\n");
-        if(executableCode == null) {
+        ExecutableCode executableCode;
+        try {
+            executableCode = linkerAndLoader.linkAndLoad(document.getText() + "\n");
+            if(executableCode == null) {
+                return;
+            }
+        } catch(LabelError | UnsupportedInstructionError ex) {
+            System.err.println(ex.getMessage());
             return;
         }
         processor.run(executableCode);

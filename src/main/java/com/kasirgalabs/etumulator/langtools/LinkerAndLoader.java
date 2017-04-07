@@ -153,6 +153,11 @@ public class LinkerAndLoader extends ArmBaseVisitor<Void> {
 
     @Override
     public Void visitBl(ArmParser.BlContext ctx) {
+        String label = ctx.LABEL().getText();
+        if(!"uart_read".equalsIgnoreCase(label) && !"uart_write".equalsIgnoreCase(label)) {
+            throw new UnsupportedInstructionError("bl instruction target only supported for "
+                    + "\"uart_read\" an \"uart_write\"");
+        }
         return null;
     }
 
@@ -185,7 +190,7 @@ public class LinkerAndLoader extends ArmBaseVisitor<Void> {
         return null;
     }
 
-    public ExecutableCode linkAndLoad(String code) {
+    public ExecutableCode linkAndLoad(String code) throws LabelError, UnsupportedInstructionError {
         targetBranchSymbols.clear();
         definedBranchSymbols.clear();
         targetDataSymbols.clear();
