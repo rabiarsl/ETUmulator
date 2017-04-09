@@ -25,21 +25,16 @@ public class NavigatorRow {
     public static final int BINARY = 3;
     private static int valueType;
     private final String property;
-    private String value;
+    private int value;
 
-    public NavigatorRow(String property, String value) {
+    public NavigatorRow(String property, int value) {
         this.property = property;
         this.value = value;
     }
 
-    public NavigatorRow(String property, int value) {
-        this.property = property;
-        this.value = Integer.toString(value);
-    }
-
     public NavigatorRow(int property, int value) {
         this.property = Integer.toString(property);
-        this.value = Integer.toString(value);
+        this.value = value;
     }
 
     public static void setValueType(int type) {
@@ -50,26 +45,22 @@ public class NavigatorRow {
         return property;
     }
 
-    public void setValue(String value) {
-        this.value = value;
-    }
-
     public String getValue() {
         switch(valueType) {
-            case BINARY:
-                return StringUtils.toBinaryString(value);
             case DECIMAL:
-                return value;
+                return Integer.toString(value);
             case HEX:
                 return StringUtils.toHexString(value);
             case ASCII:
                 return StringUtils.toAsciiString(value);
+            case BINARY:
+                return StringUtils.toBinaryString(value);
             default:
-                return value;
+                return Integer.toString(value);
         }
     }
 
     public void setValue(int value) {
-        this.value = Integer.toString(value);
+        this.value = value;
     }
 }

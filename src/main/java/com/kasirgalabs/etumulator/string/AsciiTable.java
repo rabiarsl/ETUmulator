@@ -16,16 +16,16 @@
  */
 package com.kasirgalabs.etumulator.string;
 
-public class AsciiTable {
-    private static final int NULL = 0;
-    private static final int BELL = 7;
-    private static final int BACKSPACE = 8;
-    private static final int HORIZONTAL_TAB = 9;
-    private static final int NEWLINE = 10;
-    private static final int VERTICAL_TAB = 11;
-    private static final int FORMFEED = 12;
-    private static final int CARRIAGE_RETURN = 13;
-    private static final int ESCAPE = 27;
+public final class AsciiTable {
+    private static final char NULL = 0;
+    private static final char BELL = 7;
+    private static final char BACKSPACE = 8;
+    private static final char HORIZONTAL_TAB = 9;
+    private static final char NEWLINE = 10;
+    private static final char VERTICAL_TAB = 11;
+    private static final char FORMFEED = 12;
+    private static final char CARRIAGE_RETURN = 13;
+    private static final char ESCAPE = 27;
     private static final char[] EXTENDED_ASCII_TABLE = {0x00C7, 0x00FC, 0x00E9, 0x00E2,
         0x00E4, 0x00E0, 0x00E5, 0x00E7, 0x00EA, 0x00EB, 0x00E8, 0x00EF,
         0x00EE, 0x00EC, 0x00C4, 0x00C5, 0x00C9, 0x00E6, 0x00C6, 0x00F4,
@@ -47,21 +47,24 @@ public class AsciiTable {
     private AsciiTable() {
     }
 
-    public static String getAscii(int code) {
+    public static String getAscii(char code) {
         if(hasEscapeSequence(code)) {
             return escapeSequence(code);
         }
         if(isExtendedAscii(code)) {
             return Character.toString(EXTENDED_ASCII_TABLE[code - 0x80]);
         }
+        if(code >= 0 && code <= 127) {
+            return Character.toString(code);
+        }
         return "Non-ASCII";
     }
 
-    private static boolean hasEscapeSequence(int code) {
+    private static boolean hasEscapeSequence(char code) {
         return code >= 7 && code <= 13 || code == NULL || code == ESCAPE;
     }
 
-    private static String escapeSequence(int code) {
+    private static String escapeSequence(char code) {
         switch(code) {
             case NULL:
                 return "\\0";
@@ -86,7 +89,8 @@ public class AsciiTable {
         }
     }
 
-    private static boolean isExtendedAscii(int code) {
-        return code >= 0x80 && code <= 0xFF;
+    private static boolean isExtendedAscii(char code) {
+        return code >= 128 && code <= 255;
     }
+
 }
