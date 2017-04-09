@@ -19,157 +19,162 @@ package com.kasirgalabs.etumulator.processor.visitor;
 import com.kasirgalabs.arm.ProcessorBaseVisitor;
 import com.kasirgalabs.arm.ProcessorParser;
 import com.kasirgalabs.etumulator.processor.CPSR;
+import com.kasirgalabs.etumulator.processor.PC;
 import com.kasirgalabs.etumulator.processor.UART;
 
-public class BranchVisitor extends ProcessorBaseVisitor<Integer> {
+public class BranchVisitor extends ProcessorBaseVisitor<Void> {
     private final CPSR cpsr;
     private final UART uart;
+    private final PC pc;
 
-    public BranchVisitor(CPSR cpsr, UART uart) {
+    public BranchVisitor(CPSR cpsr, UART uart, PC pc) {
         this.cpsr = cpsr;
         this.uart = uart;
+        this.pc = pc;
     }
 
     @Override
-    public Integer visitB(ProcessorParser.BContext ctx) {
-        return Integer.parseInt(ctx.DECIMAL().getText());
+    public Void visitB(ProcessorParser.BContext ctx) {
+        pc.setValue(Integer.parseInt(ctx.DECIMAL().getText()));
+        return null;
     }
 
     @Override
-    public Integer visitBeq(ProcessorParser.BeqContext ctx) {
+    public Void visitBeq(ProcessorParser.BeqContext ctx) {
         if(cpsr.isZero()) {
-            return Integer.parseInt(ctx.DECIMAL().getText());
+            pc.setValue(Integer.parseInt(ctx.DECIMAL().getText()));
         }
         return null;
     }
 
     @Override
-    public Integer visitBne(ProcessorParser.BneContext ctx) {
+    public Void visitBne(ProcessorParser.BneContext ctx) {
         if(!cpsr.isZero()) {
-            return Integer.parseInt(ctx.DECIMAL().getText());
+            pc.setValue(Integer.parseInt(ctx.DECIMAL().getText()));
         }
         return null;
     }
 
     @Override
-    public Integer visitBcs(ProcessorParser.BcsContext ctx) {
+    public Void visitBcs(ProcessorParser.BcsContext ctx) {
         if(cpsr.isCarry()) {
-            return Integer.parseInt(ctx.DECIMAL().getText());
+            pc.setValue(Integer.parseInt(ctx.DECIMAL().getText()));
         }
         return null;
     }
 
     @Override
-    public Integer visitBhs(ProcessorParser.BhsContext ctx) {
+    public Void visitBhs(ProcessorParser.BhsContext ctx) {
         if(cpsr.isCarry()) {
-            return Integer.parseInt(ctx.DECIMAL().getText());
+            pc.setValue(Integer.parseInt(ctx.DECIMAL().getText()));
         }
         return null;
     }
 
     @Override
-    public Integer visitBcc(ProcessorParser.BccContext ctx) {
+    public Void visitBcc(ProcessorParser.BccContext ctx) {
         if(!cpsr.isCarry()) {
-            return Integer.parseInt(ctx.DECIMAL().getText());
+            pc.setValue(Integer.parseInt(ctx.DECIMAL().getText()));
         }
         return null;
     }
 
     @Override
-    public Integer visitBlo(ProcessorParser.BloContext ctx) {
+    public Void visitBlo(ProcessorParser.BloContext ctx) {
         if(!cpsr.isCarry()) {
-            return Integer.parseInt(ctx.DECIMAL().getText());
+            pc.setValue(Integer.parseInt(ctx.DECIMAL().getText()));
         }
         return null;
     }
 
     @Override
-    public Integer visitBmi(ProcessorParser.BmiContext ctx) {
+    public Void visitBmi(ProcessorParser.BmiContext ctx) {
         if(cpsr.isNegative()) {
-            return Integer.parseInt(ctx.DECIMAL().getText());
+            pc.setValue(Integer.parseInt(ctx.DECIMAL().getText()));
         }
         return null;
     }
 
     @Override
-    public Integer visitBpl(ProcessorParser.BplContext ctx) {
+    public Void visitBpl(ProcessorParser.BplContext ctx) {
         if(!cpsr.isNegative()) {
-            return Integer.parseInt(ctx.DECIMAL().getText());
+            pc.setValue(Integer.parseInt(ctx.DECIMAL().getText()));
         }
         return null;
     }
 
     @Override
-    public Integer visitBvs(ProcessorParser.BvsContext ctx) {
+    public Void visitBvs(ProcessorParser.BvsContext ctx) {
         if(cpsr.isOverflow()) {
-            return Integer.parseInt(ctx.DECIMAL().getText());
+            pc.setValue(Integer.parseInt(ctx.DECIMAL().getText()));
         }
         return null;
     }
 
     @Override
-    public Integer visitBvc(ProcessorParser.BvcContext ctx) {
+    public Void visitBvc(ProcessorParser.BvcContext ctx) {
         if(!cpsr.isOverflow()) {
-            return Integer.parseInt(ctx.DECIMAL().getText());
+            pc.setValue(Integer.parseInt(ctx.DECIMAL().getText()));
         }
         return null;
     }
 
     @Override
-    public Integer visitBhi(ProcessorParser.BhiContext ctx) {
+    public Void visitBhi(ProcessorParser.BhiContext ctx) {
         if(cpsr.isCarry() && !cpsr.isZero()) {
-            return Integer.parseInt(ctx.DECIMAL().getText());
+            pc.setValue(Integer.parseInt(ctx.DECIMAL().getText()));
         }
         return null;
     }
 
     @Override
-    public Integer visitBls(ProcessorParser.BlsContext ctx) {
+    public Void visitBls(ProcessorParser.BlsContext ctx) {
         if(!cpsr.isCarry() || cpsr.isZero()) {
-            return Integer.parseInt(ctx.DECIMAL().getText());
+            pc.setValue(Integer.parseInt(ctx.DECIMAL().getText()));
         }
         return null;
     }
 
     @Override
-    public Integer visitBge(ProcessorParser.BgeContext ctx) {
+    public Void visitBge(ProcessorParser.BgeContext ctx) {
         if(cpsr.isNegative() == cpsr.isOverflow()) {
-            return Integer.parseInt(ctx.DECIMAL().getText());
+            pc.setValue(Integer.parseInt(ctx.DECIMAL().getText()));
         }
         return null;
     }
 
     @Override
-    public Integer visitBlt(ProcessorParser.BltContext ctx) {
+    public Void visitBlt(ProcessorParser.BltContext ctx) {
         if(cpsr.isNegative() != cpsr.isOverflow()) {
-            return Integer.parseInt(ctx.DECIMAL().getText());
+            pc.setValue(Integer.parseInt(ctx.DECIMAL().getText()));
         }
         return null;
     }
 
     @Override
-    public Integer visitBgt(ProcessorParser.BgtContext ctx) {
+    public Void visitBgt(ProcessorParser.BgtContext ctx) {
         if(!cpsr.isZero() && cpsr.isNegative() == cpsr.isOverflow()) {
-            return Integer.parseInt(ctx.DECIMAL().getText());
+            pc.setValue(Integer.parseInt(ctx.DECIMAL().getText()));
         }
         return null;
     }
 
     @Override
-    public Integer visitBle(ProcessorParser.BleContext ctx) {
+    public Void visitBle(ProcessorParser.BleContext ctx) {
         if(cpsr.isZero() || cpsr.isNegative() != cpsr.isOverflow()) {
-            return Integer.parseInt(ctx.DECIMAL().getText());
+            pc.setValue(Integer.parseInt(ctx.DECIMAL().getText()));
         }
         return null;
     }
 
     @Override
-    public Integer visitBal(ProcessorParser.BalContext ctx) {
-        return Integer.parseInt(ctx.DECIMAL().getText());
+    public Void visitBal(ProcessorParser.BalContext ctx) {
+        pc.setValue(Integer.parseInt(ctx.DECIMAL().getText()));
+        return null;
     }
 
     @Override
-    public Integer visitBl(ProcessorParser.BlContext ctx) {
+    public Void visitBl(ProcessorParser.BlContext ctx) {
         String label = ctx.LABEL().getText();
         if("uart_read".equalsIgnoreCase(label)) {
             try {

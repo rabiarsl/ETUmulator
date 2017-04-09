@@ -21,6 +21,9 @@ import java.util.Comparator;
 public class NavigatorRowComparator implements Comparator<String> {
     @Override
     public int compare(String o1, String o2) {
+        if("PC".equalsIgnoreCase(o1) || "PC".equalsIgnoreCase(o2)) {
+            return -1;
+        }
         if(o1.contains("r")) {
             if(Integer.parseInt(o1.substring(1)) < Integer.parseInt(o2.substring(1))) {
                 return -1;

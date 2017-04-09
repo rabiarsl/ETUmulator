@@ -19,7 +19,7 @@ package com.kasirgalabs.etumulator.processor;
 import com.kasirgalabs.arm.ProcessorBaseVisitor;
 import com.kasirgalabs.arm.ProcessorLexer;
 import com.kasirgalabs.arm.ProcessorParser;
-import com.kasirgalabs.etumulator.langtools.ExecutableCode;
+import com.kasirgalabs.etumulator.langtools.Linker.ExecutableCode;
 import com.kasirgalabs.etumulator.processor.visitor.ArithmeticVisitor;
 import com.kasirgalabs.etumulator.processor.visitor.BranchVisitor;
 import com.kasirgalabs.etumulator.processor.visitor.CompareVisitor;
@@ -42,7 +42,7 @@ public class BaseProcessor extends ProcessorBaseVisitor<Void> implements Process
     private final BranchVisitor branchVisitor;
     private final SingleDataMemoryVisitor singleDataMemoryVisitor;
     private final StackVisitor stackVisitor;
-    private int pc;
+    private final PC pc;
 
     public BaseProcessor(ProcessorUnits processorUnits) {
         arithmeticVisitor
@@ -57,12 +57,13 @@ public class BaseProcessor extends ProcessorBaseVisitor<Void> implements Process
                 .getRegisterFile(), processorUnits.getCPSR());
         logicalVisitor = new LogicalVisitor(processorUnits
                 .getRegisterFile(), processorUnits.getCPSR());
-        branchVisitor = new BranchVisitor(processorUnits.getCPSR(), processorUnits.getUART());
+        branchVisitor = new BranchVisitor(processorUnits.getCPSR(), processorUnits.getUART(),
+                processorUnits.getPC());
         singleDataMemoryVisitor = new SingleDataMemoryVisitor(processorUnits
                 .getRegisterFile(), processorUnits.getMemory());
         stackVisitor = new StackVisitor(processorUnits
                 .getRegisterFile(), processorUnits.getStack());
-        pc = 0;
+        pc = processorUnits.getPC();
     }
 
     @Override
@@ -97,11 +98,7 @@ public class BaseProcessor extends ProcessorBaseVisitor<Void> implements Process
 
     @Override
     public Void visitBranch(ProcessorParser.BranchContext ctx) {
-        Integer address = branchVisitor.visit(ctx);
-        if(address != null) {
-            pc = address;
-        }
-        return null;
+        return branchVisitor.visit(ctx);
     }
 
     @Override
@@ -116,12 +113,12 @@ public class BaseProcessor extends ProcessorBaseVisitor<Void> implements Process
 
     @Override
     public void run(ExecutableCode executableCode) {
-        pc = 0;
+        pc.setValue(0);
         final char[][] instructions = executableCode.getCode();
-        while(pc < instructions.length) {
-            char[] instruction = instructions[pc];
+        while(pc.getValue() < instructions.length) {
+            char[] instruction = instructions[pc.getValue()];
             execute(instruction);
-            pc++;
+            pc.increment();
         }
     }
 

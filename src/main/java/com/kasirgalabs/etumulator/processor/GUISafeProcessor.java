@@ -18,7 +18,7 @@ package com.kasirgalabs.etumulator.processor;
 
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
-import com.kasirgalabs.etumulator.langtools.ExecutableCode;
+import com.kasirgalabs.etumulator.langtools.Linker.ExecutableCode;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;

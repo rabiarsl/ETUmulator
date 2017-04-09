@@ -274,4 +274,38 @@ public class Linker extends AssemblerBaseVisitor<Void> {
         }
         return address;
     }
+
+    public static class ExecutableCode {
+        private final char[][] code;
+        private final List<Data> data;
+
+        private ExecutableCode(char[][] code, List<Data> data) {
+            this.code = new char[code.length][];
+            for(int i = 0; i < code.length; i++) {
+                this.code[i] = new char[code[i].length];
+                System.arraycopy(code[i], 0, this.code[i], 0, code[i].length);
+            }
+            this.data = new ArrayList<>(data.size());
+            for(int i = 0; i < data.size(); i++) {
+                this.data.add(new Data(data.get(i)));
+            }
+        }
+
+        public char[][] getCode() {
+            char[][] temp = new char[code.length][];
+            for(int i = 0; i < code.length; i++) {
+                temp[i] = new char[code[i].length];
+                System.arraycopy(code[i], 0, temp[i], 0, code[i].length);
+            }
+            return temp;
+        }
+
+        public List<Data> getData() {
+            List<Data> temp = new ArrayList<>(data.size());
+            for(int i = 0; i < data.size(); i++) {
+                temp.add(new Data(data.get(i)));
+            }
+            return temp;
+        }
+    }
 }

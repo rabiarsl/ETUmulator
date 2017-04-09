@@ -16,6 +16,7 @@
  */
 package com.kasirgalabs.etumulator.langtools;
 
+import com.kasirgalabs.etumulator.langtools.Linker.ExecutableCode;
 import com.kasirgalabs.etumulator.processor.Memory;
 
 public class Assembler {

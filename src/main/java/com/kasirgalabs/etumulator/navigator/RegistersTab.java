@@ -17,6 +17,7 @@
 package com.kasirgalabs.etumulator.navigator;
 
 import com.google.inject.Inject;
+import com.kasirgalabs.etumulator.processor.PC;
 import com.kasirgalabs.etumulator.processor.RegisterFile;
 import com.kasirgalabs.etumulator.util.Observer;
 import java.net.URL;
@@ -37,12 +38,14 @@ public class RegistersTab implements Initializable, Observer {
     @FXML
     private TableColumn<NavigatorRow, String> value;
     private final RegisterFile registerFile;
+    private final PC pc;
     private final Navigator navigator;
     private final ObservableList<NavigatorRow> data;
 
     @Inject
-    public RegistersTab(RegisterFile registerFile, Navigator navigator) {
+    public RegistersTab(RegisterFile registerFile, PC pc, Navigator navigator) {
         this.registerFile = registerFile;
+        this.pc = pc;
         this.navigator = navigator;
         data = FXCollections.observableArrayList();
     }
@@ -50,6 +53,7 @@ public class RegistersTab implements Initializable, Observer {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         registerFile.addObserver(this);
+        pc.addObserver(this);
         navigator.addObserver(this);
         property.setCellValueFactory(new PropertyValueFactory<>("property"));
         property.setComparator(new NavigatorRowComparator());
@@ -58,6 +62,7 @@ public class RegistersTab implements Initializable, Observer {
             String registerName = "r" + Integer.toString(i);
             data.add(new NavigatorRow(registerName, registerFile.getValue(registerName)));
         }
+        data.add(new NavigatorRow("PC", pc.getValue()));
         table.setItems(data);
     }
 
@@ -71,6 +76,10 @@ public class RegistersTab implements Initializable, Observer {
                     navigatorRow.setValue(registerFile.getValue(registerName));
                 }
             }
+        }
+        else if(clazz.equals(PC.class)) {
+            NavigatorRow navigatorRow = data.get(data.size() - 1);
+            navigatorRow.setValue(pc.getValue());
         }
         table.refresh();
     }

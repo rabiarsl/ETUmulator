@@ -22,6 +22,7 @@ public class BaseProcessorUnits implements ProcessorUnits {
     private final Stack stack;
     private final Memory memory;
     private final UART uart;
+    private PC pc;
 
     public BaseProcessorUnits() {
         registerFile = new RegisterFile();
@@ -29,15 +30,17 @@ public class BaseProcessorUnits implements ProcessorUnits {
         stack = new Stack();
         memory = new Memory();
         uart = new UART(registerFile);
+        pc = new PC();
     }
 
     public BaseProcessorUnits(RegisterFile registerFile, CPSR cpsr, Stack stack, Memory memory,
-            UART uart) {
+            UART uart, PC pc) {
         this.registerFile = registerFile;
         this.cpsr = cpsr;
         this.stack = stack;
         this.memory = memory;
         this.uart = uart;
+        this.pc = pc;
     }
 
     @Override
@@ -63,5 +66,10 @@ public class BaseProcessorUnits implements ProcessorUnits {
     @Override
     public UART getUART() {
         return uart;
+    }
+
+    @Override
+    public PC getPC() {
+        return pc;
     }
 }

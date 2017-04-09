@@ -19,6 +19,7 @@ package com.kasirgalabs.etumulator.langtools;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.fail;
 
+import com.kasirgalabs.etumulator.langtools.Linker.ExecutableCode;
 import com.kasirgalabs.etumulator.processor.Memory;
 import java.util.List;
 import org.junit.Test;

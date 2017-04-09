@@ -19,23 +19,40 @@ package com.kasirgalabs.etumulator.processor;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
 import com.kasirgalabs.etumulator.util.BaseDispatcher;
-import com.kasirgalabs.etumulator.util.GUISafeDispatcher;
+import com.kasirgalabs.etumulator.util.Dispatcher;
+import com.kasirgalabs.etumulator.util.Observable;
+import com.kasirgalabs.etumulator.util.Observer;
 
 @Singleton
-public class GUISafeProcessorUnits extends BaseProcessorUnits {
-    public GUISafeProcessorUnits() {
-        super(new RegisterFile(new GUISafeDispatcher()),
-                new CPSR(new GUISafeDispatcher()),
-                new Stack(new GUISafeDispatcher()),
-                new Memory(new GUISafeDispatcher()),
-                new UART(null, new BaseDispatcher()),
-                new PC(new BaseDispatcher()));
-        super.getUART().setRegisterFile(super.getRegisterFile());
+public class PC implements Observable {
+    private int pc;
+    private final Dispatcher dispatcher;
+
+    public PC() {
+        dispatcher = new BaseDispatcher();
     }
 
     @Inject
-    public GUISafeProcessorUnits(RegisterFile registerFile, CPSR cpsr, Stack stack, Memory memory,
-            UART uart, PC pc) {
-        super(registerFile, cpsr, stack, memory, uart, pc);
+    public PC(Dispatcher dispatcher) {
+        this.dispatcher = dispatcher;
+    }
+
+    @Override
+    public void addObserver(Observer listener) {
+        dispatcher.addObserver(listener);
+    }
+
+    public void increment() {
+        pc++;
+        dispatcher.notifyObservers(PC.class, "PC");
+    }
+
+    public void setValue(int value) {
+        pc = value;
+        dispatcher.notifyObservers(PC.class, "PC");
+    }
+
+    public int getValue() {
+        return pc;
     }
 }

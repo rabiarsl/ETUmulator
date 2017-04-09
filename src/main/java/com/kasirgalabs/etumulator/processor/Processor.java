@@ -16,7 +16,7 @@
  */
 package com.kasirgalabs.etumulator.processor;
 
-import com.kasirgalabs.etumulator.langtools.ExecutableCode;
+import com.kasirgalabs.etumulator.langtools.Linker.ExecutableCode;
 
 public interface Processor {
     void run(ExecutableCode executableCode);

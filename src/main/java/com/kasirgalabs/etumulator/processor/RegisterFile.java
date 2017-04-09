@@ -27,7 +27,7 @@ import java.util.Map;
 
 @Singleton
 public class RegisterFile implements Observable {
-    private final Map<String, Integer> registers = new HashMap<>(13);
+    private final Map<String, Integer> registers = new HashMap<>(14);
     private final Dispatcher dispatcher;
 
     public RegisterFile() {
@@ -50,13 +50,13 @@ public class RegisterFile implements Observable {
         dispatcher.addObserver(listener);
     }
 
-    public int getValue(String registerName) {
-        return registers.get(registerName);
-    }
-
     public void setValue(String registerName, int value) {
         registers.replace(registerName, value);
         dispatcher.notifyObservers(RegisterFile.class, registerName);
+    }
+
+    public int getValue(String registerName) {
+        return registers.get(registerName);
     }
 
     public void reset() {

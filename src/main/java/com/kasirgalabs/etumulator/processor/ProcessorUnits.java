@@ -26,4 +26,6 @@ public interface ProcessorUnits {
     Memory getMemory();
 
     UART getUART();
+
+    PC getPC();
 }
