@@ -16,9 +16,9 @@
  */
 package com.kasirgalabs.etumulator.processor;
 
-import com.kasirgalabs.arm.ArmBaseVisitor;
-import com.kasirgalabs.arm.ArmLexer;
-import com.kasirgalabs.arm.ArmParser;
+import com.kasirgalabs.arm.ProcessorBaseVisitor;
+import com.kasirgalabs.arm.ProcessorLexer;
+import com.kasirgalabs.arm.ProcessorParser;
 import com.kasirgalabs.etumulator.langtools.ExecutableCode;
 import com.kasirgalabs.etumulator.processor.visitor.ArithmeticVisitor;
 import com.kasirgalabs.etumulator.processor.visitor.BranchVisitor;
@@ -32,7 +32,7 @@ import com.kasirgalabs.etumulator.processor.visitor.StackVisitor;
 import org.antlr.v4.runtime.ANTLRInputStream;
 import org.antlr.v4.runtime.CommonTokenStream;
 
-public class BaseProcessor extends ArmBaseVisitor<Void> implements Processor {
+public class BaseProcessor extends ProcessorBaseVisitor<Void> implements Processor {
     private final ArithmeticVisitor arithmeticVisitor;
     private final MultiplyAndDivideVisitor multiplyAndDivideVisitor;
     private final MoveVisitor moveVisitor;
@@ -66,37 +66,37 @@ public class BaseProcessor extends ArmBaseVisitor<Void> implements Processor {
     }
 
     @Override
-    public Void visitArithmetic(ArmParser.ArithmeticContext ctx) {
+    public Void visitArithmetic(ProcessorParser.ArithmeticContext ctx) {
         return arithmeticVisitor.visit(ctx);
     }
 
     @Override
-    public Void visitMultiplyAndDivide(ArmParser.MultiplyAndDivideContext ctx) {
+    public Void visitMultiplyAndDivide(ProcessorParser.MultiplyAndDivideContext ctx) {
         return multiplyAndDivideVisitor.visit(ctx);
     }
 
     @Override
-    public Void visitMove(ArmParser.MoveContext ctx) {
+    public Void visitMove(ProcessorParser.MoveContext ctx) {
         return moveVisitor.visit(ctx);
     }
 
     @Override
-    public Void visitShift(ArmParser.ShiftContext ctx) {
+    public Void visitShift(ProcessorParser.ShiftContext ctx) {
         return shiftVisitor.visit(ctx);
     }
 
     @Override
-    public Void visitCompare(ArmParser.CompareContext ctx) {
+    public Void visitCompare(ProcessorParser.CompareContext ctx) {
         return compareVisitor.visit(ctx);
     }
 
     @Override
-    public Void visitLogical(ArmParser.LogicalContext ctx) {
+    public Void visitLogical(ProcessorParser.LogicalContext ctx) {
         return logicalVisitor.visit(ctx);
     }
 
     @Override
-    public Void visitBranch(ArmParser.BranchContext ctx) {
+    public Void visitBranch(ProcessorParser.BranchContext ctx) {
         Integer address = branchVisitor.visit(ctx);
         if(address != null) {
             pc = address;
@@ -105,12 +105,12 @@ public class BaseProcessor extends ArmBaseVisitor<Void> implements Processor {
     }
 
     @Override
-    public Void visitSingleDataMemory(ArmParser.SingleDataMemoryContext ctx) {
+    public Void visitSingleDataMemory(ProcessorParser.SingleDataMemoryContext ctx) {
         return singleDataMemoryVisitor.visit(ctx);
     }
 
     @Override
-    public Void visitStack(ArmParser.StackContext ctx) {
+    public Void visitStack(ProcessorParser.StackContext ctx) {
         return stackVisitor.visit(ctx);
     }
 
@@ -127,10 +127,10 @@ public class BaseProcessor extends ArmBaseVisitor<Void> implements Processor {
 
     private void execute(char[] instruction) {
         ANTLRInputStream in = new ANTLRInputStream(instruction, instruction.length);
-        ArmLexer lexer = new ArmLexer(in);
+        ProcessorLexer lexer = new ProcessorLexer(in);
         CommonTokenStream tokens = new CommonTokenStream(lexer);
-        ArmParser parser = new ArmParser(tokens);
-        ArmParser.ProgContext tree = parser.prog();
+        ProcessorParser parser = new ProcessorParser(tokens);
+        ProcessorParser.ProgContext tree = parser.prog();
         this.visit(tree);
     }
 }

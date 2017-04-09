@@ -27,7 +27,8 @@ public class Assembler {
         loader = new Loader(memory);
     }
 
-    public ExecutableCode assemble(String code) {
+    public ExecutableCode assemble(String code) throws SyntaxError, LabelError,
+            UnsupportedInstructionError {
         ExecutableCode executablecode = linker.link(code);
         loader.load(executablecode);
         return executablecode;

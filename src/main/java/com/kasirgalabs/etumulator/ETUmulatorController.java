@@ -18,9 +18,10 @@ package com.kasirgalabs.etumulator;
 
 import com.google.inject.Inject;
 import com.kasirgalabs.etumulator.document.Document;
+import com.kasirgalabs.etumulator.langtools.Assembler;
 import com.kasirgalabs.etumulator.langtools.ExecutableCode;
 import com.kasirgalabs.etumulator.langtools.LabelError;
-import com.kasirgalabs.etumulator.langtools.Assembler;
+import com.kasirgalabs.etumulator.langtools.SyntaxError;
 import com.kasirgalabs.etumulator.langtools.UnsupportedInstructionError;
 import com.kasirgalabs.etumulator.processor.Memory;
 import com.kasirgalabs.etumulator.processor.Processor;
@@ -41,10 +42,7 @@ public class ETUmulatorController {
         ExecutableCode executableCode;
         try {
             executableCode = assembler.assemble(document.getText() + "\n");
-            if(executableCode == null) {
-                return;
-            }
-        } catch(LabelError | UnsupportedInstructionError ex) {
+        } catch(SyntaxError | LabelError | UnsupportedInstructionError ex) {
             System.err.println(ex.getMessage());
             return;
         }

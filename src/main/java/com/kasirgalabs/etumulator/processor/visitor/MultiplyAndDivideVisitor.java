@@ -16,12 +16,12 @@
  */
 package com.kasirgalabs.etumulator.processor.visitor;
 
-import com.kasirgalabs.arm.ArmBaseVisitor;
-import com.kasirgalabs.arm.ArmParser;
+import com.kasirgalabs.arm.ProcessorBaseVisitor;
+import com.kasirgalabs.arm.ProcessorParser;
 import com.kasirgalabs.etumulator.processor.CPSR;
 import com.kasirgalabs.etumulator.processor.RegisterFile;
 
-public class MultiplyAndDivideVisitor extends ArmBaseVisitor<Void> {
+public class MultiplyAndDivideVisitor extends ProcessorBaseVisitor<Void> {
     private final RegisterFile registerFile;
     private final CPSR cpsr;
     private final RegisterVisitor registerVisitor;
@@ -33,7 +33,7 @@ public class MultiplyAndDivideVisitor extends ArmBaseVisitor<Void> {
     }
 
     @Override
-    public Void visitMul(ArmParser.MulContext ctx) {
+    public Void visitMul(ProcessorParser.MulContext ctx) {
         String destRegister = registerVisitor.visit(ctx.rd());
         int left = registerFile.getValue(registerVisitor.visit(ctx.rm()));
         int right = registerFile.getValue(registerVisitor.visit(ctx.rs()));
@@ -42,7 +42,7 @@ public class MultiplyAndDivideVisitor extends ArmBaseVisitor<Void> {
     }
 
     @Override
-    public Void visitMuls(ArmParser.MulsContext ctx) {
+    public Void visitMuls(ProcessorParser.MulsContext ctx) {
         String destRegister = registerVisitor.visit(ctx.rd());
         int left = registerFile.getValue(registerVisitor.visit(ctx.rm()));
         int right = registerFile.getValue(registerVisitor.visit(ctx.rs()));
@@ -53,7 +53,7 @@ public class MultiplyAndDivideVisitor extends ArmBaseVisitor<Void> {
     }
 
     @Override
-    public Void visitMla(ArmParser.MlaContext ctx) {
+    public Void visitMla(ProcessorParser.MlaContext ctx) {
         String destRegister = registerVisitor.visit(ctx.rd());
         int left = registerFile.getValue(registerVisitor.visit(ctx.rm()));
         int right = registerFile.getValue(registerVisitor.visit(ctx.rs()));
@@ -64,7 +64,7 @@ public class MultiplyAndDivideVisitor extends ArmBaseVisitor<Void> {
     }
 
     @Override
-    public Void visitMlas(ArmParser.MlasContext ctx) {
+    public Void visitMlas(ProcessorParser.MlasContext ctx) {
         String destRegister = registerVisitor.visit(ctx.rd());
         int left = registerFile.getValue(registerVisitor.visit(ctx.rm()));
         int right = registerFile.getValue(registerVisitor.visit(ctx.rs()));
@@ -76,7 +76,7 @@ public class MultiplyAndDivideVisitor extends ArmBaseVisitor<Void> {
     }
 
     @Override
-    public Void visitMls(ArmParser.MlsContext ctx) {
+    public Void visitMls(ProcessorParser.MlsContext ctx) {
         String destRegister = registerVisitor.visit(ctx.rd());
         int left = registerFile.getValue(registerVisitor.visit(ctx.rm()));
         int right = registerFile.getValue(registerVisitor.visit(ctx.rs()));
@@ -87,7 +87,7 @@ public class MultiplyAndDivideVisitor extends ArmBaseVisitor<Void> {
     }
 
     @Override
-    public Void visitSdiv(ArmParser.SdivContext ctx) {
+    public Void visitSdiv(ProcessorParser.SdivContext ctx) {
         String destRegister = registerVisitor.visit(ctx.rd());
         int left = registerFile.getValue(registerVisitor.visit(ctx.rn()));
         int right = registerFile.getValue(registerVisitor.visit(ctx.rm()));
@@ -96,7 +96,7 @@ public class MultiplyAndDivideVisitor extends ArmBaseVisitor<Void> {
     }
 
     @Override
-    public Void visitUdiv(ArmParser.UdivContext ctx) {
+    public Void visitUdiv(ProcessorParser.UdivContext ctx) {
         String destRegister = registerVisitor.visit(ctx.rd());
         int left = registerFile.getValue(registerVisitor.visit(ctx.rn()));
         int right = registerFile.getValue(registerVisitor.visit(ctx.rm()));

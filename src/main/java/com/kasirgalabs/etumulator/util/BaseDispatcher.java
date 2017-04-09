@@ -20,10 +20,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class BaseDispatcher implements Dispatcher {
-    private List<Observer> observers;
+    private final List<Observer> observers;
 
     public BaseDispatcher() {
-        observers = new ArrayList<>();
+        observers = new ArrayList<>(10);
     }
 
     @Override

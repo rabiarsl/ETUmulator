@@ -16,12 +16,12 @@
  */
 package com.kasirgalabs.etumulator.processor.visitor;
 
-import com.kasirgalabs.arm.ArmBaseVisitor;
-import com.kasirgalabs.arm.ArmParser;
+import com.kasirgalabs.arm.ProcessorBaseVisitor;
+import com.kasirgalabs.arm.ProcessorParser;
 import com.kasirgalabs.etumulator.processor.CPSR;
 import com.kasirgalabs.etumulator.processor.RegisterFile;
 
-public class CompareVisitor extends ArmBaseVisitor<Void> {
+public class CompareVisitor extends ProcessorBaseVisitor<Void> {
 
     private final RegisterFile registerFile;
     private final CPSR cpsr;
@@ -36,7 +36,7 @@ public class CompareVisitor extends ArmBaseVisitor<Void> {
     }
 
     @Override
-    public Void visitCmp(ArmParser.CmpContext ctx) {
+    public Void visitCmp(ProcessorParser.CmpContext ctx) {
         int left = registerFile.getValue(registerVisitor.visit(ctx.rn()));
         int right = operand2Visitor.visit(ctx.operand2());
         addUpdateCPSR(left, -right);
@@ -44,7 +44,7 @@ public class CompareVisitor extends ArmBaseVisitor<Void> {
     }
 
     @Override
-    public Void visitCmn(ArmParser.CmnContext ctx) {
+    public Void visitCmn(ProcessorParser.CmnContext ctx) {
         int left = registerFile.getValue(registerVisitor.visit(ctx.rn()));
         int right = operand2Visitor.visit(ctx.operand2());
         addUpdateCPSR(left, right);

@@ -27,7 +27,7 @@ import java.util.Map;
 
 @Singleton
 public class Memory implements Observable {
-    private final Map<Integer, Byte> memory = new HashMap<>();
+    private final Map<Integer, Byte> memory = new HashMap<>(16);
     private final Dispatcher dispatcher;
 
     public Memory() {

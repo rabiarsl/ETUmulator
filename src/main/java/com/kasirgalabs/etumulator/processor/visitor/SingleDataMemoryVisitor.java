@@ -16,12 +16,12 @@
  */
 package com.kasirgalabs.etumulator.processor.visitor;
 
-import com.kasirgalabs.arm.ArmBaseVisitor;
-import com.kasirgalabs.arm.ArmParser;
+import com.kasirgalabs.arm.ProcessorBaseVisitor;
+import com.kasirgalabs.arm.ProcessorParser;
 import com.kasirgalabs.etumulator.processor.Memory;
 import com.kasirgalabs.etumulator.processor.RegisterFile;
 
-public class SingleDataMemoryVisitor extends ArmBaseVisitor<Void> {
+public class SingleDataMemoryVisitor extends ProcessorBaseVisitor<Void> {
     private final RegisterFile registerFile;
     private final Memory memory;
     private final RegisterVisitor registerVisitor;
@@ -37,7 +37,7 @@ public class SingleDataMemoryVisitor extends ArmBaseVisitor<Void> {
     }
 
     @Override
-    public Void visitLdr(ArmParser.LdrContext ctx) {
+    public Void visitLdr(ProcessorParser.LdrContext ctx) {
         String destRegister = registerVisitor.visit(ctx.rd());
         if(ctx.ASSIGN() != null) {
             registerFile.setValue(destRegister, numberVisitor.visit(ctx.number()));

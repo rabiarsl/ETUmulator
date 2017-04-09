@@ -115,7 +115,10 @@ public class BaseDocumentTest {
     public void testClear() throws IOException {
         assert Platform.isFxApplicationThread();
 
-        String text = "TEST";
+        String text = "add r1, r2, r3"
+                + "\"TEST\""
+                + "//comment"
+                + "/*comment*/";
         baseDocument.setText(text);
         baseDocument.clear();
         String result = baseDocument.getText();
@@ -125,7 +128,7 @@ public class BaseDocumentTest {
     private void readFileIntoDocument(File file) throws IOException {
         assert Platform.isFxApplicationThread();
 
-        StringBuilder text = new StringBuilder();
+        StringBuilder text = new StringBuilder(64);
         try(BufferedReader bf = new BufferedReader(new FileReader(file))) {
             String line;
             while((line = bf.readLine()) != null) {

@@ -1,4 +1,4 @@
-// Generated from Arm.g4 by ANTLR 4.7
+// Generated from Assembler.g4 by ANTLR 4.7
 package com.kasirgalabs.arm;
 import org.antlr.v4.runtime.atn.*;
 import org.antlr.v4.runtime.dfa.DFA;
@@ -10,7 +10,7 @@ import java.util.Iterator;
 import java.util.ArrayList;
 
 @SuppressWarnings({"all", "warnings", "unchecked", "unused", "cast"})
-public class ArmParser extends Parser {
+public class AssemblerParser extends Parser {
 	static { RuntimeMetaData.checkVersion("4.7", RuntimeMetaData.VERSION); }
 
 	protected static final DFA[] _decisionToDFA;
@@ -51,7 +51,7 @@ public class ArmParser extends Parser {
 		RULE_bal = 77, RULE_bl = 78, RULE_ldr = 79, RULE_ldrb = 80, RULE_ldrsb = 81, 
 		RULE_ldrh = 82, RULE_ldrsh = 83, RULE_ldrAddress = 84, RULE_immediateOffset = 85, 
 		RULE_postIndexedImmediate = 86, RULE_registerOffset = 87, RULE_postIndexedRegister = 88, 
-		RULE_pcRelative = 89, RULE_str = 90, RULE_strb = 91, RULE_strsb = 92, 
+		RULE_relocationDirective = 89, RULE_str = 90, RULE_strb = 91, RULE_strsb = 92, 
 		RULE_strh = 93, RULE_strsh = 94, RULE_strOperationType = 95, RULE_push = 96, 
 		RULE_pop = 97, RULE_regList = 98, RULE_rd = 99, RULE_rn = 100, RULE_rm = 101, 
 		RULE_rs = 102, RULE_operand2 = 103, RULE_registerShiftedByRegister = 104, 
@@ -70,8 +70,8 @@ public class ArmParser extends Parser {
 		"bne", "bcs", "bhs", "bcc", "blo", "bmi", "bpl", "bvs", "bvc", "bhi", 
 		"bls", "bge", "blt", "bgt", "ble", "bal", "bl", "ldr", "ldrb", "ldrsb", 
 		"ldrh", "ldrsh", "ldrAddress", "immediateOffset", "postIndexedImmediate", 
-		"registerOffset", "postIndexedRegister", "pcRelative", "str", "strb", 
-		"strsb", "strh", "strsh", "strOperationType", "push", "pop", "regList", 
+		"registerOffset", "postIndexedRegister", "relocationDirective", "str", 
+		"strb", "strsb", "strh", "strsh", "strOperationType", "push", "pop", "regList", 
 		"rd", "rn", "rm", "rs", "operand2", "registerShiftedByRegister", "registerShiftedByConstant", 
 		"shiftOption", "opsh", "sh", "offset", "imm16", "imm12", "imm8m", "label", 
 		"data", "asciz", "number"
@@ -136,7 +136,7 @@ public class ArmParser extends Parser {
 	}
 
 	@Override
-	public String getGrammarFileName() { return "Arm.g4"; }
+	public String getGrammarFileName() { return "Assembler.g4"; }
 
 	@Override
 	public String[] getRuleNames() { return ruleNames; }
@@ -147,14 +147,14 @@ public class ArmParser extends Parser {
 	@Override
 	public ATN getATN() { return _ATN; }
 
-	public ArmParser(TokenStream input) {
+	public AssemblerParser(TokenStream input) {
 		super(input);
 		_interp = new ParserATNSimulator(this,_ATN,_decisionToDFA,_sharedContextCache);
 	}
 	public static class ProgContext extends ParserRuleContext {
-		public List<TerminalNode> EOL() { return getTokens(ArmParser.EOL); }
+		public List<TerminalNode> EOL() { return getTokens(AssemblerParser.EOL); }
 		public TerminalNode EOL(int i) {
-			return getToken(ArmParser.EOL, i);
+			return getToken(AssemblerParser.EOL, i);
 		}
 		public List<LineContext> line() {
 			return getRuleContexts(LineContext.class);
@@ -168,7 +168,7 @@ public class ArmParser extends Parser {
 		@Override public int getRuleIndex() { return RULE_prog; }
 		@Override
 		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof ArmVisitor ) return ((ArmVisitor<? extends T>)visitor).visitProg(this);
+			if ( visitor instanceof AssemblerVisitor ) return ((AssemblerVisitor<? extends T>)visitor).visitProg(this);
 			else return visitor.visitChildren(this);
 		}
 	}
@@ -233,7 +233,7 @@ public class ArmParser extends Parser {
 		@Override public int getRuleIndex() { return RULE_line; }
 		@Override
 		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof ArmVisitor ) return ((ArmVisitor<? extends T>)visitor).visitLine(this);
+			if ( visitor instanceof AssemblerVisitor ) return ((AssemblerVisitor<? extends T>)visitor).visitLine(this);
 			else return visitor.visitChildren(this);
 		}
 	}
@@ -313,7 +313,7 @@ public class ArmParser extends Parser {
 		@Override public int getRuleIndex() { return RULE_instruction; }
 		@Override
 		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof ArmVisitor ) return ((ArmVisitor<? extends T>)visitor).visitInstruction(this);
+			if ( visitor instanceof AssemblerVisitor ) return ((AssemblerVisitor<? extends T>)visitor).visitInstruction(this);
 			else return visitor.visitChildren(this);
 		}
 	}
@@ -523,7 +523,7 @@ public class ArmParser extends Parser {
 		@Override public int getRuleIndex() { return RULE_arithmetic; }
 		@Override
 		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof ArmVisitor ) return ((ArmVisitor<? extends T>)visitor).visitArithmetic(this);
+			if ( visitor instanceof AssemblerVisitor ) return ((AssemblerVisitor<? extends T>)visitor).visitArithmetic(this);
 			else return visitor.visitChildren(this);
 		}
 	}
@@ -662,7 +662,7 @@ public class ArmParser extends Parser {
 		@Override public int getRuleIndex() { return RULE_multiplyAndDivide; }
 		@Override
 		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof ArmVisitor ) return ((ArmVisitor<? extends T>)visitor).visitMultiplyAndDivide(this);
+			if ( visitor instanceof AssemblerVisitor ) return ((AssemblerVisitor<? extends T>)visitor).visitMultiplyAndDivide(this);
 			else return visitor.visitChildren(this);
 		}
 	}
@@ -760,7 +760,7 @@ public class ArmParser extends Parser {
 		@Override public int getRuleIndex() { return RULE_move; }
 		@Override
 		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof ArmVisitor ) return ((ArmVisitor<? extends T>)visitor).visitMove(this);
+			if ( visitor instanceof AssemblerVisitor ) return ((AssemblerVisitor<? extends T>)visitor).visitMove(this);
 			else return visitor.visitChildren(this);
 		}
 	}
@@ -859,7 +859,7 @@ public class ArmParser extends Parser {
 		@Override public int getRuleIndex() { return RULE_shift; }
 		@Override
 		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof ArmVisitor ) return ((ArmVisitor<? extends T>)visitor).visitShift(this);
+			if ( visitor instanceof AssemblerVisitor ) return ((AssemblerVisitor<? extends T>)visitor).visitShift(this);
 			else return visitor.visitChildren(this);
 		}
 	}
@@ -969,7 +969,7 @@ public class ArmParser extends Parser {
 		@Override public int getRuleIndex() { return RULE_compare; }
 		@Override
 		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof ArmVisitor ) return ((ArmVisitor<? extends T>)visitor).visitCompare(this);
+			if ( visitor instanceof AssemblerVisitor ) return ((AssemblerVisitor<? extends T>)visitor).visitCompare(this);
 			else return visitor.visitChildren(this);
 		}
 	}
@@ -1053,7 +1053,7 @@ public class ArmParser extends Parser {
 		@Override public int getRuleIndex() { return RULE_logical; }
 		@Override
 		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof ArmVisitor ) return ((ArmVisitor<? extends T>)visitor).visitLogical(this);
+			if ( visitor instanceof AssemblerVisitor ) return ((AssemblerVisitor<? extends T>)visitor).visitLogical(this);
 			else return visitor.visitChildren(this);
 		}
 	}
@@ -1228,7 +1228,7 @@ public class ArmParser extends Parser {
 		@Override public int getRuleIndex() { return RULE_branch; }
 		@Override
 		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof ArmVisitor ) return ((ArmVisitor<? extends T>)visitor).visitBranch(this);
+			if ( visitor instanceof AssemblerVisitor ) return ((AssemblerVisitor<? extends T>)visitor).visitBranch(this);
 			else return visitor.visitChildren(this);
 		}
 	}
@@ -1425,7 +1425,7 @@ public class ArmParser extends Parser {
 		@Override public int getRuleIndex() { return RULE_singleDataMemory; }
 		@Override
 		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof ArmVisitor ) return ((ArmVisitor<? extends T>)visitor).visitSingleDataMemory(this);
+			if ( visitor instanceof AssemblerVisitor ) return ((AssemblerVisitor<? extends T>)visitor).visitSingleDataMemory(this);
 			else return visitor.visitChildren(this);
 		}
 	}
@@ -1535,7 +1535,7 @@ public class ArmParser extends Parser {
 		@Override public int getRuleIndex() { return RULE_stack; }
 		@Override
 		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof ArmVisitor ) return ((ArmVisitor<? extends T>)visitor).visitStack(this);
+			if ( visitor instanceof AssemblerVisitor ) return ((AssemblerVisitor<? extends T>)visitor).visitStack(this);
 			else return visitor.visitChildren(this);
 		}
 	}
@@ -1580,9 +1580,9 @@ public class ArmParser extends Parser {
 		public RdContext rd() {
 			return getRuleContext(RdContext.class,0);
 		}
-		public List<TerminalNode> COMMA() { return getTokens(ArmParser.COMMA); }
+		public List<TerminalNode> COMMA() { return getTokens(AssemblerParser.COMMA); }
 		public TerminalNode COMMA(int i) {
-			return getToken(ArmParser.COMMA, i);
+			return getToken(AssemblerParser.COMMA, i);
 		}
 		public RnContext rn() {
 			return getRuleContext(RnContext.class,0);
@@ -1599,7 +1599,7 @@ public class ArmParser extends Parser {
 		@Override public int getRuleIndex() { return RULE_add; }
 		@Override
 		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof ArmVisitor ) return ((ArmVisitor<? extends T>)visitor).visitAdd(this);
+			if ( visitor instanceof AssemblerVisitor ) return ((AssemblerVisitor<? extends T>)visitor).visitAdd(this);
 			else return visitor.visitChildren(this);
 		}
 	}
@@ -1653,9 +1653,9 @@ public class ArmParser extends Parser {
 		public RdContext rd() {
 			return getRuleContext(RdContext.class,0);
 		}
-		public List<TerminalNode> COMMA() { return getTokens(ArmParser.COMMA); }
+		public List<TerminalNode> COMMA() { return getTokens(AssemblerParser.COMMA); }
 		public TerminalNode COMMA(int i) {
-			return getToken(ArmParser.COMMA, i);
+			return getToken(AssemblerParser.COMMA, i);
 		}
 		public RnContext rn() {
 			return getRuleContext(RnContext.class,0);
@@ -1669,7 +1669,7 @@ public class ArmParser extends Parser {
 		@Override public int getRuleIndex() { return RULE_adds; }
 		@Override
 		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof ArmVisitor ) return ((ArmVisitor<? extends T>)visitor).visitAdds(this);
+			if ( visitor instanceof AssemblerVisitor ) return ((AssemblerVisitor<? extends T>)visitor).visitAdds(this);
 			else return visitor.visitChildren(this);
 		}
 	}
@@ -1709,9 +1709,9 @@ public class ArmParser extends Parser {
 		public RdContext rd() {
 			return getRuleContext(RdContext.class,0);
 		}
-		public List<TerminalNode> COMMA() { return getTokens(ArmParser.COMMA); }
+		public List<TerminalNode> COMMA() { return getTokens(AssemblerParser.COMMA); }
 		public TerminalNode COMMA(int i) {
-			return getToken(ArmParser.COMMA, i);
+			return getToken(AssemblerParser.COMMA, i);
 		}
 		public RnContext rn() {
 			return getRuleContext(RnContext.class,0);
@@ -1725,7 +1725,7 @@ public class ArmParser extends Parser {
 		@Override public int getRuleIndex() { return RULE_adc; }
 		@Override
 		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof ArmVisitor ) return ((ArmVisitor<? extends T>)visitor).visitAdc(this);
+			if ( visitor instanceof AssemblerVisitor ) return ((AssemblerVisitor<? extends T>)visitor).visitAdc(this);
 			else return visitor.visitChildren(this);
 		}
 	}
@@ -1765,9 +1765,9 @@ public class ArmParser extends Parser {
 		public RdContext rd() {
 			return getRuleContext(RdContext.class,0);
 		}
-		public List<TerminalNode> COMMA() { return getTokens(ArmParser.COMMA); }
+		public List<TerminalNode> COMMA() { return getTokens(AssemblerParser.COMMA); }
 		public TerminalNode COMMA(int i) {
-			return getToken(ArmParser.COMMA, i);
+			return getToken(AssemblerParser.COMMA, i);
 		}
 		public RnContext rn() {
 			return getRuleContext(RnContext.class,0);
@@ -1781,7 +1781,7 @@ public class ArmParser extends Parser {
 		@Override public int getRuleIndex() { return RULE_adcs; }
 		@Override
 		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof ArmVisitor ) return ((ArmVisitor<? extends T>)visitor).visitAdcs(this);
+			if ( visitor instanceof AssemblerVisitor ) return ((AssemblerVisitor<? extends T>)visitor).visitAdcs(this);
 			else return visitor.visitChildren(this);
 		}
 	}
@@ -1821,9 +1821,9 @@ public class ArmParser extends Parser {
 		public RdContext rd() {
 			return getRuleContext(RdContext.class,0);
 		}
-		public List<TerminalNode> COMMA() { return getTokens(ArmParser.COMMA); }
+		public List<TerminalNode> COMMA() { return getTokens(AssemblerParser.COMMA); }
 		public TerminalNode COMMA(int i) {
-			return getToken(ArmParser.COMMA, i);
+			return getToken(AssemblerParser.COMMA, i);
 		}
 		public RnContext rn() {
 			return getRuleContext(RnContext.class,0);
@@ -1840,7 +1840,7 @@ public class ArmParser extends Parser {
 		@Override public int getRuleIndex() { return RULE_sub; }
 		@Override
 		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof ArmVisitor ) return ((ArmVisitor<? extends T>)visitor).visitSub(this);
+			if ( visitor instanceof AssemblerVisitor ) return ((AssemblerVisitor<? extends T>)visitor).visitSub(this);
 			else return visitor.visitChildren(this);
 		}
 	}
@@ -1894,9 +1894,9 @@ public class ArmParser extends Parser {
 		public RdContext rd() {
 			return getRuleContext(RdContext.class,0);
 		}
-		public List<TerminalNode> COMMA() { return getTokens(ArmParser.COMMA); }
+		public List<TerminalNode> COMMA() { return getTokens(AssemblerParser.COMMA); }
 		public TerminalNode COMMA(int i) {
-			return getToken(ArmParser.COMMA, i);
+			return getToken(AssemblerParser.COMMA, i);
 		}
 		public RnContext rn() {
 			return getRuleContext(RnContext.class,0);
@@ -1910,7 +1910,7 @@ public class ArmParser extends Parser {
 		@Override public int getRuleIndex() { return RULE_subs; }
 		@Override
 		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof ArmVisitor ) return ((ArmVisitor<? extends T>)visitor).visitSubs(this);
+			if ( visitor instanceof AssemblerVisitor ) return ((AssemblerVisitor<? extends T>)visitor).visitSubs(this);
 			else return visitor.visitChildren(this);
 		}
 	}
@@ -1950,9 +1950,9 @@ public class ArmParser extends Parser {
 		public RdContext rd() {
 			return getRuleContext(RdContext.class,0);
 		}
-		public List<TerminalNode> COMMA() { return getTokens(ArmParser.COMMA); }
+		public List<TerminalNode> COMMA() { return getTokens(AssemblerParser.COMMA); }
 		public TerminalNode COMMA(int i) {
-			return getToken(ArmParser.COMMA, i);
+			return getToken(AssemblerParser.COMMA, i);
 		}
 		public RnContext rn() {
 			return getRuleContext(RnContext.class,0);
@@ -1966,7 +1966,7 @@ public class ArmParser extends Parser {
 		@Override public int getRuleIndex() { return RULE_sbc; }
 		@Override
 		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof ArmVisitor ) return ((ArmVisitor<? extends T>)visitor).visitSbc(this);
+			if ( visitor instanceof AssemblerVisitor ) return ((AssemblerVisitor<? extends T>)visitor).visitSbc(this);
 			else return visitor.visitChildren(this);
 		}
 	}
@@ -2006,9 +2006,9 @@ public class ArmParser extends Parser {
 		public RdContext rd() {
 			return getRuleContext(RdContext.class,0);
 		}
-		public List<TerminalNode> COMMA() { return getTokens(ArmParser.COMMA); }
+		public List<TerminalNode> COMMA() { return getTokens(AssemblerParser.COMMA); }
 		public TerminalNode COMMA(int i) {
-			return getToken(ArmParser.COMMA, i);
+			return getToken(AssemblerParser.COMMA, i);
 		}
 		public RnContext rn() {
 			return getRuleContext(RnContext.class,0);
@@ -2022,7 +2022,7 @@ public class ArmParser extends Parser {
 		@Override public int getRuleIndex() { return RULE_sbcs; }
 		@Override
 		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof ArmVisitor ) return ((ArmVisitor<? extends T>)visitor).visitSbcs(this);
+			if ( visitor instanceof AssemblerVisitor ) return ((AssemblerVisitor<? extends T>)visitor).visitSbcs(this);
 			else return visitor.visitChildren(this);
 		}
 	}
@@ -2062,9 +2062,9 @@ public class ArmParser extends Parser {
 		public RdContext rd() {
 			return getRuleContext(RdContext.class,0);
 		}
-		public List<TerminalNode> COMMA() { return getTokens(ArmParser.COMMA); }
+		public List<TerminalNode> COMMA() { return getTokens(AssemblerParser.COMMA); }
 		public TerminalNode COMMA(int i) {
-			return getToken(ArmParser.COMMA, i);
+			return getToken(AssemblerParser.COMMA, i);
 		}
 		public RnContext rn() {
 			return getRuleContext(RnContext.class,0);
@@ -2078,7 +2078,7 @@ public class ArmParser extends Parser {
 		@Override public int getRuleIndex() { return RULE_rsb; }
 		@Override
 		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof ArmVisitor ) return ((ArmVisitor<? extends T>)visitor).visitRsb(this);
+			if ( visitor instanceof AssemblerVisitor ) return ((AssemblerVisitor<? extends T>)visitor).visitRsb(this);
 			else return visitor.visitChildren(this);
 		}
 	}
@@ -2118,9 +2118,9 @@ public class ArmParser extends Parser {
 		public RdContext rd() {
 			return getRuleContext(RdContext.class,0);
 		}
-		public List<TerminalNode> COMMA() { return getTokens(ArmParser.COMMA); }
+		public List<TerminalNode> COMMA() { return getTokens(AssemblerParser.COMMA); }
 		public TerminalNode COMMA(int i) {
-			return getToken(ArmParser.COMMA, i);
+			return getToken(AssemblerParser.COMMA, i);
 		}
 		public RnContext rn() {
 			return getRuleContext(RnContext.class,0);
@@ -2134,7 +2134,7 @@ public class ArmParser extends Parser {
 		@Override public int getRuleIndex() { return RULE_rsbs; }
 		@Override
 		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof ArmVisitor ) return ((ArmVisitor<? extends T>)visitor).visitRsbs(this);
+			if ( visitor instanceof AssemblerVisitor ) return ((AssemblerVisitor<? extends T>)visitor).visitRsbs(this);
 			else return visitor.visitChildren(this);
 		}
 	}
@@ -2174,9 +2174,9 @@ public class ArmParser extends Parser {
 		public RdContext rd() {
 			return getRuleContext(RdContext.class,0);
 		}
-		public List<TerminalNode> COMMA() { return getTokens(ArmParser.COMMA); }
+		public List<TerminalNode> COMMA() { return getTokens(AssemblerParser.COMMA); }
 		public TerminalNode COMMA(int i) {
-			return getToken(ArmParser.COMMA, i);
+			return getToken(AssemblerParser.COMMA, i);
 		}
 		public RnContext rn() {
 			return getRuleContext(RnContext.class,0);
@@ -2190,7 +2190,7 @@ public class ArmParser extends Parser {
 		@Override public int getRuleIndex() { return RULE_rsc; }
 		@Override
 		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof ArmVisitor ) return ((ArmVisitor<? extends T>)visitor).visitRsc(this);
+			if ( visitor instanceof AssemblerVisitor ) return ((AssemblerVisitor<? extends T>)visitor).visitRsc(this);
 			else return visitor.visitChildren(this);
 		}
 	}
@@ -2230,9 +2230,9 @@ public class ArmParser extends Parser {
 		public RdContext rd() {
 			return getRuleContext(RdContext.class,0);
 		}
-		public List<TerminalNode> COMMA() { return getTokens(ArmParser.COMMA); }
+		public List<TerminalNode> COMMA() { return getTokens(AssemblerParser.COMMA); }
 		public TerminalNode COMMA(int i) {
-			return getToken(ArmParser.COMMA, i);
+			return getToken(AssemblerParser.COMMA, i);
 		}
 		public RnContext rn() {
 			return getRuleContext(RnContext.class,0);
@@ -2246,7 +2246,7 @@ public class ArmParser extends Parser {
 		@Override public int getRuleIndex() { return RULE_rscs; }
 		@Override
 		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof ArmVisitor ) return ((ArmVisitor<? extends T>)visitor).visitRscs(this);
+			if ( visitor instanceof AssemblerVisitor ) return ((AssemblerVisitor<? extends T>)visitor).visitRscs(this);
 			else return visitor.visitChildren(this);
 		}
 	}
@@ -2286,9 +2286,9 @@ public class ArmParser extends Parser {
 		public RdContext rd() {
 			return getRuleContext(RdContext.class,0);
 		}
-		public List<TerminalNode> COMMA() { return getTokens(ArmParser.COMMA); }
+		public List<TerminalNode> COMMA() { return getTokens(AssemblerParser.COMMA); }
 		public TerminalNode COMMA(int i) {
-			return getToken(ArmParser.COMMA, i);
+			return getToken(AssemblerParser.COMMA, i);
 		}
 		public RmContext rm() {
 			return getRuleContext(RmContext.class,0);
@@ -2302,7 +2302,7 @@ public class ArmParser extends Parser {
 		@Override public int getRuleIndex() { return RULE_mul; }
 		@Override
 		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof ArmVisitor ) return ((ArmVisitor<? extends T>)visitor).visitMul(this);
+			if ( visitor instanceof AssemblerVisitor ) return ((AssemblerVisitor<? extends T>)visitor).visitMul(this);
 			else return visitor.visitChildren(this);
 		}
 	}
@@ -2342,9 +2342,9 @@ public class ArmParser extends Parser {
 		public RdContext rd() {
 			return getRuleContext(RdContext.class,0);
 		}
-		public List<TerminalNode> COMMA() { return getTokens(ArmParser.COMMA); }
+		public List<TerminalNode> COMMA() { return getTokens(AssemblerParser.COMMA); }
 		public TerminalNode COMMA(int i) {
-			return getToken(ArmParser.COMMA, i);
+			return getToken(AssemblerParser.COMMA, i);
 		}
 		public RmContext rm() {
 			return getRuleContext(RmContext.class,0);
@@ -2358,7 +2358,7 @@ public class ArmParser extends Parser {
 		@Override public int getRuleIndex() { return RULE_muls; }
 		@Override
 		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof ArmVisitor ) return ((ArmVisitor<? extends T>)visitor).visitMuls(this);
+			if ( visitor instanceof AssemblerVisitor ) return ((AssemblerVisitor<? extends T>)visitor).visitMuls(this);
 			else return visitor.visitChildren(this);
 		}
 	}
@@ -2398,9 +2398,9 @@ public class ArmParser extends Parser {
 		public RdContext rd() {
 			return getRuleContext(RdContext.class,0);
 		}
-		public List<TerminalNode> COMMA() { return getTokens(ArmParser.COMMA); }
+		public List<TerminalNode> COMMA() { return getTokens(AssemblerParser.COMMA); }
 		public TerminalNode COMMA(int i) {
-			return getToken(ArmParser.COMMA, i);
+			return getToken(AssemblerParser.COMMA, i);
 		}
 		public RmContext rm() {
 			return getRuleContext(RmContext.class,0);
@@ -2417,7 +2417,7 @@ public class ArmParser extends Parser {
 		@Override public int getRuleIndex() { return RULE_mla; }
 		@Override
 		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof ArmVisitor ) return ((ArmVisitor<? extends T>)visitor).visitMla(this);
+			if ( visitor instanceof AssemblerVisitor ) return ((AssemblerVisitor<? extends T>)visitor).visitMla(this);
 			else return visitor.visitChildren(this);
 		}
 	}
@@ -2461,9 +2461,9 @@ public class ArmParser extends Parser {
 		public RdContext rd() {
 			return getRuleContext(RdContext.class,0);
 		}
-		public List<TerminalNode> COMMA() { return getTokens(ArmParser.COMMA); }
+		public List<TerminalNode> COMMA() { return getTokens(AssemblerParser.COMMA); }
 		public TerminalNode COMMA(int i) {
-			return getToken(ArmParser.COMMA, i);
+			return getToken(AssemblerParser.COMMA, i);
 		}
 		public RmContext rm() {
 			return getRuleContext(RmContext.class,0);
@@ -2480,7 +2480,7 @@ public class ArmParser extends Parser {
 		@Override public int getRuleIndex() { return RULE_mlas; }
 		@Override
 		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof ArmVisitor ) return ((ArmVisitor<? extends T>)visitor).visitMlas(this);
+			if ( visitor instanceof AssemblerVisitor ) return ((AssemblerVisitor<? extends T>)visitor).visitMlas(this);
 			else return visitor.visitChildren(this);
 		}
 	}
@@ -2524,9 +2524,9 @@ public class ArmParser extends Parser {
 		public RdContext rd() {
 			return getRuleContext(RdContext.class,0);
 		}
-		public List<TerminalNode> COMMA() { return getTokens(ArmParser.COMMA); }
+		public List<TerminalNode> COMMA() { return getTokens(AssemblerParser.COMMA); }
 		public TerminalNode COMMA(int i) {
-			return getToken(ArmParser.COMMA, i);
+			return getToken(AssemblerParser.COMMA, i);
 		}
 		public RmContext rm() {
 			return getRuleContext(RmContext.class,0);
@@ -2543,7 +2543,7 @@ public class ArmParser extends Parser {
 		@Override public int getRuleIndex() { return RULE_mls; }
 		@Override
 		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof ArmVisitor ) return ((ArmVisitor<? extends T>)visitor).visitMls(this);
+			if ( visitor instanceof AssemblerVisitor ) return ((AssemblerVisitor<? extends T>)visitor).visitMls(this);
 			else return visitor.visitChildren(this);
 		}
 	}
@@ -2587,9 +2587,9 @@ public class ArmParser extends Parser {
 		public RdContext rd() {
 			return getRuleContext(RdContext.class,0);
 		}
-		public List<TerminalNode> COMMA() { return getTokens(ArmParser.COMMA); }
+		public List<TerminalNode> COMMA() { return getTokens(AssemblerParser.COMMA); }
 		public TerminalNode COMMA(int i) {
-			return getToken(ArmParser.COMMA, i);
+			return getToken(AssemblerParser.COMMA, i);
 		}
 		public RnContext rn() {
 			return getRuleContext(RnContext.class,0);
@@ -2603,7 +2603,7 @@ public class ArmParser extends Parser {
 		@Override public int getRuleIndex() { return RULE_sdiv; }
 		@Override
 		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof ArmVisitor ) return ((ArmVisitor<? extends T>)visitor).visitSdiv(this);
+			if ( visitor instanceof AssemblerVisitor ) return ((AssemblerVisitor<? extends T>)visitor).visitSdiv(this);
 			else return visitor.visitChildren(this);
 		}
 	}
@@ -2643,9 +2643,9 @@ public class ArmParser extends Parser {
 		public RdContext rd() {
 			return getRuleContext(RdContext.class,0);
 		}
-		public List<TerminalNode> COMMA() { return getTokens(ArmParser.COMMA); }
+		public List<TerminalNode> COMMA() { return getTokens(AssemblerParser.COMMA); }
 		public TerminalNode COMMA(int i) {
-			return getToken(ArmParser.COMMA, i);
+			return getToken(AssemblerParser.COMMA, i);
 		}
 		public RnContext rn() {
 			return getRuleContext(RnContext.class,0);
@@ -2659,7 +2659,7 @@ public class ArmParser extends Parser {
 		@Override public int getRuleIndex() { return RULE_udiv; }
 		@Override
 		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof ArmVisitor ) return ((ArmVisitor<? extends T>)visitor).visitUdiv(this);
+			if ( visitor instanceof AssemblerVisitor ) return ((AssemblerVisitor<? extends T>)visitor).visitUdiv(this);
 			else return visitor.visitChildren(this);
 		}
 	}
@@ -2699,7 +2699,7 @@ public class ArmParser extends Parser {
 		public RdContext rd() {
 			return getRuleContext(RdContext.class,0);
 		}
-		public TerminalNode COMMA() { return getToken(ArmParser.COMMA, 0); }
+		public TerminalNode COMMA() { return getToken(AssemblerParser.COMMA, 0); }
 		public Imm16Context imm16() {
 			return getRuleContext(Imm16Context.class,0);
 		}
@@ -2712,7 +2712,7 @@ public class ArmParser extends Parser {
 		@Override public int getRuleIndex() { return RULE_mov; }
 		@Override
 		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof ArmVisitor ) return ((ArmVisitor<? extends T>)visitor).visitMov(this);
+			if ( visitor instanceof AssemblerVisitor ) return ((AssemblerVisitor<? extends T>)visitor).visitMov(this);
 			else return visitor.visitChildren(this);
 		}
 	}
@@ -2762,7 +2762,7 @@ public class ArmParser extends Parser {
 		public RdContext rd() {
 			return getRuleContext(RdContext.class,0);
 		}
-		public TerminalNode COMMA() { return getToken(ArmParser.COMMA, 0); }
+		public TerminalNode COMMA() { return getToken(AssemblerParser.COMMA, 0); }
 		public Operand2Context operand2() {
 			return getRuleContext(Operand2Context.class,0);
 		}
@@ -2772,7 +2772,7 @@ public class ArmParser extends Parser {
 		@Override public int getRuleIndex() { return RULE_movs; }
 		@Override
 		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof ArmVisitor ) return ((ArmVisitor<? extends T>)visitor).visitMovs(this);
+			if ( visitor instanceof AssemblerVisitor ) return ((AssemblerVisitor<? extends T>)visitor).visitMovs(this);
 			else return visitor.visitChildren(this);
 		}
 	}
@@ -2808,7 +2808,7 @@ public class ArmParser extends Parser {
 		public RdContext rd() {
 			return getRuleContext(RdContext.class,0);
 		}
-		public TerminalNode COMMA() { return getToken(ArmParser.COMMA, 0); }
+		public TerminalNode COMMA() { return getToken(AssemblerParser.COMMA, 0); }
 		public Operand2Context operand2() {
 			return getRuleContext(Operand2Context.class,0);
 		}
@@ -2818,7 +2818,7 @@ public class ArmParser extends Parser {
 		@Override public int getRuleIndex() { return RULE_mvn; }
 		@Override
 		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof ArmVisitor ) return ((ArmVisitor<? extends T>)visitor).visitMvn(this);
+			if ( visitor instanceof AssemblerVisitor ) return ((AssemblerVisitor<? extends T>)visitor).visitMvn(this);
 			else return visitor.visitChildren(this);
 		}
 	}
@@ -2854,7 +2854,7 @@ public class ArmParser extends Parser {
 		public RdContext rd() {
 			return getRuleContext(RdContext.class,0);
 		}
-		public TerminalNode COMMA() { return getToken(ArmParser.COMMA, 0); }
+		public TerminalNode COMMA() { return getToken(AssemblerParser.COMMA, 0); }
 		public Operand2Context operand2() {
 			return getRuleContext(Operand2Context.class,0);
 		}
@@ -2864,7 +2864,7 @@ public class ArmParser extends Parser {
 		@Override public int getRuleIndex() { return RULE_mvns; }
 		@Override
 		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof ArmVisitor ) return ((ArmVisitor<? extends T>)visitor).visitMvns(this);
+			if ( visitor instanceof AssemblerVisitor ) return ((AssemblerVisitor<? extends T>)visitor).visitMvns(this);
 			else return visitor.visitChildren(this);
 		}
 	}
@@ -2900,7 +2900,7 @@ public class ArmParser extends Parser {
 		public RdContext rd() {
 			return getRuleContext(RdContext.class,0);
 		}
-		public TerminalNode COMMA() { return getToken(ArmParser.COMMA, 0); }
+		public TerminalNode COMMA() { return getToken(AssemblerParser.COMMA, 0); }
 		public Imm16Context imm16() {
 			return getRuleContext(Imm16Context.class,0);
 		}
@@ -2910,7 +2910,7 @@ public class ArmParser extends Parser {
 		@Override public int getRuleIndex() { return RULE_movt; }
 		@Override
 		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof ArmVisitor ) return ((ArmVisitor<? extends T>)visitor).visitMovt(this);
+			if ( visitor instanceof AssemblerVisitor ) return ((AssemblerVisitor<? extends T>)visitor).visitMovt(this);
 			else return visitor.visitChildren(this);
 		}
 	}
@@ -2946,9 +2946,9 @@ public class ArmParser extends Parser {
 		public RdContext rd() {
 			return getRuleContext(RdContext.class,0);
 		}
-		public List<TerminalNode> COMMA() { return getTokens(ArmParser.COMMA); }
+		public List<TerminalNode> COMMA() { return getTokens(AssemblerParser.COMMA); }
 		public TerminalNode COMMA(int i) {
-			return getToken(ArmParser.COMMA, i);
+			return getToken(AssemblerParser.COMMA, i);
 		}
 		public RmContext rm() {
 			return getRuleContext(RmContext.class,0);
@@ -2965,7 +2965,7 @@ public class ArmParser extends Parser {
 		@Override public int getRuleIndex() { return RULE_asr; }
 		@Override
 		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof ArmVisitor ) return ((ArmVisitor<? extends T>)visitor).visitAsr(this);
+			if ( visitor instanceof AssemblerVisitor ) return ((AssemblerVisitor<? extends T>)visitor).visitAsr(this);
 			else return visitor.visitChildren(this);
 		}
 	}
@@ -3023,9 +3023,9 @@ public class ArmParser extends Parser {
 		public RdContext rd() {
 			return getRuleContext(RdContext.class,0);
 		}
-		public List<TerminalNode> COMMA() { return getTokens(ArmParser.COMMA); }
+		public List<TerminalNode> COMMA() { return getTokens(AssemblerParser.COMMA); }
 		public TerminalNode COMMA(int i) {
-			return getToken(ArmParser.COMMA, i);
+			return getToken(AssemblerParser.COMMA, i);
 		}
 		public RmContext rm() {
 			return getRuleContext(RmContext.class,0);
@@ -3042,7 +3042,7 @@ public class ArmParser extends Parser {
 		@Override public int getRuleIndex() { return RULE_asrs; }
 		@Override
 		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof ArmVisitor ) return ((ArmVisitor<? extends T>)visitor).visitAsrs(this);
+			if ( visitor instanceof AssemblerVisitor ) return ((AssemblerVisitor<? extends T>)visitor).visitAsrs(this);
 			else return visitor.visitChildren(this);
 		}
 	}
@@ -3100,9 +3100,9 @@ public class ArmParser extends Parser {
 		public RdContext rd() {
 			return getRuleContext(RdContext.class,0);
 		}
-		public List<TerminalNode> COMMA() { return getTokens(ArmParser.COMMA); }
+		public List<TerminalNode> COMMA() { return getTokens(AssemblerParser.COMMA); }
 		public TerminalNode COMMA(int i) {
-			return getToken(ArmParser.COMMA, i);
+			return getToken(AssemblerParser.COMMA, i);
 		}
 		public RmContext rm() {
 			return getRuleContext(RmContext.class,0);
@@ -3119,7 +3119,7 @@ public class ArmParser extends Parser {
 		@Override public int getRuleIndex() { return RULE_lsl; }
 		@Override
 		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof ArmVisitor ) return ((ArmVisitor<? extends T>)visitor).visitLsl(this);
+			if ( visitor instanceof AssemblerVisitor ) return ((AssemblerVisitor<? extends T>)visitor).visitLsl(this);
 			else return visitor.visitChildren(this);
 		}
 	}
@@ -3177,9 +3177,9 @@ public class ArmParser extends Parser {
 		public RdContext rd() {
 			return getRuleContext(RdContext.class,0);
 		}
-		public List<TerminalNode> COMMA() { return getTokens(ArmParser.COMMA); }
+		public List<TerminalNode> COMMA() { return getTokens(AssemblerParser.COMMA); }
 		public TerminalNode COMMA(int i) {
-			return getToken(ArmParser.COMMA, i);
+			return getToken(AssemblerParser.COMMA, i);
 		}
 		public RmContext rm() {
 			return getRuleContext(RmContext.class,0);
@@ -3196,7 +3196,7 @@ public class ArmParser extends Parser {
 		@Override public int getRuleIndex() { return RULE_lsls; }
 		@Override
 		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof ArmVisitor ) return ((ArmVisitor<? extends T>)visitor).visitLsls(this);
+			if ( visitor instanceof AssemblerVisitor ) return ((AssemblerVisitor<? extends T>)visitor).visitLsls(this);
 			else return visitor.visitChildren(this);
 		}
 	}
@@ -3254,9 +3254,9 @@ public class ArmParser extends Parser {
 		public RdContext rd() {
 			return getRuleContext(RdContext.class,0);
 		}
-		public List<TerminalNode> COMMA() { return getTokens(ArmParser.COMMA); }
+		public List<TerminalNode> COMMA() { return getTokens(AssemblerParser.COMMA); }
 		public TerminalNode COMMA(int i) {
-			return getToken(ArmParser.COMMA, i);
+			return getToken(AssemblerParser.COMMA, i);
 		}
 		public RmContext rm() {
 			return getRuleContext(RmContext.class,0);
@@ -3273,7 +3273,7 @@ public class ArmParser extends Parser {
 		@Override public int getRuleIndex() { return RULE_lsr; }
 		@Override
 		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof ArmVisitor ) return ((ArmVisitor<? extends T>)visitor).visitLsr(this);
+			if ( visitor instanceof AssemblerVisitor ) return ((AssemblerVisitor<? extends T>)visitor).visitLsr(this);
 			else return visitor.visitChildren(this);
 		}
 	}
@@ -3331,9 +3331,9 @@ public class ArmParser extends Parser {
 		public RdContext rd() {
 			return getRuleContext(RdContext.class,0);
 		}
-		public List<TerminalNode> COMMA() { return getTokens(ArmParser.COMMA); }
+		public List<TerminalNode> COMMA() { return getTokens(AssemblerParser.COMMA); }
 		public TerminalNode COMMA(int i) {
-			return getToken(ArmParser.COMMA, i);
+			return getToken(AssemblerParser.COMMA, i);
 		}
 		public RmContext rm() {
 			return getRuleContext(RmContext.class,0);
@@ -3350,7 +3350,7 @@ public class ArmParser extends Parser {
 		@Override public int getRuleIndex() { return RULE_lsrs; }
 		@Override
 		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof ArmVisitor ) return ((ArmVisitor<? extends T>)visitor).visitLsrs(this);
+			if ( visitor instanceof AssemblerVisitor ) return ((AssemblerVisitor<? extends T>)visitor).visitLsrs(this);
 			else return visitor.visitChildren(this);
 		}
 	}
@@ -3408,9 +3408,9 @@ public class ArmParser extends Parser {
 		public RdContext rd() {
 			return getRuleContext(RdContext.class,0);
 		}
-		public List<TerminalNode> COMMA() { return getTokens(ArmParser.COMMA); }
+		public List<TerminalNode> COMMA() { return getTokens(AssemblerParser.COMMA); }
 		public TerminalNode COMMA(int i) {
-			return getToken(ArmParser.COMMA, i);
+			return getToken(AssemblerParser.COMMA, i);
 		}
 		public RmContext rm() {
 			return getRuleContext(RmContext.class,0);
@@ -3427,7 +3427,7 @@ public class ArmParser extends Parser {
 		@Override public int getRuleIndex() { return RULE_ror; }
 		@Override
 		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof ArmVisitor ) return ((ArmVisitor<? extends T>)visitor).visitRor(this);
+			if ( visitor instanceof AssemblerVisitor ) return ((AssemblerVisitor<? extends T>)visitor).visitRor(this);
 			else return visitor.visitChildren(this);
 		}
 	}
@@ -3485,9 +3485,9 @@ public class ArmParser extends Parser {
 		public RdContext rd() {
 			return getRuleContext(RdContext.class,0);
 		}
-		public List<TerminalNode> COMMA() { return getTokens(ArmParser.COMMA); }
+		public List<TerminalNode> COMMA() { return getTokens(AssemblerParser.COMMA); }
 		public TerminalNode COMMA(int i) {
-			return getToken(ArmParser.COMMA, i);
+			return getToken(AssemblerParser.COMMA, i);
 		}
 		public RmContext rm() {
 			return getRuleContext(RmContext.class,0);
@@ -3504,7 +3504,7 @@ public class ArmParser extends Parser {
 		@Override public int getRuleIndex() { return RULE_rors; }
 		@Override
 		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof ArmVisitor ) return ((ArmVisitor<? extends T>)visitor).visitRors(this);
+			if ( visitor instanceof AssemblerVisitor ) return ((AssemblerVisitor<? extends T>)visitor).visitRors(this);
 			else return visitor.visitChildren(this);
 		}
 	}
@@ -3562,7 +3562,7 @@ public class ArmParser extends Parser {
 		public RdContext rd() {
 			return getRuleContext(RdContext.class,0);
 		}
-		public TerminalNode COMMA() { return getToken(ArmParser.COMMA, 0); }
+		public TerminalNode COMMA() { return getToken(AssemblerParser.COMMA, 0); }
 		public RmContext rm() {
 			return getRuleContext(RmContext.class,0);
 		}
@@ -3572,7 +3572,7 @@ public class ArmParser extends Parser {
 		@Override public int getRuleIndex() { return RULE_rrx; }
 		@Override
 		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof ArmVisitor ) return ((ArmVisitor<? extends T>)visitor).visitRrx(this);
+			if ( visitor instanceof AssemblerVisitor ) return ((AssemblerVisitor<? extends T>)visitor).visitRrx(this);
 			else return visitor.visitChildren(this);
 		}
 	}
@@ -3608,7 +3608,7 @@ public class ArmParser extends Parser {
 		public RdContext rd() {
 			return getRuleContext(RdContext.class,0);
 		}
-		public TerminalNode COMMA() { return getToken(ArmParser.COMMA, 0); }
+		public TerminalNode COMMA() { return getToken(AssemblerParser.COMMA, 0); }
 		public RmContext rm() {
 			return getRuleContext(RmContext.class,0);
 		}
@@ -3618,7 +3618,7 @@ public class ArmParser extends Parser {
 		@Override public int getRuleIndex() { return RULE_rrxs; }
 		@Override
 		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof ArmVisitor ) return ((ArmVisitor<? extends T>)visitor).visitRrxs(this);
+			if ( visitor instanceof AssemblerVisitor ) return ((AssemblerVisitor<? extends T>)visitor).visitRrxs(this);
 			else return visitor.visitChildren(this);
 		}
 	}
@@ -3654,7 +3654,7 @@ public class ArmParser extends Parser {
 		public RnContext rn() {
 			return getRuleContext(RnContext.class,0);
 		}
-		public TerminalNode COMMA() { return getToken(ArmParser.COMMA, 0); }
+		public TerminalNode COMMA() { return getToken(AssemblerParser.COMMA, 0); }
 		public Operand2Context operand2() {
 			return getRuleContext(Operand2Context.class,0);
 		}
@@ -3664,7 +3664,7 @@ public class ArmParser extends Parser {
 		@Override public int getRuleIndex() { return RULE_cmp; }
 		@Override
 		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof ArmVisitor ) return ((ArmVisitor<? extends T>)visitor).visitCmp(this);
+			if ( visitor instanceof AssemblerVisitor ) return ((AssemblerVisitor<? extends T>)visitor).visitCmp(this);
 			else return visitor.visitChildren(this);
 		}
 	}
@@ -3700,7 +3700,7 @@ public class ArmParser extends Parser {
 		public RnContext rn() {
 			return getRuleContext(RnContext.class,0);
 		}
-		public TerminalNode COMMA() { return getToken(ArmParser.COMMA, 0); }
+		public TerminalNode COMMA() { return getToken(AssemblerParser.COMMA, 0); }
 		public Operand2Context operand2() {
 			return getRuleContext(Operand2Context.class,0);
 		}
@@ -3710,7 +3710,7 @@ public class ArmParser extends Parser {
 		@Override public int getRuleIndex() { return RULE_cmn; }
 		@Override
 		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof ArmVisitor ) return ((ArmVisitor<? extends T>)visitor).visitCmn(this);
+			if ( visitor instanceof AssemblerVisitor ) return ((AssemblerVisitor<? extends T>)visitor).visitCmn(this);
 			else return visitor.visitChildren(this);
 		}
 	}
@@ -3746,7 +3746,7 @@ public class ArmParser extends Parser {
 		public RnContext rn() {
 			return getRuleContext(RnContext.class,0);
 		}
-		public TerminalNode COMMA() { return getToken(ArmParser.COMMA, 0); }
+		public TerminalNode COMMA() { return getToken(AssemblerParser.COMMA, 0); }
 		public Operand2Context operand2() {
 			return getRuleContext(Operand2Context.class,0);
 		}
@@ -3756,7 +3756,7 @@ public class ArmParser extends Parser {
 		@Override public int getRuleIndex() { return RULE_tst; }
 		@Override
 		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof ArmVisitor ) return ((ArmVisitor<? extends T>)visitor).visitTst(this);
+			if ( visitor instanceof AssemblerVisitor ) return ((AssemblerVisitor<? extends T>)visitor).visitTst(this);
 			else return visitor.visitChildren(this);
 		}
 	}
@@ -3792,7 +3792,7 @@ public class ArmParser extends Parser {
 		public RnContext rn() {
 			return getRuleContext(RnContext.class,0);
 		}
-		public TerminalNode COMMA() { return getToken(ArmParser.COMMA, 0); }
+		public TerminalNode COMMA() { return getToken(AssemblerParser.COMMA, 0); }
 		public Operand2Context operand2() {
 			return getRuleContext(Operand2Context.class,0);
 		}
@@ -3802,7 +3802,7 @@ public class ArmParser extends Parser {
 		@Override public int getRuleIndex() { return RULE_teq; }
 		@Override
 		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof ArmVisitor ) return ((ArmVisitor<? extends T>)visitor).visitTeq(this);
+			if ( visitor instanceof AssemblerVisitor ) return ((AssemblerVisitor<? extends T>)visitor).visitTeq(this);
 			else return visitor.visitChildren(this);
 		}
 	}
@@ -3838,9 +3838,9 @@ public class ArmParser extends Parser {
 		public RdContext rd() {
 			return getRuleContext(RdContext.class,0);
 		}
-		public List<TerminalNode> COMMA() { return getTokens(ArmParser.COMMA); }
+		public List<TerminalNode> COMMA() { return getTokens(AssemblerParser.COMMA); }
 		public TerminalNode COMMA(int i) {
-			return getToken(ArmParser.COMMA, i);
+			return getToken(AssemblerParser.COMMA, i);
 		}
 		public RnContext rn() {
 			return getRuleContext(RnContext.class,0);
@@ -3854,7 +3854,7 @@ public class ArmParser extends Parser {
 		@Override public int getRuleIndex() { return RULE_and; }
 		@Override
 		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof ArmVisitor ) return ((ArmVisitor<? extends T>)visitor).visitAnd(this);
+			if ( visitor instanceof AssemblerVisitor ) return ((AssemblerVisitor<? extends T>)visitor).visitAnd(this);
 			else return visitor.visitChildren(this);
 		}
 	}
@@ -3894,9 +3894,9 @@ public class ArmParser extends Parser {
 		public RdContext rd() {
 			return getRuleContext(RdContext.class,0);
 		}
-		public List<TerminalNode> COMMA() { return getTokens(ArmParser.COMMA); }
+		public List<TerminalNode> COMMA() { return getTokens(AssemblerParser.COMMA); }
 		public TerminalNode COMMA(int i) {
-			return getToken(ArmParser.COMMA, i);
+			return getToken(AssemblerParser.COMMA, i);
 		}
 		public RnContext rn() {
 			return getRuleContext(RnContext.class,0);
@@ -3910,7 +3910,7 @@ public class ArmParser extends Parser {
 		@Override public int getRuleIndex() { return RULE_ands; }
 		@Override
 		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof ArmVisitor ) return ((ArmVisitor<? extends T>)visitor).visitAnds(this);
+			if ( visitor instanceof AssemblerVisitor ) return ((AssemblerVisitor<? extends T>)visitor).visitAnds(this);
 			else return visitor.visitChildren(this);
 		}
 	}
@@ -3950,9 +3950,9 @@ public class ArmParser extends Parser {
 		public RdContext rd() {
 			return getRuleContext(RdContext.class,0);
 		}
-		public List<TerminalNode> COMMA() { return getTokens(ArmParser.COMMA); }
+		public List<TerminalNode> COMMA() { return getTokens(AssemblerParser.COMMA); }
 		public TerminalNode COMMA(int i) {
-			return getToken(ArmParser.COMMA, i);
+			return getToken(AssemblerParser.COMMA, i);
 		}
 		public RnContext rn() {
 			return getRuleContext(RnContext.class,0);
@@ -3966,7 +3966,7 @@ public class ArmParser extends Parser {
 		@Override public int getRuleIndex() { return RULE_eor; }
 		@Override
 		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof ArmVisitor ) return ((ArmVisitor<? extends T>)visitor).visitEor(this);
+			if ( visitor instanceof AssemblerVisitor ) return ((AssemblerVisitor<? extends T>)visitor).visitEor(this);
 			else return visitor.visitChildren(this);
 		}
 	}
@@ -4006,9 +4006,9 @@ public class ArmParser extends Parser {
 		public RdContext rd() {
 			return getRuleContext(RdContext.class,0);
 		}
-		public List<TerminalNode> COMMA() { return getTokens(ArmParser.COMMA); }
+		public List<TerminalNode> COMMA() { return getTokens(AssemblerParser.COMMA); }
 		public TerminalNode COMMA(int i) {
-			return getToken(ArmParser.COMMA, i);
+			return getToken(AssemblerParser.COMMA, i);
 		}
 		public RnContext rn() {
 			return getRuleContext(RnContext.class,0);
@@ -4022,7 +4022,7 @@ public class ArmParser extends Parser {
 		@Override public int getRuleIndex() { return RULE_eors; }
 		@Override
 		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof ArmVisitor ) return ((ArmVisitor<? extends T>)visitor).visitEors(this);
+			if ( visitor instanceof AssemblerVisitor ) return ((AssemblerVisitor<? extends T>)visitor).visitEors(this);
 			else return visitor.visitChildren(this);
 		}
 	}
@@ -4062,9 +4062,9 @@ public class ArmParser extends Parser {
 		public RdContext rd() {
 			return getRuleContext(RdContext.class,0);
 		}
-		public List<TerminalNode> COMMA() { return getTokens(ArmParser.COMMA); }
+		public List<TerminalNode> COMMA() { return getTokens(AssemblerParser.COMMA); }
 		public TerminalNode COMMA(int i) {
-			return getToken(ArmParser.COMMA, i);
+			return getToken(AssemblerParser.COMMA, i);
 		}
 		public RnContext rn() {
 			return getRuleContext(RnContext.class,0);
@@ -4078,7 +4078,7 @@ public class ArmParser extends Parser {
 		@Override public int getRuleIndex() { return RULE_orr; }
 		@Override
 		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof ArmVisitor ) return ((ArmVisitor<? extends T>)visitor).visitOrr(this);
+			if ( visitor instanceof AssemblerVisitor ) return ((AssemblerVisitor<? extends T>)visitor).visitOrr(this);
 			else return visitor.visitChildren(this);
 		}
 	}
@@ -4118,9 +4118,9 @@ public class ArmParser extends Parser {
 		public RdContext rd() {
 			return getRuleContext(RdContext.class,0);
 		}
-		public List<TerminalNode> COMMA() { return getTokens(ArmParser.COMMA); }
+		public List<TerminalNode> COMMA() { return getTokens(AssemblerParser.COMMA); }
 		public TerminalNode COMMA(int i) {
-			return getToken(ArmParser.COMMA, i);
+			return getToken(AssemblerParser.COMMA, i);
 		}
 		public RnContext rn() {
 			return getRuleContext(RnContext.class,0);
@@ -4134,7 +4134,7 @@ public class ArmParser extends Parser {
 		@Override public int getRuleIndex() { return RULE_orrs; }
 		@Override
 		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof ArmVisitor ) return ((ArmVisitor<? extends T>)visitor).visitOrrs(this);
+			if ( visitor instanceof AssemblerVisitor ) return ((AssemblerVisitor<? extends T>)visitor).visitOrrs(this);
 			else return visitor.visitChildren(this);
 		}
 	}
@@ -4174,9 +4174,9 @@ public class ArmParser extends Parser {
 		public RdContext rd() {
 			return getRuleContext(RdContext.class,0);
 		}
-		public List<TerminalNode> COMMA() { return getTokens(ArmParser.COMMA); }
+		public List<TerminalNode> COMMA() { return getTokens(AssemblerParser.COMMA); }
 		public TerminalNode COMMA(int i) {
-			return getToken(ArmParser.COMMA, i);
+			return getToken(AssemblerParser.COMMA, i);
 		}
 		public RnContext rn() {
 			return getRuleContext(RnContext.class,0);
@@ -4190,7 +4190,7 @@ public class ArmParser extends Parser {
 		@Override public int getRuleIndex() { return RULE_orn; }
 		@Override
 		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof ArmVisitor ) return ((ArmVisitor<? extends T>)visitor).visitOrn(this);
+			if ( visitor instanceof AssemblerVisitor ) return ((AssemblerVisitor<? extends T>)visitor).visitOrn(this);
 			else return visitor.visitChildren(this);
 		}
 	}
@@ -4230,9 +4230,9 @@ public class ArmParser extends Parser {
 		public RdContext rd() {
 			return getRuleContext(RdContext.class,0);
 		}
-		public List<TerminalNode> COMMA() { return getTokens(ArmParser.COMMA); }
+		public List<TerminalNode> COMMA() { return getTokens(AssemblerParser.COMMA); }
 		public TerminalNode COMMA(int i) {
-			return getToken(ArmParser.COMMA, i);
+			return getToken(AssemblerParser.COMMA, i);
 		}
 		public RnContext rn() {
 			return getRuleContext(RnContext.class,0);
@@ -4246,7 +4246,7 @@ public class ArmParser extends Parser {
 		@Override public int getRuleIndex() { return RULE_orns; }
 		@Override
 		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof ArmVisitor ) return ((ArmVisitor<? extends T>)visitor).visitOrns(this);
+			if ( visitor instanceof AssemblerVisitor ) return ((AssemblerVisitor<? extends T>)visitor).visitOrns(this);
 			else return visitor.visitChildren(this);
 		}
 	}
@@ -4286,9 +4286,9 @@ public class ArmParser extends Parser {
 		public RdContext rd() {
 			return getRuleContext(RdContext.class,0);
 		}
-		public List<TerminalNode> COMMA() { return getTokens(ArmParser.COMMA); }
+		public List<TerminalNode> COMMA() { return getTokens(AssemblerParser.COMMA); }
 		public TerminalNode COMMA(int i) {
-			return getToken(ArmParser.COMMA, i);
+			return getToken(AssemblerParser.COMMA, i);
 		}
 		public RnContext rn() {
 			return getRuleContext(RnContext.class,0);
@@ -4302,7 +4302,7 @@ public class ArmParser extends Parser {
 		@Override public int getRuleIndex() { return RULE_bic; }
 		@Override
 		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof ArmVisitor ) return ((ArmVisitor<? extends T>)visitor).visitBic(this);
+			if ( visitor instanceof AssemblerVisitor ) return ((AssemblerVisitor<? extends T>)visitor).visitBic(this);
 			else return visitor.visitChildren(this);
 		}
 	}
@@ -4342,9 +4342,9 @@ public class ArmParser extends Parser {
 		public RdContext rd() {
 			return getRuleContext(RdContext.class,0);
 		}
-		public List<TerminalNode> COMMA() { return getTokens(ArmParser.COMMA); }
+		public List<TerminalNode> COMMA() { return getTokens(AssemblerParser.COMMA); }
 		public TerminalNode COMMA(int i) {
-			return getToken(ArmParser.COMMA, i);
+			return getToken(AssemblerParser.COMMA, i);
 		}
 		public RnContext rn() {
 			return getRuleContext(RnContext.class,0);
@@ -4358,7 +4358,7 @@ public class ArmParser extends Parser {
 		@Override public int getRuleIndex() { return RULE_bics; }
 		@Override
 		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof ArmVisitor ) return ((ArmVisitor<? extends T>)visitor).visitBics(this);
+			if ( visitor instanceof AssemblerVisitor ) return ((AssemblerVisitor<? extends T>)visitor).visitBics(this);
 			else return visitor.visitChildren(this);
 		}
 	}
@@ -4395,15 +4395,14 @@ public class ArmParser extends Parser {
 	}
 
 	public static class BContext extends ParserRuleContext {
-		public TerminalNode LABEL() { return getToken(ArmParser.LABEL, 0); }
-		public TerminalNode DECIMAL() { return getToken(ArmParser.DECIMAL, 0); }
+		public TerminalNode LABEL() { return getToken(AssemblerParser.LABEL, 0); }
 		public BContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
 		}
 		@Override public int getRuleIndex() { return RULE_b; }
 		@Override
 		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof ArmVisitor ) return ((ArmVisitor<? extends T>)visitor).visitB(this);
+			if ( visitor instanceof AssemblerVisitor ) return ((AssemblerVisitor<? extends T>)visitor).visitB(this);
 			else return visitor.visitChildren(this);
 		}
 	}
@@ -4411,22 +4410,13 @@ public class ArmParser extends Parser {
 	public final BContext b() throws RecognitionException {
 		BContext _localctx = new BContext(_ctx, getState());
 		enterRule(_localctx, 120, RULE_b);
-		int _la;
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
 			setState(698);
 			match(T__49);
 			setState(699);
-			_la = _input.LA(1);
-			if ( !(_la==LABEL || _la==DECIMAL) ) {
-			_errHandler.recoverInline(this);
-			}
-			else {
-				if ( _input.LA(1)==Token.EOF ) matchedEOF = true;
-				_errHandler.reportMatch(this);
-				consume();
-			}
+			match(LABEL);
 			}
 		}
 		catch (RecognitionException re) {
@@ -4441,15 +4431,14 @@ public class ArmParser extends Parser {
 	}
 
 	public static class BeqContext extends ParserRuleContext {
-		public TerminalNode LABEL() { return getToken(ArmParser.LABEL, 0); }
-		public TerminalNode DECIMAL() { return getToken(ArmParser.DECIMAL, 0); }
+		public TerminalNode LABEL() { return getToken(AssemblerParser.LABEL, 0); }
 		public BeqContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
 		}
 		@Override public int getRuleIndex() { return RULE_beq; }
 		@Override
 		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof ArmVisitor ) return ((ArmVisitor<? extends T>)visitor).visitBeq(this);
+			if ( visitor instanceof AssemblerVisitor ) return ((AssemblerVisitor<? extends T>)visitor).visitBeq(this);
 			else return visitor.visitChildren(this);
 		}
 	}
@@ -4457,22 +4446,13 @@ public class ArmParser extends Parser {
 	public final BeqContext beq() throws RecognitionException {
 		BeqContext _localctx = new BeqContext(_ctx, getState());
 		enterRule(_localctx, 122, RULE_beq);
-		int _la;
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
 			setState(701);
 			match(T__50);
 			setState(702);
-			_la = _input.LA(1);
-			if ( !(_la==LABEL || _la==DECIMAL) ) {
-			_errHandler.recoverInline(this);
-			}
-			else {
-				if ( _input.LA(1)==Token.EOF ) matchedEOF = true;
-				_errHandler.reportMatch(this);
-				consume();
-			}
+			match(LABEL);
 			}
 		}
 		catch (RecognitionException re) {
@@ -4487,15 +4467,14 @@ public class ArmParser extends Parser {
 	}
 
 	public static class BneContext extends ParserRuleContext {
-		public TerminalNode LABEL() { return getToken(ArmParser.LABEL, 0); }
-		public TerminalNode DECIMAL() { return getToken(ArmParser.DECIMAL, 0); }
+		public TerminalNode LABEL() { return getToken(AssemblerParser.LABEL, 0); }
 		public BneContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
 		}
 		@Override public int getRuleIndex() { return RULE_bne; }
 		@Override
 		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof ArmVisitor ) return ((ArmVisitor<? extends T>)visitor).visitBne(this);
+			if ( visitor instanceof AssemblerVisitor ) return ((AssemblerVisitor<? extends T>)visitor).visitBne(this);
 			else return visitor.visitChildren(this);
 		}
 	}
@@ -4503,22 +4482,13 @@ public class ArmParser extends Parser {
 	public final BneContext bne() throws RecognitionException {
 		BneContext _localctx = new BneContext(_ctx, getState());
 		enterRule(_localctx, 124, RULE_bne);
-		int _la;
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
 			setState(704);
 			match(T__51);
 			setState(705);
-			_la = _input.LA(1);
-			if ( !(_la==LABEL || _la==DECIMAL) ) {
-			_errHandler.recoverInline(this);
-			}
-			else {
-				if ( _input.LA(1)==Token.EOF ) matchedEOF = true;
-				_errHandler.reportMatch(this);
-				consume();
-			}
+			match(LABEL);
 			}
 		}
 		catch (RecognitionException re) {
@@ -4533,15 +4503,14 @@ public class ArmParser extends Parser {
 	}
 
 	public static class BcsContext extends ParserRuleContext {
-		public TerminalNode LABEL() { return getToken(ArmParser.LABEL, 0); }
-		public TerminalNode DECIMAL() { return getToken(ArmParser.DECIMAL, 0); }
+		public TerminalNode LABEL() { return getToken(AssemblerParser.LABEL, 0); }
 		public BcsContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
 		}
 		@Override public int getRuleIndex() { return RULE_bcs; }
 		@Override
 		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof ArmVisitor ) return ((ArmVisitor<? extends T>)visitor).visitBcs(this);
+			if ( visitor instanceof AssemblerVisitor ) return ((AssemblerVisitor<? extends T>)visitor).visitBcs(this);
 			else return visitor.visitChildren(this);
 		}
 	}
@@ -4549,22 +4518,13 @@ public class ArmParser extends Parser {
 	public final BcsContext bcs() throws RecognitionException {
 		BcsContext _localctx = new BcsContext(_ctx, getState());
 		enterRule(_localctx, 126, RULE_bcs);
-		int _la;
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
 			setState(707);
 			match(T__52);
 			setState(708);
-			_la = _input.LA(1);
-			if ( !(_la==LABEL || _la==DECIMAL) ) {
-			_errHandler.recoverInline(this);
-			}
-			else {
-				if ( _input.LA(1)==Token.EOF ) matchedEOF = true;
-				_errHandler.reportMatch(this);
-				consume();
-			}
+			match(LABEL);
 			}
 		}
 		catch (RecognitionException re) {
@@ -4579,15 +4539,14 @@ public class ArmParser extends Parser {
 	}
 
 	public static class BhsContext extends ParserRuleContext {
-		public TerminalNode LABEL() { return getToken(ArmParser.LABEL, 0); }
-		public TerminalNode DECIMAL() { return getToken(ArmParser.DECIMAL, 0); }
+		public TerminalNode LABEL() { return getToken(AssemblerParser.LABEL, 0); }
 		public BhsContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
 		}
 		@Override public int getRuleIndex() { return RULE_bhs; }
 		@Override
 		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof ArmVisitor ) return ((ArmVisitor<? extends T>)visitor).visitBhs(this);
+			if ( visitor instanceof AssemblerVisitor ) return ((AssemblerVisitor<? extends T>)visitor).visitBhs(this);
 			else return visitor.visitChildren(this);
 		}
 	}
@@ -4595,22 +4554,13 @@ public class ArmParser extends Parser {
 	public final BhsContext bhs() throws RecognitionException {
 		BhsContext _localctx = new BhsContext(_ctx, getState());
 		enterRule(_localctx, 128, RULE_bhs);
-		int _la;
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
 			setState(710);
 			match(T__53);
 			setState(711);
-			_la = _input.LA(1);
-			if ( !(_la==LABEL || _la==DECIMAL) ) {
-			_errHandler.recoverInline(this);
-			}
-			else {
-				if ( _input.LA(1)==Token.EOF ) matchedEOF = true;
-				_errHandler.reportMatch(this);
-				consume();
-			}
+			match(LABEL);
 			}
 		}
 		catch (RecognitionException re) {
@@ -4625,15 +4575,14 @@ public class ArmParser extends Parser {
 	}
 
 	public static class BccContext extends ParserRuleContext {
-		public TerminalNode LABEL() { return getToken(ArmParser.LABEL, 0); }
-		public TerminalNode DECIMAL() { return getToken(ArmParser.DECIMAL, 0); }
+		public TerminalNode LABEL() { return getToken(AssemblerParser.LABEL, 0); }
 		public BccContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
 		}
 		@Override public int getRuleIndex() { return RULE_bcc; }
 		@Override
 		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof ArmVisitor ) return ((ArmVisitor<? extends T>)visitor).visitBcc(this);
+			if ( visitor instanceof AssemblerVisitor ) return ((AssemblerVisitor<? extends T>)visitor).visitBcc(this);
 			else return visitor.visitChildren(this);
 		}
 	}
@@ -4641,22 +4590,13 @@ public class ArmParser extends Parser {
 	public final BccContext bcc() throws RecognitionException {
 		BccContext _localctx = new BccContext(_ctx, getState());
 		enterRule(_localctx, 130, RULE_bcc);
-		int _la;
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
 			setState(713);
 			match(T__54);
 			setState(714);
-			_la = _input.LA(1);
-			if ( !(_la==LABEL || _la==DECIMAL) ) {
-			_errHandler.recoverInline(this);
-			}
-			else {
-				if ( _input.LA(1)==Token.EOF ) matchedEOF = true;
-				_errHandler.reportMatch(this);
-				consume();
-			}
+			match(LABEL);
 			}
 		}
 		catch (RecognitionException re) {
@@ -4671,15 +4611,14 @@ public class ArmParser extends Parser {
 	}
 
 	public static class BloContext extends ParserRuleContext {
-		public TerminalNode LABEL() { return getToken(ArmParser.LABEL, 0); }
-		public TerminalNode DECIMAL() { return getToken(ArmParser.DECIMAL, 0); }
+		public TerminalNode LABEL() { return getToken(AssemblerParser.LABEL, 0); }
 		public BloContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
 		}
 		@Override public int getRuleIndex() { return RULE_blo; }
 		@Override
 		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof ArmVisitor ) return ((ArmVisitor<? extends T>)visitor).visitBlo(this);
+			if ( visitor instanceof AssemblerVisitor ) return ((AssemblerVisitor<? extends T>)visitor).visitBlo(this);
 			else return visitor.visitChildren(this);
 		}
 	}
@@ -4687,22 +4626,13 @@ public class ArmParser extends Parser {
 	public final BloContext blo() throws RecognitionException {
 		BloContext _localctx = new BloContext(_ctx, getState());
 		enterRule(_localctx, 132, RULE_blo);
-		int _la;
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
 			setState(716);
 			match(T__55);
 			setState(717);
-			_la = _input.LA(1);
-			if ( !(_la==LABEL || _la==DECIMAL) ) {
-			_errHandler.recoverInline(this);
-			}
-			else {
-				if ( _input.LA(1)==Token.EOF ) matchedEOF = true;
-				_errHandler.reportMatch(this);
-				consume();
-			}
+			match(LABEL);
 			}
 		}
 		catch (RecognitionException re) {
@@ -4717,15 +4647,14 @@ public class ArmParser extends Parser {
 	}
 
 	public static class BmiContext extends ParserRuleContext {
-		public TerminalNode LABEL() { return getToken(ArmParser.LABEL, 0); }
-		public TerminalNode DECIMAL() { return getToken(ArmParser.DECIMAL, 0); }
+		public TerminalNode LABEL() { return getToken(AssemblerParser.LABEL, 0); }
 		public BmiContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
 		}
 		@Override public int getRuleIndex() { return RULE_bmi; }
 		@Override
 		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof ArmVisitor ) return ((ArmVisitor<? extends T>)visitor).visitBmi(this);
+			if ( visitor instanceof AssemblerVisitor ) return ((AssemblerVisitor<? extends T>)visitor).visitBmi(this);
 			else return visitor.visitChildren(this);
 		}
 	}
@@ -4733,22 +4662,13 @@ public class ArmParser extends Parser {
 	public final BmiContext bmi() throws RecognitionException {
 		BmiContext _localctx = new BmiContext(_ctx, getState());
 		enterRule(_localctx, 134, RULE_bmi);
-		int _la;
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
 			setState(719);
 			match(T__56);
 			setState(720);
-			_la = _input.LA(1);
-			if ( !(_la==LABEL || _la==DECIMAL) ) {
-			_errHandler.recoverInline(this);
-			}
-			else {
-				if ( _input.LA(1)==Token.EOF ) matchedEOF = true;
-				_errHandler.reportMatch(this);
-				consume();
-			}
+			match(LABEL);
 			}
 		}
 		catch (RecognitionException re) {
@@ -4763,15 +4683,14 @@ public class ArmParser extends Parser {
 	}
 
 	public static class BplContext extends ParserRuleContext {
-		public TerminalNode LABEL() { return getToken(ArmParser.LABEL, 0); }
-		public TerminalNode DECIMAL() { return getToken(ArmParser.DECIMAL, 0); }
+		public TerminalNode LABEL() { return getToken(AssemblerParser.LABEL, 0); }
 		public BplContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
 		}
 		@Override public int getRuleIndex() { return RULE_bpl; }
 		@Override
 		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof ArmVisitor ) return ((ArmVisitor<? extends T>)visitor).visitBpl(this);
+			if ( visitor instanceof AssemblerVisitor ) return ((AssemblerVisitor<? extends T>)visitor).visitBpl(this);
 			else return visitor.visitChildren(this);
 		}
 	}
@@ -4779,22 +4698,13 @@ public class ArmParser extends Parser {
 	public final BplContext bpl() throws RecognitionException {
 		BplContext _localctx = new BplContext(_ctx, getState());
 		enterRule(_localctx, 136, RULE_bpl);
-		int _la;
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
 			setState(722);
 			match(T__57);
 			setState(723);
-			_la = _input.LA(1);
-			if ( !(_la==LABEL || _la==DECIMAL) ) {
-			_errHandler.recoverInline(this);
-			}
-			else {
-				if ( _input.LA(1)==Token.EOF ) matchedEOF = true;
-				_errHandler.reportMatch(this);
-				consume();
-			}
+			match(LABEL);
 			}
 		}
 		catch (RecognitionException re) {
@@ -4809,15 +4719,14 @@ public class ArmParser extends Parser {
 	}
 
 	public static class BvsContext extends ParserRuleContext {
-		public TerminalNode LABEL() { return getToken(ArmParser.LABEL, 0); }
-		public TerminalNode DECIMAL() { return getToken(ArmParser.DECIMAL, 0); }
+		public TerminalNode LABEL() { return getToken(AssemblerParser.LABEL, 0); }
 		public BvsContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
 		}
 		@Override public int getRuleIndex() { return RULE_bvs; }
 		@Override
 		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof ArmVisitor ) return ((ArmVisitor<? extends T>)visitor).visitBvs(this);
+			if ( visitor instanceof AssemblerVisitor ) return ((AssemblerVisitor<? extends T>)visitor).visitBvs(this);
 			else return visitor.visitChildren(this);
 		}
 	}
@@ -4825,22 +4734,13 @@ public class ArmParser extends Parser {
 	public final BvsContext bvs() throws RecognitionException {
 		BvsContext _localctx = new BvsContext(_ctx, getState());
 		enterRule(_localctx, 138, RULE_bvs);
-		int _la;
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
 			setState(725);
 			match(T__58);
 			setState(726);
-			_la = _input.LA(1);
-			if ( !(_la==LABEL || _la==DECIMAL) ) {
-			_errHandler.recoverInline(this);
-			}
-			else {
-				if ( _input.LA(1)==Token.EOF ) matchedEOF = true;
-				_errHandler.reportMatch(this);
-				consume();
-			}
+			match(LABEL);
 			}
 		}
 		catch (RecognitionException re) {
@@ -4855,15 +4755,14 @@ public class ArmParser extends Parser {
 	}
 
 	public static class BvcContext extends ParserRuleContext {
-		public TerminalNode LABEL() { return getToken(ArmParser.LABEL, 0); }
-		public TerminalNode DECIMAL() { return getToken(ArmParser.DECIMAL, 0); }
+		public TerminalNode LABEL() { return getToken(AssemblerParser.LABEL, 0); }
 		public BvcContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
 		}
 		@Override public int getRuleIndex() { return RULE_bvc; }
 		@Override
 		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof ArmVisitor ) return ((ArmVisitor<? extends T>)visitor).visitBvc(this);
+			if ( visitor instanceof AssemblerVisitor ) return ((AssemblerVisitor<? extends T>)visitor).visitBvc(this);
 			else return visitor.visitChildren(this);
 		}
 	}
@@ -4871,22 +4770,13 @@ public class ArmParser extends Parser {
 	public final BvcContext bvc() throws RecognitionException {
 		BvcContext _localctx = new BvcContext(_ctx, getState());
 		enterRule(_localctx, 140, RULE_bvc);
-		int _la;
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
 			setState(728);
 			match(T__59);
 			setState(729);
-			_la = _input.LA(1);
-			if ( !(_la==LABEL || _la==DECIMAL) ) {
-			_errHandler.recoverInline(this);
-			}
-			else {
-				if ( _input.LA(1)==Token.EOF ) matchedEOF = true;
-				_errHandler.reportMatch(this);
-				consume();
-			}
+			match(LABEL);
 			}
 		}
 		catch (RecognitionException re) {
@@ -4901,15 +4791,14 @@ public class ArmParser extends Parser {
 	}
 
 	public static class BhiContext extends ParserRuleContext {
-		public TerminalNode LABEL() { return getToken(ArmParser.LABEL, 0); }
-		public TerminalNode DECIMAL() { return getToken(ArmParser.DECIMAL, 0); }
+		public TerminalNode LABEL() { return getToken(AssemblerParser.LABEL, 0); }
 		public BhiContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
 		}
 		@Override public int getRuleIndex() { return RULE_bhi; }
 		@Override
 		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof ArmVisitor ) return ((ArmVisitor<? extends T>)visitor).visitBhi(this);
+			if ( visitor instanceof AssemblerVisitor ) return ((AssemblerVisitor<? extends T>)visitor).visitBhi(this);
 			else return visitor.visitChildren(this);
 		}
 	}
@@ -4917,22 +4806,13 @@ public class ArmParser extends Parser {
 	public final BhiContext bhi() throws RecognitionException {
 		BhiContext _localctx = new BhiContext(_ctx, getState());
 		enterRule(_localctx, 142, RULE_bhi);
-		int _la;
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
 			setState(731);
 			match(T__60);
 			setState(732);
-			_la = _input.LA(1);
-			if ( !(_la==LABEL || _la==DECIMAL) ) {
-			_errHandler.recoverInline(this);
-			}
-			else {
-				if ( _input.LA(1)==Token.EOF ) matchedEOF = true;
-				_errHandler.reportMatch(this);
-				consume();
-			}
+			match(LABEL);
 			}
 		}
 		catch (RecognitionException re) {
@@ -4947,15 +4827,14 @@ public class ArmParser extends Parser {
 	}
 
 	public static class BlsContext extends ParserRuleContext {
-		public TerminalNode LABEL() { return getToken(ArmParser.LABEL, 0); }
-		public TerminalNode DECIMAL() { return getToken(ArmParser.DECIMAL, 0); }
+		public TerminalNode LABEL() { return getToken(AssemblerParser.LABEL, 0); }
 		public BlsContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
 		}
 		@Override public int getRuleIndex() { return RULE_bls; }
 		@Override
 		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof ArmVisitor ) return ((ArmVisitor<? extends T>)visitor).visitBls(this);
+			if ( visitor instanceof AssemblerVisitor ) return ((AssemblerVisitor<? extends T>)visitor).visitBls(this);
 			else return visitor.visitChildren(this);
 		}
 	}
@@ -4963,22 +4842,13 @@ public class ArmParser extends Parser {
 	public final BlsContext bls() throws RecognitionException {
 		BlsContext _localctx = new BlsContext(_ctx, getState());
 		enterRule(_localctx, 144, RULE_bls);
-		int _la;
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
 			setState(734);
 			match(T__61);
 			setState(735);
-			_la = _input.LA(1);
-			if ( !(_la==LABEL || _la==DECIMAL) ) {
-			_errHandler.recoverInline(this);
-			}
-			else {
-				if ( _input.LA(1)==Token.EOF ) matchedEOF = true;
-				_errHandler.reportMatch(this);
-				consume();
-			}
+			match(LABEL);
 			}
 		}
 		catch (RecognitionException re) {
@@ -4993,15 +4863,14 @@ public class ArmParser extends Parser {
 	}
 
 	public static class BgeContext extends ParserRuleContext {
-		public TerminalNode LABEL() { return getToken(ArmParser.LABEL, 0); }
-		public TerminalNode DECIMAL() { return getToken(ArmParser.DECIMAL, 0); }
+		public TerminalNode LABEL() { return getToken(AssemblerParser.LABEL, 0); }
 		public BgeContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
 		}
 		@Override public int getRuleIndex() { return RULE_bge; }
 		@Override
 		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof ArmVisitor ) return ((ArmVisitor<? extends T>)visitor).visitBge(this);
+			if ( visitor instanceof AssemblerVisitor ) return ((AssemblerVisitor<? extends T>)visitor).visitBge(this);
 			else return visitor.visitChildren(this);
 		}
 	}
@@ -5009,22 +4878,13 @@ public class ArmParser extends Parser {
 	public final BgeContext bge() throws RecognitionException {
 		BgeContext _localctx = new BgeContext(_ctx, getState());
 		enterRule(_localctx, 146, RULE_bge);
-		int _la;
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
 			setState(737);
 			match(T__62);
 			setState(738);
-			_la = _input.LA(1);
-			if ( !(_la==LABEL || _la==DECIMAL) ) {
-			_errHandler.recoverInline(this);
-			}
-			else {
-				if ( _input.LA(1)==Token.EOF ) matchedEOF = true;
-				_errHandler.reportMatch(this);
-				consume();
-			}
+			match(LABEL);
 			}
 		}
 		catch (RecognitionException re) {
@@ -5039,15 +4899,14 @@ public class ArmParser extends Parser {
 	}
 
 	public static class BltContext extends ParserRuleContext {
-		public TerminalNode LABEL() { return getToken(ArmParser.LABEL, 0); }
-		public TerminalNode DECIMAL() { return getToken(ArmParser.DECIMAL, 0); }
+		public TerminalNode LABEL() { return getToken(AssemblerParser.LABEL, 0); }
 		public BltContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
 		}
 		@Override public int getRuleIndex() { return RULE_blt; }
 		@Override
 		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof ArmVisitor ) return ((ArmVisitor<? extends T>)visitor).visitBlt(this);
+			if ( visitor instanceof AssemblerVisitor ) return ((AssemblerVisitor<? extends T>)visitor).visitBlt(this);
 			else return visitor.visitChildren(this);
 		}
 	}
@@ -5055,22 +4914,13 @@ public class ArmParser extends Parser {
 	public final BltContext blt() throws RecognitionException {
 		BltContext _localctx = new BltContext(_ctx, getState());
 		enterRule(_localctx, 148, RULE_blt);
-		int _la;
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
 			setState(740);
 			match(T__63);
 			setState(741);
-			_la = _input.LA(1);
-			if ( !(_la==LABEL || _la==DECIMAL) ) {
-			_errHandler.recoverInline(this);
-			}
-			else {
-				if ( _input.LA(1)==Token.EOF ) matchedEOF = true;
-				_errHandler.reportMatch(this);
-				consume();
-			}
+			match(LABEL);
 			}
 		}
 		catch (RecognitionException re) {
@@ -5085,15 +4935,14 @@ public class ArmParser extends Parser {
 	}
 
 	public static class BgtContext extends ParserRuleContext {
-		public TerminalNode LABEL() { return getToken(ArmParser.LABEL, 0); }
-		public TerminalNode DECIMAL() { return getToken(ArmParser.DECIMAL, 0); }
+		public TerminalNode LABEL() { return getToken(AssemblerParser.LABEL, 0); }
 		public BgtContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
 		}
 		@Override public int getRuleIndex() { return RULE_bgt; }
 		@Override
 		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof ArmVisitor ) return ((ArmVisitor<? extends T>)visitor).visitBgt(this);
+			if ( visitor instanceof AssemblerVisitor ) return ((AssemblerVisitor<? extends T>)visitor).visitBgt(this);
 			else return visitor.visitChildren(this);
 		}
 	}
@@ -5101,22 +4950,13 @@ public class ArmParser extends Parser {
 	public final BgtContext bgt() throws RecognitionException {
 		BgtContext _localctx = new BgtContext(_ctx, getState());
 		enterRule(_localctx, 150, RULE_bgt);
-		int _la;
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
 			setState(743);
 			match(T__64);
 			setState(744);
-			_la = _input.LA(1);
-			if ( !(_la==LABEL || _la==DECIMAL) ) {
-			_errHandler.recoverInline(this);
-			}
-			else {
-				if ( _input.LA(1)==Token.EOF ) matchedEOF = true;
-				_errHandler.reportMatch(this);
-				consume();
-			}
+			match(LABEL);
 			}
 		}
 		catch (RecognitionException re) {
@@ -5131,15 +4971,14 @@ public class ArmParser extends Parser {
 	}
 
 	public static class BleContext extends ParserRuleContext {
-		public TerminalNode LABEL() { return getToken(ArmParser.LABEL, 0); }
-		public TerminalNode DECIMAL() { return getToken(ArmParser.DECIMAL, 0); }
+		public TerminalNode LABEL() { return getToken(AssemblerParser.LABEL, 0); }
 		public BleContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
 		}
 		@Override public int getRuleIndex() { return RULE_ble; }
 		@Override
 		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof ArmVisitor ) return ((ArmVisitor<? extends T>)visitor).visitBle(this);
+			if ( visitor instanceof AssemblerVisitor ) return ((AssemblerVisitor<? extends T>)visitor).visitBle(this);
 			else return visitor.visitChildren(this);
 		}
 	}
@@ -5147,22 +4986,13 @@ public class ArmParser extends Parser {
 	public final BleContext ble() throws RecognitionException {
 		BleContext _localctx = new BleContext(_ctx, getState());
 		enterRule(_localctx, 152, RULE_ble);
-		int _la;
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
 			setState(746);
 			match(T__65);
 			setState(747);
-			_la = _input.LA(1);
-			if ( !(_la==LABEL || _la==DECIMAL) ) {
-			_errHandler.recoverInline(this);
-			}
-			else {
-				if ( _input.LA(1)==Token.EOF ) matchedEOF = true;
-				_errHandler.reportMatch(this);
-				consume();
-			}
+			match(LABEL);
 			}
 		}
 		catch (RecognitionException re) {
@@ -5177,15 +5007,14 @@ public class ArmParser extends Parser {
 	}
 
 	public static class BalContext extends ParserRuleContext {
-		public TerminalNode LABEL() { return getToken(ArmParser.LABEL, 0); }
-		public TerminalNode DECIMAL() { return getToken(ArmParser.DECIMAL, 0); }
+		public TerminalNode LABEL() { return getToken(AssemblerParser.LABEL, 0); }
 		public BalContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
 		}
 		@Override public int getRuleIndex() { return RULE_bal; }
 		@Override
 		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof ArmVisitor ) return ((ArmVisitor<? extends T>)visitor).visitBal(this);
+			if ( visitor instanceof AssemblerVisitor ) return ((AssemblerVisitor<? extends T>)visitor).visitBal(this);
 			else return visitor.visitChildren(this);
 		}
 	}
@@ -5193,22 +5022,13 @@ public class ArmParser extends Parser {
 	public final BalContext bal() throws RecognitionException {
 		BalContext _localctx = new BalContext(_ctx, getState());
 		enterRule(_localctx, 154, RULE_bal);
-		int _la;
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
 			setState(749);
 			match(T__66);
 			setState(750);
-			_la = _input.LA(1);
-			if ( !(_la==LABEL || _la==DECIMAL) ) {
-			_errHandler.recoverInline(this);
-			}
-			else {
-				if ( _input.LA(1)==Token.EOF ) matchedEOF = true;
-				_errHandler.reportMatch(this);
-				consume();
-			}
+			match(LABEL);
 			}
 		}
 		catch (RecognitionException re) {
@@ -5223,14 +5043,14 @@ public class ArmParser extends Parser {
 	}
 
 	public static class BlContext extends ParserRuleContext {
-		public TerminalNode LABEL() { return getToken(ArmParser.LABEL, 0); }
+		public TerminalNode LABEL() { return getToken(AssemblerParser.LABEL, 0); }
 		public BlContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
 		}
 		@Override public int getRuleIndex() { return RULE_bl; }
 		@Override
 		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof ArmVisitor ) return ((ArmVisitor<? extends T>)visitor).visitBl(this);
+			if ( visitor instanceof AssemblerVisitor ) return ((AssemblerVisitor<? extends T>)visitor).visitBl(this);
 			else return visitor.visitChildren(this);
 		}
 	}
@@ -5262,11 +5082,11 @@ public class ArmParser extends Parser {
 		public RdContext rd() {
 			return getRuleContext(RdContext.class,0);
 		}
-		public TerminalNode COMMA() { return getToken(ArmParser.COMMA, 0); }
+		public TerminalNode COMMA() { return getToken(AssemblerParser.COMMA, 0); }
 		public LdrAddressContext ldrAddress() {
 			return getRuleContext(LdrAddressContext.class,0);
 		}
-		public TerminalNode ASSIGN() { return getToken(ArmParser.ASSIGN, 0); }
+		public TerminalNode ASSIGN() { return getToken(AssemblerParser.ASSIGN, 0); }
 		public NumberContext number() {
 			return getRuleContext(NumberContext.class,0);
 		}
@@ -5276,7 +5096,7 @@ public class ArmParser extends Parser {
 		@Override public int getRuleIndex() { return RULE_ldr; }
 		@Override
 		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof ArmVisitor ) return ((ArmVisitor<? extends T>)visitor).visitLdr(this);
+			if ( visitor instanceof AssemblerVisitor ) return ((AssemblerVisitor<? extends T>)visitor).visitLdr(this);
 			else return visitor.visitChildren(this);
 		}
 	}
@@ -5328,7 +5148,7 @@ public class ArmParser extends Parser {
 		public RdContext rd() {
 			return getRuleContext(RdContext.class,0);
 		}
-		public TerminalNode COMMA() { return getToken(ArmParser.COMMA, 0); }
+		public TerminalNode COMMA() { return getToken(AssemblerParser.COMMA, 0); }
 		public LdrAddressContext ldrAddress() {
 			return getRuleContext(LdrAddressContext.class,0);
 		}
@@ -5338,7 +5158,7 @@ public class ArmParser extends Parser {
 		@Override public int getRuleIndex() { return RULE_ldrb; }
 		@Override
 		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof ArmVisitor ) return ((ArmVisitor<? extends T>)visitor).visitLdrb(this);
+			if ( visitor instanceof AssemblerVisitor ) return ((AssemblerVisitor<? extends T>)visitor).visitLdrb(this);
 			else return visitor.visitChildren(this);
 		}
 	}
@@ -5374,7 +5194,7 @@ public class ArmParser extends Parser {
 		public RdContext rd() {
 			return getRuleContext(RdContext.class,0);
 		}
-		public TerminalNode COMMA() { return getToken(ArmParser.COMMA, 0); }
+		public TerminalNode COMMA() { return getToken(AssemblerParser.COMMA, 0); }
 		public LdrAddressContext ldrAddress() {
 			return getRuleContext(LdrAddressContext.class,0);
 		}
@@ -5384,7 +5204,7 @@ public class ArmParser extends Parser {
 		@Override public int getRuleIndex() { return RULE_ldrsb; }
 		@Override
 		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof ArmVisitor ) return ((ArmVisitor<? extends T>)visitor).visitLdrsb(this);
+			if ( visitor instanceof AssemblerVisitor ) return ((AssemblerVisitor<? extends T>)visitor).visitLdrsb(this);
 			else return visitor.visitChildren(this);
 		}
 	}
@@ -5420,7 +5240,7 @@ public class ArmParser extends Parser {
 		public RdContext rd() {
 			return getRuleContext(RdContext.class,0);
 		}
-		public TerminalNode COMMA() { return getToken(ArmParser.COMMA, 0); }
+		public TerminalNode COMMA() { return getToken(AssemblerParser.COMMA, 0); }
 		public LdrAddressContext ldrAddress() {
 			return getRuleContext(LdrAddressContext.class,0);
 		}
@@ -5430,7 +5250,7 @@ public class ArmParser extends Parser {
 		@Override public int getRuleIndex() { return RULE_ldrh; }
 		@Override
 		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof ArmVisitor ) return ((ArmVisitor<? extends T>)visitor).visitLdrh(this);
+			if ( visitor instanceof AssemblerVisitor ) return ((AssemblerVisitor<? extends T>)visitor).visitLdrh(this);
 			else return visitor.visitChildren(this);
 		}
 	}
@@ -5466,7 +5286,7 @@ public class ArmParser extends Parser {
 		public RdContext rd() {
 			return getRuleContext(RdContext.class,0);
 		}
-		public TerminalNode COMMA() { return getToken(ArmParser.COMMA, 0); }
+		public TerminalNode COMMA() { return getToken(AssemblerParser.COMMA, 0); }
 		public LdrAddressContext ldrAddress() {
 			return getRuleContext(LdrAddressContext.class,0);
 		}
@@ -5476,7 +5296,7 @@ public class ArmParser extends Parser {
 		@Override public int getRuleIndex() { return RULE_ldrsh; }
 		@Override
 		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof ArmVisitor ) return ((ArmVisitor<? extends T>)visitor).visitLdrsh(this);
+			if ( visitor instanceof AssemblerVisitor ) return ((AssemblerVisitor<? extends T>)visitor).visitLdrsh(this);
 			else return visitor.visitChildren(this);
 		}
 	}
@@ -5521,8 +5341,8 @@ public class ArmParser extends Parser {
 		public PostIndexedRegisterContext postIndexedRegister() {
 			return getRuleContext(PostIndexedRegisterContext.class,0);
 		}
-		public PcRelativeContext pcRelative() {
-			return getRuleContext(PcRelativeContext.class,0);
+		public RelocationDirectiveContext relocationDirective() {
+			return getRuleContext(RelocationDirectiveContext.class,0);
 		}
 		public LdrAddressContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
@@ -5530,7 +5350,7 @@ public class ArmParser extends Parser {
 		@Override public int getRuleIndex() { return RULE_ldrAddress; }
 		@Override
 		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof ArmVisitor ) return ((ArmVisitor<? extends T>)visitor).visitLdrAddress(this);
+			if ( visitor instanceof AssemblerVisitor ) return ((AssemblerVisitor<? extends T>)visitor).visitLdrAddress(this);
 			else return visitor.visitChildren(this);
 		}
 	}
@@ -5574,7 +5394,7 @@ public class ArmParser extends Parser {
 				enterOuterAlt(_localctx, 5);
 				{
 				setState(787);
-				pcRelative();
+				relocationDirective();
 				}
 				break;
 			}
@@ -5591,12 +5411,12 @@ public class ArmParser extends Parser {
 	}
 
 	public static class ImmediateOffsetContext extends ParserRuleContext {
-		public TerminalNode LBRACK() { return getToken(ArmParser.LBRACK, 0); }
+		public TerminalNode LBRACK() { return getToken(AssemblerParser.LBRACK, 0); }
 		public RnContext rn() {
 			return getRuleContext(RnContext.class,0);
 		}
-		public TerminalNode RBRACK() { return getToken(ArmParser.RBRACK, 0); }
-		public TerminalNode COMMA() { return getToken(ArmParser.COMMA, 0); }
+		public TerminalNode RBRACK() { return getToken(AssemblerParser.RBRACK, 0); }
+		public TerminalNode COMMA() { return getToken(AssemblerParser.COMMA, 0); }
 		public OffsetContext offset() {
 			return getRuleContext(OffsetContext.class,0);
 		}
@@ -5606,7 +5426,7 @@ public class ArmParser extends Parser {
 		@Override public int getRuleIndex() { return RULE_immediateOffset; }
 		@Override
 		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof ArmVisitor ) return ((ArmVisitor<? extends T>)visitor).visitImmediateOffset(this);
+			if ( visitor instanceof AssemblerVisitor ) return ((AssemblerVisitor<? extends T>)visitor).visitImmediateOffset(this);
 			else return visitor.visitChildren(this);
 		}
 	}
@@ -5650,12 +5470,12 @@ public class ArmParser extends Parser {
 	}
 
 	public static class PostIndexedImmediateContext extends ParserRuleContext {
-		public TerminalNode LBRACK() { return getToken(ArmParser.LBRACK, 0); }
+		public TerminalNode LBRACK() { return getToken(AssemblerParser.LBRACK, 0); }
 		public RnContext rn() {
 			return getRuleContext(RnContext.class,0);
 		}
-		public TerminalNode RBRACK() { return getToken(ArmParser.RBRACK, 0); }
-		public TerminalNode COMMA() { return getToken(ArmParser.COMMA, 0); }
+		public TerminalNode RBRACK() { return getToken(AssemblerParser.RBRACK, 0); }
+		public TerminalNode COMMA() { return getToken(AssemblerParser.COMMA, 0); }
 		public OffsetContext offset() {
 			return getRuleContext(OffsetContext.class,0);
 		}
@@ -5665,7 +5485,7 @@ public class ArmParser extends Parser {
 		@Override public int getRuleIndex() { return RULE_postIndexedImmediate; }
 		@Override
 		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof ArmVisitor ) return ((ArmVisitor<? extends T>)visitor).visitPostIndexedImmediate(this);
+			if ( visitor instanceof AssemblerVisitor ) return ((AssemblerVisitor<? extends T>)visitor).visitPostIndexedImmediate(this);
 			else return visitor.visitChildren(this);
 		}
 	}
@@ -5700,18 +5520,18 @@ public class ArmParser extends Parser {
 	}
 
 	public static class RegisterOffsetContext extends ParserRuleContext {
-		public TerminalNode LBRACK() { return getToken(ArmParser.LBRACK, 0); }
+		public TerminalNode LBRACK() { return getToken(AssemblerParser.LBRACK, 0); }
 		public RnContext rn() {
 			return getRuleContext(RnContext.class,0);
 		}
-		public List<TerminalNode> COMMA() { return getTokens(ArmParser.COMMA); }
+		public List<TerminalNode> COMMA() { return getTokens(AssemblerParser.COMMA); }
 		public TerminalNode COMMA(int i) {
-			return getToken(ArmParser.COMMA, i);
+			return getToken(AssemblerParser.COMMA, i);
 		}
 		public RmContext rm() {
 			return getRuleContext(RmContext.class,0);
 		}
-		public TerminalNode RBRACK() { return getToken(ArmParser.RBRACK, 0); }
+		public TerminalNode RBRACK() { return getToken(AssemblerParser.RBRACK, 0); }
 		public OpshContext opsh() {
 			return getRuleContext(OpshContext.class,0);
 		}
@@ -5721,7 +5541,7 @@ public class ArmParser extends Parser {
 		@Override public int getRuleIndex() { return RULE_registerOffset; }
 		@Override
 		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof ArmVisitor ) return ((ArmVisitor<? extends T>)visitor).visitRegisterOffset(this);
+			if ( visitor instanceof AssemblerVisitor ) return ((AssemblerVisitor<? extends T>)visitor).visitRegisterOffset(this);
 			else return visitor.visitChildren(this);
 		}
 	}
@@ -5769,14 +5589,14 @@ public class ArmParser extends Parser {
 	}
 
 	public static class PostIndexedRegisterContext extends ParserRuleContext {
-		public TerminalNode LBRACK() { return getToken(ArmParser.LBRACK, 0); }
+		public TerminalNode LBRACK() { return getToken(AssemblerParser.LBRACK, 0); }
 		public RnContext rn() {
 			return getRuleContext(RnContext.class,0);
 		}
-		public TerminalNode RBRACK() { return getToken(ArmParser.RBRACK, 0); }
-		public List<TerminalNode> COMMA() { return getTokens(ArmParser.COMMA); }
+		public TerminalNode RBRACK() { return getToken(AssemblerParser.RBRACK, 0); }
+		public List<TerminalNode> COMMA() { return getTokens(AssemblerParser.COMMA); }
 		public TerminalNode COMMA(int i) {
-			return getToken(ArmParser.COMMA, i);
+			return getToken(AssemblerParser.COMMA, i);
 		}
 		public RmContext rm() {
 			return getRuleContext(RmContext.class,0);
@@ -5790,7 +5610,7 @@ public class ArmParser extends Parser {
 		@Override public int getRuleIndex() { return RULE_postIndexedRegister; }
 		@Override
 		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof ArmVisitor ) return ((ArmVisitor<? extends T>)visitor).visitPostIndexedRegister(this);
+			if ( visitor instanceof AssemblerVisitor ) return ((AssemblerVisitor<? extends T>)visitor).visitPostIndexedRegister(this);
 			else return visitor.visitChildren(this);
 		}
 	}
@@ -5837,23 +5657,23 @@ public class ArmParser extends Parser {
 		return _localctx;
 	}
 
-	public static class PcRelativeContext extends ParserRuleContext {
-		public TerminalNode ASSIGN() { return getToken(ArmParser.ASSIGN, 0); }
-		public TerminalNode LABEL() { return getToken(ArmParser.LABEL, 0); }
-		public PcRelativeContext(ParserRuleContext parent, int invokingState) {
+	public static class RelocationDirectiveContext extends ParserRuleContext {
+		public TerminalNode ASSIGN() { return getToken(AssemblerParser.ASSIGN, 0); }
+		public TerminalNode LABEL() { return getToken(AssemblerParser.LABEL, 0); }
+		public RelocationDirectiveContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
 		}
-		@Override public int getRuleIndex() { return RULE_pcRelative; }
+		@Override public int getRuleIndex() { return RULE_relocationDirective; }
 		@Override
 		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof ArmVisitor ) return ((ArmVisitor<? extends T>)visitor).visitPcRelative(this);
+			if ( visitor instanceof AssemblerVisitor ) return ((AssemblerVisitor<? extends T>)visitor).visitRelocationDirective(this);
 			else return visitor.visitChildren(this);
 		}
 	}
 
-	public final PcRelativeContext pcRelative() throws RecognitionException {
-		PcRelativeContext _localctx = new PcRelativeContext(_ctx, getState());
-		enterRule(_localctx, 178, RULE_pcRelative);
+	public final RelocationDirectiveContext relocationDirective() throws RecognitionException {
+		RelocationDirectiveContext _localctx = new RelocationDirectiveContext(_ctx, getState());
+		enterRule(_localctx, 178, RULE_relocationDirective);
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
@@ -5878,7 +5698,7 @@ public class ArmParser extends Parser {
 		public RdContext rd() {
 			return getRuleContext(RdContext.class,0);
 		}
-		public TerminalNode COMMA() { return getToken(ArmParser.COMMA, 0); }
+		public TerminalNode COMMA() { return getToken(AssemblerParser.COMMA, 0); }
 		public StrOperationTypeContext strOperationType() {
 			return getRuleContext(StrOperationTypeContext.class,0);
 		}
@@ -5888,7 +5708,7 @@ public class ArmParser extends Parser {
 		@Override public int getRuleIndex() { return RULE_str; }
 		@Override
 		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof ArmVisitor ) return ((ArmVisitor<? extends T>)visitor).visitStr(this);
+			if ( visitor instanceof AssemblerVisitor ) return ((AssemblerVisitor<? extends T>)visitor).visitStr(this);
 			else return visitor.visitChildren(this);
 		}
 	}
@@ -5924,7 +5744,7 @@ public class ArmParser extends Parser {
 		public RdContext rd() {
 			return getRuleContext(RdContext.class,0);
 		}
-		public TerminalNode COMMA() { return getToken(ArmParser.COMMA, 0); }
+		public TerminalNode COMMA() { return getToken(AssemblerParser.COMMA, 0); }
 		public StrOperationTypeContext strOperationType() {
 			return getRuleContext(StrOperationTypeContext.class,0);
 		}
@@ -5934,7 +5754,7 @@ public class ArmParser extends Parser {
 		@Override public int getRuleIndex() { return RULE_strb; }
 		@Override
 		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof ArmVisitor ) return ((ArmVisitor<? extends T>)visitor).visitStrb(this);
+			if ( visitor instanceof AssemblerVisitor ) return ((AssemblerVisitor<? extends T>)visitor).visitStrb(this);
 			else return visitor.visitChildren(this);
 		}
 	}
@@ -5970,7 +5790,7 @@ public class ArmParser extends Parser {
 		public RdContext rd() {
 			return getRuleContext(RdContext.class,0);
 		}
-		public TerminalNode COMMA() { return getToken(ArmParser.COMMA, 0); }
+		public TerminalNode COMMA() { return getToken(AssemblerParser.COMMA, 0); }
 		public StrOperationTypeContext strOperationType() {
 			return getRuleContext(StrOperationTypeContext.class,0);
 		}
@@ -5980,7 +5800,7 @@ public class ArmParser extends Parser {
 		@Override public int getRuleIndex() { return RULE_strsb; }
 		@Override
 		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof ArmVisitor ) return ((ArmVisitor<? extends T>)visitor).visitStrsb(this);
+			if ( visitor instanceof AssemblerVisitor ) return ((AssemblerVisitor<? extends T>)visitor).visitStrsb(this);
 			else return visitor.visitChildren(this);
 		}
 	}
@@ -6016,7 +5836,7 @@ public class ArmParser extends Parser {
 		public RdContext rd() {
 			return getRuleContext(RdContext.class,0);
 		}
-		public TerminalNode COMMA() { return getToken(ArmParser.COMMA, 0); }
+		public TerminalNode COMMA() { return getToken(AssemblerParser.COMMA, 0); }
 		public StrOperationTypeContext strOperationType() {
 			return getRuleContext(StrOperationTypeContext.class,0);
 		}
@@ -6026,7 +5846,7 @@ public class ArmParser extends Parser {
 		@Override public int getRuleIndex() { return RULE_strh; }
 		@Override
 		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof ArmVisitor ) return ((ArmVisitor<? extends T>)visitor).visitStrh(this);
+			if ( visitor instanceof AssemblerVisitor ) return ((AssemblerVisitor<? extends T>)visitor).visitStrh(this);
 			else return visitor.visitChildren(this);
 		}
 	}
@@ -6062,7 +5882,7 @@ public class ArmParser extends Parser {
 		public RdContext rd() {
 			return getRuleContext(RdContext.class,0);
 		}
-		public TerminalNode COMMA() { return getToken(ArmParser.COMMA, 0); }
+		public TerminalNode COMMA() { return getToken(AssemblerParser.COMMA, 0); }
 		public StrOperationTypeContext strOperationType() {
 			return getRuleContext(StrOperationTypeContext.class,0);
 		}
@@ -6072,7 +5892,7 @@ public class ArmParser extends Parser {
 		@Override public int getRuleIndex() { return RULE_strsh; }
 		@Override
 		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof ArmVisitor ) return ((ArmVisitor<? extends T>)visitor).visitStrsh(this);
+			if ( visitor instanceof AssemblerVisitor ) return ((AssemblerVisitor<? extends T>)visitor).visitStrsh(this);
 			else return visitor.visitChildren(this);
 		}
 	}
@@ -6105,14 +5925,14 @@ public class ArmParser extends Parser {
 	}
 
 	public static class StrOperationTypeContext extends ParserRuleContext {
-		public TerminalNode LBRACK() { return getToken(ArmParser.LBRACK, 0); }
+		public TerminalNode LBRACK() { return getToken(AssemblerParser.LBRACK, 0); }
 		public RnContext rn() {
 			return getRuleContext(RnContext.class,0);
 		}
-		public TerminalNode RBRACK() { return getToken(ArmParser.RBRACK, 0); }
-		public List<TerminalNode> COMMA() { return getTokens(ArmParser.COMMA); }
+		public TerminalNode RBRACK() { return getToken(AssemblerParser.RBRACK, 0); }
+		public List<TerminalNode> COMMA() { return getTokens(AssemblerParser.COMMA); }
 		public TerminalNode COMMA(int i) {
-			return getToken(ArmParser.COMMA, i);
+			return getToken(AssemblerParser.COMMA, i);
 		}
 		public OffsetContext offset() {
 			return getRuleContext(OffsetContext.class,0);
@@ -6129,7 +5949,7 @@ public class ArmParser extends Parser {
 		@Override public int getRuleIndex() { return RULE_strOperationType; }
 		@Override
 		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof ArmVisitor ) return ((ArmVisitor<? extends T>)visitor).visitStrOperationType(this);
+			if ( visitor instanceof AssemblerVisitor ) return ((AssemblerVisitor<? extends T>)visitor).visitStrOperationType(this);
 			else return visitor.visitChildren(this);
 		}
 	}
@@ -6260,7 +6080,7 @@ public class ArmParser extends Parser {
 		@Override public int getRuleIndex() { return RULE_push; }
 		@Override
 		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof ArmVisitor ) return ((ArmVisitor<? extends T>)visitor).visitPush(this);
+			if ( visitor instanceof AssemblerVisitor ) return ((AssemblerVisitor<? extends T>)visitor).visitPush(this);
 			else return visitor.visitChildren(this);
 		}
 	}
@@ -6298,7 +6118,7 @@ public class ArmParser extends Parser {
 		@Override public int getRuleIndex() { return RULE_pop; }
 		@Override
 		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof ArmVisitor ) return ((ArmVisitor<? extends T>)visitor).visitPop(this);
+			if ( visitor instanceof AssemblerVisitor ) return ((AssemblerVisitor<? extends T>)visitor).visitPop(this);
 			else return visitor.visitChildren(this);
 		}
 	}
@@ -6327,15 +6147,15 @@ public class ArmParser extends Parser {
 	}
 
 	public static class RegListContext extends ParserRuleContext {
-		public TerminalNode LBRACE() { return getToken(ArmParser.LBRACE, 0); }
-		public List<TerminalNode> REGISTER() { return getTokens(ArmParser.REGISTER); }
+		public TerminalNode LBRACE() { return getToken(AssemblerParser.LBRACE, 0); }
+		public List<TerminalNode> REGISTER() { return getTokens(AssemblerParser.REGISTER); }
 		public TerminalNode REGISTER(int i) {
-			return getToken(ArmParser.REGISTER, i);
+			return getToken(AssemblerParser.REGISTER, i);
 		}
-		public TerminalNode RBRACE() { return getToken(ArmParser.RBRACE, 0); }
-		public List<TerminalNode> COMMA() { return getTokens(ArmParser.COMMA); }
+		public TerminalNode RBRACE() { return getToken(AssemblerParser.RBRACE, 0); }
+		public List<TerminalNode> COMMA() { return getTokens(AssemblerParser.COMMA); }
 		public TerminalNode COMMA(int i) {
-			return getToken(ArmParser.COMMA, i);
+			return getToken(AssemblerParser.COMMA, i);
 		}
 		public RegListContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
@@ -6343,7 +6163,7 @@ public class ArmParser extends Parser {
 		@Override public int getRuleIndex() { return RULE_regList; }
 		@Override
 		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof ArmVisitor ) return ((ArmVisitor<? extends T>)visitor).visitRegList(this);
+			if ( visitor instanceof AssemblerVisitor ) return ((AssemblerVisitor<? extends T>)visitor).visitRegList(this);
 			else return visitor.visitChildren(this);
 		}
 	}
@@ -6391,14 +6211,14 @@ public class ArmParser extends Parser {
 	}
 
 	public static class RdContext extends ParserRuleContext {
-		public TerminalNode REGISTER() { return getToken(ArmParser.REGISTER, 0); }
+		public TerminalNode REGISTER() { return getToken(AssemblerParser.REGISTER, 0); }
 		public RdContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
 		}
 		@Override public int getRuleIndex() { return RULE_rd; }
 		@Override
 		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof ArmVisitor ) return ((ArmVisitor<? extends T>)visitor).visitRd(this);
+			if ( visitor instanceof AssemblerVisitor ) return ((AssemblerVisitor<? extends T>)visitor).visitRd(this);
 			else return visitor.visitChildren(this);
 		}
 	}
@@ -6425,14 +6245,14 @@ public class ArmParser extends Parser {
 	}
 
 	public static class RnContext extends ParserRuleContext {
-		public TerminalNode REGISTER() { return getToken(ArmParser.REGISTER, 0); }
+		public TerminalNode REGISTER() { return getToken(AssemblerParser.REGISTER, 0); }
 		public RnContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
 		}
 		@Override public int getRuleIndex() { return RULE_rn; }
 		@Override
 		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof ArmVisitor ) return ((ArmVisitor<? extends T>)visitor).visitRn(this);
+			if ( visitor instanceof AssemblerVisitor ) return ((AssemblerVisitor<? extends T>)visitor).visitRn(this);
 			else return visitor.visitChildren(this);
 		}
 	}
@@ -6459,14 +6279,14 @@ public class ArmParser extends Parser {
 	}
 
 	public static class RmContext extends ParserRuleContext {
-		public TerminalNode REGISTER() { return getToken(ArmParser.REGISTER, 0); }
+		public TerminalNode REGISTER() { return getToken(AssemblerParser.REGISTER, 0); }
 		public RmContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
 		}
 		@Override public int getRuleIndex() { return RULE_rm; }
 		@Override
 		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof ArmVisitor ) return ((ArmVisitor<? extends T>)visitor).visitRm(this);
+			if ( visitor instanceof AssemblerVisitor ) return ((AssemblerVisitor<? extends T>)visitor).visitRm(this);
 			else return visitor.visitChildren(this);
 		}
 	}
@@ -6493,14 +6313,14 @@ public class ArmParser extends Parser {
 	}
 
 	public static class RsContext extends ParserRuleContext {
-		public TerminalNode REGISTER() { return getToken(ArmParser.REGISTER, 0); }
+		public TerminalNode REGISTER() { return getToken(AssemblerParser.REGISTER, 0); }
 		public RsContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
 		}
 		@Override public int getRuleIndex() { return RULE_rs; }
 		@Override
 		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof ArmVisitor ) return ((ArmVisitor<? extends T>)visitor).visitRs(this);
+			if ( visitor instanceof AssemblerVisitor ) return ((AssemblerVisitor<? extends T>)visitor).visitRs(this);
 			else return visitor.visitChildren(this);
 		}
 	}
@@ -6545,7 +6365,7 @@ public class ArmParser extends Parser {
 		@Override public int getRuleIndex() { return RULE_operand2; }
 		@Override
 		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof ArmVisitor ) return ((ArmVisitor<? extends T>)visitor).visitOperand2(this);
+			if ( visitor instanceof AssemblerVisitor ) return ((AssemblerVisitor<? extends T>)visitor).visitOperand2(this);
 			else return visitor.visitChildren(this);
 		}
 	}
@@ -6602,7 +6422,7 @@ public class ArmParser extends Parser {
 		public RmContext rm() {
 			return getRuleContext(RmContext.class,0);
 		}
-		public TerminalNode COMMA() { return getToken(ArmParser.COMMA, 0); }
+		public TerminalNode COMMA() { return getToken(AssemblerParser.COMMA, 0); }
 		public ShiftOptionContext shiftOption() {
 			return getRuleContext(ShiftOptionContext.class,0);
 		}
@@ -6615,7 +6435,7 @@ public class ArmParser extends Parser {
 		@Override public int getRuleIndex() { return RULE_registerShiftedByRegister; }
 		@Override
 		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof ArmVisitor ) return ((ArmVisitor<? extends T>)visitor).visitRegisterShiftedByRegister(this);
+			if ( visitor instanceof AssemblerVisitor ) return ((AssemblerVisitor<? extends T>)visitor).visitRegisterShiftedByRegister(this);
 			else return visitor.visitChildren(this);
 		}
 	}
@@ -6651,7 +6471,7 @@ public class ArmParser extends Parser {
 		public RmContext rm() {
 			return getRuleContext(RmContext.class,0);
 		}
-		public TerminalNode COMMA() { return getToken(ArmParser.COMMA, 0); }
+		public TerminalNode COMMA() { return getToken(AssemblerParser.COMMA, 0); }
 		public ShiftOptionContext shiftOption() {
 			return getRuleContext(ShiftOptionContext.class,0);
 		}
@@ -6664,7 +6484,7 @@ public class ArmParser extends Parser {
 		@Override public int getRuleIndex() { return RULE_registerShiftedByConstant; }
 		@Override
 		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof ArmVisitor ) return ((ArmVisitor<? extends T>)visitor).visitRegisterShiftedByConstant(this);
+			if ( visitor instanceof AssemblerVisitor ) return ((AssemblerVisitor<? extends T>)visitor).visitRegisterShiftedByConstant(this);
 			else return visitor.visitChildren(this);
 		}
 	}
@@ -6703,7 +6523,7 @@ public class ArmParser extends Parser {
 		@Override public int getRuleIndex() { return RULE_shiftOption; }
 		@Override
 		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof ArmVisitor ) return ((ArmVisitor<? extends T>)visitor).visitShiftOption(this);
+			if ( visitor instanceof AssemblerVisitor ) return ((AssemblerVisitor<? extends T>)visitor).visitShiftOption(this);
 			else return visitor.visitChildren(this);
 		}
 	}
@@ -6748,7 +6568,7 @@ public class ArmParser extends Parser {
 		@Override public int getRuleIndex() { return RULE_opsh; }
 		@Override
 		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof ArmVisitor ) return ((ArmVisitor<? extends T>)visitor).visitOpsh(this);
+			if ( visitor instanceof AssemblerVisitor ) return ((AssemblerVisitor<? extends T>)visitor).visitOpsh(this);
 			else return visitor.visitChildren(this);
 		}
 	}
@@ -6786,7 +6606,7 @@ public class ArmParser extends Parser {
 		@Override public int getRuleIndex() { return RULE_sh; }
 		@Override
 		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof ArmVisitor ) return ((ArmVisitor<? extends T>)visitor).visitSh(this);
+			if ( visitor instanceof AssemblerVisitor ) return ((AssemblerVisitor<? extends T>)visitor).visitSh(this);
 			else return visitor.visitChildren(this);
 		}
 	}
@@ -6822,7 +6642,7 @@ public class ArmParser extends Parser {
 		@Override public int getRuleIndex() { return RULE_offset; }
 		@Override
 		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof ArmVisitor ) return ((ArmVisitor<? extends T>)visitor).visitOffset(this);
+			if ( visitor instanceof AssemblerVisitor ) return ((AssemblerVisitor<? extends T>)visitor).visitOffset(this);
 			else return visitor.visitChildren(this);
 		}
 	}
@@ -6858,7 +6678,7 @@ public class ArmParser extends Parser {
 		@Override public int getRuleIndex() { return RULE_imm16; }
 		@Override
 		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof ArmVisitor ) return ((ArmVisitor<? extends T>)visitor).visitImm16(this);
+			if ( visitor instanceof AssemblerVisitor ) return ((AssemblerVisitor<? extends T>)visitor).visitImm16(this);
 			else return visitor.visitChildren(this);
 		}
 	}
@@ -6894,7 +6714,7 @@ public class ArmParser extends Parser {
 		@Override public int getRuleIndex() { return RULE_imm12; }
 		@Override
 		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof ArmVisitor ) return ((ArmVisitor<? extends T>)visitor).visitImm12(this);
+			if ( visitor instanceof AssemblerVisitor ) return ((AssemblerVisitor<? extends T>)visitor).visitImm12(this);
 			else return visitor.visitChildren(this);
 		}
 	}
@@ -6930,7 +6750,7 @@ public class ArmParser extends Parser {
 		@Override public int getRuleIndex() { return RULE_imm8m; }
 		@Override
 		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof ArmVisitor ) return ((ArmVisitor<? extends T>)visitor).visitImm8m(this);
+			if ( visitor instanceof AssemblerVisitor ) return ((AssemblerVisitor<? extends T>)visitor).visitImm8m(this);
 			else return visitor.visitChildren(this);
 		}
 	}
@@ -6957,15 +6777,15 @@ public class ArmParser extends Parser {
 	}
 
 	public static class LabelContext extends ParserRuleContext {
-		public TerminalNode LABEL() { return getToken(ArmParser.LABEL, 0); }
-		public TerminalNode COLON() { return getToken(ArmParser.COLON, 0); }
+		public TerminalNode LABEL() { return getToken(AssemblerParser.LABEL, 0); }
+		public TerminalNode COLON() { return getToken(AssemblerParser.COLON, 0); }
 		public LabelContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
 		}
 		@Override public int getRuleIndex() { return RULE_label; }
 		@Override
 		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof ArmVisitor ) return ((ArmVisitor<? extends T>)visitor).visitLabel(this);
+			if ( visitor instanceof AssemblerVisitor ) return ((AssemblerVisitor<? extends T>)visitor).visitLabel(this);
 			else return visitor.visitChildren(this);
 		}
 	}
@@ -6994,8 +6814,8 @@ public class ArmParser extends Parser {
 	}
 
 	public static class DataContext extends ParserRuleContext {
-		public TerminalNode LABEL() { return getToken(ArmParser.LABEL, 0); }
-		public TerminalNode COLON() { return getToken(ArmParser.COLON, 0); }
+		public TerminalNode LABEL() { return getToken(AssemblerParser.LABEL, 0); }
+		public TerminalNode COLON() { return getToken(AssemblerParser.COLON, 0); }
 		public AscizContext asciz() {
 			return getRuleContext(AscizContext.class,0);
 		}
@@ -7005,7 +6825,7 @@ public class ArmParser extends Parser {
 		@Override public int getRuleIndex() { return RULE_data; }
 		@Override
 		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof ArmVisitor ) return ((ArmVisitor<? extends T>)visitor).visitData(this);
+			if ( visitor instanceof AssemblerVisitor ) return ((AssemblerVisitor<? extends T>)visitor).visitData(this);
 			else return visitor.visitChildren(this);
 		}
 	}
@@ -7036,14 +6856,14 @@ public class ArmParser extends Parser {
 	}
 
 	public static class AscizContext extends ParserRuleContext {
-		public TerminalNode STRING() { return getToken(ArmParser.STRING, 0); }
+		public TerminalNode STRING() { return getToken(AssemblerParser.STRING, 0); }
 		public AscizContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
 		}
 		@Override public int getRuleIndex() { return RULE_asciz; }
 		@Override
 		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof ArmVisitor ) return ((ArmVisitor<? extends T>)visitor).visitAsciz(this);
+			if ( visitor instanceof AssemblerVisitor ) return ((AssemblerVisitor<? extends T>)visitor).visitAsciz(this);
 			else return visitor.visitChildren(this);
 		}
 	}
@@ -7072,16 +6892,16 @@ public class ArmParser extends Parser {
 	}
 
 	public static class NumberContext extends ParserRuleContext {
-		public TerminalNode DECIMAL() { return getToken(ArmParser.DECIMAL, 0); }
-		public TerminalNode HEX() { return getToken(ArmParser.HEX, 0); }
-		public TerminalNode DASH() { return getToken(ArmParser.DASH, 0); }
+		public TerminalNode DECIMAL() { return getToken(AssemblerParser.DECIMAL, 0); }
+		public TerminalNode HEX() { return getToken(AssemblerParser.HEX, 0); }
+		public TerminalNode DASH() { return getToken(AssemblerParser.DASH, 0); }
 		public NumberContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
 		}
 		@Override public int getRuleIndex() { return RULE_number; }
 		@Override
 		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof ArmVisitor ) return ((ArmVisitor<? extends T>)visitor).visitNumber(this);
+			if ( visitor instanceof AssemblerVisitor ) return ((AssemblerVisitor<? extends T>)visitor).visitNumber(this);
 			else return visitor.visitChildren(this);
 		}
 	}
@@ -7188,12 +7008,12 @@ public class ArmParser extends Parser {
 		"\u00a2\u00a4\u00a6\u00a8\u00aa\u00ac\u00ae\u00b0\u00b2\u00b4\u00b6\u00b8"+
 		"\u00ba\u00bc\u00be\u00c0\u00c2\u00c4\u00c6\u00c8\u00ca\u00cc\u00ce\u00d0"+
 		"\u00d2\u00d4\u00d6\u00d8\u00da\u00dc\u00de\u00e0\u00e2\u00e4\u00e6\u00e8"+
-		"\u00ea\2\5\4\2UUWW\6\2\34\34\36\36  \"\"\3\2WX\2\u03bd\2\u00f0\3\2\2\2"+
-		"\4\u00f7\3\2\2\2\6\u0103\3\2\2\2\b\u0111\3\2\2\2\n\u011a\3\2\2\2\f\u0121"+
-		"\3\2\2\2\16\u012d\3\2\2\2\20\u0131\3\2\2\2\22\u013f\3\2\2\2\24\u0154\3"+
-		"\2\2\2\26\u0160\3\2\2\2\30\u0164\3\2\2\2\32\u0166\3\2\2\2\34\u016f\3\2"+
-		"\2\2\36\u0176\3\2\2\2 \u017d\3\2\2\2\"\u0184\3\2\2\2$\u018d\3\2\2\2&\u0194"+
-		"\3\2\2\2(\u019b\3\2\2\2*\u01a2\3\2\2\2,\u01a9\3\2\2\2.\u01b0\3\2\2\2\60"+
+		"\u00ea\2\4\6\2\34\34\36\36  \"\"\3\2WX\2\u03bd\2\u00f0\3\2\2\2\4\u00f7"+
+		"\3\2\2\2\6\u0103\3\2\2\2\b\u0111\3\2\2\2\n\u011a\3\2\2\2\f\u0121\3\2\2"+
+		"\2\16\u012d\3\2\2\2\20\u0131\3\2\2\2\22\u013f\3\2\2\2\24\u0154\3\2\2\2"+
+		"\26\u0160\3\2\2\2\30\u0164\3\2\2\2\32\u0166\3\2\2\2\34\u016f\3\2\2\2\36"+
+		"\u0176\3\2\2\2 \u017d\3\2\2\2\"\u0184\3\2\2\2$\u018d\3\2\2\2&\u0194\3"+
+		"\2\2\2(\u019b\3\2\2\2*\u01a2\3\2\2\2,\u01a9\3\2\2\2.\u01b0\3\2\2\2\60"+
 		"\u01b7\3\2\2\2\62\u01be\3\2\2\2\64\u01c5\3\2\2\2\66\u01cc\3\2\2\28\u01d5"+
 		"\3\2\2\2:\u01de\3\2\2\2<\u01e7\3\2\2\2>\u01ee\3\2\2\2@\u01f5\3\2\2\2B"+
 		"\u01fc\3\2\2\2D\u0201\3\2\2\2F\u0206\3\2\2\2H\u020b\3\2\2\2J\u0210\3\2"+
@@ -7378,61 +7198,61 @@ public class ArmParser extends Parser {
 		"\5\u00caf\2\u02b2\u02b3\7a\2\2\u02b3\u02b4\5\u00d0i\2\u02b4w\3\2\2\2\u02b5"+
 		"\u02b6\7\63\2\2\u02b6\u02b7\5\u00c8e\2\u02b7\u02b8\7a\2\2\u02b8\u02b9"+
 		"\5\u00caf\2\u02b9\u02ba\7a\2\2\u02ba\u02bb\5\u00d0i\2\u02bby\3\2\2\2\u02bc"+
-		"\u02bd\7\64\2\2\u02bd\u02be\t\2\2\2\u02be{\3\2\2\2\u02bf\u02c0\7\65\2"+
-		"\2\u02c0\u02c1\t\2\2\2\u02c1}\3\2\2\2\u02c2\u02c3\7\66\2\2\u02c3\u02c4"+
-		"\t\2\2\2\u02c4\177\3\2\2\2\u02c5\u02c6\7\67\2\2\u02c6\u02c7\t\2\2\2\u02c7"+
-		"\u0081\3\2\2\2\u02c8\u02c9\78\2\2\u02c9\u02ca\t\2\2\2\u02ca\u0083\3\2"+
-		"\2\2\u02cb\u02cc\79\2\2\u02cc\u02cd\t\2\2\2\u02cd\u0085\3\2\2\2\u02ce"+
-		"\u02cf\7:\2\2\u02cf\u02d0\t\2\2\2\u02d0\u0087\3\2\2\2\u02d1\u02d2\7;\2"+
-		"\2\u02d2\u02d3\t\2\2\2\u02d3\u0089\3\2\2\2\u02d4\u02d5\7<\2\2\u02d5\u02d6"+
-		"\t\2\2\2\u02d6\u008b\3\2\2\2\u02d7\u02d8\7=\2\2\u02d8\u02d9\t\2\2\2\u02d9"+
-		"\u008d\3\2\2\2\u02da\u02db\7>\2\2\u02db\u02dc\t\2\2\2\u02dc\u008f\3\2"+
-		"\2\2\u02dd\u02de\7?\2\2\u02de\u02df\t\2\2\2\u02df\u0091\3\2\2\2\u02e0"+
-		"\u02e1\7@\2\2\u02e1\u02e2\t\2\2\2\u02e2\u0093\3\2\2\2\u02e3\u02e4\7A\2"+
-		"\2\u02e4\u02e5\t\2\2\2\u02e5\u0095\3\2\2\2\u02e6\u02e7\7B\2\2\u02e7\u02e8"+
-		"\t\2\2\2\u02e8\u0097\3\2\2\2\u02e9\u02ea\7C\2\2\u02ea\u02eb\t\2\2\2\u02eb"+
-		"\u0099\3\2\2\2\u02ec\u02ed\7D\2\2\u02ed\u02ee\t\2\2\2\u02ee\u009b\3\2"+
-		"\2\2\u02ef\u02f0\7E\2\2\u02f0\u02f1\t\2\2\2\u02f1\u009d\3\2\2\2\u02f2"+
-		"\u02f3\7F\2\2\u02f3\u02f4\7U\2\2\u02f4\u009f\3\2\2\2\u02f5\u02f6\7G\2"+
-		"\2\u02f6\u02f7\5\u00c8e\2\u02f7\u02fb\7a\2\2\u02f8\u02fc\5\u00aaV\2\u02f9"+
-		"\u02fa\7]\2\2\u02fa\u02fc\5\u00eav\2\u02fb\u02f8\3\2\2\2\u02fb\u02f9\3"+
-		"\2\2\2\u02fc\u00a1\3\2\2\2\u02fd\u02fe\7H\2\2\u02fe\u02ff\5\u00c8e\2\u02ff"+
-		"\u0300\7a\2\2\u0300\u0301\5\u00aaV\2\u0301\u00a3\3\2\2\2\u0302\u0303\7"+
-		"I\2\2\u0303\u0304\5\u00c8e\2\u0304\u0305\7a\2\2\u0305\u0306\5\u00aaV\2"+
-		"\u0306\u00a5\3\2\2\2\u0307\u0308\7J\2\2\u0308\u0309\5\u00c8e\2\u0309\u030a"+
-		"\7a\2\2\u030a\u030b\5\u00aaV\2\u030b\u00a7\3\2\2\2\u030c\u030d\7K\2\2"+
-		"\u030d\u030e\5\u00c8e\2\u030e\u030f\7a\2\2\u030f\u0310\5\u00aaV\2\u0310"+
-		"\u00a9\3\2\2\2\u0311\u0317\5\u00acW\2\u0312\u0317\5\u00aeX\2\u0313\u0317"+
-		"\5\u00b0Y\2\u0314\u0317\5\u00b2Z\2\u0315\u0317\5\u00b4[\2\u0316\u0311"+
-		"\3\2\2\2\u0316\u0312\3\2\2\2\u0316\u0313\3\2\2\2\u0316\u0314\3\2\2\2\u0316"+
-		"\u0315\3\2\2\2\u0317\u00ab\3\2\2\2\u0318\u0319\7^\2\2\u0319\u031c\5\u00ca"+
-		"f\2\u031a\u031b\7a\2\2\u031b\u031d\5\u00dco\2\u031c\u031a\3\2\2\2\u031c"+
-		"\u031d\3\2\2\2\u031d\u031e\3\2\2\2\u031e\u031f\7_\2\2\u031f\u00ad\3\2"+
-		"\2\2\u0320\u0321\7^\2\2\u0321\u0322\5\u00caf\2\u0322\u0323\7_\2\2\u0323"+
-		"\u0324\7a\2\2\u0324\u0325\5\u00dco\2\u0325\u00af\3\2\2\2\u0326\u0327\7"+
-		"^\2\2\u0327\u0328\5\u00caf\2\u0328\u0329\7a\2\2\u0329\u032c\5\u00ccg\2"+
-		"\u032a\u032b\7a\2\2\u032b\u032d\5\u00d8m\2\u032c\u032a\3\2\2\2\u032c\u032d"+
-		"\3\2\2\2\u032d\u032e\3\2\2\2\u032e\u032f\7_\2\2\u032f\u00b1\3\2\2\2\u0330"+
-		"\u0331\7^\2\2\u0331\u0332\5\u00caf\2\u0332\u0333\7_\2\2\u0333\u0334\7"+
-		"a\2\2\u0334\u0337\5\u00ccg\2\u0335\u0336\7a\2\2\u0336\u0338\5\u00d8m\2"+
-		"\u0337\u0335\3\2\2\2\u0337\u0338\3\2\2\2\u0338\u00b3\3\2\2\2\u0339\u033a"+
-		"\7]\2\2\u033a\u033b\7U\2\2\u033b\u00b5\3\2\2\2\u033c\u033d\7L\2\2\u033d"+
-		"\u033e\5\u00c8e\2\u033e\u033f\7a\2\2\u033f\u0340\5\u00c0a\2\u0340\u00b7"+
-		"\3\2\2\2\u0341\u0342\7M\2\2\u0342\u0343\5\u00c8e\2\u0343\u0344\7a\2\2"+
-		"\u0344\u0345\5\u00c0a\2\u0345\u00b9\3\2\2\2\u0346\u0347\7N\2\2\u0347\u0348"+
-		"\5\u00c8e\2\u0348\u0349\7a\2\2\u0349\u034a\5\u00c0a\2\u034a\u00bb\3\2"+
-		"\2\2\u034b\u034c\7O\2\2\u034c\u034d\5\u00c8e\2\u034d\u034e\7a\2\2\u034e"+
-		"\u034f\5\u00c0a\2\u034f\u00bd\3\2\2\2\u0350\u0351\7P\2\2\u0351\u0352\5"+
-		"\u00c8e\2\u0352\u0353\7a\2\2\u0353\u0354\5\u00c0a\2\u0354\u00bf\3\2\2"+
-		"\2\u0355\u0356\7^\2\2\u0356\u0357\5\u00caf\2\u0357\u0358\7_\2\2\u0358"+
-		"\u0379\3\2\2\2\u0359\u035a\7^\2\2\u035a\u035b\5\u00caf\2\u035b\u035c\7"+
-		"a\2\2\u035c\u035d\5\u00dco\2\u035d\u035e\7_\2\2\u035e\u0379\3\2\2\2\u035f"+
-		"\u0360\7^\2\2\u0360\u0361\5\u00caf\2\u0361\u0362\7_\2\2\u0362\u0363\7"+
-		"a\2\2\u0363\u0364\5\u00dco\2\u0364\u0379\3\2\2\2\u0365\u0366\7^\2\2\u0366"+
-		"\u0367\5\u00caf\2\u0367\u0368\7a\2\2\u0368\u036b\5\u00ccg\2\u0369\u036a"+
-		"\7a\2\2\u036a\u036c\5\u00d8m\2\u036b\u0369\3\2\2\2\u036b\u036c\3\2\2\2"+
-		"\u036c\u036d\3\2\2\2\u036d\u036e\7_\2\2\u036e\u0379\3\2\2\2\u036f\u0370"+
-		"\7^\2\2\u0370\u0371\5\u00caf\2\u0371\u0372\7_\2\2\u0372\u0373\7a\2\2\u0373"+
+		"\u02bd\7\64\2\2\u02bd\u02be\7U\2\2\u02be{\3\2\2\2\u02bf\u02c0\7\65\2\2"+
+		"\u02c0\u02c1\7U\2\2\u02c1}\3\2\2\2\u02c2\u02c3\7\66\2\2\u02c3\u02c4\7"+
+		"U\2\2\u02c4\177\3\2\2\2\u02c5\u02c6\7\67\2\2\u02c6\u02c7\7U\2\2\u02c7"+
+		"\u0081\3\2\2\2\u02c8\u02c9\78\2\2\u02c9\u02ca\7U\2\2\u02ca\u0083\3\2\2"+
+		"\2\u02cb\u02cc\79\2\2\u02cc\u02cd\7U\2\2\u02cd\u0085\3\2\2\2\u02ce\u02cf"+
+		"\7:\2\2\u02cf\u02d0\7U\2\2\u02d0\u0087\3\2\2\2\u02d1\u02d2\7;\2\2\u02d2"+
+		"\u02d3\7U\2\2\u02d3\u0089\3\2\2\2\u02d4\u02d5\7<\2\2\u02d5\u02d6\7U\2"+
+		"\2\u02d6\u008b\3\2\2\2\u02d7\u02d8\7=\2\2\u02d8\u02d9\7U\2\2\u02d9\u008d"+
+		"\3\2\2\2\u02da\u02db\7>\2\2\u02db\u02dc\7U\2\2\u02dc\u008f\3\2\2\2\u02dd"+
+		"\u02de\7?\2\2\u02de\u02df\7U\2\2\u02df\u0091\3\2\2\2\u02e0\u02e1\7@\2"+
+		"\2\u02e1\u02e2\7U\2\2\u02e2\u0093\3\2\2\2\u02e3\u02e4\7A\2\2\u02e4\u02e5"+
+		"\7U\2\2\u02e5\u0095\3\2\2\2\u02e6\u02e7\7B\2\2\u02e7\u02e8\7U\2\2\u02e8"+
+		"\u0097\3\2\2\2\u02e9\u02ea\7C\2\2\u02ea\u02eb\7U\2\2\u02eb\u0099\3\2\2"+
+		"\2\u02ec\u02ed\7D\2\2\u02ed\u02ee\7U\2\2\u02ee\u009b\3\2\2\2\u02ef\u02f0"+
+		"\7E\2\2\u02f0\u02f1\7U\2\2\u02f1\u009d\3\2\2\2\u02f2\u02f3\7F\2\2\u02f3"+
+		"\u02f4\7U\2\2\u02f4\u009f\3\2\2\2\u02f5\u02f6\7G\2\2\u02f6\u02f7\5\u00c8"+
+		"e\2\u02f7\u02fb\7a\2\2\u02f8\u02fc\5\u00aaV\2\u02f9\u02fa\7]\2\2\u02fa"+
+		"\u02fc\5\u00eav\2\u02fb\u02f8\3\2\2\2\u02fb\u02f9\3\2\2\2\u02fc\u00a1"+
+		"\3\2\2\2\u02fd\u02fe\7H\2\2\u02fe\u02ff\5\u00c8e\2\u02ff\u0300\7a\2\2"+
+		"\u0300\u0301\5\u00aaV\2\u0301\u00a3\3\2\2\2\u0302\u0303\7I\2\2\u0303\u0304"+
+		"\5\u00c8e\2\u0304\u0305\7a\2\2\u0305\u0306\5\u00aaV\2\u0306\u00a5\3\2"+
+		"\2\2\u0307\u0308\7J\2\2\u0308\u0309\5\u00c8e\2\u0309\u030a\7a\2\2\u030a"+
+		"\u030b\5\u00aaV\2\u030b\u00a7\3\2\2\2\u030c\u030d\7K\2\2\u030d\u030e\5"+
+		"\u00c8e\2\u030e\u030f\7a\2\2\u030f\u0310\5\u00aaV\2\u0310\u00a9\3\2\2"+
+		"\2\u0311\u0317\5\u00acW\2\u0312\u0317\5\u00aeX\2\u0313\u0317\5\u00b0Y"+
+		"\2\u0314\u0317\5\u00b2Z\2\u0315\u0317\5\u00b4[\2\u0316\u0311\3\2\2\2\u0316"+
+		"\u0312\3\2\2\2\u0316\u0313\3\2\2\2\u0316\u0314\3\2\2\2\u0316\u0315\3\2"+
+		"\2\2\u0317\u00ab\3\2\2\2\u0318\u0319\7^\2\2\u0319\u031c\5\u00caf\2\u031a"+
+		"\u031b\7a\2\2\u031b\u031d\5\u00dco\2\u031c\u031a\3\2\2\2\u031c\u031d\3"+
+		"\2\2\2\u031d\u031e\3\2\2\2\u031e\u031f\7_\2\2\u031f\u00ad\3\2\2\2\u0320"+
+		"\u0321\7^\2\2\u0321\u0322\5\u00caf\2\u0322\u0323\7_\2\2\u0323\u0324\7"+
+		"a\2\2\u0324\u0325\5\u00dco\2\u0325\u00af\3\2\2\2\u0326\u0327\7^\2\2\u0327"+
+		"\u0328\5\u00caf\2\u0328\u0329\7a\2\2\u0329\u032c\5\u00ccg\2\u032a\u032b"+
+		"\7a\2\2\u032b\u032d\5\u00d8m\2\u032c\u032a\3\2\2\2\u032c\u032d\3\2\2\2"+
+		"\u032d\u032e\3\2\2\2\u032e\u032f\7_\2\2\u032f\u00b1\3\2\2\2\u0330\u0331"+
+		"\7^\2\2\u0331\u0332\5\u00caf\2\u0332\u0333\7_\2\2\u0333\u0334\7a\2\2\u0334"+
+		"\u0337\5\u00ccg\2\u0335\u0336\7a\2\2\u0336\u0338\5\u00d8m\2\u0337\u0335"+
+		"\3\2\2\2\u0337\u0338\3\2\2\2\u0338\u00b3\3\2\2\2\u0339\u033a\7]\2\2\u033a"+
+		"\u033b\7U\2\2\u033b\u00b5\3\2\2\2\u033c\u033d\7L\2\2\u033d\u033e\5\u00c8"+
+		"e\2\u033e\u033f\7a\2\2\u033f\u0340\5\u00c0a\2\u0340\u00b7\3\2\2\2\u0341"+
+		"\u0342\7M\2\2\u0342\u0343\5\u00c8e\2\u0343\u0344\7a\2\2\u0344\u0345\5"+
+		"\u00c0a\2\u0345\u00b9\3\2\2\2\u0346\u0347\7N\2\2\u0347\u0348\5\u00c8e"+
+		"\2\u0348\u0349\7a\2\2\u0349\u034a\5\u00c0a\2\u034a\u00bb\3\2\2\2\u034b"+
+		"\u034c\7O\2\2\u034c\u034d\5\u00c8e\2\u034d\u034e\7a\2\2\u034e\u034f\5"+
+		"\u00c0a\2\u034f\u00bd\3\2\2\2\u0350\u0351\7P\2\2\u0351\u0352\5\u00c8e"+
+		"\2\u0352\u0353\7a\2\2\u0353\u0354\5\u00c0a\2\u0354\u00bf\3\2\2\2\u0355"+
+		"\u0356\7^\2\2\u0356\u0357\5\u00caf\2\u0357\u0358\7_\2\2\u0358\u0379\3"+
+		"\2\2\2\u0359\u035a\7^\2\2\u035a\u035b\5\u00caf\2\u035b\u035c\7a\2\2\u035c"+
+		"\u035d\5\u00dco\2\u035d\u035e\7_\2\2\u035e\u0379\3\2\2\2\u035f\u0360\7"+
+		"^\2\2\u0360\u0361\5\u00caf\2\u0361\u0362\7_\2\2\u0362\u0363\7a\2\2\u0363"+
+		"\u0364\5\u00dco\2\u0364\u0379\3\2\2\2\u0365\u0366\7^\2\2\u0366\u0367\5"+
+		"\u00caf\2\u0367\u0368\7a\2\2\u0368\u036b\5\u00ccg\2\u0369\u036a\7a\2\2"+
+		"\u036a\u036c\5\u00d8m\2\u036b\u0369\3\2\2\2\u036b\u036c\3\2\2\2\u036c"+
+		"\u036d\3\2\2\2\u036d\u036e\7_\2\2\u036e\u0379\3\2\2\2\u036f\u0370\7^\2"+
+		"\2\u0370\u0371\5\u00caf\2\u0371\u0372\7_\2\2\u0372\u0373\7a\2\2\u0373"+
 		"\u0376\5\u00ccg\2\u0374\u0375\7a\2\2\u0375\u0377\5\u00d8m\2\u0376\u0374"+
 		"\3\2\2\2\u0376\u0377\3\2\2\2\u0377\u0379\3\2\2\2\u0378\u0355\3\2\2\2\u0378"+
 		"\u0359\3\2\2\2\u0378\u035f\3\2\2\2\u0378\u0365\3\2\2\2\u0378\u036f\3\2"+
@@ -7449,7 +7269,7 @@ public class ArmParser extends Parser {
 		"\3\2\2\2\u0398\u00d1\3\2\2\2\u0399\u039a\5\u00ccg\2\u039a\u039b\7a\2\2"+
 		"\u039b\u039c\5\u00d6l\2\u039c\u039d\5\u00ceh\2\u039d\u00d3\3\2\2\2\u039e"+
 		"\u039f\5\u00ccg\2\u039f\u03a0\7a\2\2\u03a0\u03a1\5\u00d6l\2\u03a1\u03a2"+
-		"\5\u00eav\2\u03a2\u00d5\3\2\2\2\u03a3\u03a4\t\3\2\2\u03a4\u00d7\3\2\2"+
+		"\5\u00eav\2\u03a2\u00d5\3\2\2\2\u03a3\u03a4\t\2\2\2\u03a4\u00d7\3\2\2"+
 		"\2\u03a5\u03a6\7\36\2\2\u03a6\u03a7\5\u00dan\2\u03a7\u00d9\3\2\2\2\u03a8"+
 		"\u03a9\5\u00eav\2\u03a9\u00db\3\2\2\2\u03aa\u03ab\5\u00eav\2\u03ab\u00dd"+
 		"\3\2\2\2\u03ac\u03ad\5\u00eav\2\u03ad\u00df\3\2\2\2\u03ae\u03af\5\u00ea"+
@@ -7458,7 +7278,7 @@ public class ArmParser extends Parser {
 		"\2\u03b6\u03b7\7Z\2\2\u03b7\u03b8\5\u00e8u\2\u03b8\u00e7\3\2\2\2\u03b9"+
 		"\u03ba\7S\2\2\u03ba\u03bb\7V\2\2\u03bb\u00e9\3\2\2\2\u03bc\u03be\7`\2"+
 		"\2\u03bd\u03bc\3\2\2\2\u03bd\u03be\3\2\2\2\u03be\u03bf\3\2\2\2\u03bf\u03c0"+
-		"\t\4\2\2\u03c0\u00eb\3\2\2\2%\u00ed\u00f2\u00f7\u0103\u0111\u011a\u0121"+
+		"\t\3\2\2\u03c0\u00eb\3\2\2\2%\u00ed\u00f2\u00f7\u0103\u0111\u011a\u0121"+
 		"\u012d\u0131\u013f\u0154\u0160\u0164\u016d\u018b\u01fa\u0217\u0220\u0229"+
 		"\u0232\u023b\u0244\u024d\u0256\u02fb\u0316\u031c\u032c\u0337\u036b\u0376"+
 		"\u0378\u0386\u0397\u03bd";

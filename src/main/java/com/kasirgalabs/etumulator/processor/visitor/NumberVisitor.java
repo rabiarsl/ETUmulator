@@ -16,32 +16,32 @@
  */
 package com.kasirgalabs.etumulator.processor.visitor;
 
-import com.kasirgalabs.arm.ArmBaseVisitor;
-import com.kasirgalabs.arm.ArmParser;
+import com.kasirgalabs.arm.ProcessorBaseVisitor;
+import com.kasirgalabs.arm.ProcessorParser;
 
-public class NumberVisitor extends ArmBaseVisitor<Integer> {
+public class NumberVisitor extends ProcessorBaseVisitor<Integer> {
     @Override
-    public Integer visitImm16(ArmParser.Imm16Context ctx) {
+    public Integer visitImm16(ProcessorParser.Imm16Context ctx) {
         return visitNumber(ctx.number());
     }
 
     @Override
-    public Integer visitImm12(ArmParser.Imm12Context ctx) {
+    public Integer visitImm12(ProcessorParser.Imm12Context ctx) {
         return visitNumber(ctx.number());
     }
 
     @Override
-    public Integer visitImm8m(ArmParser.Imm8mContext ctx) {
+    public Integer visitImm8m(ProcessorParser.Imm8mContext ctx) {
         return visitNumber(ctx.number());
     }
 
     @Override
-    public Integer visitSh(ArmParser.ShContext ctx) {
+    public Integer visitSh(ProcessorParser.ShContext ctx) {
         return visitNumber(ctx.number());
     }
 
     @Override
-    public Integer visitNumber(ArmParser.NumberContext ctx) {
+    public Integer visitNumber(ProcessorParser.NumberContext ctx) {
         if(ctx.DECIMAL() != null) {
             return (int) Long.parseLong(ctx.DECIMAL().getText());
         }
@@ -49,7 +49,7 @@ public class NumberVisitor extends ArmBaseVisitor<Integer> {
     }
 
     @Override
-    public Integer visitOffset(ArmParser.OffsetContext ctx) {
+    public Integer visitOffset(ProcessorParser.OffsetContext ctx) {
         return visitNumber(ctx.number());
     }
 }

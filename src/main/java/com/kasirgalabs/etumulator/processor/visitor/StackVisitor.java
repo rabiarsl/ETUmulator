@@ -16,14 +16,14 @@
  */
 package com.kasirgalabs.etumulator.processor.visitor;
 
-import com.kasirgalabs.arm.ArmBaseVisitor;
-import com.kasirgalabs.arm.ArmParser;
+import com.kasirgalabs.arm.ProcessorBaseVisitor;
+import com.kasirgalabs.arm.ProcessorParser;
 import com.kasirgalabs.etumulator.processor.RegisterFile;
 import com.kasirgalabs.etumulator.processor.Stack;
 import java.util.ArrayList;
 import java.util.List;
 
-public class StackVisitor extends ArmBaseVisitor<Void> {
+public class StackVisitor extends ProcessorBaseVisitor<Void> {
     private final RegisterFile registerFile;
     private final Stack stack;
     private final RegListVisitor regListVisitor;
@@ -35,7 +35,7 @@ public class StackVisitor extends ArmBaseVisitor<Void> {
     }
 
     @Override
-    public Void visitPush(ArmParser.PushContext ctx) {
+    public Void visitPush(ProcessorParser.PushContext ctx) {
         List<String> regList = regListVisitor.visit(ctx.regList());
         regList.forEach((registerName) -> {
             stack.push(registerFile.getValue(registerName));
@@ -44,7 +44,7 @@ public class StackVisitor extends ArmBaseVisitor<Void> {
     }
 
     @Override
-    public Void visitPop(ArmParser.PopContext ctx) {
+    public Void visitPop(ProcessorParser.PopContext ctx) {
         List<String> regList = regListVisitor.visit(ctx.regList());
         regList.forEach((registerName) -> {
             registerFile.setValue(registerName, stack.pop());
@@ -52,10 +52,10 @@ public class StackVisitor extends ArmBaseVisitor<Void> {
         return null;
     }
 
-    private static class RegListVisitor extends ArmBaseVisitor<List<String>> {
+    private static class RegListVisitor extends ProcessorBaseVisitor<List<String>> {
         @Override
-        public List<String> visitRegList(ArmParser.RegListContext ctx) {
-            List<String> regList = new ArrayList<>();
+        public List<String> visitRegList(ProcessorParser.RegListContext ctx) {
+            List<String> regList = new ArrayList<>(10);
             ctx.REGISTER().forEach((terminalNode) -> {
                 regList.add(terminalNode.getText());
             });

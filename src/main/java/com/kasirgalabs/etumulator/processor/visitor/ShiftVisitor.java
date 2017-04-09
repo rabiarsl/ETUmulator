@@ -16,12 +16,12 @@
  */
 package com.kasirgalabs.etumulator.processor.visitor;
 
-import com.kasirgalabs.arm.ArmBaseVisitor;
-import com.kasirgalabs.arm.ArmParser;
+import com.kasirgalabs.arm.ProcessorBaseVisitor;
+import com.kasirgalabs.arm.ProcessorParser;
 import com.kasirgalabs.etumulator.processor.CPSR;
 import com.kasirgalabs.etumulator.processor.RegisterFile;
 
-public class ShiftVisitor extends ArmBaseVisitor<Void> {
+public class ShiftVisitor extends ProcessorBaseVisitor<Void> {
     private static final int ASR = 0;
     private static final int LSL = 1;
     private static final int LSR = 2;
@@ -40,7 +40,7 @@ public class ShiftVisitor extends ArmBaseVisitor<Void> {
     }
 
     @Override
-    public Void visitAsr(ArmParser.AsrContext ctx) {
+    public Void visitAsr(ProcessorParser.AsrContext ctx) {
         String destRegister = registerVisitor.visit(ctx.rd());
         int value = registerFile.getValue(registerVisitor.visit(ctx.rm()));
         int shiftAmount;
@@ -56,7 +56,7 @@ public class ShiftVisitor extends ArmBaseVisitor<Void> {
     }
 
     @Override
-    public Void visitAsrs(ArmParser.AsrsContext ctx) {
+    public Void visitAsrs(ProcessorParser.AsrsContext ctx) {
         String destRegister = registerVisitor.visit(ctx.rd());
         int value = registerFile.getValue(registerVisitor.visit(ctx.rm()));
         int shiftAmount;
@@ -71,7 +71,7 @@ public class ShiftVisitor extends ArmBaseVisitor<Void> {
     }
 
     @Override
-    public Void visitLsl(ArmParser.LslContext ctx) {
+    public Void visitLsl(ProcessorParser.LslContext ctx) {
         String destRegister = registerVisitor.visit(ctx.rd());
         int value = registerFile.getValue(registerVisitor.visit(ctx.rm()));
         int shiftAmount;
@@ -86,7 +86,7 @@ public class ShiftVisitor extends ArmBaseVisitor<Void> {
     }
 
     @Override
-    public Void visitLsls(ArmParser.LslsContext ctx) {
+    public Void visitLsls(ProcessorParser.LslsContext ctx) {
         String destRegister = registerVisitor.visit(ctx.rd());
         int value = registerFile.getValue(registerVisitor.visit(ctx.rm()));
         int shiftAmount;
@@ -101,7 +101,7 @@ public class ShiftVisitor extends ArmBaseVisitor<Void> {
     }
 
     @Override
-    public Void visitLsr(ArmParser.LsrContext ctx) {
+    public Void visitLsr(ProcessorParser.LsrContext ctx) {
         String destRegister = registerVisitor.visit(ctx.rd());
         int value = registerFile.getValue(registerVisitor.visit(ctx.rm()));
         int shiftAmount;
@@ -116,7 +116,7 @@ public class ShiftVisitor extends ArmBaseVisitor<Void> {
     }
 
     @Override
-    public Void visitLsrs(ArmParser.LsrsContext ctx) {
+    public Void visitLsrs(ProcessorParser.LsrsContext ctx) {
         String destRegister = registerVisitor.visit(ctx.rd());
         int value = registerFile.getValue(registerVisitor.visit(ctx.rm()));
         int shiftAmount;
@@ -131,7 +131,7 @@ public class ShiftVisitor extends ArmBaseVisitor<Void> {
     }
 
     @Override
-    public Void visitRor(ArmParser.RorContext ctx) {
+    public Void visitRor(ProcessorParser.RorContext ctx) {
         String destRegister = registerVisitor.visit(ctx.rd());
         int value = registerFile.getValue(registerVisitor.visit(ctx.rm()));
         int shiftAmount;
@@ -146,7 +146,7 @@ public class ShiftVisitor extends ArmBaseVisitor<Void> {
     }
 
     @Override
-    public Void visitRors(ArmParser.RorsContext ctx) {
+    public Void visitRors(ProcessorParser.RorsContext ctx) {
         String destRegister = registerVisitor.visit(ctx.rd());
         int value = registerFile.getValue(registerVisitor.visit(ctx.rm()));
         int shiftAmount;
@@ -161,7 +161,7 @@ public class ShiftVisitor extends ArmBaseVisitor<Void> {
     }
 
     @Override
-    public Void visitRrx(ArmParser.RrxContext ctx) {
+    public Void visitRrx(ProcessorParser.RrxContext ctx) {
         final int NOT_USED = Integer.MAX_VALUE;
         String destRegister = registerVisitor.visit(ctx.rd());
         int value = registerFile.getValue(registerVisitor.visit(ctx.rm()));
@@ -170,7 +170,7 @@ public class ShiftVisitor extends ArmBaseVisitor<Void> {
     }
 
     @Override
-    public Void visitRrxs(ArmParser.RrxsContext ctx) {
+    public Void visitRrxs(ProcessorParser.RrxsContext ctx) {
         final int NOT_USED = Integer.MAX_VALUE;
         String destRegister = registerVisitor.visit(ctx.rd());
         int value = registerFile.getValue(registerVisitor.visit(ctx.rm()));

@@ -16,12 +16,12 @@
  */
 package com.kasirgalabs.etumulator.processor.visitor;
 
-import com.kasirgalabs.arm.ArmBaseVisitor;
-import com.kasirgalabs.arm.ArmParser;
+import com.kasirgalabs.arm.ProcessorBaseVisitor;
+import com.kasirgalabs.arm.ProcessorParser;
 import com.kasirgalabs.etumulator.processor.CPSR;
 import com.kasirgalabs.etumulator.processor.RegisterFile;
 
-public class LogicalVisitor extends ArmBaseVisitor<Void> {
+public class LogicalVisitor extends ProcessorBaseVisitor<Void> {
     private final RegisterFile registerFile;
     private final CPSR cpsr;
     private final RegisterVisitor registerVisitor;
@@ -35,7 +35,7 @@ public class LogicalVisitor extends ArmBaseVisitor<Void> {
     }
 
     @Override
-    public Void visitTst(ArmParser.TstContext ctx) {
+    public Void visitTst(ProcessorParser.TstContext ctx) {
         int left = registerFile.getValue(registerVisitor.visit(ctx.rn()));
         int right = operand2Visitor.visit(ctx.operand2());
         cpsr.updateNZ(left & right);
@@ -43,7 +43,7 @@ public class LogicalVisitor extends ArmBaseVisitor<Void> {
     }
 
     @Override
-    public Void visitTeq(ArmParser.TeqContext ctx) {
+    public Void visitTeq(ProcessorParser.TeqContext ctx) {
         int left = registerFile.getValue(registerVisitor.visit(ctx.rn()));
         int right = operand2Visitor.visit(ctx.operand2());
         cpsr.updateNZ(left ^ right);
@@ -51,7 +51,7 @@ public class LogicalVisitor extends ArmBaseVisitor<Void> {
     }
 
     @Override
-    public Void visitAnd(ArmParser.AndContext ctx) {
+    public Void visitAnd(ProcessorParser.AndContext ctx) {
         String destRegister = registerVisitor.visit(ctx.rd());
         int left = registerFile.getValue(registerVisitor.visit(ctx.rn()));
         int right = operand2Visitor.visit(ctx.operand2());
@@ -60,7 +60,7 @@ public class LogicalVisitor extends ArmBaseVisitor<Void> {
     }
 
     @Override
-    public Void visitAnds(ArmParser.AndsContext ctx) {
+    public Void visitAnds(ProcessorParser.AndsContext ctx) {
         String destRegister = registerVisitor.visit(ctx.rd());
         int left = registerFile.getValue(registerVisitor.visit(ctx.rn()));
         int right = operand2Visitor.visit(ctx.operand2());
@@ -69,7 +69,7 @@ public class LogicalVisitor extends ArmBaseVisitor<Void> {
     }
 
     @Override
-    public Void visitEor(ArmParser.EorContext ctx) {
+    public Void visitEor(ProcessorParser.EorContext ctx) {
         String destRegister = registerVisitor.visit(ctx.rd());
         int left = registerFile.getValue(registerVisitor.visit(ctx.rn()));
         int right = operand2Visitor.visit(ctx.operand2());
@@ -78,7 +78,7 @@ public class LogicalVisitor extends ArmBaseVisitor<Void> {
     }
 
     @Override
-    public Void visitEors(ArmParser.EorsContext ctx) {
+    public Void visitEors(ProcessorParser.EorsContext ctx) {
         String destRegister = registerVisitor.visit(ctx.rd());
         int left = registerFile.getValue(registerVisitor.visit(ctx.rn()));
         int right = operand2Visitor.visit(ctx.operand2());
@@ -87,7 +87,7 @@ public class LogicalVisitor extends ArmBaseVisitor<Void> {
     }
 
     @Override
-    public Void visitOrr(ArmParser.OrrContext ctx) {
+    public Void visitOrr(ProcessorParser.OrrContext ctx) {
         String destRegister = registerVisitor.visit(ctx.rd());
         int left = registerFile.getValue(registerVisitor.visit(ctx.rn()));
         int right = operand2Visitor.visit(ctx.operand2());
@@ -96,7 +96,7 @@ public class LogicalVisitor extends ArmBaseVisitor<Void> {
     }
 
     @Override
-    public Void visitOrrs(ArmParser.OrrsContext ctx) {
+    public Void visitOrrs(ProcessorParser.OrrsContext ctx) {
         String destRegister = registerVisitor.visit(ctx.rd());
         int left = registerFile.getValue(registerVisitor.visit(ctx.rn()));
         int right = operand2Visitor.visit(ctx.operand2());
@@ -105,7 +105,7 @@ public class LogicalVisitor extends ArmBaseVisitor<Void> {
     }
 
     @Override
-    public Void visitOrn(ArmParser.OrnContext ctx) {
+    public Void visitOrn(ProcessorParser.OrnContext ctx) {
         String destRegister = registerVisitor.visit(ctx.rd());
         int left = registerFile.getValue(registerVisitor.visit(ctx.rn()));
         int right = operand2Visitor.visit(ctx.operand2());
@@ -114,7 +114,7 @@ public class LogicalVisitor extends ArmBaseVisitor<Void> {
     }
 
     @Override
-    public Void visitOrns(ArmParser.OrnsContext ctx) {
+    public Void visitOrns(ProcessorParser.OrnsContext ctx) {
         String destRegister = registerVisitor.visit(ctx.rd());
         int left = registerFile.getValue(registerVisitor.visit(ctx.rn()));
         int right = operand2Visitor.visit(ctx.operand2());
@@ -123,7 +123,7 @@ public class LogicalVisitor extends ArmBaseVisitor<Void> {
     }
 
     @Override
-    public Void visitBic(ArmParser.BicContext ctx) {
+    public Void visitBic(ProcessorParser.BicContext ctx) {
         String destRegister = registerVisitor.visit(ctx.rd());
         int left = registerFile.getValue(registerVisitor.visit(ctx.rn()));
         int right = operand2Visitor.visit(ctx.operand2());
@@ -132,7 +132,7 @@ public class LogicalVisitor extends ArmBaseVisitor<Void> {
     }
 
     @Override
-    public Void visitBics(ArmParser.BicsContext ctx) {
+    public Void visitBics(ProcessorParser.BicsContext ctx) {
         String destRegister = registerVisitor.visit(ctx.rd());
         int left = registerFile.getValue(registerVisitor.visit(ctx.rn()));
         int right = operand2Visitor.visit(ctx.operand2());

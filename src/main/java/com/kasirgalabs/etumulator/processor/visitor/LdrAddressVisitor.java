@@ -16,11 +16,11 @@
  */
 package com.kasirgalabs.etumulator.processor.visitor;
 
-import com.kasirgalabs.arm.ArmBaseVisitor;
-import com.kasirgalabs.arm.ArmParser;
+import com.kasirgalabs.arm.ProcessorBaseVisitor;
+import com.kasirgalabs.arm.ProcessorParser;
 import com.kasirgalabs.etumulator.processor.RegisterFile;
 
-public class LdrAddressVisitor extends ArmBaseVisitor<Integer> {
+public class LdrAddressVisitor extends ProcessorBaseVisitor<Integer> {
     private final RegisterFile registerFile;
     private final RegisterVisitor registerVisitor;
     private final NumberVisitor numberVisitor;
@@ -32,24 +32,23 @@ public class LdrAddressVisitor extends ArmBaseVisitor<Integer> {
     }
 
     @Override
-    public Integer visitLdrAddress(ArmParser.LdrAddressContext ctx) {
+    public Integer visitLdrAddress(ProcessorParser.LdrAddressContext ctx) {
         if(ctx.immediateOffset() != null) {
             return visitImmediateOffset(ctx.immediateOffset());
         }
-        if(ctx.postIndexedImmediate() != null) {
+        else if(ctx.postIndexedImmediate() != null) {
             return visit(ctx.postIndexedImmediate());
         }
-        if(ctx.registerOffset() != null) {
+        else if(ctx.registerOffset() != null) {
             return visit(ctx.registerOffset());
         }
-        if(ctx.postIndexedRegister() != null) {
+        else {
             return visit(ctx.postIndexedRegister());
         }
-        return null;
     }
 
     @Override
-    public Integer visitImmediateOffset(ArmParser.ImmediateOffsetContext ctx) {
+    public Integer visitImmediateOffset(ProcessorParser.ImmediateOffsetContext ctx) {
         int value = registerFile.getValue(registerVisitor.visit(ctx.rn()));
         if(ctx.offset() != null) {
             value += numberVisitor.visit(ctx.offset());
@@ -58,7 +57,7 @@ public class LdrAddressVisitor extends ArmBaseVisitor<Integer> {
     }
 
     @Override
-    public Integer visitPostIndexedImmediate(ArmParser.PostIndexedImmediateContext ctx) {
+    public Integer visitPostIndexedImmediate(ProcessorParser.PostIndexedImmediateContext ctx) {
         String srcRegister = registerVisitor.visit(ctx.rn());
         int value = registerFile.getValue(srcRegister);
         int offset = numberVisitor.visit(ctx.offset());
@@ -67,7 +66,7 @@ public class LdrAddressVisitor extends ArmBaseVisitor<Integer> {
     }
 
     @Override
-    public Integer visitRegisterOffset(ArmParser.RegisterOffsetContext ctx) {
+    public Integer visitRegisterOffset(ProcessorParser.RegisterOffsetContext ctx) {
         String destRegister = registerVisitor.visit(ctx.rn());
         int value = registerFile.getValue(registerVisitor.visit(ctx.rm()));
         if(ctx.opsh() != null) {
@@ -78,7 +77,7 @@ public class LdrAddressVisitor extends ArmBaseVisitor<Integer> {
     }
 
     @Override
-    public Integer visitPostIndexedRegister(ArmParser.PostIndexedRegisterContext ctx) {
+    public Integer visitPostIndexedRegister(ProcessorParser.PostIndexedRegisterContext ctx) {
         String srcRegister = registerVisitor.visit(ctx.rn());
         int value = registerFile.getValue(srcRegister);
         int offset = registerFile.getValue(registerVisitor.visit(ctx.rm()));

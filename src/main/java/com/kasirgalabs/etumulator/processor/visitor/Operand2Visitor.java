@@ -16,11 +16,11 @@
  */
 package com.kasirgalabs.etumulator.processor.visitor;
 
-import com.kasirgalabs.arm.ArmBaseVisitor;
-import com.kasirgalabs.arm.ArmParser;
+import com.kasirgalabs.arm.ProcessorBaseVisitor;
+import com.kasirgalabs.arm.ProcessorParser;
 import com.kasirgalabs.etumulator.processor.RegisterFile;
 
-public class Operand2Visitor extends ArmBaseVisitor<Integer> {
+public class Operand2Visitor extends ProcessorBaseVisitor<Integer> {
     private final RegisterFile registerFile;
     private final RegisterVisitor registerVisitor;
     private final NumberVisitor numberVisitor;
@@ -34,7 +34,7 @@ public class Operand2Visitor extends ArmBaseVisitor<Integer> {
     }
 
     @Override
-    public Integer visitOperand2(ArmParser.Operand2Context ctx) {
+    public Integer visitOperand2(ProcessorParser.Operand2Context ctx) {
         if(ctx.rm() != null) {
             return registerFile.getValue(registerVisitor.visit(ctx.rm()));
         }

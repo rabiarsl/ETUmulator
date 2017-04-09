@@ -16,12 +16,12 @@
  */
 package com.kasirgalabs.etumulator.processor.visitor;
 
-import com.kasirgalabs.arm.ArmBaseVisitor;
-import com.kasirgalabs.arm.ArmParser;
+import com.kasirgalabs.arm.ProcessorBaseVisitor;
+import com.kasirgalabs.arm.ProcessorParser;
 import com.kasirgalabs.etumulator.processor.CPSR;
 import com.kasirgalabs.etumulator.processor.UART;
 
-public class BranchVisitor extends ArmBaseVisitor<Integer> {
+public class BranchVisitor extends ProcessorBaseVisitor<Integer> {
     private final CPSR cpsr;
     private final UART uart;
 
@@ -31,12 +31,12 @@ public class BranchVisitor extends ArmBaseVisitor<Integer> {
     }
 
     @Override
-    public Integer visitB(ArmParser.BContext ctx) {
+    public Integer visitB(ProcessorParser.BContext ctx) {
         return Integer.parseInt(ctx.DECIMAL().getText());
     }
 
     @Override
-    public Integer visitBeq(ArmParser.BeqContext ctx) {
+    public Integer visitBeq(ProcessorParser.BeqContext ctx) {
         if(cpsr.isZero()) {
             return Integer.parseInt(ctx.DECIMAL().getText());
         }
@@ -44,7 +44,7 @@ public class BranchVisitor extends ArmBaseVisitor<Integer> {
     }
 
     @Override
-    public Integer visitBne(ArmParser.BneContext ctx) {
+    public Integer visitBne(ProcessorParser.BneContext ctx) {
         if(!cpsr.isZero()) {
             return Integer.parseInt(ctx.DECIMAL().getText());
         }
@@ -52,7 +52,7 @@ public class BranchVisitor extends ArmBaseVisitor<Integer> {
     }
 
     @Override
-    public Integer visitBcs(ArmParser.BcsContext ctx) {
+    public Integer visitBcs(ProcessorParser.BcsContext ctx) {
         if(cpsr.isCarry()) {
             return Integer.parseInt(ctx.DECIMAL().getText());
         }
@@ -60,7 +60,7 @@ public class BranchVisitor extends ArmBaseVisitor<Integer> {
     }
 
     @Override
-    public Integer visitBhs(ArmParser.BhsContext ctx) {
+    public Integer visitBhs(ProcessorParser.BhsContext ctx) {
         if(cpsr.isCarry()) {
             return Integer.parseInt(ctx.DECIMAL().getText());
         }
@@ -68,7 +68,7 @@ public class BranchVisitor extends ArmBaseVisitor<Integer> {
     }
 
     @Override
-    public Integer visitBcc(ArmParser.BccContext ctx) {
+    public Integer visitBcc(ProcessorParser.BccContext ctx) {
         if(!cpsr.isCarry()) {
             return Integer.parseInt(ctx.DECIMAL().getText());
         }
@@ -76,7 +76,7 @@ public class BranchVisitor extends ArmBaseVisitor<Integer> {
     }
 
     @Override
-    public Integer visitBlo(ArmParser.BloContext ctx) {
+    public Integer visitBlo(ProcessorParser.BloContext ctx) {
         if(!cpsr.isCarry()) {
             return Integer.parseInt(ctx.DECIMAL().getText());
         }
@@ -84,7 +84,7 @@ public class BranchVisitor extends ArmBaseVisitor<Integer> {
     }
 
     @Override
-    public Integer visitBmi(ArmParser.BmiContext ctx) {
+    public Integer visitBmi(ProcessorParser.BmiContext ctx) {
         if(cpsr.isNegative()) {
             return Integer.parseInt(ctx.DECIMAL().getText());
         }
@@ -92,7 +92,7 @@ public class BranchVisitor extends ArmBaseVisitor<Integer> {
     }
 
     @Override
-    public Integer visitBpl(ArmParser.BplContext ctx) {
+    public Integer visitBpl(ProcessorParser.BplContext ctx) {
         if(!cpsr.isNegative()) {
             return Integer.parseInt(ctx.DECIMAL().getText());
         }
@@ -100,7 +100,7 @@ public class BranchVisitor extends ArmBaseVisitor<Integer> {
     }
 
     @Override
-    public Integer visitBvs(ArmParser.BvsContext ctx) {
+    public Integer visitBvs(ProcessorParser.BvsContext ctx) {
         if(cpsr.isOverflow()) {
             return Integer.parseInt(ctx.DECIMAL().getText());
         }
@@ -108,7 +108,7 @@ public class BranchVisitor extends ArmBaseVisitor<Integer> {
     }
 
     @Override
-    public Integer visitBvc(ArmParser.BvcContext ctx) {
+    public Integer visitBvc(ProcessorParser.BvcContext ctx) {
         if(!cpsr.isOverflow()) {
             return Integer.parseInt(ctx.DECIMAL().getText());
         }
@@ -116,7 +116,7 @@ public class BranchVisitor extends ArmBaseVisitor<Integer> {
     }
 
     @Override
-    public Integer visitBhi(ArmParser.BhiContext ctx) {
+    public Integer visitBhi(ProcessorParser.BhiContext ctx) {
         if(cpsr.isCarry() && !cpsr.isZero()) {
             return Integer.parseInt(ctx.DECIMAL().getText());
         }
@@ -124,7 +124,7 @@ public class BranchVisitor extends ArmBaseVisitor<Integer> {
     }
 
     @Override
-    public Integer visitBls(ArmParser.BlsContext ctx) {
+    public Integer visitBls(ProcessorParser.BlsContext ctx) {
         if(!cpsr.isCarry() || cpsr.isZero()) {
             return Integer.parseInt(ctx.DECIMAL().getText());
         }
@@ -132,7 +132,7 @@ public class BranchVisitor extends ArmBaseVisitor<Integer> {
     }
 
     @Override
-    public Integer visitBge(ArmParser.BgeContext ctx) {
+    public Integer visitBge(ProcessorParser.BgeContext ctx) {
         if(cpsr.isNegative() == cpsr.isOverflow()) {
             return Integer.parseInt(ctx.DECIMAL().getText());
         }
@@ -140,7 +140,7 @@ public class BranchVisitor extends ArmBaseVisitor<Integer> {
     }
 
     @Override
-    public Integer visitBlt(ArmParser.BltContext ctx) {
+    public Integer visitBlt(ProcessorParser.BltContext ctx) {
         if(cpsr.isNegative() != cpsr.isOverflow()) {
             return Integer.parseInt(ctx.DECIMAL().getText());
         }
@@ -148,7 +148,7 @@ public class BranchVisitor extends ArmBaseVisitor<Integer> {
     }
 
     @Override
-    public Integer visitBgt(ArmParser.BgtContext ctx) {
+    public Integer visitBgt(ProcessorParser.BgtContext ctx) {
         if(!cpsr.isZero() && cpsr.isNegative() == cpsr.isOverflow()) {
             return Integer.parseInt(ctx.DECIMAL().getText());
         }
@@ -156,7 +156,7 @@ public class BranchVisitor extends ArmBaseVisitor<Integer> {
     }
 
     @Override
-    public Integer visitBle(ArmParser.BleContext ctx) {
+    public Integer visitBle(ProcessorParser.BleContext ctx) {
         if(cpsr.isZero() || cpsr.isNegative() != cpsr.isOverflow()) {
             return Integer.parseInt(ctx.DECIMAL().getText());
         }
@@ -164,18 +164,18 @@ public class BranchVisitor extends ArmBaseVisitor<Integer> {
     }
 
     @Override
-    public Integer visitBal(ArmParser.BalContext ctx) {
+    public Integer visitBal(ProcessorParser.BalContext ctx) {
         return Integer.parseInt(ctx.DECIMAL().getText());
     }
 
     @Override
-    public Integer visitBl(ArmParser.BlContext ctx) {
+    public Integer visitBl(ProcessorParser.BlContext ctx) {
         String label = ctx.LABEL().getText();
         if("uart_read".equalsIgnoreCase(label)) {
             try {
                 uart.read();
             } catch(InterruptedException ex) {
-                System.exit(0);
+                System.exit(-1);
             }
         }
         else if("uart_write".equalsIgnoreCase(label)) {

@@ -16,12 +16,12 @@
  */
 package com.kasirgalabs.etumulator.processor.visitor;
 
-import com.kasirgalabs.arm.ArmBaseVisitor;
-import com.kasirgalabs.arm.ArmParser;
+import com.kasirgalabs.arm.ProcessorBaseVisitor;
+import com.kasirgalabs.arm.ProcessorParser;
 import com.kasirgalabs.etumulator.processor.CPSR;
 import com.kasirgalabs.etumulator.processor.RegisterFile;
 
-public class MoveVisitor extends ArmBaseVisitor<Void> {
+public class MoveVisitor extends ProcessorBaseVisitor<Void> {
     private final RegisterFile registerFile;
     private final CPSR cpsr;
     private final RegisterVisitor registerVisitor;
@@ -37,7 +37,7 @@ public class MoveVisitor extends ArmBaseVisitor<Void> {
     }
 
     @Override
-    public Void visitMov(ArmParser.MovContext ctx) {
+    public Void visitMov(ProcessorParser.MovContext ctx) {
         String destRegister = registerVisitor.visit(ctx.rd());
         int value;
         if(ctx.imm16() != null) {
@@ -51,7 +51,7 @@ public class MoveVisitor extends ArmBaseVisitor<Void> {
     }
 
     @Override
-    public Void visitMovs(ArmParser.MovsContext ctx) {
+    public Void visitMovs(ProcessorParser.MovsContext ctx) {
         String destRegister = registerVisitor.visit(ctx.rd());
         int value = operand2Visitor.visit(ctx.operand2());
         cpsr.updateNZ(value);
@@ -60,7 +60,7 @@ public class MoveVisitor extends ArmBaseVisitor<Void> {
     }
 
     @Override
-    public Void visitMvn(ArmParser.MvnContext ctx) {
+    public Void visitMvn(ProcessorParser.MvnContext ctx) {
         String destRegister = registerVisitor.visit(ctx.rd());
         int value = 0xffff_ffff ^ operand2Visitor.visit(ctx.operand2());
         registerFile.setValue(destRegister, value);
@@ -68,7 +68,7 @@ public class MoveVisitor extends ArmBaseVisitor<Void> {
     }
 
     @Override
-    public Void visitMvns(ArmParser.MvnsContext ctx) {
+    public Void visitMvns(ProcessorParser.MvnsContext ctx) {
         String destRegister = registerVisitor.visit(ctx.rd());
         int value = 0xffff_ffff ^ operand2Visitor.visit(ctx.operand2());
         cpsr.updateNZ(value);
@@ -77,7 +77,7 @@ public class MoveVisitor extends ArmBaseVisitor<Void> {
     }
 
     @Override
-    public Void visitMovt(ArmParser.MovtContext ctx) {
+    public Void visitMovt(ProcessorParser.MovtContext ctx) {
         String destRegister = registerVisitor.visit(ctx.rd());
         int value = registerFile.getValue(destRegister);
         value &= 0x0000_ffff;

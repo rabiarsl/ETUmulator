@@ -1,4 +1,4 @@
-grammar Arm;
+grammar Assembler;
 
 prog
     : (line? EOL)+
@@ -322,75 +322,75 @@ bics
     ;
 
 b
-    : 'b' (LABEL | DECIMAL)
+    : 'b' LABEL
     ;
 
 beq
-    : 'beq' (LABEL | DECIMAL)
+    : 'beq' LABEL
     ;
 
 bne
-    : 'bne' (LABEL | DECIMAL)
+    : 'bne' LABEL
     ;
 
 bcs
-    : 'bcs' (LABEL | DECIMAL)
+    : 'bcs' LABEL
     ;
 
 bhs
-    : 'bhs' (LABEL | DECIMAL)
+    : 'bhs' LABEL
     ;
 
 bcc
-    : 'bcc' (LABEL | DECIMAL)
+    : 'bcc' LABEL
     ;
 
 blo
-    : 'blo' (LABEL | DECIMAL)
+    : 'blo' LABEL
     ;
 
 bmi
-    : 'bmi' (LABEL | DECIMAL)
+    : 'bmi' LABEL
     ;
 
 bpl
-    : 'bpl' (LABEL | DECIMAL)
+    : 'bpl' LABEL
     ;
 
 bvs
-    : 'bvs' (LABEL | DECIMAL)
+    : 'bvs' LABEL
     ;
 
 bvc
-    : 'bvc' (LABEL | DECIMAL)
+    : 'bvc' LABEL
     ;
 
 bhi
-    : 'bhi' (LABEL | DECIMAL)
+    : 'bhi' LABEL
     ;
 
 bls
-    : 'bls' (LABEL | DECIMAL)
+    : 'bls' LABEL
     ;
 
 bge
-    : 'bge' (LABEL | DECIMAL)
+    : 'bge' LABEL
     ;
 
 blt
-    : 'blt' (LABEL | DECIMAL)
+    : 'blt' LABEL
     ;
 
 bgt
-    : 'bgt' (LABEL | DECIMAL)
+    : 'bgt' LABEL
     ;
 
 ble
-    : 'ble' (LABEL | DECIMAL)
+    : 'ble' LABEL
     ;
 
 bal
-    : 'bal' (LABEL | DECIMAL)
+    : 'bal' LABEL
     ;
 
 bl
@@ -423,7 +423,7 @@ ldrAddress
     | postIndexedImmediate
     | registerOffset
     | postIndexedRegister
-    | pcRelative
+    | relocationDirective
     ;
 
 immediateOffset
@@ -442,7 +442,7 @@ postIndexedRegister
     : LBRACK rn RBRACK COMMA rm (COMMA opsh)?
     ;
 
-pcRelative
+relocationDirective
     : ASSIGN LABEL
     ;
 

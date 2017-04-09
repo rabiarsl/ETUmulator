@@ -16,27 +16,27 @@
  */
 package com.kasirgalabs.etumulator.processor.visitor;
 
-import com.kasirgalabs.arm.ArmBaseVisitor;
-import com.kasirgalabs.arm.ArmParser;
+import com.kasirgalabs.arm.ProcessorBaseVisitor;
+import com.kasirgalabs.arm.ProcessorParser;
 
-public class RegisterVisitor extends ArmBaseVisitor<String> {
+public class RegisterVisitor extends ProcessorBaseVisitor<String> {
     @Override
-    public String visitRd(ArmParser.RdContext ctx) {
+    public String visitRd(ProcessorParser.RdContext ctx) {
         return ctx.REGISTER().getText();
     }
 
     @Override
-    public String visitRn(ArmParser.RnContext ctx) {
+    public String visitRn(ProcessorParser.RnContext ctx) {
         return ctx.REGISTER().getText();
     }
 
     @Override
-    public String visitRm(ArmParser.RmContext ctx) {
+    public String visitRm(ProcessorParser.RmContext ctx) {
         return ctx.REGISTER().getText();
     }
 
     @Override
-    public String visitRs(ArmParser.RsContext ctx) {
+    public String visitRs(ProcessorParser.RsContext ctx) {
         return ctx.REGISTER().getText();
     }
 }

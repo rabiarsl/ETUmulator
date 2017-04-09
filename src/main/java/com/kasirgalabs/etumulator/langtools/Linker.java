@@ -16,9 +16,9 @@
  */
 package com.kasirgalabs.etumulator.langtools;
 
-import com.kasirgalabs.arm.ArmBaseVisitor;
-import com.kasirgalabs.arm.ArmLexer;
-import com.kasirgalabs.arm.ArmParser;
+import com.kasirgalabs.arm.AssemblerBaseVisitor;
+import com.kasirgalabs.arm.AssemblerLexer;
+import com.kasirgalabs.arm.AssemblerParser;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -31,7 +31,7 @@ import org.antlr.v4.runtime.CommonTokenStream;
 import org.antlr.v4.runtime.ParserRuleContext;
 import org.antlr.v4.runtime.tree.TerminalNode;
 
-public class Linker extends ArmBaseVisitor<Void> {
+public class Linker extends AssemblerBaseVisitor<Void> {
     private final Map<String, Integer> definedBranches;
     private final Map<String, Data> definedData;
     private final Set<Integer> addressBook;
@@ -39,122 +39,121 @@ public class Linker extends ArmBaseVisitor<Void> {
     private char[][] code;
 
     public Linker() {
-        definedBranches = new HashMap<>();
-        definedData = new HashMap<>();
-        addressBook = new HashSet<>();
+        definedBranches = new HashMap<>(16);
+        definedData = new HashMap<>(16);
+        addressBook = new HashSet<>(16);
     }
 
     @Override
-    public Void visitB(ArmParser.BContext ctx) {
+    public Void visitB(AssemblerParser.BContext ctx) {
         replaceLabelAddress(ctx, ctx.LABEL());
         return null;
     }
 
     @Override
-    public Void visitBeq(ArmParser.BeqContext ctx) {
+    public Void visitBeq(AssemblerParser.BeqContext ctx) {
         replaceLabelAddress(ctx, ctx.LABEL());
         return null;
     }
 
     @Override
-    public Void visitBne(ArmParser.BneContext ctx) {
+    public Void visitBne(AssemblerParser.BneContext ctx) {
         replaceLabelAddress(ctx, ctx.LABEL());
         return null;
     }
 
     @Override
-    public Void visitBcs(ArmParser.BcsContext ctx) {
+    public Void visitBcs(AssemblerParser.BcsContext ctx) {
         replaceLabelAddress(ctx, ctx.LABEL());
         return null;
     }
 
     @Override
-    public Void visitBhs(ArmParser.BhsContext ctx) {
+    public Void visitBhs(AssemblerParser.BhsContext ctx) {
         replaceLabelAddress(ctx, ctx.LABEL());
         return null;
     }
 
     @Override
-    public Void visitBcc(ArmParser.BccContext ctx) {
+    public Void visitBcc(AssemblerParser.BccContext ctx) {
         replaceLabelAddress(ctx, ctx.LABEL());
         return null;
     }
 
     @Override
-    public Void visitBlo(ArmParser.BloContext ctx) {
+    public Void visitBlo(AssemblerParser.BloContext ctx) {
         replaceLabelAddress(ctx, ctx.LABEL());
         return null;
     }
 
     @Override
-    public Void visitBmi(ArmParser.BmiContext ctx) {
+    public Void visitBmi(AssemblerParser.BmiContext ctx) {
         replaceLabelAddress(ctx, ctx.LABEL());
         return null;
     }
 
     @Override
-    public Void visitBpl(ArmParser.BplContext ctx) {
+    public Void visitBpl(AssemblerParser.BplContext ctx) {
         replaceLabelAddress(ctx, ctx.LABEL());
         return null;
     }
 
     @Override
-    public Void visitBvs(ArmParser.BvsContext ctx) {
+    public Void visitBvs(AssemblerParser.BvsContext ctx) {
         replaceLabelAddress(ctx, ctx.LABEL());
         return null;
     }
 
     @Override
-    public Void visitBvc(ArmParser.BvcContext ctx) {
+    public Void visitBvc(AssemblerParser.BvcContext ctx) {
         replaceLabelAddress(ctx, ctx.LABEL());
         return null;
     }
 
     @Override
-    public Void visitBhi(ArmParser.BhiContext ctx) {
+    public Void visitBhi(AssemblerParser.BhiContext ctx) {
         replaceLabelAddress(ctx, ctx.LABEL());
         return null;
     }
 
     @Override
-    public Void visitBls(ArmParser.BlsContext ctx) {
+    public Void visitBls(AssemblerParser.BlsContext ctx) {
         replaceLabelAddress(ctx, ctx.LABEL());
         return null;
     }
 
     @Override
-    public Void visitBge(ArmParser.BgeContext ctx) {
+    public Void visitBge(AssemblerParser.BgeContext ctx) {
         replaceLabelAddress(ctx, ctx.LABEL());
         return null;
     }
 
     @Override
-    public Void visitBlt(ArmParser.BltContext ctx) {
+    public Void visitBlt(AssemblerParser.BltContext ctx) {
         replaceLabelAddress(ctx, ctx.LABEL());
         return visitChildren(ctx);
     }
 
     @Override
-    public Void visitBgt(ArmParser.BgtContext ctx) {
+    public Void visitBgt(AssemblerParser.BgtContext ctx) {
         replaceLabelAddress(ctx, ctx.LABEL());
         return null;
     }
 
     @Override
-    public Void visitBle(ArmParser.BleContext ctx) {
-        replaceLabelAddress(ctx, ctx.LABEL());
-
-        return null;
-    }
-
-    @Override
-    public Void visitBal(ArmParser.BalContext ctx) {
+    public Void visitBle(AssemblerParser.BleContext ctx) {
         replaceLabelAddress(ctx, ctx.LABEL());
         return null;
     }
 
     @Override
-    public Void visitBl(ArmParser.BlContext ctx) {
+    public Void visitBal(AssemblerParser.BalContext ctx) {
+        replaceLabelAddress(ctx, ctx.LABEL());
+        return null;
+    }
+
+    @Override
+    public Void visitBl(AssemblerParser.BlContext ctx) {
         String label = ctx.LABEL().getText();
         if(!"uart_read".equalsIgnoreCase(label) && !"uart_write".equalsIgnoreCase(label)) {
             throw new UnsupportedInstructionError("bl instruction target only supported for "
@@ -164,7 +163,7 @@ public class Linker extends ArmBaseVisitor<Void> {
     }
 
     @Override
-    public Void visitPcRelative(ArmParser.PcRelativeContext ctx) {
+    public Void visitRelocationDirective(AssemblerParser.RelocationDirectiveContext ctx) {
         if(!secondPass) {
             return null;
         }
@@ -181,7 +180,7 @@ public class Linker extends ArmBaseVisitor<Void> {
     }
 
     @Override
-    public Void visitLabel(ArmParser.LabelContext ctx) {
+    public Void visitLabel(AssemblerParser.LabelContext ctx) {
         if(secondPass) {
             return null;
         }
@@ -195,7 +194,7 @@ public class Linker extends ArmBaseVisitor<Void> {
     }
 
     @Override
-    public Void visitData(ArmParser.DataContext ctx) {
+    public Void visitData(AssemblerParser.DataContext ctx) {
         if(secondPass) {
             return null;
         }
@@ -217,10 +216,10 @@ public class Linker extends ArmBaseVisitor<Void> {
         secondPass = false;
         this.code = parseCode(code);
         ANTLRInputStream in = new ANTLRInputStream(code);
-        ArmLexer lexer = new ArmLexer(in);
+        AssemblerLexer lexer = new AssemblerLexer(in);
         CommonTokenStream tokens = new CommonTokenStream(lexer);
-        ArmParser parser = new ArmParser(tokens);
-        ArmParser.ProgContext program = parser.prog();
+        AssemblerParser parser = new AssemblerParser(tokens);
+        AssemblerParser.ProgContext program = parser.prog();
         if(parser.getNumberOfSyntaxErrors() > 0) {
             throw new SyntaxError("You have error(s) in your code.");
         }

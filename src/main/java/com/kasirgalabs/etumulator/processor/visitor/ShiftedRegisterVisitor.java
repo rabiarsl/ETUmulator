@@ -16,11 +16,11 @@
  */
 package com.kasirgalabs.etumulator.processor.visitor;
 
-import com.kasirgalabs.arm.ArmBaseVisitor;
-import com.kasirgalabs.arm.ArmParser;
+import com.kasirgalabs.arm.ProcessorBaseVisitor;
+import com.kasirgalabs.arm.ProcessorParser;
 import com.kasirgalabs.etumulator.processor.RegisterFile;
 
-public class ShiftedRegisterVisitor extends ArmBaseVisitor<Integer> {
+public class ShiftedRegisterVisitor extends ProcessorBaseVisitor<Integer> {
     private static final int ASR = 0;
     private static final int LSL = 1;
     private static final int LSR = 2;
@@ -36,7 +36,8 @@ public class ShiftedRegisterVisitor extends ArmBaseVisitor<Integer> {
     }
 
     @Override
-    public Integer visitRegisterShiftedByRegister(ArmParser.RegisterShiftedByRegisterContext ctx) {
+    public Integer visitRegisterShiftedByRegister(
+            ProcessorParser.RegisterShiftedByRegisterContext ctx) {
         int value = registerFile.getValue(registerVisitor.visit(ctx.rm()));
         int shiftOption = visitShiftOption(ctx.shiftOption());
         int shiftAmount = registerFile.getValue(registerVisitor.visit(ctx.rs()));
@@ -44,7 +45,8 @@ public class ShiftedRegisterVisitor extends ArmBaseVisitor<Integer> {
     }
 
     @Override
-    public Integer visitRegisterShiftedByConstant(ArmParser.RegisterShiftedByConstantContext ctx) {
+    public Integer visitRegisterShiftedByConstant(
+            ProcessorParser.RegisterShiftedByConstantContext ctx) {
         int value = registerFile.getValue(registerVisitor.visit(ctx.rm()));
         int shiftOption = visitShiftOption(ctx.shiftOption());
         int shiftAmount = numberVisitor.visit(ctx.number());
@@ -52,7 +54,7 @@ public class ShiftedRegisterVisitor extends ArmBaseVisitor<Integer> {
     }
 
     @Override
-    public Integer visitShiftOption(ArmParser.ShiftOptionContext ctx) {
+    public Integer visitShiftOption(ProcessorParser.ShiftOptionContext ctx) {
         switch(ctx.getText()) {
             case "asr":
                 return ASR;

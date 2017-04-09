@@ -55,7 +55,7 @@ public class DocumentMenu {
     private void openOnAction(ActionEvent event) throws IOException {
         File file = fileChooser.showOpenDialog(window);
         if(file != null) {
-            StringBuilder text = new StringBuilder();
+            StringBuilder text = new StringBuilder(256);
             try(BufferedReader bf = new BufferedReader(new FileReader(file))) {
                 String line;
                 while((line = bf.readLine()) != null) {

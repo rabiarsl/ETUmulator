@@ -1,4 +1,4 @@
-// Generated from Arm.g4 by ANTLR 4.7
+// Generated from Processor.g4 by ANTLR 4.7
 package com.kasirgalabs.arm;
 import org.antlr.v4.runtime.Lexer;
 import org.antlr.v4.runtime.CharStream;
@@ -10,7 +10,7 @@ import org.antlr.v4.runtime.dfa.DFA;
 import org.antlr.v4.runtime.misc.*;
 
 @SuppressWarnings({"all", "warnings", "unchecked", "unused", "cast"})
-public class ArmLexer extends Lexer {
+public class ProcessorLexer extends Lexer {
 	static { RuntimeMetaData.checkVersion("4.7", RuntimeMetaData.VERSION); }
 
 	protected static final DFA[] _decisionToDFA;
@@ -114,13 +114,13 @@ public class ArmLexer extends Lexer {
 	}
 
 
-	public ArmLexer(CharStream input) {
+	public ProcessorLexer(CharStream input) {
 		super(input);
 		_interp = new LexerATNSimulator(this,_ATN,_decisionToDFA,_sharedContextCache);
 	}
 
 	@Override
-	public String getGrammarFileName() { return "Arm.g4"; }
+	public String getGrammarFileName() { return "Processor.g4"; }
 
 	@Override
 	public String[] getRuleNames() { return ruleNames; }
