@@ -1,45 +1,54 @@
 /*
  * Copyright (C) 2017 Kasirgalabs
  *
- * This program is free software: you can redistribute it and/or modify
+ * This code is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
  *
- * This program is distributed in the hope that it will be useful,
+ * This code is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this code.  If not, see <http://www.gnu.org/licenses/>.
  */
 package com.kasirgalabs.etumulator.langtools;
 
-import java.util.HashSet;
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.List;
 
 public class ExecutableCode {
-    private final String code;
-    private final Set<Symbol> symbols;
+    private final char[][] code;
+    private final List<Data> data;
 
-    public ExecutableCode(String code, Set<Symbol> symbols) {
-        this.code = code;
-        this.symbols = new HashSet<>(symbols.size());
-        symbols.forEach((symbol) -> {
-            this.symbols.add(new Symbol(symbol));
-        });
+    public ExecutableCode(char[][] code, List<Data> data) {
+        this.code = new char[code.length][];
+        for(int i = 0; i < code.length; i++) {
+            this.code[i] = new char[code[i].length];
+            System.arraycopy(code[i], 0, this.code[i], 0, code[i].length);
+        }
+        this.data = new ArrayList<>(data.size());
+        for(int i = 0; i < data.size(); i++) {
+            this.data.add(new Data(data.get(i)));
+        }
     }
 
-    public String getCode() {
-        return code;
+    public char[][] getCode() {
+        char[][] temp = new char[code.length][];
+        for(int i = 0; i < code.length; i++) {
+            temp[i] = new char[code[i].length];
+            System.arraycopy(code[i], 0, temp[i], 0, code[i].length);
+        }
+        return temp;
     }
 
-    public final Set<Symbol> getSymbols() {
-        Set<Symbol> temp = new HashSet<>(symbols.size());
-        symbols.forEach((symbol) -> {
-            temp.add(new Symbol(symbol));
-        });
+    public List<Data> getData() {
+        List<Data> temp = new ArrayList<>(data.size());
+        for(int i = 0; i < data.size(); i++) {
+            temp.add(new Data(data.get(i)));
+        }
         return temp;
     }
 }

@@ -322,75 +322,75 @@ bics
     ;
 
 b
-    : 'b' LABEL
+    : 'b' (LABEL | DECIMAL)
     ;
 
 beq
-    : 'beq' LABEL
+    : 'beq' (LABEL | DECIMAL)
     ;
 
 bne
-    : 'bne' LABEL
+    : 'bne' (LABEL | DECIMAL)
     ;
 
 bcs
-    : 'bcs' LABEL
+    : 'bcs' (LABEL | DECIMAL)
     ;
 
 bhs
-    : 'bhs' LABEL
+    : 'bhs' (LABEL | DECIMAL)
     ;
 
 bcc
-    : 'bcc' LABEL
+    : 'bcc' (LABEL | DECIMAL)
     ;
 
 blo
-    : 'blo' LABEL
+    : 'blo' (LABEL | DECIMAL)
     ;
 
 bmi
-    : 'bmi' LABEL
+    : 'bmi' (LABEL | DECIMAL)
     ;
 
 bpl
-    : 'bpl' LABEL
+    : 'bpl' (LABEL | DECIMAL)
     ;
 
 bvs
-    : 'bvs' LABEL
+    : 'bvs' (LABEL | DECIMAL)
     ;
 
 bvc
-    : 'bvc' LABEL
+    : 'bvc' (LABEL | DECIMAL)
     ;
 
 bhi
-    : 'bhi' LABEL
+    : 'bhi' (LABEL | DECIMAL)
     ;
 
 bls
-    : 'bls' LABEL
+    : 'bls' (LABEL | DECIMAL)
     ;
 
 bge
-    : 'bge' LABEL
+    : 'bge' (LABEL | DECIMAL)
     ;
 
 blt
-    : 'blt' LABEL
+    : 'blt' (LABEL | DECIMAL)
     ;
 
 bgt
-    : 'bgt' LABEL
+    : 'bgt' (LABEL | DECIMAL)
     ;
 
 ble
-    : 'ble' LABEL
+    : 'ble' (LABEL | DECIMAL)
     ;
 
 bal
-    : 'bal' LABEL
+    : 'bal' (LABEL | DECIMAL)
     ;
 
 bl

@@ -18,7 +18,7 @@ package com.kasirgalabs.etumulator.processor.visitor;
 
 import static org.junit.Assert.assertEquals;
 
-import com.kasirgalabs.etumulator.langtools.LinkerAndLoader;
+import com.kasirgalabs.etumulator.langtools.Assembler;
 import com.kasirgalabs.etumulator.processor.BaseProcessor;
 import com.kasirgalabs.etumulator.processor.BaseProcessorUnits;
 import com.kasirgalabs.etumulator.processor.CPSR;
@@ -33,7 +33,7 @@ public class BranchVisitorTest {
     private final CPSR cpsr;
     private final UART uart;
     private final Processor processor;
-    private final LinkerAndLoader linkerAndLoader;
+    private final Assembler assembler;
 
     public BranchVisitorTest() {
         ProcessorUnits processorUnits = new BaseProcessorUnits();
@@ -41,7 +41,7 @@ public class BranchVisitorTest {
         cpsr = processorUnits.getCPSR();
         uart = processorUnits.getUART();
         processor = new BaseProcessor(processorUnits);
-        linkerAndLoader = new LinkerAndLoader(null);
+        assembler = new Assembler(null);
     }
 
     /**
@@ -53,7 +53,7 @@ public class BranchVisitorTest {
                 + "b target\n"
                 + "add r0, r0, r0\n"
                 + "target:\n";
-        processor.run(linkerAndLoader.linkAndLoad(code));
+        processor.run(assembler.assemble(code));
         assertEquals("Branch instruction does not work properly.", 1, registerFile.getValue("r0"));
 
         code = "target:\n"
@@ -62,7 +62,7 @@ public class BranchVisitorTest {
                 + "add r0, r0, #1\n"
                 + "b target\n"
                 + "target2:\n";
-        processor.run(linkerAndLoader.linkAndLoad(code));
+        processor.run(assembler.assemble(code));
         assertEquals("Branch instruction does not work properly.", 5, registerFile.getValue("r0"));
     }
 
@@ -76,7 +76,7 @@ public class BranchVisitorTest {
                 + "beq target\n"
                 + "mov r0, #1\n"
                 + "target:\n";
-        processor.run(linkerAndLoader.linkAndLoad(code));
+        processor.run(assembler.assemble(code));
         assertEquals("Branch instruction does not work properly.", 4, registerFile.getValue("r0"));
 
         code = "target:\n"
@@ -85,7 +85,7 @@ public class BranchVisitorTest {
                 + "add r0, r0, #1\n"
                 + "b target\n"
                 + "target2:\n";
-        processor.run(linkerAndLoader.linkAndLoad(code));
+        processor.run(assembler.assemble(code));
         assertEquals("Branch instruction does not work properly.", 5, registerFile.getValue("r0"));
     }
 
@@ -99,7 +99,7 @@ public class BranchVisitorTest {
                 + "bne target\n"
                 + "mov r0, #1\n"
                 + "target:\n";
-        processor.run(linkerAndLoader.linkAndLoad(code));
+        processor.run(assembler.assemble(code));
         assertEquals("Branch instruction does not work properly.", 4, registerFile.getValue("r0"));
 
         code = "mov r0, #4\n"
@@ -108,7 +108,7 @@ public class BranchVisitorTest {
                 + "bne target\n"
                 + "mov r0, #1\n"
                 + "target:\n";
-        processor.run(linkerAndLoader.linkAndLoad(code));
+        processor.run(assembler.assemble(code));
         assertEquals("Branch instruction does not work properly.", 1, registerFile.getValue("r0"));
     }
 
@@ -122,7 +122,7 @@ public class BranchVisitorTest {
                 + "bcs target\n"
                 + "mov r0, #1\n"
                 + "target:\n";
-        processor.run(linkerAndLoader.linkAndLoad(code));
+        processor.run(assembler.assemble(code));
         assertEquals("Branch instruction does not work properly.", 4, registerFile.getValue("r0"));
 
         cpsr.setCarry(false);
@@ -130,7 +130,7 @@ public class BranchVisitorTest {
                 + "bcs target\n"
                 + "mov r0, #1\n"
                 + "target:\n";
-        processor.run(linkerAndLoader.linkAndLoad(code));
+        processor.run(assembler.assemble(code));
         assertEquals("Branch instruction does not work properly.", 1, registerFile.getValue("r0"));
     }
 
@@ -144,7 +144,7 @@ public class BranchVisitorTest {
                 + "bhs target\n"
                 + "mov r0, #1\n"
                 + "target:\n";
-        processor.run(linkerAndLoader.linkAndLoad(code));
+        processor.run(assembler.assemble(code));
         assertEquals("Branch instruction does not work properly.", 1, registerFile.getValue("r0"));
 
         cpsr.setCarry(true);
@@ -152,7 +152,7 @@ public class BranchVisitorTest {
                 + "bhs target\n"
                 + "mov r0, #1\n"
                 + "target:\n";
-        processor.run(linkerAndLoader.linkAndLoad(code));
+        processor.run(assembler.assemble(code));
         assertEquals("Branch instruction does not work properly.", 4, registerFile.getValue("r0"));
     }
 
@@ -166,7 +166,7 @@ public class BranchVisitorTest {
                 + "bcc target\n"
                 + "mov r0, #1\n"
                 + "target:\n";
-        processor.run(linkerAndLoader.linkAndLoad(code));
+        processor.run(assembler.assemble(code));
         assertEquals("Branch instrucbtion does not work properly.", 1, registerFile.getValue("r0"));
 
         cpsr.setCarry(false);
@@ -174,7 +174,7 @@ public class BranchVisitorTest {
                 + "bcc target\n"
                 + "mov r0, #1\n"
                 + "target:\n";
-        processor.run(linkerAndLoader.linkAndLoad(code));
+        processor.run(assembler.assemble(code));
         assertEquals("Branch instrucbtion does not work properly.", 4, registerFile.getValue("r0"));
     }
 
@@ -188,7 +188,7 @@ public class BranchVisitorTest {
                 + "blo target\n"
                 + "mov r0, #1\n"
                 + "target:\n";
-        processor.run(linkerAndLoader.linkAndLoad(code));
+        processor.run(assembler.assemble(code));
         assertEquals("Branch instruction does not work properly.", 4, registerFile.getValue("r0"));
 
         cpsr.setCarry(true);
@@ -196,7 +196,7 @@ public class BranchVisitorTest {
                 + "blo target\n"
                 + "mov r0, #1\n"
                 + "target:\n";
-        processor.run(linkerAndLoader.linkAndLoad(code));
+        processor.run(assembler.assemble(code));
         assertEquals("Branch instruction does not work properly.", 1, registerFile.getValue("r0"));
     }
 
@@ -210,7 +210,7 @@ public class BranchVisitorTest {
                 + "bmi target\n"
                 + "mov r0, #1\n"
                 + "target:\n";
-        processor.run(linkerAndLoader.linkAndLoad(code));
+        processor.run(assembler.assemble(code));
         assertEquals("Branch instruction does not work properly.", 0xffff_ffff, registerFile
                 .getValue("r0"));
 
@@ -219,7 +219,7 @@ public class BranchVisitorTest {
                 + "bmi target\n"
                 + "mov r0, #1\n"
                 + "target:\n";
-        processor.run(linkerAndLoader.linkAndLoad(code));
+        processor.run(assembler.assemble(code));
         assertEquals("Branch instruction does not work properly.", 1, registerFile.getValue("r0"));
     }
 
@@ -233,7 +233,7 @@ public class BranchVisitorTest {
                 + "bpl target\n"
                 + "mov r0, #1\n"
                 + "target:\n";
-        processor.run(linkerAndLoader.linkAndLoad(code));
+        processor.run(assembler.assemble(code));
         assertEquals("Branch instruction does not work properly.", 1, registerFile.getValue("r0"));
 
         code = "ldr r0, =0x7fffffff\n"
@@ -241,7 +241,7 @@ public class BranchVisitorTest {
                 + "bpl target\n"
                 + "mov r0, #1\n"
                 + "target:\n";
-        processor.run(linkerAndLoader.linkAndLoad(code));
+        processor.run(assembler.assemble(code));
         assertEquals("Branch instruction does not work properly.", 0x7fff_ffff, registerFile
                 .getValue("r0"));
     }
@@ -256,7 +256,7 @@ public class BranchVisitorTest {
                 + "bvs target\n"
                 + "mov r0, #2\n"
                 + "target:\n";
-        processor.run(linkerAndLoader.linkAndLoad(code));
+        processor.run(assembler.assemble(code));
         assertEquals("Branch instruction does not work properly.", Integer.MIN_VALUE, registerFile
                 .getValue("r0"));
 
@@ -265,7 +265,7 @@ public class BranchVisitorTest {
                 + "bvs target\n"
                 + "mov r0, #1\n"
                 + "target:\n";
-        processor.run(linkerAndLoader.linkAndLoad(code));
+        processor.run(assembler.assemble(code));
         assertEquals("Branch instruction does not work properly.", 1, registerFile.getValue("r0"));
     }
 
@@ -279,7 +279,7 @@ public class BranchVisitorTest {
                 + "bvc target\n"
                 + "mov r0, #2\n"
                 + "target:\n";
-        processor.run(linkerAndLoader.linkAndLoad(code));
+        processor.run(assembler.assemble(code));
         assertEquals("Branch instruction does not work properly.", 2, registerFile.getValue("r0"));
 
         code = "mov r0, #2\n"
@@ -287,7 +287,7 @@ public class BranchVisitorTest {
                 + "bvc target\n"
                 + "mov r0, #1\n"
                 + "target:\n";
-        processor.run(linkerAndLoader.linkAndLoad(code));
+        processor.run(assembler.assemble(code));
         assertEquals("Branch instruction does not work properly.", 2, registerFile.getValue("r0"));
     }
 
@@ -301,7 +301,7 @@ public class BranchVisitorTest {
                 + "bhi target\n"
                 + "mov r0, #4\n"
                 + "target:\n";
-        processor.run(linkerAndLoader.linkAndLoad(code));
+        processor.run(assembler.assemble(code));
         assertEquals("Branch instruction does not work properly.", 2, registerFile.getValue("r0"));
 
         code = "mov r0, #0\n"
@@ -309,7 +309,7 @@ public class BranchVisitorTest {
                 + "bhi target\n"
                 + "mov r0, #1\n"
                 + "target:\n";
-        processor.run(linkerAndLoader.linkAndLoad(code));
+        processor.run(assembler.assemble(code));
         assertEquals("Branch instruction does not work properly.", 1, registerFile.getValue("r0"));
 
         cpsr.setCarry(false);
@@ -317,7 +317,7 @@ public class BranchVisitorTest {
                 + "bhi target\n"
                 + "mov r0, #1\n"
                 + "target:\n";
-        processor.run(linkerAndLoader.linkAndLoad(code));
+        processor.run(assembler.assemble(code));
         assertEquals("Branch instruction does not work properly.", 1, registerFile.getValue("r0"));
     }
 
@@ -331,7 +331,7 @@ public class BranchVisitorTest {
                 + "bls target\n"
                 + "mov r0, #0\n"
                 + "target:\n";
-        processor.run(linkerAndLoader.linkAndLoad(code));
+        processor.run(assembler.assemble(code));
         assertEquals("Branch instruction does not work properly.", 2, registerFile.getValue("r0"));
 
         code = "ldr r0, =#0x80000001\n"
@@ -339,7 +339,7 @@ public class BranchVisitorTest {
                 + "bls target\n"
                 + "mov r0, #3\n"
                 + "target:\n";
-        processor.run(linkerAndLoader.linkAndLoad(code));
+        processor.run(assembler.assemble(code));
         assertEquals("Branch instruction does not work properly.", 3, registerFile.getValue("r0"));
 
         cpsr.setCarry(true);
@@ -348,7 +348,7 @@ public class BranchVisitorTest {
                 + "bls target\n"
                 + "mov r0, #1\n"
                 + "target:\n";
-        processor.run(linkerAndLoader.linkAndLoad(code));
+        processor.run(assembler.assemble(code));
         assertEquals("Branch instruction does not work properly.", 1, registerFile.getValue("r0"));
 
         cpsr.setCarry(false);
@@ -357,7 +357,7 @@ public class BranchVisitorTest {
                 + "bls target\n"
                 + "mov r0, #1\n"
                 + "target:\n";
-        processor.run(linkerAndLoader.linkAndLoad(code));
+        processor.run(assembler.assemble(code));
         assertEquals("Branch instruction does not work properly.", 4, registerFile.getValue("r0"));
 
         cpsr.setCarry(true);
@@ -366,7 +366,7 @@ public class BranchVisitorTest {
                 + "bls target\n"
                 + "mov r0, #1\n"
                 + "target:\n";
-        processor.run(linkerAndLoader.linkAndLoad(code));
+        processor.run(assembler.assemble(code));
         assertEquals("Branch instruction does not work properly.", 8, registerFile.getValue("r0"));
     }
 
@@ -381,7 +381,7 @@ public class BranchVisitorTest {
                 + "bge target\n"
                 + "mov r0, #1\n"
                 + "target:\n";
-        processor.run(linkerAndLoader.linkAndLoad(code));
+        processor.run(assembler.assemble(code));
         assertEquals("Branch instruction does not work properly.", 2, registerFile.getValue("r0"));
 
         code = "ldr r0, =#0x80000000\n"
@@ -390,7 +390,7 @@ public class BranchVisitorTest {
                 + "bge target\n"
                 + "mov r0, #2\n"
                 + "target:\n";
-        processor.run(linkerAndLoader.linkAndLoad(code));
+        processor.run(assembler.assemble(code));
         assertEquals("Branch instruction does not work properly.", 2, registerFile.getValue("r0"));
 
         code = "mov r0, 1\n"
@@ -399,7 +399,7 @@ public class BranchVisitorTest {
                 + "bge target\n"
                 + "mov r0, #2\n"
                 + "target:\n";
-        processor.run(linkerAndLoader.linkAndLoad(code));
+        processor.run(assembler.assemble(code));
         assertEquals("Branch instruction does not work properly.", 1, registerFile.getValue("r0"));
     }
 
@@ -414,7 +414,7 @@ public class BranchVisitorTest {
                 + "blt target\n"
                 + "mov r0, #1\n"
                 + "target:\n";
-        processor.run(linkerAndLoader.linkAndLoad(code));
+        processor.run(assembler.assemble(code));
         assertEquals("Branch instruction does not work properly.", 2, registerFile.getValue("r0"));
 
         code = "mov r0, #0\n"
@@ -422,7 +422,7 @@ public class BranchVisitorTest {
                 + "blt target\n"
                 + "mov r0, #2\n"
                 + "target:\n";
-        processor.run(linkerAndLoader.linkAndLoad(code));
+        processor.run(assembler.assemble(code));
         assertEquals("Branch instruction does not work properly.", 2, registerFile.getValue("r0"));
     }
 
@@ -437,7 +437,7 @@ public class BranchVisitorTest {
                 + "bgt target\n"
                 + "mov r0, #1\n"
                 + "target:\n";
-        processor.run(linkerAndLoader.linkAndLoad(code));
+        processor.run(assembler.assemble(code));
         assertEquals("Branch instruction does not work properly.", 2, registerFile.getValue("r0"));
 
         code = "ldr r0, =#0x80000000\n"
@@ -446,7 +446,7 @@ public class BranchVisitorTest {
                 + "bgt target\n"
                 + "mov r0, #2\n"
                 + "target:\n";
-        processor.run(linkerAndLoader.linkAndLoad(code));
+        processor.run(assembler.assemble(code));
         assertEquals("Branch instruction does not work properly.", 2, registerFile.getValue("r0"));
 
         code = "mov r0, 1\n"
@@ -455,7 +455,7 @@ public class BranchVisitorTest {
                 + "bgt target\n"
                 + "mov r0, #2\n"
                 + "target:\n";
-        processor.run(linkerAndLoader.linkAndLoad(code));
+        processor.run(assembler.assemble(code));
         assertEquals("Branch instruction does not work properly.", 2, registerFile.getValue("r0"));
     }
 
@@ -470,7 +470,7 @@ public class BranchVisitorTest {
                 + "ble target\n"
                 + "mov r0, #1\n"
                 + "target:\n";
-        processor.run(linkerAndLoader.linkAndLoad(code));
+        processor.run(assembler.assemble(code));
         assertEquals("Branch instruction does not work properly.", 2, registerFile.getValue("r0"));
 
         code = "mov r0, #1\n"
@@ -478,7 +478,7 @@ public class BranchVisitorTest {
                 + "ble target\n"
                 + "mov r0, #2\n"
                 + "target:\n";
-        processor.run(linkerAndLoader.linkAndLoad(code));
+        processor.run(assembler.assemble(code));
         assertEquals("Branch instruction does not work properly.", 2, registerFile.getValue("r0"));
 
         code = "mov r0, 1\n"
@@ -487,7 +487,7 @@ public class BranchVisitorTest {
                 + "ble target\n"
                 + "mov r0, #2\n"
                 + "target:\n";
-        processor.run(linkerAndLoader.linkAndLoad(code));
+        processor.run(assembler.assemble(code));
         assertEquals("Branch instruction does not work properly.", 1, registerFile.getValue("r0"));
     }
 
@@ -500,7 +500,7 @@ public class BranchVisitorTest {
                 + "bal target\n"
                 + "add r0, r0, r0\n"
                 + "target:\n";
-        processor.run(linkerAndLoader.linkAndLoad(code));
+        processor.run(assembler.assemble(code));
         assertEquals("Branch instruction does not work properly.", 1, registerFile.getValue("r0"));
 
         code = "mov r0, #0\n"
@@ -510,7 +510,7 @@ public class BranchVisitorTest {
                 + "add r0, r0, #1\n"
                 + "bal target\n"
                 + "target2:\n";
-        processor.run(linkerAndLoader.linkAndLoad(code));
+        processor.run(assembler.assemble(code));
         assertEquals("Branch instruction does not work properly.", 5, registerFile.getValue("r0"));
     }
 
@@ -527,7 +527,7 @@ public class BranchVisitorTest {
                 + "bl uart_write\n"
                 + "b label\n"
                 + "exit:\n";
-        processor.run(linkerAndLoader.linkAndLoad(code));
+        processor.run(assembler.assemble(code));
         assertEquals("Branch instruction does not work properly.", 100, registerFile.getValue("r0"));
 
         registerFile.reset();
@@ -536,7 +536,7 @@ public class BranchVisitorTest {
             uart.feed(expResult);
         });
         code = "bl uart_read\n";
-        processor.run(linkerAndLoader.linkAndLoad(code));
+        processor.run(assembler.assemble(code));
         assertEquals("Branch instruction does not work properly.", expResult, registerFile
                 .getValue("r0"));
     }

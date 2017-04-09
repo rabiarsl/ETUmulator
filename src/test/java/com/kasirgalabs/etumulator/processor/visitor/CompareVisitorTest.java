@@ -19,7 +19,7 @@ package com.kasirgalabs.etumulator.processor.visitor;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
-import com.kasirgalabs.etumulator.langtools.LinkerAndLoader;
+import com.kasirgalabs.etumulator.langtools.Assembler;
 import com.kasirgalabs.etumulator.processor.BaseProcessor;
 import com.kasirgalabs.etumulator.processor.BaseProcessorUnits;
 import com.kasirgalabs.etumulator.processor.CPSR;
@@ -28,13 +28,13 @@ import com.kasirgalabs.etumulator.processor.ProcessorUnits;
 import org.junit.Test;
 
 public class CompareVisitorTest {
-    private final LinkerAndLoader linkerAndLoader;
+    private final Assembler assembler;
     private final CPSR cpsr;
     private final Processor processor;
 
     public CompareVisitorTest() {
         ProcessorUnits processorUnits = new BaseProcessorUnits();
-        linkerAndLoader = new LinkerAndLoader(processorUnits.getMemory());
+        assembler = new Assembler(processorUnits.getMemory());
         cpsr = processorUnits.getCPSR();
         processor = new BaseProcessor(processorUnits);
     }
@@ -45,20 +45,20 @@ public class CompareVisitorTest {
     @Test
     public void testVisitCmp() {
         String code = "cmp r2, #0\n";
-        processor.run(linkerAndLoader.linkAndLoad(code));
+        processor.run(assembler.assemble(code));
         assertFalse("Negative flag is wrong.", cpsr.isNegative());
         assertTrue("Zero flag is wrong.", cpsr.isZero());
         assertFalse("Overflow flag is wrong.", cpsr.isOverflow());
 
         code = "cmp r2, 8\n";
-        processor.run(linkerAndLoader.linkAndLoad(code));
+        processor.run(assembler.assemble(code));
         assertTrue("Negative flag is wrong.", cpsr.isNegative());
         assertFalse("Zero flag is wrong.", cpsr.isZero());
         assertFalse("Overflow flag is wrong.", cpsr.isOverflow());
 
         code = "mov r0, #0xf0\n"
                 + "cmp r0, 0xf0\n";
-        processor.run(linkerAndLoader.linkAndLoad(code));
+        processor.run(assembler.assemble(code));
         assertFalse("Negative flag is wrong.", cpsr.isNegative());
         assertTrue("Zero flag is wrong.", cpsr.isZero());
         assertFalse("Overflow flag is wrong.", cpsr.isOverflow());
@@ -66,7 +66,7 @@ public class CompareVisitorTest {
         code = "ldr r1, =#0x80000000\n"
                 + "ldr r2, =0xffffffff\n"
                 + "cmp r1, r2\n";
-        processor.run(linkerAndLoader.linkAndLoad(code));
+        processor.run(assembler.assemble(code));
         assertTrue("Negative flag is wrong.", cpsr.isNegative());
         assertFalse("Zero flag is wrong.", cpsr.isZero());
         assertFalse("Overflow flag is wrong.", cpsr.isOverflow());
@@ -78,13 +78,13 @@ public class CompareVisitorTest {
     @Test
     public void testVisitCmn() {
         String code = "cmn r1,  #0\n";
-        processor.run(linkerAndLoader.linkAndLoad(code));
+        processor.run(assembler.assemble(code));
         assertFalse("Negative flag is wrong.", cpsr.isNegative());
         assertTrue("Zero flag is wrong.", cpsr.isZero());
         assertFalse("Overflow flag is wrong.", cpsr.isOverflow());
 
         code = "cmn r2, 8\n";
-        processor.run(linkerAndLoader.linkAndLoad(code));
+        processor.run(assembler.assemble(code));
         assertFalse("Negative flag is wrong.", cpsr.isNegative());
         assertFalse("Zero flag is wrong.", cpsr.isZero());
         assertFalse("Overflow flag is wrong.", cpsr.isOverflow());
@@ -92,7 +92,7 @@ public class CompareVisitorTest {
         code = "ldr r1, =#0x80000000\n"
                 + "ldr r2, =0xffffffff\n"
                 + "cmn r1, r2\n";
-        processor.run(linkerAndLoader.linkAndLoad(code));
+        processor.run(assembler.assemble(code));
         assertFalse("Negative flag is wrong.", cpsr.isNegative());
         assertFalse("Zero flag is wrong.", cpsr.isZero());
         assertTrue("Overflow flag is wrong.", cpsr.isOverflow());

@@ -20,7 +20,7 @@ import com.google.inject.Inject;
 import com.kasirgalabs.etumulator.document.Document;
 import com.kasirgalabs.etumulator.langtools.ExecutableCode;
 import com.kasirgalabs.etumulator.langtools.LabelError;
-import com.kasirgalabs.etumulator.langtools.LinkerAndLoader;
+import com.kasirgalabs.etumulator.langtools.Assembler;
 import com.kasirgalabs.etumulator.langtools.UnsupportedInstructionError;
 import com.kasirgalabs.etumulator.processor.Memory;
 import com.kasirgalabs.etumulator.processor.Processor;
@@ -37,10 +37,10 @@ public class ETUmulatorController {
 
     @FXML
     private void runButtonOnAction(ActionEvent event) {
-        LinkerAndLoader linkerAndLoader = new LinkerAndLoader(memory);
+        Assembler assembler = new Assembler(memory);
         ExecutableCode executableCode;
         try {
-            executableCode = linkerAndLoader.linkAndLoad(document.getText() + "\n");
+            executableCode = assembler.assemble(document.getText() + "\n");
             if(executableCode == null) {
                 return;
             }

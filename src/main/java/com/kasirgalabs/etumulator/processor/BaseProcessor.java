@@ -117,23 +117,12 @@ public class BaseProcessor extends ArmBaseVisitor<Void> implements Processor {
     @Override
     public void run(ExecutableCode executableCode) {
         pc = 0;
-        branchVisitor.setSymbols(executableCode.getSymbols());
-        singleDataMemoryVisitor.setSymbols(executableCode.getSymbols());
-        final char[][] instructions = parseInstructions(executableCode.getCode());
+        final char[][] instructions = executableCode.getCode();
         while(pc < instructions.length) {
             char[] instruction = instructions[pc];
             execute(instruction);
             pc++;
         }
-    }
-
-    private char[][] parseInstructions(String code) {
-        String[] parts = code.split("\\n");
-        char[][] instructions = new char[parts.length][];
-        for(int i = 0; i < instructions.length; i++) {
-            instructions[i] = (parts[i] + "\n").toCharArray();
-        }
-        return instructions;
     }
 
     private void execute(char[] instruction) {

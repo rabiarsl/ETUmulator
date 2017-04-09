@@ -18,14 +18,9 @@ package com.kasirgalabs.etumulator.processor.visitor;
 
 import com.kasirgalabs.arm.ArmBaseVisitor;
 import com.kasirgalabs.arm.ArmParser;
-import com.kasirgalabs.etumulator.langtools.Symbol;
 import com.kasirgalabs.etumulator.processor.RegisterFile;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Set;
 
 public class LdrAddressVisitor extends ArmBaseVisitor<Integer> {
-    private Set<Symbol> symbols;
     private final RegisterFile registerFile;
     private final RegisterVisitor registerVisitor;
     private final NumberVisitor numberVisitor;
@@ -34,10 +29,6 @@ public class LdrAddressVisitor extends ArmBaseVisitor<Integer> {
         this.registerFile = registerFile;
         registerVisitor = new RegisterVisitor();
         numberVisitor = new NumberVisitor();
-    }
-
-    public void setSymbols(Set<Symbol> symbols) {
-        this.symbols = symbols;
     }
 
     @Override
@@ -54,7 +45,7 @@ public class LdrAddressVisitor extends ArmBaseVisitor<Integer> {
         if(ctx.postIndexedRegister() != null) {
             return visit(ctx.postIndexedRegister());
         }
-        return visit(ctx.pcRelative());
+        return null;
     }
 
     @Override
@@ -97,16 +88,5 @@ public class LdrAddressVisitor extends ArmBaseVisitor<Integer> {
         }
         registerFile.setValue(srcRegister, value + offset);
         return value;
-    }
-
-    @Override
-    public Integer visitPcRelative(ArmParser.PcRelativeContext ctx) {
-        return addressOfSymbol(ctx.LABEL().getText());
-    }
-
-    private Integer addressOfSymbol(String name) {
-        List<Symbol> list = new ArrayList<>(symbols);
-        int index = list.indexOf(new Symbol(name, 0));
-        return list.get(index).getAddress();
     }
 }

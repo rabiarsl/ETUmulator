@@ -18,7 +18,7 @@ package com.kasirgalabs.etumulator.processor;
 
 import static org.junit.Assert.assertEquals;
 
-import com.kasirgalabs.etumulator.langtools.LinkerAndLoader;
+import com.kasirgalabs.etumulator.langtools.Assembler;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
@@ -29,12 +29,12 @@ import org.junit.Test;
 public class GUISafeProcessorTest {
     private final GUISafeProcessor processor;
     private final GUISafeProcessorUnits processorUnits;
-    private final LinkerAndLoader linkerAndLoader;
+    private final Assembler assembler;
 
     public GUISafeProcessorTest() throws InterruptedException {
         processorUnits = new GUISafeProcessorUnits();
         processor = new GUISafeProcessor(processorUnits);
-        linkerAndLoader = new LinkerAndLoader(processorUnits.getMemory());
+        assembler = new Assembler(processorUnits.getMemory());
     }
 
     @After
@@ -55,7 +55,7 @@ public class GUISafeProcessorTest {
         String code = "nop\n"
                 + "nop\n"
                 + "nop\n";
-        processor.run(linkerAndLoader.linkAndLoad(code));
+        processor.run(assembler.assemble(code));
         processor.waitForComplete(5, TimeUnit.SECONDS);
 
         code = "mov r0, #1\n"
@@ -66,7 +66,7 @@ public class GUISafeProcessorTest {
                 + "bl uart_write\n"
                 + "b label\n"
                 + "exit:\n";
-        processor.run(linkerAndLoader.linkAndLoad(code));
+        processor.run(assembler.assemble(code));
         processor.waitForComplete(5, TimeUnit.SECONDS);
         assertEquals("GUISafeProcessor does not work properly.", 100, processorUnits
                 .getRegisterFile().getValue("r0"));
@@ -79,7 +79,7 @@ public class GUISafeProcessorTest {
                 + "push {r0}\n"
                 + "b label\n"
                 + "exit:\n";
-        processor.run(linkerAndLoader.linkAndLoad(code));
+        processor.run(assembler.assemble(code));
         processor.waitForComplete(5, TimeUnit.SECONDS);
         assertEquals("GUISafeProcessor does not work properly.", 100, processorUnits
                 .getStack().peek());
