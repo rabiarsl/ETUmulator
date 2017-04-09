@@ -19,7 +19,7 @@ package com.kasirgalabs.etumulator.util;
 public interface Dispatcher {
     void addObserver(Observer listener);
 
-    public void notifyObservers(Class<?> clazz, Object arg);
+    void notifyObservers(Class<?> clazz, Object arg);
 
-    public void notifyObservers(Class<?> clazz);
+    void notifyObservers(Class<?> clazz);
 }

@@ -269,7 +269,9 @@ public class LogicalVisitorTest {
         code = "ldr r1, =0xffffffff\n"
                 + "orns r0, r1, r1\n";
         processor.run(assembler.assemble(code));
-        assertEquals("OR result is wrong.", 0xffff_ffff | ~0xffff_ffff, registerFile.getValue("r0"));
+        assertEquals("OR result is wrong.",
+                0xffff_ffff | ~0xffff_ffff,
+                registerFile.getValue("r0"));
         assertTrue("Negative flag is wrong.", cpsr.isNegative());
         assertFalse("Zero flag is wrong.", cpsr.isZero());
 
@@ -308,7 +310,9 @@ public class LogicalVisitorTest {
                 + "ldr r2, = 0xf0f0f0f0\n"
                 + "bic r0, r1, r2\n";
         processor.run(assembler.assemble(code));
-        assertEquals("AND result is wrong.", 0x0f0f_0f0f & ~0xf0f0_f0f0, registerFile.getValue("r0"));
+        assertEquals("AND result is wrong.",
+                0x0f0f_0f0f & ~0xf0f0_f0f0,
+                registerFile.getValue("r0"));
     }
 
     /**
@@ -327,7 +331,9 @@ public class LogicalVisitorTest {
         code = "ldr r1, =0xffffffff\n"
                 + "bics r0, r1, r1\n";
         processor.run(assembler.assemble(code));
-        assertEquals("AND result is wrong.", 0xffff_ffff & ~0xffff_ffff, registerFile.getValue("r0"));
+        assertEquals("AND result is wrong.",
+                0xffff_ffff & ~0xffff_ffff,
+                registerFile.getValue("r0"));
         assertFalse("Negative flag is wrong.", cpsr.isNegative());
         assertTrue("Zero flag is wrong.", cpsr.isZero());
 

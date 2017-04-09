@@ -162,8 +162,7 @@ public class MultiplyAndDivideVisitorTest {
                 + "udiv r0, r0, r1\n";
         processor.run(assembler.assemble(code));
         assertEquals("Multiply result is wrong.", Integer.divideUnsigned(50, 0xffff_ffff),
-                registerFile
-                        .getValue("r0"));
+                registerFile.getValue("r0"));
 
         code = "ldr r0, =0xffffffff\n"
                 + "mov r1, 1\n"

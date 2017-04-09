@@ -24,22 +24,25 @@ public class StringUtils {
 
     public static String toBinaryString(String decimal) {
         int temp = Integer.parseInt(decimal);
-        String binaryString = Integer.toBinaryString(temp);
-        int missingBits = BIT_WIDTH - binaryString.length();
+        StringBuilder binaryString = new StringBuilder(32);
+        int missingBits = BIT_WIDTH - Integer.toBinaryString(temp).length();
         for(int i = 0; i < missingBits; i++) {
-            binaryString = "0" + binaryString;
+            binaryString.append("0");
         }
-        return binaryString;
+        binaryString.append(Integer.toBinaryString(temp));
+        return binaryString.toString();
     }
 
     public static String toHexString(String decimal) {
         int temp = Integer.parseInt(decimal);
-        String hexString = Integer.toHexString(temp);
-        int missingBits = BIT_WIDTH / 4 - hexString.length();
+        StringBuilder hexString = new StringBuilder(32);
+        hexString.append("0x");
+        int missingBits = BIT_WIDTH / 4 - Integer.toHexString(temp).length();
         for(int i = 0; i < missingBits; i++) {
-            hexString = "0" + hexString;
+            hexString.append("0");
         }
-        return "0x" + hexString;
+        hexString.append(Integer.toHexString(temp));
+        return hexString.toString();
     }
 
     public static String toAsciiString(String decimal) {

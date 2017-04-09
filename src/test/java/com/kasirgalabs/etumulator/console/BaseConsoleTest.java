@@ -93,7 +93,9 @@ public class BaseConsoleTest extends UART {
         FutureTask<Void> futureTask = new FutureTask<>(() -> {
             console.write('a');
             String text = console.getText();
-            assertEquals("BaseConsole does not work properly.", 'a', text.charAt(text.length() - 1));
+            assertEquals("BaseConsole does not work properly.",
+                    'a',
+                    text.charAt(text.length() - 1));
             return null;
         });
         Platform.runLater(futureTask);
@@ -142,7 +144,7 @@ public class BaseConsoleTest extends UART {
         FutureTask<Void> futureTask = new FutureTask<>(() -> {
             BaseConsole baseConsole = (BaseConsole) console;
             baseConsole.update(UART.class, 'x');
-            String text = baseConsole.getText();
+            baseConsole.getText();
 
             mockInput = 'x';
             baseConsole.update(UART.class, "read");

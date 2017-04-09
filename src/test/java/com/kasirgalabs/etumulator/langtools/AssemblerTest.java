@@ -24,19 +24,13 @@ import java.util.List;
 import org.junit.Test;
 
 public class AssemblerTest {
-    private final Memory memory;
-    private final Assembler assembler;
-
-    public AssemblerTest() {
-        memory = new Memory();
-        assembler = new Assembler(memory);
-    }
-
     /**
      * Test of assemble method, of class Assembler.
      */
     @Test
     public void testAssemble() {
+        Memory memory = new Memory();
+        Assembler assembler = new Assembler(memory);
         ExecutableCode executableCode;
         String expData;
         String code = "ldr r0, =label\n";

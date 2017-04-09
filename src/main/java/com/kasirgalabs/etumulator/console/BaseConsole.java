@@ -65,7 +65,7 @@ public class BaseConsole extends TextArea implements Initializable, Console, Obs
 
     @Override
     public void update(Class<?> clazz, Object arg) {
-        if(arg.equals("read")) {
+        if("read".equals(arg)) {
             readEnable = true;
             return;
         }

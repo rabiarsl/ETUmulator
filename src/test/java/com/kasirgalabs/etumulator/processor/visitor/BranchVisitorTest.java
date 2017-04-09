@@ -528,7 +528,9 @@ public class BranchVisitorTest {
                 + "b label\n"
                 + "exit:\n";
         processor.run(assembler.assemble(code));
-        assertEquals("Branch instruction does not work properly.", 100, registerFile.getValue("r0"));
+        assertEquals("Branch instruction does not work properly.",
+                100,
+                registerFile.getValue("r0"));
 
         registerFile.reset();
         char expResult = '5';
