@@ -5,6 +5,7 @@
 
 # ETUmulator
 ETUmulator is a Thumb-2 assembly language emulator written in Java. It is written with portability in mind, with builds actively maintained for Linux. At this moment, ETUmulator only emulates a subset of Thumb-2 instruction set.
+
 ## Getting Started
 These instructions will get you a copy of the project up and running on your local machine for development and testing purposes.
 
@@ -44,6 +45,14 @@ then
 **That's really it!**<br/>
 <br/>
 If you want the project set up in NetBeans (our favored IDE), just install [NetBeans Gradle](http://plugins.netbeans.org/plugin/44510/gradle-support) plugin and open ETUmulator from NetBeans. Then you get a bunch of run configurations and other stuff for free!
+
+### Running
+Execute the below command:
+```
+./gradlew jar
+```
+then you will be able to run ETUmulator from your terminal by typing `java -jar build/libs/ETUmulator.jar`<br/>
+or navigate to `build/libs` directory and double click on the `ETUmulator`
 
 ### Running the tests
 Open a terminal in the root of the project directory, then execute the command:
