@@ -16,6 +16,7 @@
  */
 package com.kasirgalabs.etumulator.util;
 
+import java.util.concurrent.CancellationException;
 import java.util.concurrent.CountDownLatch;
 import javafx.application.Platform;
 
@@ -32,7 +33,7 @@ public class GUISafeDispatcher extends BaseDispatcher {
                 latch.await();
             }
         } catch(InterruptedException ex) {
-            System.exit(-1);
+            throw new CancellationException();
         }
     }
 

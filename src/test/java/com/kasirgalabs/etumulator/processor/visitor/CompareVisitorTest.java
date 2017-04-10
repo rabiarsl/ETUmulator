@@ -19,7 +19,7 @@ package com.kasirgalabs.etumulator.processor.visitor;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
-import com.kasirgalabs.etumulator.langtools.Assembler;
+import com.kasirgalabs.etumulator.lang.Assembler;
 import com.kasirgalabs.etumulator.processor.BaseProcessor;
 import com.kasirgalabs.etumulator.processor.BaseProcessorUnits;
 import com.kasirgalabs.etumulator.processor.CPSR;

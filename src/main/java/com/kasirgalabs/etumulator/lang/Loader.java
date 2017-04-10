@@ -14,24 +14,27 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.kasirgalabs.etumulator.langtools;
+package com.kasirgalabs.etumulator.lang;
 
-import com.kasirgalabs.etumulator.langtools.Linker.ExecutableCode;
+import com.kasirgalabs.etumulator.lang.Linker.ExecutableCode;
 import com.kasirgalabs.etumulator.processor.Memory;
+import java.util.List;
 
-public class Assembler {
-    private final Linker linker;
-    private final Loader loader;
+public class Loader {
+    private final Memory memory;
 
-    public Assembler(Memory memory) {
-        linker = new Linker();
-        loader = new Loader(memory);
+    public Loader(Memory memory) {
+        this.memory = memory;
     }
 
-    public ExecutableCode assemble(String code) throws SyntaxError, LabelError,
-            UnsupportedInstructionError {
-        ExecutableCode executablecode = linker.link(code);
-        loader.load(executablecode);
-        return executablecode;
+    public void load(ExecutableCode executablecode) {
+        List<Data> data = executablecode.getData();
+        data.forEach(item -> {
+            String value = item.getValue();
+            int address = item.getAddress();
+            for(int i = 0; i < value.length(); i++) {
+                memory.set(address + i, (byte) value.charAt(i));
+            }
+        });
     }
 }

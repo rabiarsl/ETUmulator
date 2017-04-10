@@ -14,10 +14,10 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.kasirgalabs.etumulator.langtools;
+package com.kasirgalabs.etumulator.processor;
 
-public class UnsupportedInstructionError extends Error {
-    public UnsupportedInstructionError(String message) {
+public class IllegalPCException extends IllegalStateException {
+    public IllegalPCException(String message) {
         super(message);
     }
 }

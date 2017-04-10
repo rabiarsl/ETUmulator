@@ -2,11 +2,9 @@
 
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
-<?import javafx.scene.control.Label?>
 <?import javafx.scene.control.Menu?>
 <?import javafx.scene.control.MenuBar?>
 <?import javafx.scene.control.MenuItem?>
-<?import javafx.scene.control.TextArea?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.RowConstraints?>
@@ -39,10 +37,10 @@
         <VBox alignment="CENTER" spacing="5.0" GridPane.columnIndex="2" GridPane.rowIndex="1">
             <children>
                 <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#runButtonOnAction" text="Run" />
-                <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="Stop" />
-                <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="Pause" />
-                <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="Continue" />
-                <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="Step" />
+                <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#stopButtonOnAction" text="Stop" />
+                <Button disable="true" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="Pause" />
+                <Button disable="true" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="Continue" />
+                <Button disable="true" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="Step" />
             </children>
             <GridPane.margin>
                 <Insets bottom="10.0" right="10.0" top="10.0" />

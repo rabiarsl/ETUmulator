@@ -14,7 +14,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.kasirgalabs.etumulator.langtools;
+package com.kasirgalabs.etumulator.lang;
 
 import com.kasirgalabs.arm.AssemblerBaseVisitor;
 import com.kasirgalabs.arm.AssemblerLexer;
@@ -208,8 +208,7 @@ public class Linker extends AssemblerBaseVisitor<Void> {
         return null;
     }
 
-    public ExecutableCode link(String code) throws SyntaxError, LabelError,
-            UnsupportedInstructionError {
+    public ExecutableCode link(String code) throws SyntaxError, LabelError {
         definedBranches.clear();
         definedData.clear();
         addressBook.clear();

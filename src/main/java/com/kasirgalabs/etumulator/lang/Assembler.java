@@ -14,10 +14,23 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.kasirgalabs.etumulator.langtools;
+package com.kasirgalabs.etumulator.lang;
 
-public class LabelError extends Error {
-    public LabelError(String message) {
-        super(message);
+import com.kasirgalabs.etumulator.lang.Linker.ExecutableCode;
+import com.kasirgalabs.etumulator.processor.Memory;
+
+public class Assembler {
+    private final Linker linker;
+    private final Loader loader;
+
+    public Assembler(Memory memory) {
+        linker = new Linker();
+        loader = new Loader(memory);
+    }
+
+    public ExecutableCode assemble(String code) throws SyntaxError, LabelError {
+        ExecutableCode executablecode = linker.link(code);
+        loader.load(executablecode);
+        return executablecode;
     }
 }

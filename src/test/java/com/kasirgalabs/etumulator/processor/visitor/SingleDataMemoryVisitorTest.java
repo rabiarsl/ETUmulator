@@ -18,7 +18,7 @@ package com.kasirgalabs.etumulator.processor.visitor;
 
 import static org.junit.Assert.assertEquals;
 
-import com.kasirgalabs.etumulator.langtools.Assembler;
+import com.kasirgalabs.etumulator.lang.Assembler;
 import com.kasirgalabs.etumulator.processor.BaseProcessor;
 import com.kasirgalabs.etumulator.processor.BaseProcessorUnits;
 import com.kasirgalabs.etumulator.processor.Memory;

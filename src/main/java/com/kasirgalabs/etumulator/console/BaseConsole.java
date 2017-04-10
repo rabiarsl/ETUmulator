@@ -20,7 +20,6 @@ import com.google.inject.Inject;
 import com.google.inject.Singleton;
 import com.kasirgalabs.etumulator.processor.UART;
 import com.kasirgalabs.etumulator.util.Observer;
-import java.io.IOException;
 import java.io.OutputStream;
 import java.io.PrintStream;
 import java.net.URL;
@@ -50,7 +49,7 @@ public class BaseConsole extends TextArea implements Initializable, Console, Obs
     public void initialize(URL location, ResourceBundle resources) {
         System.setErr(new PrintStream(new OutputStream() {
             @Override
-            public void write(int b) throws IOException {
+            public void write(int b) {
                 Platform.runLater(() -> {
                     BaseConsole.this.write((char) b);
                 });

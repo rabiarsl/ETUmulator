@@ -45,10 +45,10 @@ public class Memory implements Observable {
     }
 
     public byte get(int address) {
-        if(!isAddressEmpty(address)) {
-            return memory.get(address);
+        if(isAddressEmpty(address)) {
+            return (byte) (Math.random() * Byte.MAX_VALUE);
         }
-        return (byte) (Math.random() * Byte.MAX_VALUE);
+        return memory.get(address);
     }
 
     public void set(int address, byte value) {

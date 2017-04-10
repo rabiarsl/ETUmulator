@@ -18,11 +18,11 @@ package com.kasirgalabs.etumulator;
 
 import com.google.inject.Inject;
 import com.kasirgalabs.etumulator.document.Document;
-import com.kasirgalabs.etumulator.langtools.Assembler;
-import com.kasirgalabs.etumulator.langtools.LabelError;
-import com.kasirgalabs.etumulator.langtools.Linker.ExecutableCode;
-import com.kasirgalabs.etumulator.langtools.SyntaxError;
-import com.kasirgalabs.etumulator.langtools.UnsupportedInstructionError;
+import com.kasirgalabs.etumulator.lang.Assembler;
+import com.kasirgalabs.etumulator.lang.LabelError;
+import com.kasirgalabs.etumulator.lang.Linker.ExecutableCode;
+import com.kasirgalabs.etumulator.lang.SyntaxError;
+import com.kasirgalabs.etumulator.processor.GUISafeProcessor;
 import com.kasirgalabs.etumulator.processor.Memory;
 import com.kasirgalabs.etumulator.processor.Processor;
 import javafx.event.ActionEvent;
@@ -42,10 +42,16 @@ public class ETUmulatorController {
         ExecutableCode executableCode;
         try {
             executableCode = assembler.assemble(document.getText() + "\n");
-        } catch(SyntaxError | LabelError | UnsupportedInstructionError ex) {
+        } catch(SyntaxError | LabelError ex) {
             System.err.println(ex.getMessage());
             return;
         }
         processor.run(executableCode);
+    }
+
+    @FXML
+    private void stopButtonOnAction(ActionEvent event) {
+        GUISafeProcessor guiSafeProcessor = (GUISafeProcessor) processor;
+        guiSafeProcessor.stop();
     }
 }

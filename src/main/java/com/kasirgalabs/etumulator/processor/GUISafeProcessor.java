@@ -18,8 +18,9 @@ package com.kasirgalabs.etumulator.processor;
 
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
-import com.kasirgalabs.etumulator.langtools.Linker.ExecutableCode;
+import com.kasirgalabs.etumulator.lang.Linker.ExecutableCode;
 import java.util.concurrent.Callable;
+import java.util.concurrent.CancellationException;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -42,7 +43,16 @@ public class GUISafeProcessor extends BaseProcessor implements Callable<Void> {
     @Override
     public void run(ExecutableCode executableCode) {
         this.executableCode = executableCode;
-        future = executor.submit(this);
+        if(future == null) {
+            future = executor.submit(this);
+            return;
+        }
+        if(future.isDone()) {
+            future = executor.submit(this);
+        }
+        else {
+            System.err.println("Processor is busy running previous task.");
+        }
     }
 
     public void waitForComplete(long timeout, TimeUnit unit) throws InterruptedException,
@@ -51,12 +61,26 @@ public class GUISafeProcessor extends BaseProcessor implements Callable<Void> {
     }
 
     public void stop() {
+        if(future != null) {
+            future.cancel(true);
+        }
+    }
+
+    public void terminate() {
         executor.shutdownNow();
     }
 
     @Override
     public Void call() {
-        super.run(executableCode);
+        try {
+            super.run(executableCode);
+        } catch(CancellationException ex) {
+        } catch(IllegalPCException ex) {
+            System.err.println(ex.getMessage());
+            throw ex;
+        } catch(Throwable ex) {
+            ex.printStackTrace();
+        }
         return null;
     }
 }

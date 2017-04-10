@@ -22,6 +22,7 @@ import com.kasirgalabs.etumulator.processor.CPSR;
 import com.kasirgalabs.etumulator.processor.LR;
 import com.kasirgalabs.etumulator.processor.PC;
 import com.kasirgalabs.etumulator.processor.UART;
+import java.util.concurrent.CancellationException;
 
 public class BranchVisitor extends ProcessorBaseVisitor<Void> {
     private final CPSR cpsr;
@@ -185,7 +186,7 @@ public class BranchVisitor extends ProcessorBaseVisitor<Void> {
                 try {
                     uart.read();
                 } catch(InterruptedException ex) {
-                    System.exit(-1);
+                    throw new CancellationException();
                 }
             }
             else if("uart_write".equalsIgnoreCase(label)) {

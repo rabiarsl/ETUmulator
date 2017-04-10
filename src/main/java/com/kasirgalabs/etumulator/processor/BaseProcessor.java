@@ -19,7 +19,7 @@ package com.kasirgalabs.etumulator.processor;
 import com.kasirgalabs.arm.ProcessorBaseVisitor;
 import com.kasirgalabs.arm.ProcessorLexer;
 import com.kasirgalabs.arm.ProcessorParser;
-import com.kasirgalabs.etumulator.langtools.Linker.ExecutableCode;
+import com.kasirgalabs.etumulator.lang.Linker.ExecutableCode;
 import com.kasirgalabs.etumulator.processor.visitor.ArithmeticVisitor;
 import com.kasirgalabs.etumulator.processor.visitor.BranchVisitor;
 import com.kasirgalabs.etumulator.processor.visitor.CompareVisitor;
@@ -115,6 +115,9 @@ public class BaseProcessor extends ProcessorBaseVisitor<Void> implements Process
         pc.setValue(0);
         final char[][] instructions = executableCode.getCode();
         while(pc.getValue() < instructions.length) {
+            if(pc.getValue() < 0) {
+                throw new IllegalPCException("PC can not be negative.");
+            }
             char[] instruction = instructions[pc.getValue()];
             execute(instruction);
             pc.increment();

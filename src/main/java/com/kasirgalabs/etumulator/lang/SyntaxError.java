@@ -14,27 +14,10 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.kasirgalabs.etumulator.langtools;
+package com.kasirgalabs.etumulator.lang;
 
-public class Data {
-    private final String data;
-    private final int address;
-
-    public Data(Data data) {
-        this.data = data.getValue();
-        this.address = data.getAddress();
-    }
-
-    public Data(String data, int address) {
-        this.data = data;
-        this.address = address;
-    }
-
-    public String getValue() {
-        return data;
-    }
-
-    public Integer getAddress() {
-        return address;
+public class SyntaxError extends Error {
+    public SyntaxError(String message) {
+        super(message);
     }
 }

@@ -14,27 +14,27 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.kasirgalabs.etumulator.langtools;
+package com.kasirgalabs.etumulator.lang;
 
-import com.kasirgalabs.etumulator.langtools.Linker.ExecutableCode;
-import com.kasirgalabs.etumulator.processor.Memory;
-import java.util.List;
+public class Data {
+    private final String data;
+    private final int address;
 
-public class Loader {
-    private final Memory memory;
-
-    public Loader(Memory memory) {
-        this.memory = memory;
+    public Data(Data data) {
+        this.data = data.getValue();
+        this.address = data.getAddress();
     }
 
-    public void load(ExecutableCode executablecode) {
-        List<Data> data = executablecode.getData();
-        data.forEach(item -> {
-            String value = item.getValue();
-            int address = item.getAddress();
-            for(int i = 0; i < value.length(); i++) {
-                memory.set(address + i, (byte) value.charAt(i));
-            }
-        });
+    public Data(String data, int address) {
+        this.data = data;
+        this.address = address;
+    }
+
+    public String getValue() {
+        return data;
+    }
+
+    public Integer getAddress() {
+        return address;
     }
 }

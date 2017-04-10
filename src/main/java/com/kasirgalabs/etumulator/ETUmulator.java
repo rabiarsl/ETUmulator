@@ -65,7 +65,7 @@ public class ETUmulator extends Application {
             }
         });
         primaryStage.setOnCloseRequest((event) -> {
-            processor.stop();
+            processor.terminate();
             primaryStage.close();
         });
     }

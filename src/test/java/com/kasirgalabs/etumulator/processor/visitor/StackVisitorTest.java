@@ -18,7 +18,7 @@ package com.kasirgalabs.etumulator.processor.visitor;
 
 import static org.junit.Assert.assertEquals;
 
-import com.kasirgalabs.etumulator.langtools.Assembler;
+import com.kasirgalabs.etumulator.lang.Assembler;
 import com.kasirgalabs.etumulator.processor.BaseProcessor;
 import com.kasirgalabs.etumulator.processor.BaseProcessorUnits;
 import com.kasirgalabs.etumulator.processor.Processor;
@@ -65,6 +65,14 @@ public class StackVisitorTest {
                 + "exit:\n";
         processor.run(assembler.assemble(code));
         assertEquals("Branch instruction does not work properly.", 2, registerFile.getValue("r0"));
+
+        code = "nop\n"
+                + "nop\n"
+                + "nop\n"
+                + "push {pc}\n"
+                + "pop {r0}\n";
+        processor.run(assembler.assemble(code));
+        assertEquals("Branch instruction does not work properly.", 3, registerFile.getValue("r0"));
     }
 
     /**
@@ -80,13 +88,16 @@ public class StackVisitorTest {
         assertEquals("Pop result is wrong.", 4, registerFile.getValue("r0"));
         assertEquals("Pop result is wrong.", 0xffff_ffff, registerFile.getValue("r1"));
 
-        code = "mov r0, #1\n"
-                + "mov r2, #5\n"
-                + "push {r2}\n"
-                + "pop {pc}\n"
-                + "mov r0, #2\n"
-                + "mov r0, #3\n"
-                + "mov r1, #2\n";
+        code = "mov r0, #2\n"
+                + "push {r0}\n"
+                + "pop {lr}\n"
+                + "push {lr}\n"
+                + "pop {r1}\n";
+        processor.run(assembler.assemble(code));
+        assertEquals("Pop result is wrong.", 2, registerFile.getValue("r1"));
+        stack.pop();
+
+        code = "mov r0, #1\n";
         processor.run(assembler.assemble(code));
         assertEquals("Pop result is wrong.", 1, registerFile.getValue("r0"));
         assertEquals("Pop result is wrong.", 2, registerFile.getValue("r1"));

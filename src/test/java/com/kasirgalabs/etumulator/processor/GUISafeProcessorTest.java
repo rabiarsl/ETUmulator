@@ -17,8 +17,10 @@
 package com.kasirgalabs.etumulator.processor;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.fail;
 
-import com.kasirgalabs.etumulator.langtools.Assembler;
+import com.kasirgalabs.etumulator.lang.Assembler;
+import java.util.concurrent.CancellationException;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
@@ -39,7 +41,7 @@ public class GUISafeProcessorTest {
 
     @After
     public void tearDown() {
-        processor.stop();
+        processor.terminate();
     }
 
     /**
@@ -68,8 +70,8 @@ public class GUISafeProcessorTest {
                 + "exit:\n";
         processor.run(assembler.assemble(code));
         processor.waitForComplete(5, TimeUnit.SECONDS);
-        assertEquals("GUISafeProcessor does not work properly.", 100, processorUnits
-                .getRegisterFile().getValue("r0"));
+        assertEquals("GUISafeProcessor does not work properly.", 100,
+                processorUnits.getRegisterFile().getValue("r0"));
 
         code = "mov r0, #1\n"
                 + "label:\n"
@@ -81,7 +83,35 @@ public class GUISafeProcessorTest {
                 + "exit:\n";
         processor.run(assembler.assemble(code));
         processor.waitForComplete(5, TimeUnit.SECONDS);
-        assertEquals("GUISafeProcessor does not work properly.", 100, processorUnits
-                .getStack().peek());
+        assertEquals("GUISafeProcessor does not work properly.", 100,
+                processorUnits.getStack().peek());
+
+        code = "here:\n"
+                + "b here\n";
+        processor.run(assembler.assemble(code));
+        Thread.sleep(2000);
+        processor.stop();
+
+        code = "here:\n"
+                + "b here\n";
+        processor.run(assembler.assemble(code));
+        processor.run(assembler.assemble(code));
+        Thread.sleep(2000);
+        try {
+            processor.stop();
+            processor.waitForComplete(5, TimeUnit.SECONDS);
+            fail("GUISafeProcessor should throw CancellationException when stop method is called.");
+        } catch(CancellationException ex) {
+        }
+
+        code = "ldr r0, =0xfffffffe\n"
+                + "push {r0}\n"
+                + "pop {pc}\n";
+        processor.run(assembler.assemble(code));
+        try {
+            processor.waitForComplete(5, TimeUnit.SECONDS);
+            fail("GUISafeProcessor should throw exception when PC is negative.");
+        } catch(ExecutionException ex) {
+        }
     }
 }

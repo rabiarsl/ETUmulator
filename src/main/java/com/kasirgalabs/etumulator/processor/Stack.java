@@ -49,6 +49,9 @@ public class Stack implements Observable {
     }
 
     public int pop() {
+        if(list.isEmpty()) {
+            return (int) (Math.random() * Integer.MAX_VALUE);
+        }
         int result = list.pop();
         dispatcher.notifyObservers(Stack.class, "pop");
         return result;
