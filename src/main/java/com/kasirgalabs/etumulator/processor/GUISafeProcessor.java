@@ -20,7 +20,6 @@ import com.google.inject.Inject;
 import com.google.inject.Singleton;
 import com.kasirgalabs.etumulator.lang.Linker.ExecutableCode;
 import java.util.concurrent.Callable;
-import java.util.concurrent.CancellationException;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -74,7 +73,6 @@ public class GUISafeProcessor extends BaseProcessor implements Callable<Void> {
     public Void call() {
         try {
             super.run(executableCode);
-        } catch(CancellationException ex) {
         } catch(IllegalPCException ex) {
             System.err.println(ex.getMessage());
             throw ex;

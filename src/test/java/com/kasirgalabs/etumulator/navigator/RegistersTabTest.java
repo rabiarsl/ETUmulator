@@ -89,6 +89,7 @@ public class RegistersTabTest {
             pc.setValue(5);
             return null;
         });
+        future.get(5, TimeUnit.SECONDS);
 
         executor = Executors.newSingleThreadExecutor();
         future = executor.submit(() -> {

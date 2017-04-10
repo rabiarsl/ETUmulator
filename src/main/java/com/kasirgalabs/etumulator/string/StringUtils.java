@@ -26,7 +26,7 @@ public final class StringUtils {
         StringBuilder binaryString = new StringBuilder(32);
         int missingBits = BIT_WIDTH - Integer.toBinaryString(value).length();
         for(int i = 0; i < missingBits; i++) {
-            binaryString.append("0");
+            binaryString.append('0');
         }
         binaryString.append(Integer.toBinaryString(value));
         return binaryString.toString();
@@ -37,7 +37,7 @@ public final class StringUtils {
         hexString.append("0x");
         int missingBits = BIT_WIDTH / 4 - Integer.toHexString(value).length();
         for(int i = 0; i < missingBits; i++) {
-            hexString.append("0");
+            hexString.append('0');
         }
         hexString.append(Integer.toHexString(value));
         return hexString.toString();

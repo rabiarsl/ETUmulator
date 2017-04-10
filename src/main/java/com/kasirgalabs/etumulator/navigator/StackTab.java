@@ -61,20 +61,22 @@ public class StackTab implements Initializable, Observer {
     public void update(Class<?> clazz, Object arg) {
         if(clazz.equals(Stack.class)) {
             String operation = (String) arg;
-            if("push".equals(operation)) {
-                data.add(new NavigatorRow(data.size(), stack.peek()));
-            }
-            else if("pop".equals(operation)) {
-                for(int i = 0; i < data.size(); i++) {
-                    NavigatorRow navigatorRow = data.get(i);
-                    if(navigatorRow.getProperty().equals(Integer.toString(data.size() - 1))) {
-                        data.remove(i);
-                        break;
+            switch(operation) {
+                case "push":
+                    data.add(new NavigatorRow(data.size(), stack.peek()));
+                    break;
+                case "pop":
+                    for(int i = 0; i < data.size(); i++) {
+                        NavigatorRow navigatorRow = data.get(i);
+                        if(navigatorRow.getProperty().equals(Integer.toString(data.size() - 1))) {
+                            data.remove(i);
+                            break;
+                        }
                     }
-                }
-            }
-            else {
-                data.clear();
+                    break;
+                default:
+                    data.clear();
+                    break;
             }
         }
         table.refresh();

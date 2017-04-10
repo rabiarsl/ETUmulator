@@ -28,11 +28,11 @@ import com.kasirgalabs.etumulator.processor.Stack;
 import org.junit.Test;
 
 public class StackVisitorTest {
+    private final ProcessorUnits processorUnits;
     private final Assembler assembler;
     private final RegisterFile registerFile;
     private final Stack stack;
     private final Processor processor;
-    ProcessorUnits processorUnits;
 
     public StackVisitorTest() {
         processorUnits = new BaseProcessorUnits();

@@ -27,7 +27,7 @@ public class JavaFXThread implements TestRule {
     }
 
     private static class JavaFXSatement extends Statement {
-        private Throwable rethrownException = null;
+        private Throwable rethrownException;
         private final Statement statement;
 
         private JavaFXSatement(Statement aStatement) {

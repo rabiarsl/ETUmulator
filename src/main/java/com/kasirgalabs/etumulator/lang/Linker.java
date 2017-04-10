@@ -155,7 +155,7 @@ public class Linker extends AssemblerBaseVisitor<Void> {
     @Override
     public Void visitBl(AssemblerParser.BlContext ctx) {
         String label = ctx.LABEL().getText();
-        if("uart_read".equalsIgnoreCase(label) | "uart_write".equalsIgnoreCase(label)) {
+        if("uart_read".equalsIgnoreCase(label) || "uart_write".equalsIgnoreCase(label)) {
             return null;
         }
         replaceLabelAddress(ctx, ctx.LABEL());
