@@ -17,6 +17,7 @@
 package com.kasirgalabs.etumulator.navigator;
 
 import com.kasirgalabs.etumulator.document.BaseDocumentTest;
+import com.kasirgalabs.etumulator.processor.LR;
 import com.kasirgalabs.etumulator.processor.PC;
 import com.kasirgalabs.etumulator.processor.RegisterFile;
 import com.kasirgalabs.etumulator.util.GUISafeDispatcher;
@@ -36,6 +37,7 @@ import org.junit.Test;
 public class RegistersTabTest {
     private RegisterFile registerFile;
     private PC pc;
+    private LR lr;
     private Navigator navigator;
     private RegistersTab registersTab;
 
@@ -47,8 +49,9 @@ public class RegistersTabTest {
         FutureTask<Void> futureTask = new FutureTask<>(() -> {
             registerFile = new RegisterFile(new GUISafeDispatcher());
             pc = new PC(new GUISafeDispatcher());
+            lr = new LR(new GUISafeDispatcher());
             navigator = new Navigator();
-            registersTab = new RegistersTab(registerFile, pc, navigator);
+            registersTab = new RegistersTab(registerFile, pc, lr, navigator);
             ClassLoader classLoader = BaseDocumentTest.class.getClassLoader();
             FXMLLoader fxmlLoader
                     = new FXMLLoader(classLoader.getResource("fxml/RegistersTab.fxml"));
@@ -84,6 +87,12 @@ public class RegistersTabTest {
         executor = Executors.newSingleThreadExecutor();
         future = executor.submit(() -> {
             pc.setValue(5);
+            return null;
+        });
+
+        executor = Executors.newSingleThreadExecutor();
+        future = executor.submit(() -> {
+            lr.setValue(5);
             return null;
         });
         future.get(5, TimeUnit.SECONDS);

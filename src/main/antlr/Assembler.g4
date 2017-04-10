@@ -485,7 +485,7 @@ pop
     ;
 
 regList
-    : LBRACE REGISTER (COMMA REGISTER)* RBRACE
+    : LBRACE (REGISTER | PC | LR) (COMMA (REGISTER | PC | LR))* RBRACE
     ;
 
 rd
@@ -564,6 +564,14 @@ REGISTER
     | 'r10'
     | 'r11'
     | 'r12'
+    ;
+
+PC
+    : 'pc'
+    ;
+
+LR
+    : 'lr'
     ;
 
 label

@@ -44,12 +44,12 @@ public class PC implements Observable {
 
     public void increment() {
         pc++;
-        dispatcher.notifyObservers(PC.class, "PC");
+        dispatcher.notifyObservers(PC.class);
     }
 
     public void setValue(int value) {
         pc = value;
-        dispatcher.notifyObservers(PC.class, "PC");
+        dispatcher.notifyObservers(PC.class);
     }
 
     public int getValue() {

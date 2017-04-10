@@ -32,9 +32,10 @@ public class StackVisitorTest {
     private final RegisterFile registerFile;
     private final Stack stack;
     private final Processor processor;
+    ProcessorUnits processorUnits;
 
     public StackVisitorTest() {
-        ProcessorUnits processorUnits = new BaseProcessorUnits();
+        processorUnits = new BaseProcessorUnits();
         assembler = new Assembler(processorUnits.getMemory());
         registerFile = processorUnits.getRegisterFile();
         stack = processorUnits.getStack();
@@ -52,6 +53,18 @@ public class StackVisitorTest {
         processor.run(assembler.assemble(code));
         assertEquals("Push result is wrong.", 0xffff_ffff, stack.pop());
         assertEquals("Push result is wrong.", 4, stack.pop());
+
+        code = "mov r0, #1\n"
+                + "bl increment\n"
+                + "add r0, r0, #1\n"
+                + "b exit\n"
+                + "increment:\n"
+                + "push {lr}\n"
+                + "pop {pc}\n"
+                + "mov r0, #12\n"
+                + "exit:\n";
+        processor.run(assembler.assemble(code));
+        assertEquals("Branch instruction does not work properly.", 2, registerFile.getValue("r0"));
     }
 
     /**
@@ -66,5 +79,16 @@ public class StackVisitorTest {
         processor.run(assembler.assemble(code));
         assertEquals("Pop result is wrong.", 4, registerFile.getValue("r0"));
         assertEquals("Pop result is wrong.", 0xffff_ffff, registerFile.getValue("r1"));
+
+        code = "mov r0, #1\n"
+                + "mov r2, #5\n"
+                + "push {r2}\n"
+                + "pop {pc}\n"
+                + "mov r0, #2\n"
+                + "mov r0, #3\n"
+                + "mov r1, #2\n";
+        processor.run(assembler.assemble(code));
+        assertEquals("Pop result is wrong.", 1, registerFile.getValue("r0"));
+        assertEquals("Pop result is wrong.", 2, registerFile.getValue("r1"));
     }
 }

@@ -45,5 +45,11 @@ public class NavigatorRowComparatorTest {
                 "11111111111111111111111111111110"));
         assertEquals("Compare result is wrong.", -1, instance.compare("PC", "r13"));
         assertEquals("Compare result is wrong.", -1, instance.compare("r13", "PC"));
+        assertEquals("Compare result is wrong.", -1, instance.compare("PC", "LR"));
+        assertEquals("Compare result is wrong.", -1, instance.compare("LR", "PC"));
+        assertEquals("Compare result is wrong.", -1, instance.compare("LR", "r0"));
+        assertEquals("Compare result is wrong.", -1, instance.compare("r0", "LR"));
+        assertEquals("Compare result is wrong.", -1, instance.compare("LR", "PC"));
+
     }
 }

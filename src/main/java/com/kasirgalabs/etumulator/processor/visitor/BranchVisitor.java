@@ -19,6 +19,7 @@ package com.kasirgalabs.etumulator.processor.visitor;
 import com.kasirgalabs.arm.ProcessorBaseVisitor;
 import com.kasirgalabs.arm.ProcessorParser;
 import com.kasirgalabs.etumulator.processor.CPSR;
+import com.kasirgalabs.etumulator.processor.LR;
 import com.kasirgalabs.etumulator.processor.PC;
 import com.kasirgalabs.etumulator.processor.UART;
 
@@ -26,11 +27,13 @@ public class BranchVisitor extends ProcessorBaseVisitor<Void> {
     private final CPSR cpsr;
     private final UART uart;
     private final PC pc;
+    private final LR lr;
 
-    public BranchVisitor(CPSR cpsr, UART uart, PC pc) {
+    public BranchVisitor(CPSR cpsr, UART uart, PC pc, LR lr) {
         this.cpsr = cpsr;
         this.uart = uart;
         this.pc = pc;
+        this.lr = lr;
     }
 
     @Override
@@ -175,16 +178,23 @@ public class BranchVisitor extends ProcessorBaseVisitor<Void> {
 
     @Override
     public Void visitBl(ProcessorParser.BlContext ctx) {
-        String label = ctx.LABEL().getText();
-        if("uart_read".equalsIgnoreCase(label)) {
-            try {
-                uart.read();
-            } catch(InterruptedException ex) {
-                System.exit(-1);
+        lr.setValue((int) (Math.random() * Integer.MAX_VALUE));
+        if(ctx.LABEL() != null) {
+            String label = ctx.LABEL().getText();
+            if("uart_read".equalsIgnoreCase(label)) {
+                try {
+                    uart.read();
+                } catch(InterruptedException ex) {
+                    System.exit(-1);
+                }
+            }
+            else if("uart_write".equalsIgnoreCase(label)) {
+                uart.write();
             }
         }
-        else if("uart_write".equalsIgnoreCase(label)) {
-            uart.write();
+        else {
+            lr.setValue(pc.getValue());
+            pc.setValue(Integer.parseInt(ctx.DECIMAL().getText()));
         }
         return null;
     }

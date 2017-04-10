@@ -45,24 +45,23 @@ public class BaseProcessor extends ProcessorBaseVisitor<Void> implements Process
     private final PC pc;
 
     public BaseProcessor(ProcessorUnits processorUnits) {
-        arithmeticVisitor
-                = new ArithmeticVisitor(processorUnits.getRegisterFile(), processorUnits.getCPSR());
-        multiplyAndDivideVisitor = new MultiplyAndDivideVisitor(processorUnits
-                .getRegisterFile(), processorUnits.getCPSR());
-        moveVisitor = new MoveVisitor(processorUnits
-                .getRegisterFile(), processorUnits.getCPSR());
-        shiftVisitor = new ShiftVisitor(processorUnits
-                .getRegisterFile(), processorUnits.getCPSR());
-        compareVisitor = new CompareVisitor(processorUnits
-                .getRegisterFile(), processorUnits.getCPSR());
-        logicalVisitor = new LogicalVisitor(processorUnits
-                .getRegisterFile(), processorUnits.getCPSR());
+        arithmeticVisitor = new ArithmeticVisitor(processorUnits.getRegisterFile(),
+                processorUnits.getCPSR());
+        multiplyAndDivideVisitor = new MultiplyAndDivideVisitor(processorUnits.getRegisterFile(),
+                processorUnits.getCPSR());
+        moveVisitor = new MoveVisitor(processorUnits.getRegisterFile(), processorUnits.getCPSR());
+        shiftVisitor = new ShiftVisitor(processorUnits.getRegisterFile(), processorUnits.getCPSR());
+        compareVisitor = new CompareVisitor(processorUnits.getRegisterFile(),
+                processorUnits.getCPSR());
+        logicalVisitor = new LogicalVisitor(processorUnits.getRegisterFile(),
+                processorUnits.getCPSR());
         branchVisitor = new BranchVisitor(processorUnits.getCPSR(), processorUnits.getUART(),
-                processorUnits.getPC());
-        singleDataMemoryVisitor = new SingleDataMemoryVisitor(processorUnits
-                .getRegisterFile(), processorUnits.getMemory());
-        stackVisitor = new StackVisitor(processorUnits
-                .getRegisterFile(), processorUnits.getStack());
+                processorUnits.getPC(), processorUnits.getLR());
+        singleDataMemoryVisitor = new SingleDataMemoryVisitor(processorUnits.getRegisterFile(),
+                processorUnits.getMemory());
+        stackVisitor = new StackVisitor(processorUnits.getRegisterFile(), processorUnits.getPC(),
+                processorUnits.getLR(), processorUnits.getStack()
+        );
         pc = processorUnits.getPC();
     }
 

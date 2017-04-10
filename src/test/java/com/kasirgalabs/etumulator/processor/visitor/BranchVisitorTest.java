@@ -242,8 +242,8 @@ public class BranchVisitorTest {
                 + "mov r0, #1\n"
                 + "target:\n";
         processor.run(assembler.assemble(code));
-        assertEquals("Branch instruction does not work properly.", 0x7fff_ffff, registerFile
-                .getValue("r0"));
+        assertEquals("Branch instruction does not work properly.", 0x7fff_ffff,
+                registerFile.getValue("r0"));
     }
 
     /**
@@ -528,8 +528,7 @@ public class BranchVisitorTest {
                 + "b label\n"
                 + "exit:\n";
         processor.run(assembler.assemble(code));
-        assertEquals("Branch instruction does not work properly.",
-                100,
+        assertEquals("Branch instruction does not work properly.", 100,
                 registerFile.getValue("r0"));
 
         registerFile.reset();
@@ -539,7 +538,17 @@ public class BranchVisitorTest {
         });
         code = "bl uart_read\n";
         processor.run(assembler.assemble(code));
-        assertEquals("Branch instruction does not work properly.", expResult, registerFile
-                .getValue("r0"));
+        assertEquals("Branch instruction does not work properly.", expResult,
+                registerFile.getValue("r0"));
+
+        code = "mov r0, #0\n"
+                + "mov r1, #1\n"
+                + "bl increment\n"
+                + "add r1, r1, #1\n"
+                + "increment:\n"
+                + "add r0, r0, #1\n";
+        processor.run(assembler.assemble(code));
+        assertEquals("Branch instruction does not work properly.", 1, registerFile.getValue("r0"));
+        assertEquals("Branch instruction does not work properly.", 1, registerFile.getValue("r1"));
     }
 }

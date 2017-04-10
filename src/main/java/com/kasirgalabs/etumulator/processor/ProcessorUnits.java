@@ -28,4 +28,6 @@ public interface ProcessorUnits {
     UART getUART();
 
     PC getPC();
+
+    LR getLR();
 }

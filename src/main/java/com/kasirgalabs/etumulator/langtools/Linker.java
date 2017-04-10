@@ -155,10 +155,10 @@ public class Linker extends AssemblerBaseVisitor<Void> {
     @Override
     public Void visitBl(AssemblerParser.BlContext ctx) {
         String label = ctx.LABEL().getText();
-        if(!"uart_read".equalsIgnoreCase(label) && !"uart_write".equalsIgnoreCase(label)) {
-            throw new UnsupportedInstructionError("bl instruction target only supported for "
-                    + "\"uart_read\" an \"uart_write\"");
+        if("uart_read".equalsIgnoreCase(label) | "uart_write".equalsIgnoreCase(label)) {
+            return null;
         }
+        replaceLabelAddress(ctx, ctx.LABEL());
         return null;
     }
 

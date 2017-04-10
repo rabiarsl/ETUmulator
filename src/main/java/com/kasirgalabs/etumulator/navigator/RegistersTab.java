@@ -17,6 +17,7 @@
 package com.kasirgalabs.etumulator.navigator;
 
 import com.google.inject.Inject;
+import com.kasirgalabs.etumulator.processor.LR;
 import com.kasirgalabs.etumulator.processor.PC;
 import com.kasirgalabs.etumulator.processor.RegisterFile;
 import com.kasirgalabs.etumulator.util.Observer;
@@ -39,13 +40,15 @@ public class RegistersTab implements Initializable, Observer {
     private TableColumn<NavigatorRow, String> value;
     private final RegisterFile registerFile;
     private final PC pc;
+    private final LR lr;
     private final Navigator navigator;
     private final ObservableList<NavigatorRow> data;
 
     @Inject
-    public RegistersTab(RegisterFile registerFile, PC pc, Navigator navigator) {
+    public RegistersTab(RegisterFile registerFile, PC pc, LR lr, Navigator navigator) {
         this.registerFile = registerFile;
         this.pc = pc;
+        this.lr = lr;
         this.navigator = navigator;
         data = FXCollections.observableArrayList();
     }
@@ -54,6 +57,7 @@ public class RegistersTab implements Initializable, Observer {
     public void initialize(URL location, ResourceBundle resources) {
         registerFile.addObserver(this);
         pc.addObserver(this);
+        lr.addObserver(this);
         navigator.addObserver(this);
         property.setCellValueFactory(new PropertyValueFactory<>("property"));
         property.setComparator(new NavigatorRowComparator());
@@ -62,6 +66,7 @@ public class RegistersTab implements Initializable, Observer {
             String registerName = "r" + Integer.toString(i);
             data.add(new NavigatorRow(registerName, registerFile.getValue(registerName)));
         }
+        data.add(new NavigatorRow("LR", lr.getValue()));
         data.add(new NavigatorRow("PC", pc.getValue()));
         table.setItems(data);
     }
@@ -80,6 +85,10 @@ public class RegistersTab implements Initializable, Observer {
         else if(clazz.equals(PC.class)) {
             NavigatorRow navigatorRow = data.get(data.size() - 1);
             navigatorRow.setValue(pc.getValue());
+        }
+        else if(clazz.equals(LR.class)) {
+            NavigatorRow navigatorRow = data.get(data.size() - 2);
+            navigatorRow.setValue(lr.getValue());
         }
         table.refresh();
     }

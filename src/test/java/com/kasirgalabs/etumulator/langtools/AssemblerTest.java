@@ -133,12 +133,5 @@ public class AssemblerTest {
         expData = "DATA2\n";
         assertEquals("Assembler did not resolve data properly.", expData,
                 dataResult.get(2).getValue());
-
-        code = "bl unsupported\n";
-        try {
-            assembler.assemble(code);
-            fail("Assembler did not throw UnsupportedInstructionError.");
-        } catch(UnsupportedInstructionError ex) {
-        }
     }
 }
