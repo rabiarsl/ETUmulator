@@ -59,4 +59,9 @@ public class Memory implements Observable {
     public boolean isAddressEmpty(int address) {
         return !memory.containsKey(address);
     }
+
+    public void reset() {
+        memory.clear();
+        dispatcher.notifyObservers(Memory.class);
+    }
 }

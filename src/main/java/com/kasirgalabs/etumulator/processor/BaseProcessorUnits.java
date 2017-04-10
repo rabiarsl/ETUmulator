@@ -80,4 +80,14 @@ public class BaseProcessorUnits implements ProcessorUnits {
     public LR getLR() {
         return lr;
     }
+
+    @Override
+    public void reset() {
+        registerFile.reset();
+        cpsr.reset();
+        stack.reset();
+        memory.reset();
+        pc.reset();
+        lr.reset();
+    }
 }

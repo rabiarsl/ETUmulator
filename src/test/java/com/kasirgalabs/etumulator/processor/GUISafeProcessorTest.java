@@ -104,6 +104,7 @@ public class GUISafeProcessorTest {
         } catch(CancellationException ex) {
         }
 
+        processorUnits.reset();
         code = "ldr r0, =0xfffffffe\n"
                 + "push {r0}\n"
                 + "pop {pc}\n";

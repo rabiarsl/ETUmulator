@@ -30,4 +30,6 @@ public interface ProcessorUnits {
     PC getPC();
 
     LR getLR();
+
+    void reset();
 }

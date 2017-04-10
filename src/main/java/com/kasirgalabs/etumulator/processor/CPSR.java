@@ -85,4 +85,12 @@ public class CPSR implements Observable {
         dispatcher.notifyObservers(CPSR.class);
         return result;
     }
+
+    public void reset() {
+        negative = false;
+        zero = false;
+        carry = false;
+        overflow = false;
+        dispatcher.notifyObservers(CPSR.class);
+    }
 }

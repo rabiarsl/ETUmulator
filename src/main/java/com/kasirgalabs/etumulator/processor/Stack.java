@@ -60,4 +60,9 @@ public class Stack implements Observable {
     public int peek() {
         return list.peek();
     }
+
+    public void reset() {
+        list.clear();
+        dispatcher.notifyObservers(Stack.class, "clear");
+    }
 }

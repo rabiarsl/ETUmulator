@@ -64,7 +64,7 @@ public class StackTab implements Initializable, Observer {
             if("push".equals(operation)) {
                 data.add(new NavigatorRow(data.size(), stack.peek()));
             }
-            else {
+            else if("pop".equals(operation)) {
                 for(int i = 0; i < data.size(); i++) {
                     NavigatorRow navigatorRow = data.get(i);
                     if(navigatorRow.getProperty().equals(Integer.toString(data.size() - 1))) {
@@ -72,6 +72,9 @@ public class StackTab implements Initializable, Observer {
                         break;
                     }
                 }
+            }
+            else {
+                data.clear();
             }
         }
         table.refresh();

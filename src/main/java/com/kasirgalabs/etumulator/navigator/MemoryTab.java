@@ -60,18 +60,23 @@ public class MemoryTab implements Initializable, Observer {
     @Override
     public void update(Class<?> clazz, Object arg) {
         if(clazz.equals(Memory.class)) {
-            int address = (int) arg;
-            boolean dataNotContainsAddress = true;
-            for(int i = 0; i < data.size(); i++) {
-                NavigatorRow navigatorRow = data.get(i);
-                if(navigatorRow.getProperty().equals(Integer.toString(address))) {
-                    navigatorRow.setValue(memory.get(address));
-                    dataNotContainsAddress = false;
-                    break;
+            if(arg != null) {
+                int address = (int) arg;
+                boolean dataNotContainsAddress = true;
+                for(int i = 0; i < data.size(); i++) {
+                    NavigatorRow navigatorRow = data.get(i);
+                    if(navigatorRow.getProperty().equals(Integer.toString(address))) {
+                        navigatorRow.setValue(memory.get(address));
+                        dataNotContainsAddress = false;
+                        break;
+                    }
+                }
+                if(dataNotContainsAddress) {
+                    data.add(new NavigatorRow(address, memory.get(address)));
                 }
             }
-            if(dataNotContainsAddress) {
-                data.add(new NavigatorRow(address, memory.get(address)));
+            else {
+                data.clear();
             }
         }
         table.refresh();

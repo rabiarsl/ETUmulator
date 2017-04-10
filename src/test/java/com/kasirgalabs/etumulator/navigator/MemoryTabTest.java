@@ -83,6 +83,7 @@ public class MemoryTabTest {
             memory.set(ADDRESS + 4, (byte) 1);
             memory.set(ADDRESS, (byte) 4);
             memory.get(ADDRESS - 1);
+            memory.reset();
             return null;
         });
         future.get(5, TimeUnit.SECONDS);

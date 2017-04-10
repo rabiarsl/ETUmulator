@@ -25,7 +25,7 @@ import com.kasirgalabs.etumulator.util.Observer;
 
 @Singleton
 public class LR implements Observable {
-    private int pc;
+    private int lr;
     private final Dispatcher dispatcher;
 
     public LR() {
@@ -43,11 +43,16 @@ public class LR implements Observable {
     }
 
     public void setValue(int value) {
-        pc = value;
+        lr = value;
         dispatcher.notifyObservers(LR.class);
     }
 
     public int getValue() {
-        return pc;
+        return lr;
+    }
+
+    public void reset() {
+        lr = 0;
+        dispatcher.notifyObservers(LR.class);
     }
 }

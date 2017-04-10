@@ -96,5 +96,14 @@ public class RegistersTabTest {
             return null;
         });
         future.get(5, TimeUnit.SECONDS);
+
+        executor = Executors.newSingleThreadExecutor();
+        future = executor.submit(() -> {
+            registerFile.reset();
+            pc.reset();
+            lr.reset();
+            return null;
+        });
+        future.get(5, TimeUnit.SECONDS);
     }
 }

@@ -81,6 +81,8 @@ public class StackTabTest {
             stack.pop();
             stack.pop();
             stack.pop();
+            stack.pop();
+            stack.reset();
             return null;
         });
         future.get(5, TimeUnit.SECONDS);

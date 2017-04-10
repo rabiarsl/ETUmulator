@@ -55,4 +55,9 @@ public class PC implements Observable {
     public int getValue() {
         return pc;
     }
+
+    public void reset() {
+        pc = 0;
+        dispatcher.notifyObservers(PC.class);
+    }
 }

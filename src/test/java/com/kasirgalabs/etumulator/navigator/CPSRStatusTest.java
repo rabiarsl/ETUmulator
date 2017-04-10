@@ -78,6 +78,7 @@ public class CPSRStatusTest {
             cpsr.setCarry(false);
             cpsr.setOverflow(true);
             cpsr.setOverflow(false);
+            cpsr.reset();
             return null;
         });
         future.get(5, TimeUnit.SECONDS);
