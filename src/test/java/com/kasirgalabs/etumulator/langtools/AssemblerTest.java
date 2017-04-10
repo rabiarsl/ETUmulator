@@ -16,15 +16,14 @@
  */
 package com.kasirgalabs.etumulator.langtools;
 
-import com.kasirgalabs.etumulator.lang.LabelError;
-import com.kasirgalabs.etumulator.lang.Assembler;
-import com.kasirgalabs.etumulator.lang.SyntaxError;
-import com.kasirgalabs.etumulator.lang.Data;
-
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.fail;
 
+import com.kasirgalabs.etumulator.lang.Assembler;
+import com.kasirgalabs.etumulator.lang.Data;
+import com.kasirgalabs.etumulator.lang.LabelError;
 import com.kasirgalabs.etumulator.lang.Linker.ExecutableCode;
+import com.kasirgalabs.etumulator.lang.SyntaxError;
 import com.kasirgalabs.etumulator.processor.Memory;
 import java.util.List;
 import org.junit.Test;
@@ -109,7 +108,7 @@ public class AssemblerTest {
         code = "ldr r0, =label\n"
                 + "label: .asciz \"DATA\"\n";
         executableCode = assembler.assemble(code);
-        expData = "DATA\n";
+        expData = "DATA\0";
         assertEquals("Assembler did not resolve data properly.", expData,
                 executableCode.getData().get(0).getValue());
 
@@ -129,13 +128,13 @@ public class AssemblerTest {
                 + "label2: .asciz \"DATA2\"\n";
         executableCode = assembler.assemble(code);
         List<Data> dataResult = executableCode.getData();
-        expData = "DATA0\n";
+        expData = "DATA0\0";
         assertEquals("Assembler did not resolve data properly.", expData,
                 dataResult.get(0).getValue());
-        expData = "DATA1\n";
+        expData = "DATA1\0";
         assertEquals("Assembler did not resolve data properly.", expData,
                 dataResult.get(1).getValue());
-        expData = "DATA2\n";
+        expData = "DATA2\0";
         assertEquals("Assembler did not resolve data properly.", expData,
                 dataResult.get(2).getValue());
     }

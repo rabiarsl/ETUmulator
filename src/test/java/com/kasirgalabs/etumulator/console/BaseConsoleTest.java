@@ -57,7 +57,7 @@ public class BaseConsoleTest extends UART {
             return null;
         });
         Platform.runLater(futureTask);
-        futureTask.get(5, TimeUnit.SECONDS);
+        futureTask.get(10, TimeUnit.SECONDS);
     }
 
     /**
@@ -99,7 +99,7 @@ public class BaseConsoleTest extends UART {
             return null;
         });
         Platform.runLater(futureTask);
-        futureTask.get(5, TimeUnit.SECONDS);
+        futureTask.get(10, TimeUnit.SECONDS);
     }
 
     /**

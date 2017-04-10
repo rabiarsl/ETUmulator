@@ -202,7 +202,7 @@ public class Linker extends AssemblerBaseVisitor<Void> {
         if(definedBranches.containsKey(label) || definedData.containsKey(label)) {
             throw new LabelError("\"" + label + "\" is already defined.");
         }
-        String asciz = ctx.asciz().STRING().getText().replaceAll("\"", "") + "\n";
+        String asciz = ctx.asciz().STRING().getText().replaceAll("\"", "") + "\0";
         int address = generateAddress(asciz);
         definedData.put(label, new Data(asciz, address));
         return null;

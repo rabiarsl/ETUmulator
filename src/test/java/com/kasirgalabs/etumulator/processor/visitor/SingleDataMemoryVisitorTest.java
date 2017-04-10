@@ -53,7 +53,7 @@ public class SingleDataMemoryVisitorTest {
         assertEquals("LDR operation does not work properly.", 'a', memory.get(address));
         assertEquals("LDR operation does not work properly.", 'b', memory.get(address + 1));
         assertEquals("LDR operation does not work properly.", 'c', memory.get(address + 2));
-        assertEquals("LDR operation does not work properly.", '\n', memory.get(address + 3));
+        assertEquals("LDR operation does not work properly.", '\0', memory.get(address + 3));
 
         code = "ldr r0, =0xffffffff\n";
         processor.run(assembler.assemble(code));
