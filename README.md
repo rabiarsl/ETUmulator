@@ -44,7 +44,7 @@ then
 ```
 **That's really it!**<br/>
 <br/>
-If you want the project set up in NetBeans (our favored IDE), just install [NetBeans Gradle](http://plugins.netbeans.org/plugin/44510/gradle-support) plugin and open ETUmulator from NetBeans. Then you get a bunch of run configurations and other stuff for free!
+If you want the project set up in [NetBeans](https://netbeans.org/) (our favored IDE), just install [NetBeans Gradle](http://plugins.netbeans.org/plugin/44510/gradle-support) plugin and open ETUmulator from NetBeans. Then you get a bunch of run configurations and other stuff for free!
 
 ### Running
 Execute the below command:
