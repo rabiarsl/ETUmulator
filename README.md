@@ -19,7 +19,7 @@ We use [Gradle](https://gradle.org/) to automate just about everything. As long 
 ###### For linux:
 Open a terminal by pressing "CTRL + ALT + T"<br/>
 From your terminal, change the current directory on your local machine where you want to get a development environment.
-Example to change current directory to Desktop: 
+Example to change current directory to Desktop:
 ```
 cd ~/Desktop
 ```
@@ -51,8 +51,8 @@ Execute the below command:
 ```
 ./gradlew jar
 ```
-then you will be able to run ETUmulator from your terminal by typing `java -jar build/libs/ETUmulator.jar`<br/>
-or navigate to `build/libs` directory and double click on the `ETUmulator.jar`
+then you will be able to run ETUmulator from your terminal by typing `java -jar build/libs/ETUmulator-0.3.7.jar`<br/>
+or navigate to `build/libs` directory and double click on the `ETUmulator-0.3.7.jar`
 
 ### Running the tests
 Open a terminal in the root of the project directory, then execute the command:

@@ -4,6 +4,7 @@ apply plugin: "antlr"
 apply plugin: "pmd"
 apply plugin: "findbugs"
 
+version = "0.3.7"
 sourceCompatibility = "1.8"
 targetCompatibility = "1.8"
 
@@ -102,7 +103,7 @@ task uploadCoverageToCodacy(type: JavaExec, dependsOn : jacocoTestReport) {
 jar {
     manifest {
         attributes "Specification-Title": "ETUmulator"
-        attributes "Specification-Version": "v0.3.7"
+        attributes "Specification-Version": version
         attributes "Specification-Vendor": "Kasirgalabs"
         attributes "Main-Class": mainClassName
     }
