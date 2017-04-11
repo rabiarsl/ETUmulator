@@ -18,6 +18,7 @@ package com.kasirgalabs.etumulator.navigator;
 
 import com.kasirgalabs.etumulator.document.BaseDocumentTest;
 import com.kasirgalabs.etumulator.processor.Memory;
+import com.kasirgalabs.etumulator.processor.Memory.Size;
 import com.kasirgalabs.etumulator.util.GUISafeDispatcher;
 import java.util.Random;
 import java.util.concurrent.ExecutionException;
@@ -82,7 +83,9 @@ public class MemoryTabTest {
             memory.set(ADDRESS + 3, (byte) 1);
             memory.set(ADDRESS + 4, (byte) 1);
             memory.set(ADDRESS, (byte) 4);
-            memory.get(ADDRESS - 1);
+            memory.get(ADDRESS - 1, Size.BYTE);
+            memory.get(ADDRESS - 1, Size.HALFWORD);
+            memory.get(ADDRESS - 1, Size.WORD);
             memory.reset();
             return null;
         });

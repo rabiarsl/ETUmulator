@@ -497,23 +497,11 @@ public interface AssemblerVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitLdrb(AssemblerParser.LdrbContext ctx);
 	/**
-	 * Visit a parse tree produced by {@link AssemblerParser#ldrsb}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitLdrsb(AssemblerParser.LdrsbContext ctx);
-	/**
 	 * Visit a parse tree produced by {@link AssemblerParser#ldrh}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
 	T visitLdrh(AssemblerParser.LdrhContext ctx);
-	/**
-	 * Visit a parse tree produced by {@link AssemblerParser#ldrsh}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitLdrsh(AssemblerParser.LdrshContext ctx);
 	/**
 	 * Visit a parse tree produced by {@link AssemblerParser#ldrAddress}.
 	 * @param ctx the parse tree

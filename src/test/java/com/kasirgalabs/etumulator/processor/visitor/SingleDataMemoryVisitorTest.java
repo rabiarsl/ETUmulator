@@ -22,6 +22,7 @@ import com.kasirgalabs.etumulator.lang.Assembler;
 import com.kasirgalabs.etumulator.processor.BaseProcessor;
 import com.kasirgalabs.etumulator.processor.BaseProcessorUnits;
 import com.kasirgalabs.etumulator.processor.Memory;
+import com.kasirgalabs.etumulator.processor.Memory.Size;
 import com.kasirgalabs.etumulator.processor.Processor;
 import com.kasirgalabs.etumulator.processor.ProcessorUnits;
 import com.kasirgalabs.etumulator.processor.RegisterFile;
@@ -50,10 +51,13 @@ public class SingleDataMemoryVisitorTest {
                 + "label: .asciz \"abc\"\n";
         processor.run(assembler.assemble(code));
         int address = registerFile.getValue("r0");
-        assertEquals("LDR operation does not work properly.", 'a', memory.get(address));
-        assertEquals("LDR operation does not work properly.", 'b', memory.get(address + 1));
-        assertEquals("LDR operation does not work properly.", 'c', memory.get(address + 2));
-        assertEquals("LDR operation does not work properly.", '\0', memory.get(address + 3));
+        assertEquals("LDR operation does not work properly.", 'a', memory.get(address, Size.BYTE));
+        assertEquals("LDR operation does not work properly.", 'b', memory
+                .get(address + 1, Size.BYTE));
+        assertEquals("LDR operation does not work properly.", 'c', memory
+                .get(address + 2, Size.BYTE));
+        assertEquals("LDR operation does not work properly.", '\0', memory.get(address + 3,
+                Size.BYTE));
 
         code = "ldr r0, =0xffffffff\n";
         processor.run(assembler.assemble(code));
@@ -65,7 +69,7 @@ public class SingleDataMemoryVisitorTest {
                 + "label: .asciz \"abc\"\n";
         processor.run(assembler.assemble(code));
         assertEquals("LDR operation does not work properly.", 'a', registerFile.getValue("r1"));
-        int value = memory.get(registerFile.getValue("r0"));
+        int value = memory.get(registerFile.getValue("r0"), Size.BYTE);
         assertEquals("LDR operation does not work properly.", 'b', value);
 
         code = "ldr r0, =label\n"
@@ -100,7 +104,7 @@ public class SingleDataMemoryVisitorTest {
                 + "label: .asciz \"abc\"\n";
         processor.run(assembler.assemble(code));
         assertEquals("LDR operation does not work properly.", 'a', registerFile.getValue("r1"));
-        value = memory.get(registerFile.getValue("r0"));
+        value = memory.get(registerFile.getValue("r0"), Size.BYTE);
         assertEquals("LDR operation does not work properly.", 'b', value);
 
         code = "mov r1, #1\n"
@@ -109,7 +113,7 @@ public class SingleDataMemoryVisitorTest {
                 + "label: .asciz \"abc\"\n";
         processor.run(assembler.assemble(code));
         assertEquals("LDR operation does not work properly.", 'a', registerFile.getValue("r1"));
-        value = memory.get(registerFile.getValue("r0"));
+        value = memory.get(registerFile.getValue("r0"), Size.BYTE);
         assertEquals("LDR operation does not work properly.", 'c', value);
     }
 }

@@ -497,23 +497,11 @@ public interface ProcessorVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitLdrb(ProcessorParser.LdrbContext ctx);
 	/**
-	 * Visit a parse tree produced by {@link ProcessorParser#ldrsb}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitLdrsb(ProcessorParser.LdrsbContext ctx);
-	/**
 	 * Visit a parse tree produced by {@link ProcessorParser#ldrh}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
 	T visitLdrh(ProcessorParser.LdrhContext ctx);
-	/**
-	 * Visit a parse tree produced by {@link ProcessorParser#ldrsh}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitLdrsh(ProcessorParser.LdrshContext ctx);
 	/**
 	 * Visit a parse tree produced by {@link ProcessorParser#ldrAddress}.
 	 * @param ctx the parse tree

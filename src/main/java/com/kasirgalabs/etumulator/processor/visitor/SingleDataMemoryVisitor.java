@@ -19,6 +19,7 @@ package com.kasirgalabs.etumulator.processor.visitor;
 import com.kasirgalabs.arm.ProcessorBaseVisitor;
 import com.kasirgalabs.arm.ProcessorParser;
 import com.kasirgalabs.etumulator.processor.Memory;
+import com.kasirgalabs.etumulator.processor.Memory.Size;
 import com.kasirgalabs.etumulator.processor.RegisterFile;
 
 public class SingleDataMemoryVisitor extends ProcessorBaseVisitor<Void> {
@@ -44,7 +45,20 @@ public class SingleDataMemoryVisitor extends ProcessorBaseVisitor<Void> {
         }
         else {
             int address = ldrAddressVisitor.visit(ctx.ldrAddress());
-            registerFile.setValue(destRegister, memory.get(address));
+            registerFile.setValue(destRegister, memory.get(address, Size.WORD));
+        }
+        return null;
+    }
+
+    @Override
+    public Void visitLdrb(ProcessorParser.LdrbContext ctx) {
+        String destRegister = registerVisitor.visit(ctx.rd());
+        if(ctx.ASSIGN() != null) {
+            registerFile.setValue(destRegister, numberVisitor.visit(ctx.number()));
+        }
+        else {
+            int address = ldrAddressVisitor.visit(ctx.ldrAddress());
+            registerFile.setValue(destRegister, memory.get(address, Size.WORD));
         }
         return null;
     }

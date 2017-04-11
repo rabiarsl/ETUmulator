@@ -114,9 +114,7 @@ branch
 singleDataMemory
     : ldr
     | ldrb
-    | ldrsb
     | ldrh
-    | ldrsh
     | str
     | strb
     | strsb
@@ -402,20 +400,11 @@ ldr
     ;
 
 ldrb
-    : 'ldrb' rd COMMA ldrAddress
-    ;
-
-ldrsb
-    : 'ldrsb' rd COMMA ldrAddress
+    : 'ldrb' rd COMMA (ldrAddress | ASSIGN number)
     ;
 
 ldrh
-    : 'ldrh' rd COMMA ldrAddress
-    ;
-
-
-ldrsh
-    : 'ldrsh' rd COMMA ldrAddress
+    : 'ldrh' rd COMMA (ldrAddress | ASSIGN number)
     ;
 
 ldrAddress
