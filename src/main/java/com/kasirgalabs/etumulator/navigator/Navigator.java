@@ -41,8 +41,8 @@ public class Navigator extends BaseDispatcher implements Initializable, Observab
 
     @FXML
     private void valueTypeOnAction(ActionEvent event) {
-        int valueType = valueTypeComboBox.getSelectionModel().getSelectedIndex();
-        NavigatorRow.setValueType(valueType);
+        int type = valueTypeComboBox.getSelectionModel().getSelectedIndex();
+        NavigatorRow.setType(NavigatorRow.Type.values()[type]);
         notifyObservers(Navigator.class);
     }
 }

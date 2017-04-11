@@ -21,10 +21,6 @@ import com.kasirgalabs.arm.ProcessorParser;
 import com.kasirgalabs.etumulator.processor.RegisterFile;
 
 public class ShiftedRegisterVisitor extends ProcessorBaseVisitor<Integer> {
-    private static final int ASR = 0;
-    private static final int LSL = 1;
-    private static final int LSR = 2;
-    private static final int ROR = 3;
     private final RegisterFile registerFile;
     private final RegisterVisitor registerVisitor;
     private final NumberVisitor numberVisitor;
@@ -41,7 +37,7 @@ public class ShiftedRegisterVisitor extends ProcessorBaseVisitor<Integer> {
         int value = registerFile.getValue(registerVisitor.visit(ctx.rm()));
         int shiftOption = visitShiftOption(ctx.shiftOption());
         int shiftAmount = registerFile.getValue(registerVisitor.visit(ctx.rs()));
-        return shift(value, shiftOption, shiftAmount);
+        return shift(value, Shift.values()[shiftOption], shiftAmount);
     }
 
     @Override
@@ -50,24 +46,15 @@ public class ShiftedRegisterVisitor extends ProcessorBaseVisitor<Integer> {
         int value = registerFile.getValue(registerVisitor.visit(ctx.rm()));
         int shiftOption = visitShiftOption(ctx.shiftOption());
         int shiftAmount = numberVisitor.visit(ctx.number());
-        return shift(value, shiftOption, shiftAmount);
+        return shift(value, Shift.values()[shiftOption], shiftAmount);
     }
 
     @Override
     public Integer visitShiftOption(ProcessorParser.ShiftOptionContext ctx) {
-        switch(ctx.getText()) {
-            case "asr":
-                return ASR;
-            case "lsl":
-                return LSL;
-            case "lsr":
-                return LSR;
-            default:
-                return ROR;
-        }
+        return Shift.valueOf(ctx.getText().toUpperCase()).ordinal();
     }
 
-    private int shift(int value, int shiftOption, int shiftAmount) {
+    private int shift(int value, Shift shiftOption, int shiftAmount) {
         switch(shiftOption) {
             case ASR:
                 return value >> shiftAmount;

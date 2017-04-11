@@ -19,11 +19,7 @@ package com.kasirgalabs.etumulator.navigator;
 import com.kasirgalabs.etumulator.string.StringUtils;
 
 public class NavigatorRow {
-    public static final int DECIMAL = 0;
-    public static final int HEX = 1;
-    public static final int ASCII = 2;
-    public static final int BINARY = 3;
-    private static int valueType;
+    private static Type type = Type.DECIMAL;
     private final String property;
     private int value;
 
@@ -37,8 +33,8 @@ public class NavigatorRow {
         this.value = value;
     }
 
-    public static void setValueType(int type) {
-        valueType = type;
+    public static void setType(Type type) {
+        NavigatorRow.type = type;
     }
 
     public String getProperty() {
@@ -46,7 +42,7 @@ public class NavigatorRow {
     }
 
     public String getValue() {
-        switch(valueType) {
+        switch(type) {
             case DECIMAL:
                 return Integer.toString(value);
             case HEX:
@@ -62,5 +58,9 @@ public class NavigatorRow {
 
     public void setValue(int value) {
         this.value = value;
+    }
+
+    public enum Type {
+        DECIMAL, HEX, ASCII, BINARY;
     }
 }
