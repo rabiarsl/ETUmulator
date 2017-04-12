@@ -16,9 +16,9 @@
  */
 package com.kasirgalabs.etumulator.lang;
 
-import com.kasirgalabs.arm.AssemblerBaseVisitor;
-import com.kasirgalabs.arm.AssemblerLexer;
-import com.kasirgalabs.arm.AssemblerParser;
+import com.kasirgalabs.thumb2.AssemblerBaseVisitor;
+import com.kasirgalabs.thumb2.AssemblerLexer;
+import com.kasirgalabs.thumb2.AssemblerParser;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;

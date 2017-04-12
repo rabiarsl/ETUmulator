@@ -18,6 +18,7 @@ package com.kasirgalabs.etumulator.navigator;
 
 import com.google.inject.Inject;
 import com.kasirgalabs.etumulator.processor.Memory;
+import com.kasirgalabs.etumulator.processor.Memory.Size;
 import com.kasirgalabs.etumulator.util.Observer;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -66,13 +67,13 @@ public class MemoryTab implements Initializable, Observer {
                 for(int i = 0; i < data.size(); i++) {
                     NavigatorRow navigatorRow = data.get(i);
                     if(navigatorRow.getProperty().equals(Integer.toString(address))) {
-                        navigatorRow.setValue(memory.get(address));
+                        navigatorRow.setValue(memory.get(address, Size.BYTE));
                         dataNotContainsAddress = false;
                         break;
                     }
                 }
                 if(dataNotContainsAddress) {
-                    data.add(new NavigatorRow(address, memory.get(address)));
+                    data.add(new NavigatorRow(address, memory.get(address, Size.BYTE)));
                 }
             }
             else {

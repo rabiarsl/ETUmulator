@@ -114,14 +114,10 @@ branch
 singleDataMemory
     : ldr
     | ldrb
-    | ldrsb
     | ldrh
-    | ldrsh
     | str
     | strb
-    | strsb
     | strh
-    | strsh
     ;
 
 stack
@@ -398,27 +394,30 @@ bl
     ;
 
 ldr
-    : 'ldr' rd COMMA (ldrAddress | ASSIGN number)
+    : 'ldr' rd COMMA (memoryAddress | ASSIGN number)
     ;
 
 ldrb
-    : 'ldrb' rd COMMA ldrAddress
-    ;
-
-ldrsb
-    : 'ldrsb' rd COMMA ldrAddress
+    : 'ldrb' rd COMMA (memoryAddress | ASSIGN number)
     ;
 
 ldrh
-    : 'ldrh' rd COMMA ldrAddress
+    : 'ldrh' rd COMMA (memoryAddress | ASSIGN number)
     ;
 
-
-ldrsh
-    : 'ldrsh' rd COMMA ldrAddress
+str
+    : 'str' rd COMMA memoryAddress
     ;
 
-ldrAddress
+strb
+    : 'strb' rd COMMA memoryAddress
+    ;
+
+strh
+    : 'strh' rd COMMA memoryAddress
+    ;
+
+memoryAddress
     : immediateOffset
     | postIndexedImmediate
     | registerOffset
@@ -439,36 +438,6 @@ registerOffset
 
 postIndexedRegister
     : LBRACK rn RBRACK COMMA rm (COMMA opsh)?
-    ;
-
-str
-    : 'str' rd COMMA strOperationType
-    ;
-
-strb
-    : 'strb' rd COMMA strOperationType
-    ;
-
-strsb
-    : 'strsb' rd COMMA strOperationType
-    ;
-
-
-strh
-    : 'strh' rd COMMA strOperationType
-    ;
-
-
-strsh
-    : 'strsh' rd COMMA strOperationType
-    ;
-
-strOperationType
-    : LBRACK rn RBRACK
-    | LBRACK rn COMMA offset RBRACK
-    | LBRACK rn RBRACK COMMA offset
-    | LBRACK rn COMMA rm (COMMA opsh)? RBRACK
-    | LBRACK rn RBRACK COMMA rm (COMMA opsh)?
     ;
 
 push

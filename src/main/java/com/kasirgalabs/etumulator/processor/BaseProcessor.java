@@ -16,19 +16,19 @@
  */
 package com.kasirgalabs.etumulator.processor;
 
-import com.kasirgalabs.arm.ProcessorBaseVisitor;
-import com.kasirgalabs.arm.ProcessorLexer;
-import com.kasirgalabs.arm.ProcessorParser;
 import com.kasirgalabs.etumulator.lang.Linker.ExecutableCode;
-import com.kasirgalabs.etumulator.processor.visitor.ArithmeticVisitor;
-import com.kasirgalabs.etumulator.processor.visitor.BranchVisitor;
-import com.kasirgalabs.etumulator.processor.visitor.CompareVisitor;
-import com.kasirgalabs.etumulator.processor.visitor.LogicalVisitor;
-import com.kasirgalabs.etumulator.processor.visitor.MoveVisitor;
-import com.kasirgalabs.etumulator.processor.visitor.MultiplyAndDivideVisitor;
-import com.kasirgalabs.etumulator.processor.visitor.ShiftVisitor;
-import com.kasirgalabs.etumulator.processor.visitor.SingleDataMemoryVisitor;
-import com.kasirgalabs.etumulator.processor.visitor.StackVisitor;
+import com.kasirgalabs.etumulator.visitor.ArithmeticVisitor;
+import com.kasirgalabs.etumulator.visitor.BranchVisitor;
+import com.kasirgalabs.etumulator.visitor.CompareVisitor;
+import com.kasirgalabs.etumulator.visitor.LogicalVisitor;
+import com.kasirgalabs.etumulator.visitor.MoveVisitor;
+import com.kasirgalabs.etumulator.visitor.MultiplyAndDivideVisitor;
+import com.kasirgalabs.etumulator.visitor.ShiftVisitor;
+import com.kasirgalabs.etumulator.visitor.SingleDataMemoryVisitor;
+import com.kasirgalabs.etumulator.visitor.StackVisitor;
+import com.kasirgalabs.thumb2.ProcessorBaseVisitor;
+import com.kasirgalabs.thumb2.ProcessorLexer;
+import com.kasirgalabs.thumb2.ProcessorParser;
 import org.antlr.v4.runtime.ANTLRInputStream;
 import org.antlr.v4.runtime.CommonTokenStream;
 
