@@ -52,13 +52,13 @@ public class Memory implements Observable {
         int temp;
         switch(size) {
             case BYTE:
-                return memory.get(address);
+                return 0x0000_00ff & memory.get(address);
             case HALFWORD:
                 value = memory.get(address);
                 temp = memory.get(address + 1);
                 temp <<= 8;
                 value |= temp;
-                return value;
+                return 0x0000_ffff & value;
             case WORD:
                 value = memory.get(address);
                 temp = memory.get(address + 1);
@@ -72,7 +72,6 @@ public class Memory implements Observable {
                 value |= temp;
                 break;
         }
-
         return memory.get(address);
     }
 

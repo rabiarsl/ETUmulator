@@ -24,7 +24,6 @@ import com.kasirgalabs.etumulator.lang.Linker.ExecutableCode;
 import com.kasirgalabs.etumulator.lang.SyntaxError;
 import com.kasirgalabs.etumulator.processor.GUISafeProcessor;
 import com.kasirgalabs.etumulator.processor.Memory;
-import com.kasirgalabs.etumulator.processor.Processor;
 import com.kasirgalabs.etumulator.processor.ProcessorUnits;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -35,12 +34,13 @@ public class ETUmulatorController {
     @Inject
     private ProcessorUnits processorUnits;
     @Inject
-    private Processor processor;
+    private GUISafeProcessor processor;
     @Inject
     private Memory memory;
 
     @FXML
     private void runButtonOnAction(ActionEvent event) {
+        processor.stop();
         processorUnits.reset();
         Assembler assembler = new Assembler(memory);
         ExecutableCode executableCode;
@@ -55,7 +55,6 @@ public class ETUmulatorController {
 
     @FXML
     private void stopButtonOnAction(ActionEvent event) {
-        GUISafeProcessor guiSafeProcessor = (GUISafeProcessor) processor;
-        guiSafeProcessor.stop();
+        processor.stop();
     }
 }

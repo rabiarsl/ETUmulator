@@ -52,12 +52,12 @@ public class SingleDataMemoryVisitorTest {
         processor.run(assembler.assemble(code));
         int address = registerFile.getValue("r0");
         assertEquals("LDR operation does not work properly.", 'a', memory.get(address, Size.BYTE));
-        assertEquals("LDR operation does not work properly.", 'b', memory
-                .get(address + 1, Size.BYTE));
-        assertEquals("LDR operation does not work properly.", 'c', memory
-                .get(address + 2, Size.BYTE));
-        assertEquals("LDR operation does not work properly.", '\0', memory.get(address + 3,
-                Size.BYTE));
+        assertEquals("LDR operation does not work properly.", 'b',
+                memory.get(address + 1, Size.BYTE));
+        assertEquals("LDR operation does not work properly.", 'c',
+                memory.get(address + 2, Size.BYTE));
+        assertEquals("LDR operation does not work properly.", '\0',
+                memory.get(address + 3, Size.BYTE));
 
         code = "ldr r0, =0xffffffff\n";
         processor.run(assembler.assemble(code));
@@ -77,43 +77,54 @@ public class SingleDataMemoryVisitorTest {
                 + "label: .asciz \"abc\"\n";
         processor.run(assembler.assemble(code));
         assertEquals("LDR operation does not work properly.", 'a', registerFile.getValue("r1"));
+    }
+
+    /**
+     * Test of visitLdrb method, of class SingleDataMemoryVisitor.
+     */
+    @Test
+    public void testVisitLdrb() {
+        String code = "ldrb r0, =0xffffffff\n";
+        processor.run(assembler.assemble(code));
+        assertEquals("LDRB operation does not work properly.", 0x0000_00ff,
+                registerFile.getValue("r0"));
 
         code = "ldr r0, =label\n"
-                + "ldr r1, [r0, #1]\n"
+                + "ldrb r1, [r0, #1]\n"
                 + "label: .asciz \"abc\"\n";
         processor.run(assembler.assemble(code));
-        assertEquals("LDR operation does not work properly.", 'b', registerFile.getValue("r1"));
+        assertEquals("LDRB operation does not work properly.", 'b', registerFile.getValue("r1"));
 
         code = "mov r1, #1\n"
                 + "ldr r0, =label\n"
-                + "ldr r1, [r0, r1, lsl #1]\n"
+                + "ldrb r1, [r0, r1, lsl #1]\n"
                 + "label: .asciz \"abc\"\n";
         processor.run(assembler.assemble(code));
-        assertEquals("LDR operation does not work properly.", 'c', registerFile.getValue("r1"));
+        assertEquals("LDRB operation does not work properly.", 'c', registerFile.getValue("r1"));
 
         code = "mov r1, #2\n"
                 + "ldr r0, =label\n"
-                + "ldr r1, [r0, r1]\n"
+                + "ldrb r1, [r0, r1]\n"
                 + "label: .asciz \"abc\"\n";
         processor.run(assembler.assemble(code));
-        assertEquals("LDR operation does not work properly.", 'c', registerFile.getValue("r1"));
+        assertEquals("LDRB operation does not work properly.", 'c', registerFile.getValue("r1"));
 
         code = "mov r1, #1\n"
                 + "ldr r0, =label\n"
-                + "ldr r1, [r0], r1\n"
+                + "ldrb r1, [r0], r1\n"
                 + "label: .asciz \"abc\"\n";
         processor.run(assembler.assemble(code));
-        assertEquals("LDR operation does not work properly.", 'a', registerFile.getValue("r1"));
-        value = memory.get(registerFile.getValue("r0"), Size.BYTE);
-        assertEquals("LDR operation does not work properly.", 'b', value);
+        assertEquals("LDRB operation does not work properly.", 'a', registerFile.getValue("r1"));
+        int value = memory.get(registerFile.getValue("r0"), Size.BYTE);
+        assertEquals("LDRB operation does not work properly.", 'b', value);
 
         code = "mov r1, #1\n"
                 + "ldr r0, =label\n"
-                + "ldr r1, [r0], r1, lsl #1\n"
+                + "ldrb r1, [r0], r1, lsl #1\n"
                 + "label: .asciz \"abc\"\n";
         processor.run(assembler.assemble(code));
-        assertEquals("LDR operation does not work properly.", 'a', registerFile.getValue("r1"));
+        assertEquals("LDRB operation does not work properly.", 'a', registerFile.getValue("r1"));
         value = memory.get(registerFile.getValue("r0"), Size.BYTE);
-        assertEquals("LDR operation does not work properly.", 'c', value);
+        assertEquals("LDRB operation does not work properly.", 'c', value);
     }
 }
