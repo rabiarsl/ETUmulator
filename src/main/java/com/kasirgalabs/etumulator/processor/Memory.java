@@ -70,7 +70,7 @@ public class Memory implements Observable {
                 temp = memory.get(address + 3);
                 temp <<= 16;
                 value |= temp;
-                break;
+                return value;
         }
         return memory.get(address);
     }

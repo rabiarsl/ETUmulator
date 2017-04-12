@@ -78,12 +78,12 @@ tasks.withType(FindBugs) {
 }
 
 generateGrammarSource {
-    arguments += ["-package", "com.kasirgalabs.arm", "-visitor", "-no-listener", "-long-messages"]
+    arguments += ["-package", "com.kasirgalabs.thumb2", "-visitor", "-no-listener", "-long-messages"]
     doLast {
         copy {
             from "build/generated-src/antlr/main/"
             include "*.java"
-            into "src/main/java/com/kasirgalabs/arm"
+            into "src/main/java/com/kasirgalabs/thumb2"
         }
         delete "build/generated-src/antlr"
     }
@@ -120,7 +120,7 @@ jacocoTestReport {
     afterEvaluate {
         classDirectories = files(
             classDirectories.files.collect {
-                fileTree(dir: it, exclude: "com/kasirgalabs/arm/**")
+                fileTree(dir: it, exclude: "com/kasirgalabs/thumb2/**")
             })
     }
     reports {
