@@ -62,4 +62,17 @@ public class SingleDataMemoryVisitor extends ProcessorBaseVisitor<Void> {
         }
         return null;
     }
+
+    @Override
+    public Void visitLdrh(ProcessorParser.LdrhContext ctx) {
+        String destRegister = registerVisitor.visit(ctx.rd());
+        if(ctx.ASSIGN() != null) {
+            registerFile.setValue(destRegister, (0x0000_ffff) & numberVisitor.visit(ctx.number()));
+        }
+        else {
+            int address = ldrAddressVisitor.visit(ctx.ldrAddress());
+            registerFile.setValue(destRegister, memory.get(address, Size.HALFWORD));
+        }
+        return null;
+    }
 }

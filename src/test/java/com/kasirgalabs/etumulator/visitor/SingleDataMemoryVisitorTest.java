@@ -63,20 +63,6 @@ public class SingleDataMemoryVisitorTest {
         processor.run(assembler.assemble(code));
         assertEquals("LDR operation does not work properly.", 0xffff_ffff,
                 registerFile.getValue("r0"));
-
-        code = "ldr r0, =label\n"
-                + "ldr r1, [r0], #1\n"
-                + "label: .asciz \"abc\"\n";
-        processor.run(assembler.assemble(code));
-        assertEquals("LDR operation does not work properly.", 'a', registerFile.getValue("r1"));
-        int value = memory.get(registerFile.getValue("r0"), Size.BYTE);
-        assertEquals("LDR operation does not work properly.", 'b', value);
-
-        code = "ldr r0, =label\n"
-                + "ldr r1, [r0]\n"
-                + "label: .asciz \"abc\"\n";
-        processor.run(assembler.assemble(code));
-        assertEquals("LDR operation does not work properly.", 'a', registerFile.getValue("r1"));
     }
 
     /**
@@ -88,6 +74,21 @@ public class SingleDataMemoryVisitorTest {
         processor.run(assembler.assemble(code));
         assertEquals("LDRB operation does not work properly.", 0x0000_00ff,
                 registerFile.getValue("r0"));
+
+        code = "ldr r0, =label\n"
+                + "ldrb r1, [r0], #1\n"
+                + "label: .asciz \"abc\"\n";
+        processor.run(assembler.assemble(code));
+
+        assertEquals("LDRB operation does not work properly.", 'a', registerFile.getValue("r1"));
+        int value = memory.get(registerFile.getValue("r0"), Size.BYTE);
+        assertEquals("LDR operation does not work properly.", 'b', value);
+
+        code = "ldr r0, =label\n"
+                + "ldrb r1, [r0]\n"
+                + "label: .asciz \"abc\"\n";
+        processor.run(assembler.assemble(code));
+        assertEquals("LDRB operation does not work properly.", 'a', registerFile.getValue("r1"));
 
         code = "ldr r0, =label\n"
                 + "ldrb r1, [r0, #1]\n"
@@ -115,7 +116,7 @@ public class SingleDataMemoryVisitorTest {
                 + "label: .asciz \"abc\"\n";
         processor.run(assembler.assemble(code));
         assertEquals("LDRB operation does not work properly.", 'a', registerFile.getValue("r1"));
-        int value = memory.get(registerFile.getValue("r0"), Size.BYTE);
+        value = memory.get(registerFile.getValue("r0"), Size.BYTE);
         assertEquals("LDRB operation does not work properly.", 'b', value);
 
         code = "mov r1, #1\n"
@@ -126,5 +127,24 @@ public class SingleDataMemoryVisitorTest {
         assertEquals("LDRB operation does not work properly.", 'a', registerFile.getValue("r1"));
         value = memory.get(registerFile.getValue("r0"), Size.BYTE);
         assertEquals("LDRB operation does not work properly.", 'c', value);
+    }
+
+    /**
+     * Test of visitLdrh method, of class SingleDataMemoryVisitor.
+     */
+    @Test
+    public void testVisitLdrh() {
+        String code = "ldrh r0, =0xffffffff\n";
+        processor.run(assembler.assemble(code));
+        assertEquals("LDRH operation does not work properly.", 0x0000_ffff,
+                registerFile.getValue("r0"));
+
+        code = "ldr r0, =label\n"
+                + "ldrh r1, [r0]\n"
+                + "label: .asciz \"ab\"\n";
+        processor.run(assembler.assemble(code));
+        int expResult = ((byte) 'b' << 8) | (byte) 'a';
+        assertEquals("LDRB operation does not work properly.", expResult,
+                registerFile.getValue("r1"));
     }
 }

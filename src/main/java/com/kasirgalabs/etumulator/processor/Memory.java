@@ -71,8 +71,9 @@ public class Memory implements Observable {
                 temp <<= 16;
                 value |= temp;
                 return value;
+            default:
+                return memory.get(address);
         }
-        return memory.get(address);
     }
 
     public void set(int address, byte value) {
