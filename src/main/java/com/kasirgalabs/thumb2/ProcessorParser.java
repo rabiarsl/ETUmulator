@@ -29,7 +29,8 @@ public class ProcessorParser extends Parser {
 		T__66=67, T__67=68, T__68=69, T__69=70, T__70=71, T__71=72, T__72=73, 
 		T__73=74, T__74=75, T__75=76, T__76=77, REGISTER=78, PC=79, LR=80, LABEL=81, 
 		STRING=82, DECIMAL=83, HEX=84, DOUBLE_QUOTE=85, COLON=86, LBRACE=87, RBRACE=88, 
-		ASSIGN=89, LBRACK=90, RBRACK=91, DASH=92, COMMA=93, WS=94, EOL=95;
+		ASSIGN=89, LBRACK=90, RBRACK=91, DASH=92, COMMA=93, COMMENT=94, LINE_COMMENT=95, 
+		WS=96, EOL=97;
 	public static final int
 		RULE_prog = 0, RULE_line = 1, RULE_instruction = 2, RULE_arithmetic = 3, 
 		RULE_multiplyAndDivide = 4, RULE_move = 5, RULE_shift = 6, RULE_compare = 7, 
@@ -96,7 +97,8 @@ public class ProcessorParser extends Parser {
 		null, null, null, null, null, null, null, null, null, null, null, null, 
 		null, null, null, null, null, null, "REGISTER", "PC", "LR", "LABEL", "STRING", 
 		"DECIMAL", "HEX", "DOUBLE_QUOTE", "COLON", "LBRACE", "RBRACE", "ASSIGN", 
-		"LBRACK", "RBRACK", "DASH", "COMMA", "WS", "EOL"
+		"LBRACK", "RBRACK", "DASH", "COMMA", "COMMENT", "LINE_COMMENT", "WS", 
+		"EOL"
 	};
 	public static final Vocabulary VOCABULARY = new VocabularyImpl(_LITERAL_NAMES, _SYMBOLIC_NAMES);
 
@@ -6602,7 +6604,7 @@ public class ProcessorParser extends Parser {
 	}
 
 	public static final String _serializedATN =
-		"\3\u608b\ua72a\u8133\ub9ed\u417c\u3be7\u7786\u5964\3a\u037b\4\2\t\2\4"+
+		"\3\u608b\ua72a\u8133\ub9ed\u417c\u3be7\u7786\u5964\3c\u037b\4\2\t\2\4"+
 		"\3\t\3\4\4\t\4\4\5\t\5\4\6\t\6\4\7\t\7\4\b\t\b\4\t\t\t\4\n\t\n\4\13\t"+
 		"\13\4\f\t\f\4\r\t\r\4\16\t\16\4\17\t\17\4\20\t\20\4\21\t\21\4\22\t\22"+
 		"\4\23\t\23\4\24\t\24\4\25\t\25\4\26\t\26\4\27\t\27\4\30\t\30\4\31\t\31"+
@@ -6689,7 +6691,7 @@ public class ProcessorParser extends Parser {
 		"\2\2\u00d4\u0367\3\2\2\2\u00d6\u0369\3\2\2\2\u00d8\u036b\3\2\2\2\u00da"+
 		"\u036e\3\2\2\2\u00dc\u0372\3\2\2\2\u00de\u0376\3\2\2\2\u00e0\u00e2\5\4"+
 		"\3\2\u00e1\u00e0\3\2\2\2\u00e1\u00e2\3\2\2\2\u00e2\u00e3\3\2\2\2\u00e3"+
-		"\u00e5\7a\2\2\u00e4\u00e1\3\2\2\2\u00e5\u00e6\3\2\2\2\u00e6\u00e4\3\2"+
+		"\u00e5\7c\2\2\u00e4\u00e1\3\2\2\2\u00e5\u00e6\3\2\2\2\u00e6\u00e4\3\2"+
 		"\2\2\u00e6\u00e7\3\2\2\2\u00e7\3\3\2\2\2\u00e8\u00ec\5\6\4\2\u00e9\u00ec"+
 		"\5\u00d8m\2\u00ea\u00ec\5\u00dan\2\u00eb\u00e8\3\2\2\2\u00eb\u00e9\3\2"+
 		"\2\2\u00eb\u00ea\3\2\2\2\u00ec\5\3\2\2\2\u00ed\u00f8\5\b\5\2\u00ee\u00f8"+

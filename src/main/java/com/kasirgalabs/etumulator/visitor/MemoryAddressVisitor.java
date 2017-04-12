@@ -70,7 +70,7 @@ public class MemoryAddressVisitor extends ProcessorBaseVisitor<Integer> {
         String destRegister = registerVisitor.visit(ctx.rn());
         int value = registerFile.getValue(registerVisitor.visit(ctx.rm()));
         if(ctx.opsh() != null) {
-            int shiftAmount = numberVisitor.visit(ctx.opsh().sh().number());
+            int shiftAmount = numberVisitor.visit(ctx.opsh());
             value <<= shiftAmount;
         }
         return registerFile.getValue(destRegister) + value;
@@ -82,7 +82,7 @@ public class MemoryAddressVisitor extends ProcessorBaseVisitor<Integer> {
         int value = registerFile.getValue(srcRegister);
         int offset = registerFile.getValue(registerVisitor.visit(ctx.rm()));
         if(ctx.opsh() != null) {
-            int shiftAmount = numberVisitor.visit(ctx.opsh().sh().number());
+            int shiftAmount = numberVisitor.visit(ctx.opsh());
             offset <<= shiftAmount;
         }
         registerFile.setValue(srcRegister, value + offset);

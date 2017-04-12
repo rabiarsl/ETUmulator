@@ -52,4 +52,9 @@ public class NumberVisitor extends ProcessorBaseVisitor<Integer> {
     public Integer visitOffset(ProcessorParser.OffsetContext ctx) {
         return visitNumber(ctx.number());
     }
+
+    @Override
+    public Integer visitOpsh(ProcessorParser.OpshContext ctx) {
+        return visit(ctx.sh());
+    }
 }

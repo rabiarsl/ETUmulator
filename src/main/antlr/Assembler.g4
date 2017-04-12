@@ -618,8 +618,15 @@ COMMA
     : ','
     ;
 
-WS
-    : [ \t\u000C]+ -> skip
+COMMENT
+    :   '/*' .*? '*/' -> skip
+    ;
+
+LINE_COMMENT
+    :   '//' ~[\r\n]* -> skip
+    ;
+
+WS  :  [ \t\r\u000C]+ -> skip
     ;
 
 EOL
