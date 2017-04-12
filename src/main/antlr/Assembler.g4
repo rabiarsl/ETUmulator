@@ -117,9 +117,7 @@ singleDataMemory
     | ldrh
     | str
     | strb
-    | strsb
     | strh
-    | strsh
     ;
 
 stack
@@ -396,23 +394,34 @@ bl
     ;
 
 ldr
-    : 'ldr' rd COMMA (ldrAddress | ASSIGN number)
+    : 'ldr' rd COMMA (memoryAddress | ASSIGN number | relocationDirective)
     ;
 
 ldrb
-    : 'ldrb' rd COMMA (ldrAddress | ASSIGN number)
+    : 'ldrb' rd COMMA (memoryAddress | ASSIGN number)
     ;
 
 ldrh
-    : 'ldrh' rd COMMA (ldrAddress | ASSIGN number)
+    : 'ldrh' rd COMMA (memoryAddress | ASSIGN number)
     ;
 
-ldrAddress
+str
+    : 'str' rd COMMA memoryAddress
+    ;
+
+strb
+    : 'strb' rd COMMA memoryAddress
+    ;
+
+strh
+    : 'strh' rd COMMA memoryAddress
+    ;
+
+memoryAddress
     : immediateOffset
     | postIndexedImmediate
     | registerOffset
     | postIndexedRegister
-    | relocationDirective
     ;
 
 immediateOffset
@@ -433,36 +442,6 @@ postIndexedRegister
 
 relocationDirective
     : ASSIGN LABEL
-    ;
-
-str
-    : 'str' rd COMMA strOperationType
-    ;
-
-strb
-    : 'strb' rd COMMA strOperationType
-    ;
-
-strsb
-    : 'strsb' rd COMMA strOperationType
-    ;
-
-
-strh
-    : 'strh' rd COMMA strOperationType
-    ;
-
-
-strsh
-    : 'strsh' rd COMMA strOperationType
-    ;
-
-strOperationType
-    : LBRACK rn RBRACK
-    | LBRACK rn COMMA offset RBRACK
-    | LBRACK rn RBRACK COMMA offset
-    | LBRACK rn COMMA rm (COMMA opsh)? RBRACK
-    | LBRACK rn RBRACK COMMA rm (COMMA opsh)?
     ;
 
 push

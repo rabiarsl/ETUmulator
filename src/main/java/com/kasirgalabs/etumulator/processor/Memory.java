@@ -76,9 +76,28 @@ public class Memory implements Observable {
         }
     }
 
-    public void set(int address, byte value) {
-        memory.put(address, value);
-        dispatcher.notifyObservers(Memory.class, address);
+    public void set(int address, int value, Size size) {
+        switch(size) {
+            case BYTE:
+                memory.put(address, (byte) value);
+                dispatcher.notifyObservers(Memory.class, address);
+                break;
+            case HALFWORD:
+                memory.put(address, (byte) value);
+                dispatcher.notifyObservers(Memory.class, address);
+                memory.put(address + 1, (byte) (value >>> 8));
+                dispatcher.notifyObservers(Memory.class, address);
+                break;
+            case WORD:
+                memory.put(address, (byte) value);
+                dispatcher.notifyObservers(Memory.class, address);
+                memory.put(address + 1, (byte) (value >>> 8));
+                dispatcher.notifyObservers(Memory.class, address);
+                memory.put(address + 2, (byte) (value >>> 16));
+                dispatcher.notifyObservers(Memory.class, address);
+                memory.put(address + 3, (byte) (value >>> 24));
+                dispatcher.notifyObservers(Memory.class, address);
+        }
     }
 
     public boolean isAddressEmpty(int address, Size size) {

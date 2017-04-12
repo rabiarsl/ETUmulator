@@ -503,11 +503,29 @@ public interface AssemblerVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitLdrh(AssemblerParser.LdrhContext ctx);
 	/**
-	 * Visit a parse tree produced by {@link AssemblerParser#ldrAddress}.
+	 * Visit a parse tree produced by {@link AssemblerParser#str}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitLdrAddress(AssemblerParser.LdrAddressContext ctx);
+	T visitStr(AssemblerParser.StrContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link AssemblerParser#strb}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitStrb(AssemblerParser.StrbContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link AssemblerParser#strh}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitStrh(AssemblerParser.StrhContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link AssemblerParser#memoryAddress}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitMemoryAddress(AssemblerParser.MemoryAddressContext ctx);
 	/**
 	 * Visit a parse tree produced by {@link AssemblerParser#immediateOffset}.
 	 * @param ctx the parse tree
@@ -538,42 +556,6 @@ public interface AssemblerVisitor<T> extends ParseTreeVisitor<T> {
 	 * @return the visitor result
 	 */
 	T visitRelocationDirective(AssemblerParser.RelocationDirectiveContext ctx);
-	/**
-	 * Visit a parse tree produced by {@link AssemblerParser#str}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitStr(AssemblerParser.StrContext ctx);
-	/**
-	 * Visit a parse tree produced by {@link AssemblerParser#strb}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitStrb(AssemblerParser.StrbContext ctx);
-	/**
-	 * Visit a parse tree produced by {@link AssemblerParser#strsb}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitStrsb(AssemblerParser.StrsbContext ctx);
-	/**
-	 * Visit a parse tree produced by {@link AssemblerParser#strh}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitStrh(AssemblerParser.StrhContext ctx);
-	/**
-	 * Visit a parse tree produced by {@link AssemblerParser#strsh}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitStrsh(AssemblerParser.StrshContext ctx);
-	/**
-	 * Visit a parse tree produced by {@link AssemblerParser#strOperationType}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitStrOperationType(AssemblerParser.StrOperationTypeContext ctx);
 	/**
 	 * Visit a parse tree produced by {@link AssemblerParser#push}.
 	 * @param ctx the parse tree

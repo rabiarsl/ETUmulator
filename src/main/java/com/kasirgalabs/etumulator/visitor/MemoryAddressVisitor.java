@@ -20,19 +20,19 @@ import com.kasirgalabs.etumulator.processor.RegisterFile;
 import com.kasirgalabs.thumb2.ProcessorBaseVisitor;
 import com.kasirgalabs.thumb2.ProcessorParser;
 
-public class LdrAddressVisitor extends ProcessorBaseVisitor<Integer> {
+public class MemoryAddressVisitor extends ProcessorBaseVisitor<Integer> {
     private final RegisterFile registerFile;
     private final RegisterVisitor registerVisitor;
     private final NumberVisitor numberVisitor;
 
-    public LdrAddressVisitor(RegisterFile registerFile) {
+    public MemoryAddressVisitor(RegisterFile registerFile) {
         this.registerFile = registerFile;
         registerVisitor = new RegisterVisitor();
         numberVisitor = new NumberVisitor();
     }
 
     @Override
-    public Integer visitLdrAddress(ProcessorParser.LdrAddressContext ctx) {
+    public Integer visitMemoryAddress(ProcessorParser.MemoryAddressContext ctx) {
         if(ctx.immediateOffset() != null) {
             return visitImmediateOffset(ctx.immediateOffset());
         }

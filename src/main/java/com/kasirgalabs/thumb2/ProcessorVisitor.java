@@ -503,11 +503,29 @@ public interface ProcessorVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitLdrh(ProcessorParser.LdrhContext ctx);
 	/**
-	 * Visit a parse tree produced by {@link ProcessorParser#ldrAddress}.
+	 * Visit a parse tree produced by {@link ProcessorParser#str}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitLdrAddress(ProcessorParser.LdrAddressContext ctx);
+	T visitStr(ProcessorParser.StrContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link ProcessorParser#strb}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitStrb(ProcessorParser.StrbContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link ProcessorParser#strh}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitStrh(ProcessorParser.StrhContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link ProcessorParser#memoryAddress}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitMemoryAddress(ProcessorParser.MemoryAddressContext ctx);
 	/**
 	 * Visit a parse tree produced by {@link ProcessorParser#immediateOffset}.
 	 * @param ctx the parse tree
@@ -532,42 +550,6 @@ public interface ProcessorVisitor<T> extends ParseTreeVisitor<T> {
 	 * @return the visitor result
 	 */
 	T visitPostIndexedRegister(ProcessorParser.PostIndexedRegisterContext ctx);
-	/**
-	 * Visit a parse tree produced by {@link ProcessorParser#str}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitStr(ProcessorParser.StrContext ctx);
-	/**
-	 * Visit a parse tree produced by {@link ProcessorParser#strb}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitStrb(ProcessorParser.StrbContext ctx);
-	/**
-	 * Visit a parse tree produced by {@link ProcessorParser#strsb}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitStrsb(ProcessorParser.StrsbContext ctx);
-	/**
-	 * Visit a parse tree produced by {@link ProcessorParser#strh}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitStrh(ProcessorParser.StrhContext ctx);
-	/**
-	 * Visit a parse tree produced by {@link ProcessorParser#strsh}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitStrsh(ProcessorParser.StrshContext ctx);
-	/**
-	 * Visit a parse tree produced by {@link ProcessorParser#strOperationType}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitStrOperationType(ProcessorParser.StrOperationTypeContext ctx);
 	/**
 	 * Visit a parse tree produced by {@link ProcessorParser#push}.
 	 * @param ctx the parse tree

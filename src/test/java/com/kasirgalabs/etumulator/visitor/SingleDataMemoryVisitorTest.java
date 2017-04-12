@@ -63,6 +63,14 @@ public class SingleDataMemoryVisitorTest {
         processor.run(assembler.assemble(code));
         assertEquals("LDR operation does not work properly.", 0xffff_ffff,
                 registerFile.getValue("r0"));
+
+        code = "mov r0, #2\n"
+                + "mov r1, #4\n"
+                + "str r0, [r1]\n"
+                + "ldr r2, [r1]\n";
+        processor.run(assembler.assemble(code));
+        assertEquals("LDR operation does not work properly.", 2,
+                registerFile.getValue("r0"));
     }
 
     /**
@@ -143,8 +151,53 @@ public class SingleDataMemoryVisitorTest {
                 + "ldrh r1, [r0]\n"
                 + "label: .asciz \"ab\"\n";
         processor.run(assembler.assemble(code));
-        int expResult = ((byte) 'b' << 8) | (byte) 'a';
+        int expResult = ('b' << 8) | 'a';
         assertEquals("LDRB operation does not work properly.", expResult,
                 registerFile.getValue("r1"));
+    }
+
+    /**
+     * Test of visitStr method, of class SingleDataMemoryVisitor.
+     */
+    @Test
+    public void testVisitStr() {
+        int expResult = 2;
+        int address = 4;
+        String code = "mov r0, #2\n"
+                + "mov r1, #4\n"
+                + "str r0, [r1]\n";
+        processor.run(assembler.assemble(code));
+        assertEquals("STR operation does not work properly.", expResult,
+                memory.get(address, Size.WORD));
+    }
+
+    /**
+     * Test of visitStrb method, of class SingleDataMemoryVisitor.
+     */
+    @Test
+    public void testVisitStrb() {
+        int expResult = 1;
+        int address = 4;
+        String code = "ldr r0, =0xffff0001\n"
+                + "mov r1, #4\n"
+                + "strb r0, [r1]\n";
+        processor.run(assembler.assemble(code));
+        assertEquals("STRB operation does not work properly.", expResult,
+                memory.get(address, Size.BYTE));
+    }
+
+    /**
+     * Test of visitStrh method, of class SingleDataMemoryVisitor.
+     */
+    @Test
+    public void testVisitStrh() {
+        int expResult = 0x0000_ffff;
+        int address = 4;
+        String code = "ldr r0, =0xefffffff\n"
+                + "mov r1, #4\n"
+                + "strh r0, [r1]\n";
+        processor.run(assembler.assemble(code));
+        assertEquals("STRH operation does not work properly.", expResult,
+                memory.get(address, Size.HALFWORD));
     }
 }

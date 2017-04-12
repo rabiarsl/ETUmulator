@@ -74,18 +74,12 @@ public class MemoryTabTest {
         Future<Void> future = executor.submit(() -> {
             Random random = new Random();
             final int ADDRESS = random.nextInt(Integer.MAX_VALUE);
-            memory.set(ADDRESS, (byte) 0);
-            memory.set(ADDRESS, (byte) 1);
-            memory.set(ADDRESS, (byte) 2);
-            memory.set(ADDRESS, (byte) 3);
-            memory.set(ADDRESS + 1, (byte) 1);
-            memory.set(ADDRESS + 2, (byte) 1);
-            memory.set(ADDRESS + 3, (byte) 1);
-            memory.set(ADDRESS + 4, (byte) 1);
-            memory.set(ADDRESS, (byte) 4);
-            memory.get(ADDRESS - 1, Size.BYTE);
-            memory.get(ADDRESS - 1, Size.HALFWORD);
-            memory.get(ADDRESS - 1, Size.WORD);
+            memory.set(ADDRESS, 0, Size.BYTE);
+            memory.set(ADDRESS, 1, Size.HALFWORD);
+            memory.set(ADDRESS, 2, Size.WORD);
+            memory.get(ADDRESS, Size.BYTE);
+            memory.get(ADDRESS, Size.HALFWORD);
+            memory.get(ADDRESS, Size.WORD);
             memory.reset();
             return null;
         });

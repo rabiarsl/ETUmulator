@@ -27,14 +27,14 @@ public class SingleDataMemoryVisitor extends ProcessorBaseVisitor<Void> {
     private final Memory memory;
     private final RegisterVisitor registerVisitor;
     private final NumberVisitor numberVisitor;
-    private final LdrAddressVisitor ldrAddressVisitor;
+    private final MemoryAddressVisitor memoryAddressVisitor;
 
     public SingleDataMemoryVisitor(RegisterFile registerFile, Memory memory) {
         this.registerFile = registerFile;
         this.memory = memory;
         registerVisitor = new RegisterVisitor();
         numberVisitor = new NumberVisitor();
-        ldrAddressVisitor = new LdrAddressVisitor(registerFile);
+        memoryAddressVisitor = new MemoryAddressVisitor(registerFile);
     }
 
     @Override
@@ -44,7 +44,7 @@ public class SingleDataMemoryVisitor extends ProcessorBaseVisitor<Void> {
             registerFile.setValue(destRegister, numberVisitor.visit(ctx.number()));
         }
         else {
-            int address = ldrAddressVisitor.visit(ctx.ldrAddress());
+            int address = memoryAddressVisitor.visit(ctx.memoryAddress());
             registerFile.setValue(destRegister, memory.get(address, Size.WORD));
         }
         return null;
@@ -57,7 +57,7 @@ public class SingleDataMemoryVisitor extends ProcessorBaseVisitor<Void> {
             registerFile.setValue(destRegister, (0x0000_00ff) & numberVisitor.visit(ctx.number()));
         }
         else {
-            int address = ldrAddressVisitor.visit(ctx.ldrAddress());
+            int address = memoryAddressVisitor.visit(ctx.memoryAddress());
             registerFile.setValue(destRegister, memory.get(address, Size.BYTE));
         }
         return null;
@@ -70,9 +70,33 @@ public class SingleDataMemoryVisitor extends ProcessorBaseVisitor<Void> {
             registerFile.setValue(destRegister, (0x0000_ffff) & numberVisitor.visit(ctx.number()));
         }
         else {
-            int address = ldrAddressVisitor.visit(ctx.ldrAddress());
+            int address = memoryAddressVisitor.visit(ctx.memoryAddress());
             registerFile.setValue(destRegister, memory.get(address, Size.HALFWORD));
         }
+        return null;
+    }
+
+    @Override
+    public Void visitStr(ProcessorParser.StrContext ctx) {
+        String srcRegister = registerVisitor.visit(ctx.rd());
+        int address = memoryAddressVisitor.visit(ctx.memoryAddress());
+        memory.set(address, registerFile.getValue(srcRegister), Size.WORD);
+        return null;
+    }
+
+    @Override
+    public Void visitStrb(ProcessorParser.StrbContext ctx) {
+        String srcRegister = registerVisitor.visit(ctx.rd());
+        int address = memoryAddressVisitor.visit(ctx.memoryAddress());
+        memory.set(address, registerFile.getValue(srcRegister), Size.BYTE);
+        return null;
+    }
+
+    @Override
+    public Void visitStrh(ProcessorParser.StrhContext ctx) {
+        String srcRegister = registerVisitor.visit(ctx.rd());
+        int address = memoryAddressVisitor.visit(ctx.memoryAddress());
+        memory.set(address, registerFile.getValue(srcRegister), Size.HALFWORD);
         return null;
     }
 }
