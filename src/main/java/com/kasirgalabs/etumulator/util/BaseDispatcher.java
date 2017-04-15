@@ -27,8 +27,8 @@ public class BaseDispatcher implements Dispatcher {
     }
 
     @Override
-    public void addObserver(Observer listener) {
-        observers.add(listener);
+    public void addObserver(Observer observer) {
+        observers.add(observer);
     }
 
     @Override

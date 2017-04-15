@@ -46,8 +46,8 @@ public class RegisterFile implements Observable {
     }
 
     @Override
-    public void addObserver(Observer listener) {
-        dispatcher.addObserver(listener);
+    public void addObserver(Observer observer) {
+        dispatcher.addObserver(observer);
     }
 
     public void setValue(String registerName, int value) {

@@ -40,8 +40,8 @@ public class Memory implements Observable {
     }
 
     @Override
-    public void addObserver(Observer listener) {
-        dispatcher.addObserver(listener);
+    public void addObserver(Observer observer) {
+        dispatcher.addObserver(observer);
     }
 
     public int get(int address, Size size) {
