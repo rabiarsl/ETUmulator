@@ -18,6 +18,7 @@ package com.kasirgalabs.etumulator.visitor;
 
 import com.kasirgalabs.thumb2.ProcessorBaseVisitor;
 import com.kasirgalabs.thumb2.ProcessorParser;
+import java.math.BigInteger;
 
 public class NumberVisitor extends ProcessorBaseVisitor<Integer> {
     @Override
@@ -43,9 +44,9 @@ public class NumberVisitor extends ProcessorBaseVisitor<Integer> {
     @Override
     public Integer visitNumber(ProcessorParser.NumberContext ctx) {
         if(ctx.DECIMAL() != null) {
-            return (int) Long.parseLong(ctx.DECIMAL().getText());
+            return new BigInteger(ctx.DECIMAL().getText()).intValue();
         }
-        return (int) Long.parseLong(ctx.HEX().getText().substring(2), 16);
+        return new BigInteger(ctx.HEX().getText().substring(2), 16).intValue();
     }
 
     @Override
