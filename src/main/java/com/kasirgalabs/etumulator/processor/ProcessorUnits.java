@@ -19,7 +19,7 @@ package com.kasirgalabs.etumulator.processor;
 public interface ProcessorUnits {
     RegisterFile getRegisterFile();
 
-    CPSR getCPSR();
+    APSR getAPSR();
 
     Stack getStack();
 

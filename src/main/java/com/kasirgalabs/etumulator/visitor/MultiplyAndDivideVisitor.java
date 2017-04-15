@@ -16,19 +16,19 @@
  */
 package com.kasirgalabs.etumulator.visitor;
 
-import com.kasirgalabs.etumulator.processor.CPSR;
+import com.kasirgalabs.etumulator.processor.APSR;
 import com.kasirgalabs.etumulator.processor.RegisterFile;
 import com.kasirgalabs.thumb2.ProcessorBaseVisitor;
 import com.kasirgalabs.thumb2.ProcessorParser;
 
 public class MultiplyAndDivideVisitor extends ProcessorBaseVisitor<Void> {
     private final RegisterFile registerFile;
-    private final CPSR cpsr;
+    private final APSR apsr;
     private final RegisterVisitor registerVisitor;
 
-    public MultiplyAndDivideVisitor(RegisterFile registerFile, CPSR cpsr) {
+    public MultiplyAndDivideVisitor(RegisterFile registerFile, APSR apsr) {
         this.registerFile = registerFile;
-        this.cpsr = cpsr;
+        this.apsr = apsr;
         registerVisitor = new RegisterVisitor();
     }
 
@@ -47,7 +47,7 @@ public class MultiplyAndDivideVisitor extends ProcessorBaseVisitor<Void> {
         int left = registerFile.getValue(registerVisitor.visit(ctx.rm()));
         int right = registerFile.getValue(registerVisitor.visit(ctx.rs()));
         int result = left * right;
-        cpsr.updateNZ(result);
+        apsr.updateNZ(result);
         registerFile.setValue(destRegister, result);
         return null;
     }
@@ -70,7 +70,7 @@ public class MultiplyAndDivideVisitor extends ProcessorBaseVisitor<Void> {
         int right = registerFile.getValue(registerVisitor.visit(ctx.rs()));
         int result = left * right;
         result += registerFile.getValue(registerVisitor.visit(ctx.rn()));
-        cpsr.updateNZ(result);
+        apsr.updateNZ(result);
         registerFile.setValue(destRegister, result);
         return null;
     }

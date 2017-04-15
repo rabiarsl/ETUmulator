@@ -16,21 +16,21 @@
  */
 package com.kasirgalabs.etumulator.visitor;
 
-import com.kasirgalabs.etumulator.processor.CPSR;
+import com.kasirgalabs.etumulator.processor.APSR;
 import com.kasirgalabs.etumulator.processor.RegisterFile;
 import com.kasirgalabs.thumb2.ProcessorBaseVisitor;
 import com.kasirgalabs.thumb2.ProcessorParser;
 
 public class MoveVisitor extends ProcessorBaseVisitor<Void> {
     private final RegisterFile registerFile;
-    private final CPSR cpsr;
+    private final APSR apsr;
     private final RegisterVisitor registerVisitor;
     private final Operand2Visitor operand2Visitor;
     private final NumberVisitor numberVisitor;
 
-    public MoveVisitor(RegisterFile registerFile, CPSR cpsr) {
+    public MoveVisitor(RegisterFile registerFile, APSR apsr) {
         this.registerFile = registerFile;
-        this.cpsr = cpsr;
+        this.apsr = apsr;
         registerVisitor = new RegisterVisitor();
         operand2Visitor = new Operand2Visitor(registerFile);
         numberVisitor = new NumberVisitor();
@@ -54,7 +54,7 @@ public class MoveVisitor extends ProcessorBaseVisitor<Void> {
     public Void visitMovs(ProcessorParser.MovsContext ctx) {
         String destRegister = registerVisitor.visit(ctx.rd());
         int value = operand2Visitor.visit(ctx.operand2());
-        cpsr.updateNZ(value);
+        apsr.updateNZ(value);
         registerFile.setValue(destRegister, value);
         return null;
     }
@@ -71,7 +71,7 @@ public class MoveVisitor extends ProcessorBaseVisitor<Void> {
     public Void visitMvns(ProcessorParser.MvnsContext ctx) {
         String destRegister = registerVisitor.visit(ctx.rd());
         int value = 0xffff_ffff ^ operand2Visitor.visit(ctx.operand2());
-        cpsr.updateNZ(value);
+        apsr.updateNZ(value);
         registerFile.setValue(destRegister, value);
         return null;
     }

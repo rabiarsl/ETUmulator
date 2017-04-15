@@ -24,7 +24,7 @@ import com.kasirgalabs.etumulator.util.GUISafeDispatcher;
 public class GUISafeProcessorUnits extends BaseProcessorUnits {
     public GUISafeProcessorUnits() {
         super(new RegisterFile(new GUISafeDispatcher()),
-                new CPSR(new GUISafeDispatcher()),
+                new APSR(new GUISafeDispatcher()),
                 new Stack(new GUISafeDispatcher()),
                 new Memory(new GUISafeDispatcher()),
                 new UART(null, new GUISafeDispatcher()),
@@ -34,8 +34,8 @@ public class GUISafeProcessorUnits extends BaseProcessorUnits {
     }
 
     @Inject
-    public GUISafeProcessorUnits(RegisterFile registerFile, CPSR cpsr, Stack stack, Memory memory,
+    public GUISafeProcessorUnits(RegisterFile registerFile, APSR apsr, Stack stack, Memory memory,
             UART uart, PC pc, LR lr) {
-        super(registerFile, cpsr, stack, memory, uart, pc, lr);
+        super(registerFile, apsr, stack, memory, uart, pc, lr);
     }
 }

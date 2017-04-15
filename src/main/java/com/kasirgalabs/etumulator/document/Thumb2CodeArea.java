@@ -22,12 +22,12 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import org.fxmisc.richtext.CodeArea;
 
-public class ArmCodeArea extends CodeArea {
-    public ArmCodeArea() {
+public class Thumb2CodeArea extends CodeArea {
+    public Thumb2CodeArea() {
         getStylesheets().clear();
-        getStylesheets().add(ArmCodeArea.class.getClassLoader()
+        getStylesheets().add(Thumb2CodeArea.class.getClassLoader()
                 .getResource("styles/arm-syntax-highlight.css").toExternalForm());
-        getStylesheets().add(ArmCodeArea.class.getClassLoader()
+        getStylesheets().add(Thumb2CodeArea.class.getClassLoader()
                 .getResource("styles/spellchecking.css").toExternalForm());
         setCursor(Cursor.TEXT);
         richChanges().filter(ch -> !ch.getInserted().equals(ch.getRemoved()))

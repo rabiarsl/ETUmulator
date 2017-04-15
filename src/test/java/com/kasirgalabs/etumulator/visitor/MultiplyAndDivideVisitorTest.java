@@ -21,9 +21,9 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 import com.kasirgalabs.etumulator.lang.Assembler;
+import com.kasirgalabs.etumulator.processor.APSR;
 import com.kasirgalabs.etumulator.processor.BaseProcessor;
 import com.kasirgalabs.etumulator.processor.BaseProcessorUnits;
-import com.kasirgalabs.etumulator.processor.CPSR;
 import com.kasirgalabs.etumulator.processor.Processor;
 import com.kasirgalabs.etumulator.processor.ProcessorUnits;
 import com.kasirgalabs.etumulator.processor.RegisterFile;
@@ -32,14 +32,14 @@ import org.junit.Test;
 public class MultiplyAndDivideVisitorTest {
     private final Assembler assembler;
     private final RegisterFile registerFile;
-    private final CPSR cpsr;
+    private final APSR apsr;
     private final Processor processor;
 
     public MultiplyAndDivideVisitorTest() {
         ProcessorUnits processorUnits = new BaseProcessorUnits();
         assembler = new Assembler(processorUnits.getMemory());
         registerFile = processorUnits.getRegisterFile();
-        cpsr = processorUnits.getCPSR();
+        apsr = processorUnits.getAPSR();
         processor = new BaseProcessor(processorUnits);
     }
 
@@ -67,16 +67,16 @@ public class MultiplyAndDivideVisitorTest {
         String code = "muls r0, r1, r3\n";
         processor.run(assembler.assemble(code));
         assertEquals("Multiply result is wrong.", 0, registerFile.getValue("r0"));
-        assertFalse("Negative flag is wrong.", cpsr.isNegative());
-        assertTrue("Zero flag is wrong.", cpsr.isZero());
+        assertFalse("Negative flag is wrong.", apsr.isNegative());
+        assertTrue("Zero flag is wrong.", apsr.isZero());
 
         code = "mov r1, 4\n"
                 + "mov r2, 8\n"
                 + "muls r0, r1, r2\n";
         processor.run(assembler.assemble(code));
         assertEquals("Multiply result is wrong.", 32, registerFile.getValue("r0"));
-        assertFalse("Negative flag is wrong.", cpsr.isNegative());
-        assertFalse("Zero flag is wrong.", cpsr.isZero());
+        assertFalse("Negative flag is wrong.", apsr.isNegative());
+        assertFalse("Zero flag is wrong.", apsr.isZero());
     }
 
     /**
@@ -104,8 +104,8 @@ public class MultiplyAndDivideVisitorTest {
         String code = "mlas r0, r1, r3, r4\n";
         processor.run(assembler.assemble(code));
         assertEquals("Multiply result is wrong.", 0, registerFile.getValue("r0"));
-        assertFalse("Negative flag is wrong.", cpsr.isNegative());
-        assertTrue("Zero flag is wrong.", cpsr.isZero());
+        assertFalse("Negative flag is wrong.", apsr.isNegative());
+        assertTrue("Zero flag is wrong.", apsr.isZero());
 
         code = "mov r1, 4\n"
                 + "mov r2, 8\n"
@@ -113,8 +113,8 @@ public class MultiplyAndDivideVisitorTest {
                 + "mlas r0, r1, r2, r3\n";
         processor.run(assembler.assemble(code));
         assertEquals("Multiply result is wrong.", 34, registerFile.getValue("r0"));
-        assertFalse("Negative flag is wrong.", cpsr.isNegative());
-        assertFalse("Zero flag is wrong.", cpsr.isZero());
+        assertFalse("Negative flag is wrong.", apsr.isNegative());
+        assertFalse("Zero flag is wrong.", apsr.isZero());
     }
 
     /**

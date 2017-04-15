@@ -19,9 +19,9 @@ package com.kasirgalabs.etumulator.visitor;
 import static org.junit.Assert.assertEquals;
 
 import com.kasirgalabs.etumulator.lang.Assembler;
+import com.kasirgalabs.etumulator.processor.APSR;
 import com.kasirgalabs.etumulator.processor.BaseProcessor;
 import com.kasirgalabs.etumulator.processor.BaseProcessorUnits;
-import com.kasirgalabs.etumulator.processor.CPSR;
 import com.kasirgalabs.etumulator.processor.Processor;
 import com.kasirgalabs.etumulator.processor.ProcessorUnits;
 import com.kasirgalabs.etumulator.processor.RegisterFile;
@@ -30,7 +30,7 @@ import org.junit.Test;
 
 public class BranchVisitorTest {
     private final RegisterFile registerFile;
-    private final CPSR cpsr;
+    private final APSR apsr;
     private final UART uart;
     private final Processor processor;
     private final Assembler assembler;
@@ -38,7 +38,7 @@ public class BranchVisitorTest {
     public BranchVisitorTest() {
         ProcessorUnits processorUnits = new BaseProcessorUnits();
         registerFile = processorUnits.getRegisterFile();
-        cpsr = processorUnits.getCPSR();
+        apsr = processorUnits.getAPSR();
         uart = processorUnits.getUART();
         processor = new BaseProcessor(processorUnits);
         assembler = new Assembler(null);
@@ -117,7 +117,7 @@ public class BranchVisitorTest {
      */
     @Test
     public void testVisitBcs() {
-        cpsr.setCarry(true);
+        apsr.setCarry(true);
         String code = "mov r0, #4\n"
                 + "bcs target\n"
                 + "mov r0, #1\n"
@@ -125,7 +125,7 @@ public class BranchVisitorTest {
         processor.run(assembler.assemble(code));
         assertEquals("Branch instruction does not work properly.", 4, registerFile.getValue("r0"));
 
-        cpsr.setCarry(false);
+        apsr.setCarry(false);
         code = "mov r0, #4\n"
                 + "bcs target\n"
                 + "mov r0, #1\n"
@@ -139,7 +139,7 @@ public class BranchVisitorTest {
      */
     @Test
     public void testVisitBhs() {
-        cpsr.setCarry(false);
+        apsr.setCarry(false);
         String code = "mov r0, #4\n"
                 + "bhs target\n"
                 + "mov r0, #1\n"
@@ -147,7 +147,7 @@ public class BranchVisitorTest {
         processor.run(assembler.assemble(code));
         assertEquals("Branch instruction does not work properly.", 1, registerFile.getValue("r0"));
 
-        cpsr.setCarry(true);
+        apsr.setCarry(true);
         code = "mov r0, #4\n"
                 + "bhs target\n"
                 + "mov r0, #1\n"
@@ -161,7 +161,7 @@ public class BranchVisitorTest {
      */
     @Test
     public void testVisitBcc() {
-        cpsr.setCarry(true);
+        apsr.setCarry(true);
         String code = "mov r0, #4\n"
                 + "bcc target\n"
                 + "mov r0, #1\n"
@@ -169,7 +169,7 @@ public class BranchVisitorTest {
         processor.run(assembler.assemble(code));
         assertEquals("Branch instrucbtion does not work properly.", 1, registerFile.getValue("r0"));
 
-        cpsr.setCarry(false);
+        apsr.setCarry(false);
         code = "mov r0, #4\n"
                 + "bcc target\n"
                 + "mov r0, #1\n"
@@ -183,7 +183,7 @@ public class BranchVisitorTest {
      */
     @Test
     public void testVisitBlo() {
-        cpsr.setCarry(false);
+        apsr.setCarry(false);
         String code = "mov r0, #4\n"
                 + "blo target\n"
                 + "mov r0, #1\n"
@@ -191,7 +191,7 @@ public class BranchVisitorTest {
         processor.run(assembler.assemble(code));
         assertEquals("Branch instruction does not work properly.", 4, registerFile.getValue("r0"));
 
-        cpsr.setCarry(true);
+        apsr.setCarry(true);
         code = "mov r0, #4\n"
                 + "blo target\n"
                 + "mov r0, #1\n"
@@ -312,7 +312,7 @@ public class BranchVisitorTest {
         processor.run(assembler.assemble(code));
         assertEquals("Branch instruction does not work properly.", 1, registerFile.getValue("r0"));
 
-        cpsr.setCarry(false);
+        apsr.setCarry(false);
         code = "mov r0, #4\n"
                 + "bhi target\n"
                 + "mov r0, #1\n"
@@ -342,8 +342,8 @@ public class BranchVisitorTest {
         processor.run(assembler.assemble(code));
         assertEquals("Branch instruction does not work properly.", 3, registerFile.getValue("r0"));
 
-        cpsr.setCarry(true);
-        cpsr.setZero(false);
+        apsr.setCarry(true);
+        apsr.setZero(false);
         code = "mov r0, #4\n"
                 + "bls target\n"
                 + "mov r0, #1\n"
@@ -351,8 +351,8 @@ public class BranchVisitorTest {
         processor.run(assembler.assemble(code));
         assertEquals("Branch instruction does not work properly.", 1, registerFile.getValue("r0"));
 
-        cpsr.setCarry(false);
-        cpsr.setZero(true);
+        apsr.setCarry(false);
+        apsr.setZero(true);
         code = "mov r0, #4\n"
                 + "bls target\n"
                 + "mov r0, #1\n"
@@ -360,8 +360,8 @@ public class BranchVisitorTest {
         processor.run(assembler.assemble(code));
         assertEquals("Branch instruction does not work properly.", 4, registerFile.getValue("r0"));
 
-        cpsr.setCarry(true);
-        cpsr.setZero(true);
+        apsr.setCarry(true);
+        apsr.setZero(true);
         code = "mov r0, #8\n"
                 + "bls target\n"
                 + "mov r0, #1\n"

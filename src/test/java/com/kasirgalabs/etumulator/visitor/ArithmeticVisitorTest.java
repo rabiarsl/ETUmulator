@@ -21,9 +21,9 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 import com.kasirgalabs.etumulator.lang.Assembler;
+import com.kasirgalabs.etumulator.processor.APSR;
 import com.kasirgalabs.etumulator.processor.BaseProcessor;
 import com.kasirgalabs.etumulator.processor.BaseProcessorUnits;
-import com.kasirgalabs.etumulator.processor.CPSR;
 import com.kasirgalabs.etumulator.processor.Processor;
 import com.kasirgalabs.etumulator.processor.ProcessorUnits;
 import com.kasirgalabs.etumulator.processor.RegisterFile;
@@ -32,14 +32,14 @@ import org.junit.Test;
 public class ArithmeticVisitorTest {
     private final Assembler assembler;
     private final RegisterFile registerFile;
-    private final CPSR cpsr;
+    private final APSR apsr;
     private final Processor processor;
 
     public ArithmeticVisitorTest() {
         ProcessorUnits processorUnits = new BaseProcessorUnits();
         assembler = new Assembler(processorUnits.getMemory());
         registerFile = processorUnits.getRegisterFile();
-        cpsr = processorUnits.getCPSR();
+        apsr = processorUnits.getAPSR();
         processor = new BaseProcessor(processorUnits);
     }
 
@@ -89,9 +89,9 @@ public class ArithmeticVisitorTest {
                 + "adds r0, r1, r2\n";
         processor.run(assembler.assemble(code));
         assertEquals("Addition result is wrong.", Integer.MAX_VALUE, registerFile.getValue("r0"));
-        assertFalse("Negative flag is wrong.", cpsr.isNegative());
-        assertFalse("Zero flag is wrong.", cpsr.isZero());
-        assertTrue("Overflow flag is wrong.", cpsr.isOverflow());
+        assertFalse("Negative flag is wrong.", apsr.isNegative());
+        assertFalse("Zero flag is wrong.", apsr.isZero());
+        assertTrue("Overflow flag is wrong.", apsr.isOverflow());
     }
 
     /**
@@ -99,29 +99,29 @@ public class ArithmeticVisitorTest {
      */
     @Test
     public void testVisitAdc() {
-        cpsr.setCarry(false);
+        apsr.setCarry(false);
         String code = "adc r1, r2, r3\n";
         processor.run(assembler.assemble(code));
         assertEquals("Addition result is wrong.", 0, registerFile.getValue("r1"));
 
-        cpsr.setCarry(true);
+        apsr.setCarry(true);
         code = "adc r0, r1, 0\n";
         processor.run(assembler.assemble(code));
         assertEquals("Addition result is wrong.", 1, registerFile.getValue("r0"));
 
-        cpsr.setCarry(false);
+        apsr.setCarry(false);
         code = "adc r0, r1, 4\n";
         processor.run(assembler.assemble(code));
         assertEquals("Addition result is wrong.", 4, registerFile.getValue("r0"));
 
-        cpsr.setCarry(true);
+        apsr.setCarry(true);
         code = "mov r1, #1\n"
                 + "mov r2, #2\n"
                 + "adc r0, r1, r2\n";
         processor.run(assembler.assemble(code));
         assertEquals("Addition result is wrong.", 4, registerFile.getValue("r0"));
 
-        cpsr.setCarry(true);
+        apsr.setCarry(true);
         code = "mov r0, #1\n"
                 + "adc r0, r0, r0\n";
         processor.run(assembler.assemble(code));
@@ -133,29 +133,29 @@ public class ArithmeticVisitorTest {
      */
     @Test
     public void testVisitAdcs() {
-        cpsr.setCarry(false);
+        apsr.setCarry(false);
         String code = "mov r1, #1\n"
                 + "adcs r0, r1, r1\n";
         processor.run(assembler.assemble(code));
         assertEquals("Addition result is wrong.", 2, registerFile.getValue("r0"));
 
-        cpsr.setCarry(true);
+        apsr.setCarry(true);
         code = "ldr r1, =0x7fffffff\n"
                 + "adcs r0, r1, r1\n";
         processor.run(assembler.assemble(code));
         assertEquals("Addition result is wrong.", -1, registerFile.getValue("r0"));
-        assertTrue("Negative flag is wrong.", cpsr.isNegative());
-        assertFalse("Zero flag is wrong.", cpsr.isZero());
-        assertTrue("Overflow flag is wrong.", cpsr.isOverflow());
+        assertTrue("Negative flag is wrong.", apsr.isNegative());
+        assertFalse("Zero flag is wrong.", apsr.isZero());
+        assertTrue("Overflow flag is wrong.", apsr.isOverflow());
 
-        cpsr.setCarry(true);
+        apsr.setCarry(true);
         code = "ldr r1, =0x7fffffff\n"
                 + "adcs r0, r1, #0\n";
         processor.run(assembler.assemble(code));
         assertEquals("Addition result is wrong.", Integer.MIN_VALUE, registerFile.getValue("r0"));
-        assertTrue("Negative flag is wrong.", cpsr.isNegative());
-        assertFalse("Zero flag is wrong.", cpsr.isZero());
-        assertTrue("Overflow flag is wrong.", cpsr.isOverflow());
+        assertTrue("Negative flag is wrong.", apsr.isNegative());
+        assertFalse("Zero flag is wrong.", apsr.isZero());
+        assertTrue("Overflow flag is wrong.", apsr.isOverflow());
     }
 
     /**
@@ -192,16 +192,16 @@ public class ArithmeticVisitorTest {
         String code = "subs r0, r1, r2\n";
         processor.run(assembler.assemble(code));
         assertEquals("Subtraction result is wrong.", 0, registerFile.getValue("r0"));
-        assertFalse("Negative flag is wrong.", cpsr.isNegative());
-        assertTrue("Zero flag is wrong.", cpsr.isZero());
-        assertFalse("Overflow flag is wrong.", cpsr.isOverflow());
+        assertFalse("Negative flag is wrong.", apsr.isNegative());
+        assertTrue("Zero flag is wrong.", apsr.isZero());
+        assertFalse("Overflow flag is wrong.", apsr.isOverflow());
 
         code = "subs r0, r1, #1\n";
         processor.run(assembler.assemble(code));
         assertEquals("Subtraction result is wrong.", -1, registerFile.getValue("r0"));
-        assertTrue("Negative flag is wrong.", cpsr.isNegative());
-        assertFalse("Zero flag is wrong.", cpsr.isZero());
-        assertFalse("Overflow flag is wrong.", cpsr.isOverflow());
+        assertTrue("Negative flag is wrong.", apsr.isNegative());
+        assertFalse("Zero flag is wrong.", apsr.isZero());
+        assertFalse("Overflow flag is wrong.", apsr.isOverflow());
 
         code = "ldr r1, =0x80000000\n"
                 + "mov r2, #1\n"
@@ -210,18 +210,18 @@ public class ArithmeticVisitorTest {
         assertEquals("Subtraction result is wrong.",
                 Integer.MAX_VALUE,
                 registerFile.getValue("r0"));
-        assertFalse("Negative flag is wrong.", cpsr.isNegative());
-        assertFalse("Zero flag is wrong.", cpsr.isZero());
-        assertTrue("Overflow flag is wrong.", cpsr.isOverflow());
+        assertFalse("Negative flag is wrong.", apsr.isNegative());
+        assertFalse("Zero flag is wrong.", apsr.isZero());
+        assertTrue("Overflow flag is wrong.", apsr.isOverflow());
 
         code = "mov r0, #0\n"
                 + "mov r1, #0xf\n"
                 + "subs r0, r0, r1\n";
         processor.run(assembler.assemble(code));
         assertEquals("Subtraction result is wrong.", -0xf, registerFile.getValue("r0"));
-        assertTrue("Negative flag is wrong.", cpsr.isNegative());
-        assertFalse("Zero flag is wrong.", cpsr.isZero());
-        assertFalse("Overflow flag is wrong.", cpsr.isOverflow());
+        assertTrue("Negative flag is wrong.", apsr.isNegative());
+        assertFalse("Zero flag is wrong.", apsr.isZero());
+        assertFalse("Overflow flag is wrong.", apsr.isOverflow());
     }
 
     /**
@@ -229,29 +229,29 @@ public class ArithmeticVisitorTest {
      */
     @Test
     public void testVisitSbc() {
-        cpsr.setCarry(true);
+        apsr.setCarry(true);
         String code = "sbc r1, r2, r3\n";
         processor.run(assembler.assemble(code));
         assertEquals("Subtraction result is wrong.", 0, registerFile.getValue("r1"));
 
-        cpsr.setCarry(false);
+        apsr.setCarry(false);
         code = "sbc r0, r1, 0\n";
         processor.run(assembler.assemble(code));
         assertEquals("Subtraction result is wrong.", -1, registerFile.getValue("r0"));
 
-        cpsr.setCarry(true);
+        apsr.setCarry(true);
         code = "sbc r0, r1, 4\n";
         processor.run(assembler.assemble(code));
         assertEquals("Subtraction result is wrong.", -4, registerFile.getValue("r0"));
 
-        cpsr.setCarry(false);
+        apsr.setCarry(false);
         code = "mov r1, #1\n"
                 + "mov r2, #2\n"
                 + "sbc r0, r1, r2\n";
         processor.run(assembler.assemble(code));
         assertEquals("Subtraction result is wrong.", -2, registerFile.getValue("r0"));
 
-        cpsr.setCarry(false);
+        apsr.setCarry(false);
         code = "mov r0, #1\n"
                 + "sbc r0, r0, r0\n";
         processor.run(assembler.assemble(code));
@@ -263,46 +263,46 @@ public class ArithmeticVisitorTest {
      */
     @Test
     public void testVisitSbcs() {
-        cpsr.setCarry(true);
+        apsr.setCarry(true);
         String code = "ldr r1, =#0x80000000\n"
                 + "sbcs r0, r1, #1\n";
         processor.run(assembler.assemble(code));
         assertEquals("Subtraction result is wrong.",
                 Integer.MAX_VALUE,
                 registerFile.getValue("r0"));
-        assertFalse("Negative flag is wrong.", cpsr.isNegative());
-        assertFalse("Zero flag is wrong.", cpsr.isZero());
-        assertTrue("Overflow flag is wrong.", cpsr.isOverflow());
+        assertFalse("Negative flag is wrong.", apsr.isNegative());
+        assertFalse("Zero flag is wrong.", apsr.isZero());
+        assertTrue("Overflow flag is wrong.", apsr.isOverflow());
 
-        cpsr.setCarry(false);
+        apsr.setCarry(false);
         code = "ldr r1, =#0x80000000\n"
                 + "sbcs r0, r1, #1\n";
         processor.run(assembler.assemble(code));
         assertEquals("Subtraction result is wrong.", Integer.MAX_VALUE - 1, registerFile
                 .getValue("r0"));
-        assertFalse("Negative flag is wrong.", cpsr.isNegative());
-        assertFalse("Zero flag is wrong.", cpsr.isZero());
-        assertTrue("Overflow flag is wrong.", cpsr.isOverflow());
+        assertFalse("Negative flag is wrong.", apsr.isNegative());
+        assertFalse("Zero flag is wrong.", apsr.isZero());
+        assertTrue("Overflow flag is wrong.", apsr.isOverflow());
 
-        cpsr.setCarry(true);
+        apsr.setCarry(true);
         code = "mov r1, #0\n"
                 + "sbcs r0, r1, #0\n";
         processor.run(assembler.assemble(code));
         assertEquals("Subtraction result is wrong.", 0, registerFile.getValue("r0"));
-        assertFalse("Negative flag is wrong.", cpsr.isNegative());
-        assertTrue("Zero flag is wrong.", cpsr.isZero());
-        assertFalse("Overflow flag is wrong.", cpsr.isOverflow());
+        assertFalse("Negative flag is wrong.", apsr.isNegative());
+        assertTrue("Zero flag is wrong.", apsr.isZero());
+        assertFalse("Overflow flag is wrong.", apsr.isOverflow());
 
-        cpsr.setCarry(false);
+        apsr.setCarry(false);
         code = "ldr r1, =#0x80000001\n"
                 + "sbcs r0, r1, #1\n";
         processor.run(assembler.assemble(code));
         assertEquals("Subtraction result is wrong.",
                 Integer.MAX_VALUE,
                 registerFile.getValue("r0"));
-        assertFalse("Negative flag is wrong.", cpsr.isNegative());
-        assertFalse("Zero flag is wrong.", cpsr.isZero());
-        assertTrue("Overflow flag is wrong.", cpsr.isOverflow());
+        assertFalse("Negative flag is wrong.", apsr.isNegative());
+        assertFalse("Zero flag is wrong.", apsr.isZero());
+        assertTrue("Overflow flag is wrong.", apsr.isOverflow());
     }
 
     /**
@@ -340,17 +340,17 @@ public class ArithmeticVisitorTest {
         String code = "rsbs r0, r1, r2\n";
         processor.run(assembler.assemble(code));
         assertEquals("Subtraction result is wrong.", 0, registerFile.getValue("r0"));
-        assertFalse("Negative flag is wrong.", cpsr.isNegative());
-        assertTrue("Zero flag is wrong.", cpsr.isZero());
-        assertFalse("Overflow flag is wrong.", cpsr.isOverflow());
+        assertFalse("Negative flag is wrong.", apsr.isNegative());
+        assertTrue("Zero flag is wrong.", apsr.isZero());
+        assertFalse("Overflow flag is wrong.", apsr.isOverflow());
 
         code = "mov r1, 0\n"
                 + "rsbs r0, r1, 1\n";
         processor.run(assembler.assemble(code));
         assertEquals("Subtraction result is wrong.", 1, registerFile.getValue("r0"));
-        assertFalse("Negative flag is wrong.", cpsr.isNegative());
-        assertFalse("Zero flag is wrong.", cpsr.isZero());
-        assertFalse("Overflow flag is wrong.", cpsr.isOverflow());
+        assertFalse("Negative flag is wrong.", apsr.isNegative());
+        assertFalse("Zero flag is wrong.", apsr.isZero());
+        assertFalse("Overflow flag is wrong.", apsr.isOverflow());
 
         code = "ldr r1, =0x80000000\n"
                 + "mov r2, #1\n"
@@ -359,18 +359,18 @@ public class ArithmeticVisitorTest {
         assertEquals("Subtraction result is wrong.",
                 Integer.MAX_VALUE,
                 registerFile.getValue("r0"));
-        assertFalse("Negative flag is wrong.", cpsr.isNegative());
-        assertFalse("Zero flag is wrong.", cpsr.isZero());
-        assertTrue("Overflow flag is wrong.", cpsr.isOverflow());
+        assertFalse("Negative flag is wrong.", apsr.isNegative());
+        assertFalse("Zero flag is wrong.", apsr.isZero());
+        assertTrue("Overflow flag is wrong.", apsr.isOverflow());
 
         code = "mov r1, #0xf\n"
                 + "mov r0, #0\n"
                 + "rsbs r0, r1, r0\n";
         processor.run(assembler.assemble(code));
         assertEquals("Subtraction result is wrong.", -0xf, registerFile.getValue("r0"));
-        assertTrue("Negative flag is wrong.", cpsr.isNegative());
-        assertFalse("Zero flag is wrong.", cpsr.isZero());
-        assertFalse("Overflow flag is wrong.", cpsr.isOverflow());
+        assertTrue("Negative flag is wrong.", apsr.isNegative());
+        assertFalse("Zero flag is wrong.", apsr.isZero());
+        assertFalse("Overflow flag is wrong.", apsr.isOverflow());
     }
 
     /**
@@ -378,29 +378,29 @@ public class ArithmeticVisitorTest {
      */
     @Test
     public void testVisitRsc() {
-        cpsr.setCarry(true);
+        apsr.setCarry(true);
         String code = "rsc r1, r2, r3\n";
         processor.run(assembler.assemble(code));
         assertEquals("Subtraction result is wrong.", 0, registerFile.getValue("r1"));
 
-        cpsr.setCarry(false);
+        apsr.setCarry(false);
         code = "rsc r0, r1, 0\n";
         processor.run(assembler.assemble(code));
         assertEquals("Subtraction result is wrong.", -1, registerFile.getValue("r0"));
 
-        cpsr.setCarry(true);
+        apsr.setCarry(true);
         code = "rsc r0, r1, 4\n";
         processor.run(assembler.assemble(code));
         assertEquals("Subtraction result is wrong.", 4, registerFile.getValue("r0"));
 
-        cpsr.setCarry(false);
+        apsr.setCarry(false);
         code = "mov r1, #1\n"
                 + "mov r2, #2\n"
                 + "rsc r0, r2, r1\n";
         processor.run(assembler.assemble(code));
         assertEquals("Subtraction result is wrong.", -2, registerFile.getValue("r0"));
 
-        cpsr.setCarry(false);
+        apsr.setCarry(false);
         code = "mov r0, #1\n"
                 + "rsc r0, r0, r0\n";
         processor.run(assembler.assemble(code));
@@ -412,7 +412,7 @@ public class ArithmeticVisitorTest {
      */
     @Test
     public void testVisitRscs() {
-        cpsr.setCarry(true);
+        apsr.setCarry(true);
         String code = "mov r2, #1\n"
                 + "ldr r1, =#0x80000000\n"
                 + "rscs r0, r2, r1\n";
@@ -420,31 +420,31 @@ public class ArithmeticVisitorTest {
         assertEquals("Subtraction result is wrong.",
                 Integer.MAX_VALUE,
                 registerFile.getValue("r0"));
-        assertFalse("Negative flag is wrong.", cpsr.isNegative());
-        assertFalse("Zero flag is wrong.", cpsr.isZero());
-        assertTrue("Overflow flag is wrong.", cpsr.isOverflow());
+        assertFalse("Negative flag is wrong.", apsr.isNegative());
+        assertFalse("Zero flag is wrong.", apsr.isZero());
+        assertTrue("Overflow flag is wrong.", apsr.isOverflow());
 
-        cpsr.setCarry(false);
+        apsr.setCarry(false);
         code = "mov r2, #1\n"
                 + "ldr r1, =#0x80000000\n"
                 + "rscs r0, r2, r1\n";
         processor.run(assembler.assemble(code));
         assertEquals("Subtraction result is wrong.", Integer.MAX_VALUE - 1, registerFile
                 .getValue("r0"));
-        assertFalse("Negative flag is wrong.", cpsr.isNegative());
-        assertFalse("Zero flag is wrong.", cpsr.isZero());
-        assertTrue("Overflow flag is wrong.", cpsr.isOverflow());
+        assertFalse("Negative flag is wrong.", apsr.isNegative());
+        assertFalse("Zero flag is wrong.", apsr.isZero());
+        assertTrue("Overflow flag is wrong.", apsr.isOverflow());
 
-        cpsr.setCarry(true);
+        apsr.setCarry(true);
         code = "mov r1, #0\n"
                 + "rscs r0, r1, #0\n";
         processor.run(assembler.assemble(code));
         assertEquals("Subtraction result is wrong.", 0, registerFile.getValue("r0"));
-        assertFalse("Negative flag is wrong.", cpsr.isNegative());
-        assertTrue("Zero flag is wrong.", cpsr.isZero());
-        assertFalse("Overflow flag is wrong.", cpsr.isOverflow());
+        assertFalse("Negative flag is wrong.", apsr.isNegative());
+        assertTrue("Zero flag is wrong.", apsr.isZero());
+        assertFalse("Overflow flag is wrong.", apsr.isOverflow());
 
-        cpsr.setCarry(false);
+        apsr.setCarry(false);
         code = "mov r2, #1\n"
                 + "ldr r1, =#0x80000001\n"
                 + "rscs r0, r2, r1\n";
@@ -452,8 +452,8 @@ public class ArithmeticVisitorTest {
         assertEquals("Subtraction result is wrong.",
                 Integer.MAX_VALUE,
                 registerFile.getValue("r0"));
-        assertFalse("Negative flag is wrong.", cpsr.isNegative());
-        assertFalse("Zero flag is wrong.", cpsr.isZero());
-        assertTrue("Overflow flag is wrong.", cpsr.isOverflow());
+        assertFalse("Negative flag is wrong.", apsr.isNegative());
+        assertFalse("Zero flag is wrong.", apsr.isZero());
+        assertTrue("Overflow flag is wrong.", apsr.isOverflow());
     }
 }

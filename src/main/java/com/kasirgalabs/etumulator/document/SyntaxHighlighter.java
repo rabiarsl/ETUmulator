@@ -21,8 +21,8 @@ public class SyntaxHighlighter {
         "eor", "eors", "orr", "orrs", "orn", "orns", "bic", "bics",
         "b", "beq", "bne", "bcs", "bhs", "bcc", "blo", "bmi",
         "bpl", "bvs", "bvc", "bhi", "bls", "bge", "blt", "bgt",
-        "ble", "bal", "bl", "ldr", "ldrb", "ldrsb", "ldrh", "ldrsh",
-        "str", "strb", "strsb", "strh", "strsh", "push", "pop", "asciz"
+        "ble", "bal", "bl", "ldr", "ldrb", "ldrh", "str", "strb",
+        "strh", "push", "pop", "asciz"
     };
     private static final String KEYWORD_PATTERN = "\\b(" + String.join("|", KEYWORDS) + ")\\b";
     private static final String STRING_PATTERN = "\"([^\"\\\\]|\\\\.)*\"";

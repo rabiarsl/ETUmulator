@@ -37,7 +37,6 @@ import org.fxmisc.richtext.CodeArea;
 
 @Singleton
 public class BaseDocument implements Initializable, Document {
-
     private static final String DEFAULT_NAME = "untitled";
     @FXML
     private Label label;
@@ -47,7 +46,7 @@ public class BaseDocument implements Initializable, Document {
     private final CodeArea document;
 
     public BaseDocument() {
-        document = new ArmCodeArea();
+        document = new Thumb2CodeArea();
         IntFunction<Node> numberFunction = LineNumberFunction.applyTo(document);
         IntFunction<Node> arrowFunction = new ArrowFunction(document.currentParagraphProperty());
         IntFunction<Node> graphicFactory = line -> {

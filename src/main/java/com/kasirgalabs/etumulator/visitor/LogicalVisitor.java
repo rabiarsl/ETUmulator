@@ -16,20 +16,20 @@
  */
 package com.kasirgalabs.etumulator.visitor;
 
-import com.kasirgalabs.etumulator.processor.CPSR;
+import com.kasirgalabs.etumulator.processor.APSR;
 import com.kasirgalabs.etumulator.processor.RegisterFile;
 import com.kasirgalabs.thumb2.ProcessorBaseVisitor;
 import com.kasirgalabs.thumb2.ProcessorParser;
 
 public class LogicalVisitor extends ProcessorBaseVisitor<Void> {
     private final RegisterFile registerFile;
-    private final CPSR cpsr;
+    private final APSR apsr;
     private final RegisterVisitor registerVisitor;
     private final Operand2Visitor operand2Visitor;
 
-    public LogicalVisitor(RegisterFile registerFile, CPSR cpsr) {
+    public LogicalVisitor(RegisterFile registerFile, APSR apsr) {
         this.registerFile = registerFile;
-        this.cpsr = cpsr;
+        this.apsr = apsr;
         registerVisitor = new RegisterVisitor();
         operand2Visitor = new Operand2Visitor(registerFile);
     }
@@ -38,7 +38,7 @@ public class LogicalVisitor extends ProcessorBaseVisitor<Void> {
     public Void visitTst(ProcessorParser.TstContext ctx) {
         int left = registerFile.getValue(registerVisitor.visit(ctx.rn()));
         int right = operand2Visitor.visit(ctx.operand2());
-        cpsr.updateNZ(left & right);
+        apsr.updateNZ(left & right);
         return null;
     }
 
@@ -46,7 +46,7 @@ public class LogicalVisitor extends ProcessorBaseVisitor<Void> {
     public Void visitTeq(ProcessorParser.TeqContext ctx) {
         int left = registerFile.getValue(registerVisitor.visit(ctx.rn()));
         int right = operand2Visitor.visit(ctx.operand2());
-        cpsr.updateNZ(left ^ right);
+        apsr.updateNZ(left ^ right);
         return null;
     }
 
@@ -64,7 +64,7 @@ public class LogicalVisitor extends ProcessorBaseVisitor<Void> {
         String destRegister = registerVisitor.visit(ctx.rd());
         int left = registerFile.getValue(registerVisitor.visit(ctx.rn()));
         int right = operand2Visitor.visit(ctx.operand2());
-        registerFile.setValue(destRegister, cpsr.updateNZ(left & right));
+        registerFile.setValue(destRegister, apsr.updateNZ(left & right));
         return null;
     }
 
@@ -82,7 +82,7 @@ public class LogicalVisitor extends ProcessorBaseVisitor<Void> {
         String destRegister = registerVisitor.visit(ctx.rd());
         int left = registerFile.getValue(registerVisitor.visit(ctx.rn()));
         int right = operand2Visitor.visit(ctx.operand2());
-        registerFile.setValue(destRegister, cpsr.updateNZ(left ^ right));
+        registerFile.setValue(destRegister, apsr.updateNZ(left ^ right));
         return null;
     }
 
@@ -100,7 +100,7 @@ public class LogicalVisitor extends ProcessorBaseVisitor<Void> {
         String destRegister = registerVisitor.visit(ctx.rd());
         int left = registerFile.getValue(registerVisitor.visit(ctx.rn()));
         int right = operand2Visitor.visit(ctx.operand2());
-        registerFile.setValue(destRegister, cpsr.updateNZ(left | right));
+        registerFile.setValue(destRegister, apsr.updateNZ(left | right));
         return null;
     }
 
@@ -118,7 +118,7 @@ public class LogicalVisitor extends ProcessorBaseVisitor<Void> {
         String destRegister = registerVisitor.visit(ctx.rd());
         int left = registerFile.getValue(registerVisitor.visit(ctx.rn()));
         int right = operand2Visitor.visit(ctx.operand2());
-        registerFile.setValue(destRegister, cpsr.updateNZ(left | ~right));
+        registerFile.setValue(destRegister, apsr.updateNZ(left | ~right));
         return null;
     }
 
@@ -136,7 +136,7 @@ public class LogicalVisitor extends ProcessorBaseVisitor<Void> {
         String destRegister = registerVisitor.visit(ctx.rd());
         int left = registerFile.getValue(registerVisitor.visit(ctx.rn()));
         int right = operand2Visitor.visit(ctx.operand2());
-        registerFile.setValue(destRegister, cpsr.updateNZ(left & ~right));
+        registerFile.setValue(destRegister, apsr.updateNZ(left & ~right));
         return null;
     }
 }

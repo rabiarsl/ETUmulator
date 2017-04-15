@@ -46,16 +46,16 @@ public class BaseProcessor extends ProcessorBaseVisitor<Void> implements Process
 
     public BaseProcessor(ProcessorUnits processorUnits) {
         arithmeticVisitor = new ArithmeticVisitor(processorUnits.getRegisterFile(),
-                processorUnits.getCPSR());
+                processorUnits.getAPSR());
         multiplyAndDivideVisitor = new MultiplyAndDivideVisitor(processorUnits.getRegisterFile(),
-                processorUnits.getCPSR());
-        moveVisitor = new MoveVisitor(processorUnits.getRegisterFile(), processorUnits.getCPSR());
-        shiftVisitor = new ShiftVisitor(processorUnits.getRegisterFile(), processorUnits.getCPSR());
+                processorUnits.getAPSR());
+        moveVisitor = new MoveVisitor(processorUnits.getRegisterFile(), processorUnits.getAPSR());
+        shiftVisitor = new ShiftVisitor(processorUnits.getRegisterFile(), processorUnits.getAPSR());
         compareVisitor = new CompareVisitor(processorUnits.getRegisterFile(),
-                processorUnits.getCPSR());
+                processorUnits.getAPSR());
         logicalVisitor = new LogicalVisitor(processorUnits.getRegisterFile(),
-                processorUnits.getCPSR());
-        branchVisitor = new BranchVisitor(processorUnits.getCPSR(), processorUnits.getUART(),
+                processorUnits.getAPSR());
+        branchVisitor = new BranchVisitor(processorUnits.getAPSR(), processorUnits.getUART(),
                 processorUnits.getPC(), processorUnits.getLR());
         singleDataMemoryVisitor = new SingleDataMemoryVisitor(processorUnits.getRegisterFile(),
                 processorUnits.getMemory());

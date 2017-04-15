@@ -23,18 +23,18 @@ import com.kasirgalabs.etumulator.util.Observable;
 import com.kasirgalabs.etumulator.util.Observer;
 
 @Singleton
-public class CPSR implements Observable {
+public class APSR implements Observable {
     private boolean negative;
     private boolean zero;
     private boolean carry;
     private boolean overflow;
     private final Dispatcher dispatcher;
 
-    public CPSR() {
+    public APSR() {
         this.dispatcher = new BaseDispatcher();
     }
 
-    public CPSR(Dispatcher dispatcher) {
+    public APSR(Dispatcher dispatcher) {
         this.dispatcher = dispatcher;
     }
 
@@ -49,7 +49,7 @@ public class CPSR implements Observable {
 
     public void setNegative(boolean negative) {
         this.negative = negative;
-        dispatcher.notifyObservers(CPSR.class);
+        dispatcher.notifyObservers(APSR.class);
     }
 
     public boolean isZero() {
@@ -58,7 +58,7 @@ public class CPSR implements Observable {
 
     public void setZero(boolean zero) {
         this.zero = zero;
-        dispatcher.notifyObservers(CPSR.class);
+        dispatcher.notifyObservers(APSR.class);
     }
 
     public boolean isCarry() {
@@ -67,7 +67,7 @@ public class CPSR implements Observable {
 
     public void setCarry(boolean carry) {
         this.carry = carry;
-        dispatcher.notifyObservers(CPSR.class);
+        dispatcher.notifyObservers(APSR.class);
     }
 
     public boolean isOverflow() {
@@ -76,13 +76,13 @@ public class CPSR implements Observable {
 
     public void setOverflow(boolean overflow) {
         this.overflow = overflow;
-        dispatcher.notifyObservers(CPSR.class);
+        dispatcher.notifyObservers(APSR.class);
     }
 
     public int updateNZ(int result) {
         negative = result < 0;
         zero = result == 0;
-        dispatcher.notifyObservers(CPSR.class);
+        dispatcher.notifyObservers(APSR.class);
         return result;
     }
 
@@ -91,6 +91,6 @@ public class CPSR implements Observable {
         zero = false;
         carry = false;
         overflow = false;
-        dispatcher.notifyObservers(CPSR.class);
+        dispatcher.notifyObservers(APSR.class);
     }
 }

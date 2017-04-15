@@ -18,7 +18,7 @@ package com.kasirgalabs.etumulator.processor;
 
 public class BaseProcessorUnits implements ProcessorUnits {
     private final RegisterFile registerFile;
-    private final CPSR cpsr;
+    private final APSR apsr;
     private final Stack stack;
     private final Memory memory;
     private final UART uart;
@@ -27,7 +27,7 @@ public class BaseProcessorUnits implements ProcessorUnits {
 
     public BaseProcessorUnits() {
         registerFile = new RegisterFile();
-        cpsr = new CPSR();
+        apsr = new APSR();
         stack = new Stack();
         memory = new Memory();
         uart = new UART(registerFile);
@@ -35,10 +35,10 @@ public class BaseProcessorUnits implements ProcessorUnits {
         lr = new LR();
     }
 
-    public BaseProcessorUnits(RegisterFile registerFile, CPSR cpsr, Stack stack, Memory memory,
+    public BaseProcessorUnits(RegisterFile registerFile, APSR apsr, Stack stack, Memory memory,
             UART uart, PC pc, LR lr) {
         this.registerFile = registerFile;
-        this.cpsr = cpsr;
+        this.apsr = apsr;
         this.stack = stack;
         this.memory = memory;
         this.uart = uart;
@@ -52,8 +52,8 @@ public class BaseProcessorUnits implements ProcessorUnits {
     }
 
     @Override
-    public CPSR getCPSR() {
-        return cpsr;
+    public APSR getAPSR() {
+        return apsr;
     }
 
     @Override
@@ -84,7 +84,7 @@ public class BaseProcessorUnits implements ProcessorUnits {
     @Override
     public void reset() {
         registerFile.reset();
-        cpsr.reset();
+        apsr.reset();
         stack.reset();
         memory.reset();
         pc.reset();

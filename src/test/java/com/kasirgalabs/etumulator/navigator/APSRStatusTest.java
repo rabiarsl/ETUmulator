@@ -17,7 +17,7 @@
 package com.kasirgalabs.etumulator.navigator;
 
 import com.kasirgalabs.etumulator.document.BaseDocumentTest;
-import com.kasirgalabs.etumulator.processor.CPSR;
+import com.kasirgalabs.etumulator.processor.APSR;
 import com.kasirgalabs.etumulator.util.GUISafeDispatcher;
 import java.io.IOException;
 import java.util.concurrent.ExecutionException;
@@ -32,22 +32,22 @@ import javafx.embed.swing.JFXPanel;
 import javafx.fxml.FXMLLoader;
 import org.junit.Test;
 
-public class CPSRStatusTest {
-    private CPSR cpsr;
-    private CPSRStatus cpsrStatus;
+public class APSRStatusTest {
+    private APSR apsr;
+    private APSRStatus apsrStatus;
 
-    public CPSRStatusTest() throws IOException, InterruptedException, ExecutionException,
+    public APSRStatusTest() throws IOException, InterruptedException, ExecutionException,
             TimeoutException {
         assert !Platform.isFxApplicationThread();
         new JFXPanel();
 
         FutureTask<Void> futureTask = new FutureTask<>(() -> {
-            cpsr = new CPSR(new GUISafeDispatcher());
-            cpsrStatus = new CPSRStatus(cpsr);
+            apsr = new APSR(new GUISafeDispatcher());
+            apsrStatus = new APSRStatus(apsr);
             ClassLoader classLoader = BaseDocumentTest.class.getClassLoader();
-            FXMLLoader fxmlLoader = new FXMLLoader(classLoader.getResource("fxml/CPSRStatus.fxml"));
+            FXMLLoader fxmlLoader = new FXMLLoader(classLoader.getResource("fxml/APSRStatus.fxml"));
             fxmlLoader.setControllerFactory((Class<?> param) -> {
-                return cpsrStatus;
+                return apsrStatus;
             });
             fxmlLoader.load();
             return null;
@@ -57,7 +57,7 @@ public class CPSRStatusTest {
     }
 
     /**
-     * Test of update method, of class CPSRStatus.
+     * Test of update method, of class APSRStatus.
      *
      * @throws java.lang.InterruptedException
      * @throws java.util.concurrent.ExecutionException
@@ -70,15 +70,15 @@ public class CPSRStatusTest {
 
         ExecutorService executor = Executors.newSingleThreadExecutor();
         Future<Void> future = executor.submit(() -> {
-            cpsr.setNegative(true);
-            cpsr.setNegative(false);
-            cpsr.setZero(true);
-            cpsr.setZero(false);
-            cpsr.setCarry(true);
-            cpsr.setCarry(false);
-            cpsr.setOverflow(true);
-            cpsr.setOverflow(false);
-            cpsr.reset();
+            apsr.setNegative(true);
+            apsr.setNegative(false);
+            apsr.setZero(true);
+            apsr.setZero(false);
+            apsr.setCarry(true);
+            apsr.setCarry(false);
+            apsr.setOverflow(true);
+            apsr.setOverflow(false);
+            apsr.reset();
             return null;
         });
         future.get(5, TimeUnit.SECONDS);

@@ -17,7 +17,7 @@
 package com.kasirgalabs.etumulator.navigator;
 
 import com.google.inject.Inject;
-import com.kasirgalabs.etumulator.processor.CPSR;
+import com.kasirgalabs.etumulator.processor.APSR;
 import com.kasirgalabs.etumulator.util.Observer;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -25,7 +25,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.TextField;
 
-public class CPSRStatus implements Initializable, Observer {
+public class APSRStatus implements Initializable, Observer {
     @FXML
     private TextField negative;
     @FXML
@@ -34,27 +34,27 @@ public class CPSRStatus implements Initializable, Observer {
     private TextField carry;
     @FXML
     private TextField overflow;
-    private final CPSR cpsr;
+    private final APSR apsr;
 
     @Inject
-    public CPSRStatus(CPSR cpsr) {
-        this.cpsr = cpsr;
+    public APSRStatus(APSR apsr) {
+        this.apsr = apsr;
     }
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        cpsr.addObserver(this);
+        apsr.addObserver(this);
     }
 
     @Override
     public void update(Class<?> clazz, Object arg) {
-        int n = cpsr.isNegative() ? 0 : 1;
+        int n = apsr.isNegative() ? 0 : 1;
         negative.setText(Integer.toString(n));
-        int z = cpsr.isZero() ? 0 : 1;
+        int z = apsr.isZero() ? 0 : 1;
         zero.setText(Integer.toString(z));
-        int c = cpsr.isCarry() ? 0 : 1;
+        int c = apsr.isCarry() ? 0 : 1;
         carry.setText(Integer.toString(c));
-        int v = cpsr.isOverflow() ? 0 : 1;
+        int v = apsr.isOverflow() ? 0 : 1;
         overflow.setText(Integer.toString(v));
     }
 }

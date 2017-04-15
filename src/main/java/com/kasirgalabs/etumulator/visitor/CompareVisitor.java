@@ -16,7 +16,7 @@
  */
 package com.kasirgalabs.etumulator.visitor;
 
-import com.kasirgalabs.etumulator.processor.CPSR;
+import com.kasirgalabs.etumulator.processor.APSR;
 import com.kasirgalabs.etumulator.processor.RegisterFile;
 import com.kasirgalabs.thumb2.ProcessorBaseVisitor;
 import com.kasirgalabs.thumb2.ProcessorParser;
@@ -24,13 +24,13 @@ import com.kasirgalabs.thumb2.ProcessorParser;
 public class CompareVisitor extends ProcessorBaseVisitor<Void> {
 
     private final RegisterFile registerFile;
-    private final CPSR cpsr;
+    private final APSR apsr;
     private final RegisterVisitor registerVisitor;
     private final Operand2Visitor operand2Visitor;
 
-    public CompareVisitor(RegisterFile registerFile, CPSR cpsr) {
+    public CompareVisitor(RegisterFile registerFile, APSR apsr) {
         this.registerFile = registerFile;
-        this.cpsr = cpsr;
+        this.apsr = apsr;
         registerVisitor = new RegisterVisitor();
         operand2Visitor = new Operand2Visitor(registerFile);
     }
@@ -39,7 +39,7 @@ public class CompareVisitor extends ProcessorBaseVisitor<Void> {
     public Void visitCmp(ProcessorParser.CmpContext ctx) {
         int left = registerFile.getValue(registerVisitor.visit(ctx.rn()));
         int right = operand2Visitor.visit(ctx.operand2());
-        addUpdateCPSR(left, -right);
+        addUpdateAPSR(left, -right);
         return null;
     }
 
@@ -47,11 +47,11 @@ public class CompareVisitor extends ProcessorBaseVisitor<Void> {
     public Void visitCmn(ProcessorParser.CmnContext ctx) {
         int left = registerFile.getValue(registerVisitor.visit(ctx.rn()));
         int right = operand2Visitor.visit(ctx.operand2());
-        addUpdateCPSR(left, right);
+        addUpdateAPSR(left, right);
         return null;
     }
 
-    private int addUpdateCPSR(int left, int right) {
+    private int addUpdateAPSR(int left, int right) {
         int result;
         boolean overflow;
         try {
@@ -61,8 +61,8 @@ public class CompareVisitor extends ProcessorBaseVisitor<Void> {
             overflow = true;
             result = left + right;
         }
-        cpsr.setOverflow(overflow);
-        cpsr.updateNZ(result);
+        apsr.setOverflow(overflow);
+        apsr.updateNZ(result);
         return result;
     }
 }

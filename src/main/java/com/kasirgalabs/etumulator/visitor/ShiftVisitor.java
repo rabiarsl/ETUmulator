@@ -16,20 +16,20 @@
  */
 package com.kasirgalabs.etumulator.visitor;
 
-import com.kasirgalabs.etumulator.processor.CPSR;
+import com.kasirgalabs.etumulator.processor.APSR;
 import com.kasirgalabs.etumulator.processor.RegisterFile;
 import com.kasirgalabs.thumb2.ProcessorBaseVisitor;
 import com.kasirgalabs.thumb2.ProcessorParser;
 
 public class ShiftVisitor extends ProcessorBaseVisitor<Void> {
     private final RegisterFile registerFile;
-    private final CPSR cpsr;
+    private final APSR apsr;
     private final RegisterVisitor registerVisitor;
     private final NumberVisitor numberVisitor;
 
-    public ShiftVisitor(RegisterFile registerFile, CPSR cpsr) {
+    public ShiftVisitor(RegisterFile registerFile, APSR apsr) {
         this.registerFile = registerFile;
-        this.cpsr = cpsr;
+        this.apsr = apsr;
         registerVisitor = new RegisterVisitor();
         numberVisitor = new NumberVisitor();
     }
@@ -61,7 +61,7 @@ public class ShiftVisitor extends ProcessorBaseVisitor<Void> {
         else {
             shiftAmount = numberVisitor.visit(ctx.sh());
         }
-        registerFile.setValue(destRegister, shiftUpdateCPSR(value, Shift.ASR, shiftAmount));
+        registerFile.setValue(destRegister, shiftUpdateAPSR(value, Shift.ASR, shiftAmount));
         return null;
     }
 
@@ -91,7 +91,7 @@ public class ShiftVisitor extends ProcessorBaseVisitor<Void> {
         else {
             shiftAmount = numberVisitor.visit(ctx.sh());
         }
-        registerFile.setValue(destRegister, shiftUpdateCPSR(value, Shift.LSL, shiftAmount));
+        registerFile.setValue(destRegister, shiftUpdateAPSR(value, Shift.LSL, shiftAmount));
         return null;
     }
 
@@ -121,7 +121,7 @@ public class ShiftVisitor extends ProcessorBaseVisitor<Void> {
         else {
             shiftAmount = numberVisitor.visit(ctx.sh());
         }
-        registerFile.setValue(destRegister, shiftUpdateCPSR(value, Shift.LSR, shiftAmount));
+        registerFile.setValue(destRegister, shiftUpdateAPSR(value, Shift.LSR, shiftAmount));
         return null;
     }
 
@@ -151,7 +151,7 @@ public class ShiftVisitor extends ProcessorBaseVisitor<Void> {
         else {
             shiftAmount = numberVisitor.visit(ctx.sh());
         }
-        registerFile.setValue(destRegister, shiftUpdateCPSR(value, Shift.ROR, shiftAmount));
+        registerFile.setValue(destRegister, shiftUpdateAPSR(value, Shift.ROR, shiftAmount));
         return null;
     }
 
@@ -169,7 +169,7 @@ public class ShiftVisitor extends ProcessorBaseVisitor<Void> {
         final int NOT_USED = Integer.MAX_VALUE;
         String destRegister = registerVisitor.visit(ctx.rd());
         int value = registerFile.getValue(registerVisitor.visit(ctx.rm()));
-        registerFile.setValue(destRegister, shiftUpdateCPSR(value, Shift.RRX, NOT_USED));
+        registerFile.setValue(destRegister, shiftUpdateAPSR(value, Shift.RRX, NOT_USED));
         return null;
     }
 
@@ -185,7 +185,7 @@ public class ShiftVisitor extends ProcessorBaseVisitor<Void> {
                 return Integer.rotateRight(value, shiftAmount);
             case RRX:
                 int result = value >>> 1;
-                if(cpsr.isCarry()) {
+                if(apsr.isCarry()) {
                     result |= 0x8000_0000;
                 }
                 return result;
@@ -194,33 +194,33 @@ public class ShiftVisitor extends ProcessorBaseVisitor<Void> {
         }
     }
 
-    private int shiftUpdateCPSR(int value, Shift shiftOption, int shiftAmount) {
+    private int shiftUpdateAPSR(int value, Shift shiftOption, int shiftAmount) {
         if(shiftOption == Shift.RRX) {
-            return rrxUpdateCPSR(value);
+            return rrxUpdateAPSR(value);
         }
-        cpsr.setCarry(false);
+        apsr.setCarry(false);
         int result = shift(value, shiftOption, shiftAmount - 1);
         if(shiftOption == Shift.LSL) {
             if(Integer.numberOfLeadingZeros(result) == 0) {
-                cpsr.setCarry(true);
+                apsr.setCarry(true);
             }
         }
         else {
             if(Integer.numberOfTrailingZeros(result) == 0) {
-                cpsr.setCarry(true);
+                apsr.setCarry(true);
             }
         }
         result = shift(value, shiftOption, shiftAmount);
-        cpsr.updateNZ(result);
+        apsr.updateNZ(result);
         return result;
     }
 
-    private int rrxUpdateCPSR(int value) {
+    private int rrxUpdateAPSR(int value) {
         final int NOT_USED = Integer.MAX_VALUE;
         boolean newCarry = Integer.numberOfTrailingZeros(value) == 0;
         int result = shift(value, Shift.RRX, NOT_USED);
-        cpsr.setCarry(newCarry);
-        cpsr.updateNZ(result);
+        apsr.setCarry(newCarry);
+        apsr.updateNZ(result);
         return result;
     }
 }

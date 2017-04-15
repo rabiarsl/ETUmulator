@@ -16,21 +16,21 @@
  */
 package com.kasirgalabs.etumulator.visitor;
 
-import com.kasirgalabs.etumulator.processor.CPSR;
+import com.kasirgalabs.etumulator.processor.APSR;
 import com.kasirgalabs.etumulator.processor.RegisterFile;
 import com.kasirgalabs.thumb2.ProcessorBaseVisitor;
 import com.kasirgalabs.thumb2.ProcessorParser;
 
 public class ArithmeticVisitor extends ProcessorBaseVisitor<Void> {
     private final RegisterFile registerFile;
-    private final CPSR cpsr;
+    private final APSR apsr;
     private final RegisterVisitor registerVisitor;
     private final Operand2Visitor operand2Visitor;
     private final NumberVisitor numberVisitor;
 
-    public ArithmeticVisitor(RegisterFile registerFile, CPSR cpsr) {
+    public ArithmeticVisitor(RegisterFile registerFile, APSR apsr) {
         this.registerFile = registerFile;
-        this.cpsr = cpsr;
+        this.apsr = apsr;
         registerVisitor = new RegisterVisitor();
         operand2Visitor = new Operand2Visitor(registerFile);
         numberVisitor = new NumberVisitor();
@@ -56,7 +56,7 @@ public class ArithmeticVisitor extends ProcessorBaseVisitor<Void> {
         String destRegister = registerVisitor.visit(ctx.rd());
         int left = registerFile.getValue(registerVisitor.visit(ctx.rn()));
         int right = operand2Visitor.visit(ctx.operand2());
-        int result = addUpdateCPSR(left, right);
+        int result = addUpdateAPSR(left, right);
         registerFile.setValue(destRegister, result);
         return null;
     }
@@ -67,7 +67,7 @@ public class ArithmeticVisitor extends ProcessorBaseVisitor<Void> {
         int left = registerFile.getValue(registerVisitor.visit(ctx.rn()));
         int right = operand2Visitor.visit(ctx.operand2());
         int result = left + right;
-        if(cpsr.isCarry()) {
+        if(apsr.isCarry()) {
             result++;
         }
         registerFile.setValue(destRegister, result);
@@ -79,16 +79,16 @@ public class ArithmeticVisitor extends ProcessorBaseVisitor<Void> {
         String destRegister = registerVisitor.visit(ctx.rd());
         int left = registerFile.getValue(registerVisitor.visit(ctx.rn()));
         int right = operand2Visitor.visit(ctx.operand2());
-        int result = addUpdateCPSR(left, right);
-        if(cpsr.isCarry()) {
-            if(!cpsr.isOverflow()) {
-                result = addUpdateCPSR(result, 1);
+        int result = addUpdateAPSR(left, right);
+        if(apsr.isCarry()) {
+            if(!apsr.isOverflow()) {
+                result = addUpdateAPSR(result, 1);
             }
             else {
                 result++;
             }
         }
-        cpsr.updateNZ(result);
+        apsr.updateNZ(result);
         registerFile.setValue(destRegister, result);
         return null;
     }
@@ -113,7 +113,7 @@ public class ArithmeticVisitor extends ProcessorBaseVisitor<Void> {
         String destRegister = registerVisitor.visit(ctx.rd());
         int left = registerFile.getValue(registerVisitor.visit(ctx.rn()));
         int right = operand2Visitor.visit(ctx.operand2());
-        int result = addUpdateCPSR(left, -right);
+        int result = addUpdateAPSR(left, -right);
         registerFile.setValue(destRegister, result);
         return null;
     }
@@ -124,7 +124,7 @@ public class ArithmeticVisitor extends ProcessorBaseVisitor<Void> {
         int left = registerFile.getValue(registerVisitor.visit(ctx.rn()));
         int right = operand2Visitor.visit(ctx.operand2());
         int result = left - right;
-        if(!cpsr.isCarry()) {
+        if(!apsr.isCarry()) {
             result--;
         }
         registerFile.setValue(destRegister, result);
@@ -136,16 +136,16 @@ public class ArithmeticVisitor extends ProcessorBaseVisitor<Void> {
         String destRegister = registerVisitor.visit(ctx.rd());
         int left = registerFile.getValue(registerVisitor.visit(ctx.rn()));
         int right = operand2Visitor.visit(ctx.operand2());
-        int result = addUpdateCPSR(left, -right);
-        if(!cpsr.isCarry()) {
-            if(!cpsr.isOverflow()) {
-                result = addUpdateCPSR(result, -1);
+        int result = addUpdateAPSR(left, -right);
+        if(!apsr.isCarry()) {
+            if(!apsr.isOverflow()) {
+                result = addUpdateAPSR(result, -1);
             }
             else {
                 result--;
             }
         }
-        cpsr.updateNZ(result);
+        apsr.updateNZ(result);
         registerFile.setValue(destRegister, result);
         return null;
     }
@@ -164,7 +164,7 @@ public class ArithmeticVisitor extends ProcessorBaseVisitor<Void> {
         String destRegister = registerVisitor.visit(ctx.rd());
         int left = registerFile.getValue(registerVisitor.visit(ctx.rn()));
         int right = operand2Visitor.visit(ctx.operand2());
-        int result = addUpdateCPSR(right, -left);
+        int result = addUpdateAPSR(right, -left);
         registerFile.setValue(destRegister, result);
         return null;
     }
@@ -175,7 +175,7 @@ public class ArithmeticVisitor extends ProcessorBaseVisitor<Void> {
         int left = registerFile.getValue(registerVisitor.visit(ctx.rn()));
         int right = operand2Visitor.visit(ctx.operand2());
         int result = right - left;
-        if(!cpsr.isCarry()) {
+        if(!apsr.isCarry()) {
             result--;
         }
         registerFile.setValue(destRegister, result);
@@ -187,21 +187,21 @@ public class ArithmeticVisitor extends ProcessorBaseVisitor<Void> {
         String destRegister = registerVisitor.visit(ctx.rd());
         int left = registerFile.getValue(registerVisitor.visit(ctx.rn()));
         int right = operand2Visitor.visit(ctx.operand2());
-        int result = addUpdateCPSR(right, -left);
-        if(!cpsr.isCarry()) {
-            if(!cpsr.isOverflow()) {
-                result = addUpdateCPSR(result, -1);
+        int result = addUpdateAPSR(right, -left);
+        if(!apsr.isCarry()) {
+            if(!apsr.isOverflow()) {
+                result = addUpdateAPSR(result, -1);
             }
             else {
                 result--;
             }
         }
-        cpsr.updateNZ(result);
+        apsr.updateNZ(result);
         registerFile.setValue(destRegister, result);
         return null;
     }
 
-    private int addUpdateCPSR(int left, int right) {
+    private int addUpdateAPSR(int left, int right) {
         int result;
         boolean overflow;
         try {
@@ -211,8 +211,8 @@ public class ArithmeticVisitor extends ProcessorBaseVisitor<Void> {
             overflow = true;
             result = left + right;
         }
-        cpsr.setOverflow(overflow);
-        cpsr.updateNZ(result);
+        apsr.setOverflow(overflow);
+        apsr.updateNZ(result);
         return result;
     }
 }
