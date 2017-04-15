@@ -26,7 +26,7 @@ public class Thumb2CodeArea extends CodeArea {
     public Thumb2CodeArea() {
         getStylesheets().clear();
         getStylesheets().add(Thumb2CodeArea.class.getClassLoader()
-                .getResource("styles/arm-syntax-highlight.css").toExternalForm());
+                .getResource("styles/thumb2-syntax-highlight.css").toExternalForm());
         getStylesheets().add(Thumb2CodeArea.class.getClassLoader()
                 .getResource("styles/spellchecking.css").toExternalForm());
         setCursor(Cursor.TEXT);

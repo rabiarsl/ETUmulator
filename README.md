@@ -10,9 +10,11 @@ ETUmulator is a Thumb-2 assembly language emulator written in Java. It is writte
 These instructions will get you a copy of the project up and running on your local machine for development and testing purposes.
 
 ### Prerequisites
-We use [Gradle](https://gradle.org/) to automate just about everything. As long as you have a [Java SE Development Kit 8](http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html) version **8u60** or above running, you are well on your way to get a development environment.<br/>
-<br/>
-*Since we have already included a Gradle wrapper in the repository, installing Gradle is an optional process.*
+We use [Gradle](https://gradle.org/) to automate just about everything. As long as you have a [Java SE Development Kit 8](http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html) version **8u60** or above running, you are well on your way to get a development environment.
+
+###### Optional
+- Since we have already included a Gradle wrapper in the repository, installing Gradle is an optional process.<br/>
+- [Scene Buider](http://gluonhq.com/products/scene-builder/) is a visual layout tool that lets users quickly design JavaFX application user interfaces, without coding.
 
 ### Installing
 
