@@ -40,7 +40,7 @@ import org.antlr.v4.runtime.tree.TerminalNode;
  * addresses at which code and data will lie.<br>
  * For branches, linker calculates the address of instruction from target label and then replaces
  * the branch label with absolute address.<br>
- * For data, linker simply generates random addresses and relocates the code in a way that the
+ * For data, linker simply generates random addresses and modifies the code in a way that the
  * memory instruction labels are replaced with generated addresses.
  * <p>
  * Consider below code:<br>
@@ -50,7 +50,7 @@ import org.antlr.v4.runtime.tree.TerminalNode;
  * &nbsp;label:<br>
  * &nbsp;&nbsp;&nbsp;nop<br>
  * </code>
- * after linking the code turns into:<br>
+ * after linking:<br>
  * <code>
  * &nbsp;b 2<br>
  * &nbsp;nop<br>
@@ -262,7 +262,7 @@ public class Linker extends AssemblerBaseVisitor<Void> {
 
     /**
      * Returns an ExecutableCode that can then be run by the processor. If the given code contains
-     * data section, linker will only generate memory addresses. Without loading process referenced
+     * data section, linker will only generate memory addresses. Without loading process, referenced
      * data will be unpredictable.
      *
      * @param code The code that will be linked.
