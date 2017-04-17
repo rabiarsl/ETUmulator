@@ -80,6 +80,7 @@ public class MemoryTabTest {
             memory.get(ADDRESS, Size.BYTE);
             memory.get(ADDRESS, Size.HALFWORD);
             memory.get(ADDRESS, Size.WORD);
+            memory.get(ADDRESS + 1, Size.WORD);
             memory.reset();
             return null;
         });

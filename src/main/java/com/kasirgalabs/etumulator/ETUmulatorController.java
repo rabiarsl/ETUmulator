@@ -46,7 +46,7 @@ public class ETUmulatorController {
         ExecutableCode executableCode;
         try {
             executableCode = assembler.assemble(document.getText() + "\n");
-        } catch(SyntaxError | LabelError ex) {
+        } catch(SyntaxError | LabelError | NumberFormatException ex) {
             System.err.println(ex.getMessage());
             return;
         }

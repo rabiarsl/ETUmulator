@@ -208,7 +208,7 @@ public class Linker extends AssemblerBaseVisitor<Void> {
         return null;
     }
 
-    public ExecutableCode link(String code) throws SyntaxError, LabelError {
+    public ExecutableCode link(String code) throws LabelError {
         definedBranches.clear();
         definedData.clear();
         addressBook.clear();
@@ -219,9 +219,6 @@ public class Linker extends AssemblerBaseVisitor<Void> {
         CommonTokenStream tokens = new CommonTokenStream(lexer);
         AssemblerParser parser = new AssemblerParser(tokens);
         AssemblerParser.ProgContext program = parser.prog();
-        if(parser.getNumberOfSyntaxErrors() > 0) {
-            throw new SyntaxError("You have error(s) in your code.");
-        }
         visit(program);
         secondPass = true;
         visit(program);
