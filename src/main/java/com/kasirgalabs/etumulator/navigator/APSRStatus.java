@@ -48,13 +48,13 @@ public class APSRStatus implements Initializable, Observer {
 
     @Override
     public void update(Class<?> clazz, Object arg) {
-        int n = apsr.isNegative() ? 0 : 1;
+        int n = apsr.isNegative() ? 1 : 0;
         negative.setText(Integer.toString(n));
-        int z = apsr.isZero() ? 0 : 1;
+        int z = apsr.isZero() ? 1 : 0;
         zero.setText(Integer.toString(z));
-        int c = apsr.isCarry() ? 0 : 1;
+        int c = apsr.isCarry() ? 1 : 0;
         carry.setText(Integer.toString(c));
-        int v = apsr.isOverflow() ? 0 : 1;
+        int v = apsr.isOverflow() ? 1 : 0;
         overflow.setText(Integer.toString(v));
     }
 }
