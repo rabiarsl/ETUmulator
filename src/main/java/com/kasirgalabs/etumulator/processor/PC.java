@@ -42,7 +42,7 @@ public class PC implements Observable {
     private final Dispatcher dispatcher;
 
     /**
-     * Construct an PC with {@link BaseDispatcher}.
+     * Construct a PC with {@link BaseDispatcher}.
      *
      * @see BaseDispatcher
      */
@@ -51,7 +51,7 @@ public class PC implements Observable {
     }
 
     /**
-     * Construct an PC with the given dispatcher as parameter.
+     * Construct a PC with the given dispatcher as parameter.
      *
      * @param dispatcher The dispatcher which will be used to notify observers.
      *

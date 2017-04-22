@@ -1,7 +1,10 @@
-[![Build Status](https://travis-ci.org/kasirgalabs/ETUmulator.svg?branch=master)](https://travis-ci.org/kasirgalabs/ETUmulator)
-[![Codacy Badge](https://api.codacy.com/project/badge/Coverage/b79a64268c3b4ab38699a5780e773302)](https://www.codacy.com/app/RootG/ETUmulator?utm_source=github.com&utm_medium=referral&utm_content=kasirgalabs/ETUmulator&utm_campaign=Badge_Coverage)
-[![Codacy Badge](https://api.codacy.com/project/badge/Grade/b79a64268c3b4ab38699a5780e773302)](https://www.codacy.com/app/RootG/ETUmulator?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=kasirgalabs/ETUmulator&amp;utm_campaign=Badge_Grade)
-[![Dependency Status](https://www.versioneye.com/user/projects/58b1886d7b9e15004de85395/badge.svg?style=flat-square)](https://www.versioneye.com/user/projects/58b1886d7b9e15004de85395)
+<p align="center">
+  <a title="Build Status" href="https://travis-ci.org/kasirgalabs/ETUmulator"><img src="https://travis-ci.org/kasirgalabs/ETUmulator.svg?branch=master"></a>
+  <a title="Coverage" href="https://www.codacy.com/app/RootG/ETUmulator?utm_source=github.com&utm_medium=referral&utm_content=kasirgalabs/ETUmulator&utm_campaign=Badge_Coverage"><img src="https://api.codacy.com/project/badge/Coverage/b79a64268c3b4ab38699a5780e773302"></a>
+  <a title="Grade" href="https://www.codacy.com/app/RootG/ETUmulator?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=kasirgalabs/ETUmulator&amp;utm_campaign=Badge_Grade"><img src="https://api.codacy.com/project/badge/Grade/b79a64268c3b4ab38699a5780e773302"></a>
+  <a title="Dependency Status" href="https://www.versioneye.com/user/projects/58b1886d7b9e15004de85395"><img src="https://www.versioneye.com/user/projects/58b1886d7b9e15004de85395/badge.svg?style=flat-square"></a>
+  <a title="Gitter" href="https://gitter.im/ETUmulator/Lobby"><img src="https://badges.gitter.im/Join%20Chat.svg"></a>
+</p>
 
 # ETUmulator
 ETUmulator is a Thumb-2 assembly language emulator written in Java. It is written with portability in mind, with builds actively maintained for Linux. At this moment, ETUmulator only emulates a subset of Thumb-2 instruction set.

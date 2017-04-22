@@ -44,7 +44,7 @@ public class LR implements Observable {
     private final Dispatcher dispatcher;
 
     /**
-     * Construct an LR with {@link BaseDispatcher}.
+     * Construct a LR with {@link BaseDispatcher}.
      *
      * @see BaseDispatcher
      */
@@ -53,7 +53,7 @@ public class LR implements Observable {
     }
 
     /**
-     * Construct an LR with the given dispatcher as parameter.
+     * Construct a LR with the given dispatcher as parameter.
      *
      * @param dispatcher The dispatcher which will be used to notify observers.
      *
