@@ -31,7 +31,7 @@ import com.kasirgalabs.etumulator.util.Observer;
  * reverts to 0.
  * <p>
  * This class represents an observable object. After a state change on PC value, all of it's
- * observers will be notified through default {@link Dispatcher} or the Dispatcher initialized
+ * observers will be notified through default {@link BaseDispatcher} or the Dispatcher initialized
  * during construction.
  *
  * @author rootg

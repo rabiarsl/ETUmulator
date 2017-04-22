@@ -31,8 +31,8 @@ import com.kasirgalabs.etumulator.util.Observer;
  * On subroutine entry, store LR to the stack with an instruction of the form: PUSH {LR} and use
  * a matching instruction to return: POP {PC}
  * <p>
- * This class represents an observable object. After a state change on PC value, all of it's
- * observers will be notified through default {@link Dispatcher} or the Dispatcher initialized
+ * This class represents an observable object. After a state change on LR value, all of it's
+ * observers will be notified through default {@link BaseDispatcher} or the Dispatcher initialized
  * during construction.
  *
  * @author rootg

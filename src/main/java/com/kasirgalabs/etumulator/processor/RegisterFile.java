@@ -64,6 +64,6 @@ public class RegisterFile implements Observable {
         for(int i = 0; i < 13; i++) {
             registers.put("r" + Integer.toString(i), 0);
         }
-        dispatcher.notifyObservers(Stack.class, "clear");
+        dispatcher.notifyObservers(RegisterFile.class, "clear");
     }
 }

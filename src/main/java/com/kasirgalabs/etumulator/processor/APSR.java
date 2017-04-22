@@ -29,7 +29,7 @@ import com.kasirgalabs.etumulator.util.Observer;
  * executed if the condition code flags in the APSR meet the specified condition.
  * <p>
  * This class represents an observable object. After a state change on flags, all of it's observers
- * will be notified through default {@link Dispatcher} or the Dispatcher initialized during
+ * will be notified through default {@link BaseDispatcher} or the Dispatcher initialized during
  * construction.
  *
  * @author rootg
