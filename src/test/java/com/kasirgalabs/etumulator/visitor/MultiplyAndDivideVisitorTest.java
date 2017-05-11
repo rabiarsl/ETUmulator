@@ -150,6 +150,18 @@ public class MultiplyAndDivideVisitorTest {
                 + "sdiv r0, r0, r1\n";
         processor.run(assembler.assemble(code));
         assertEquals("Multiply result is wrong.", 2, registerFile.getValue("r0"));
+
+        code = "ldr r0, =0x80000000\n"
+                + "ldr r1, =0xffffffff\n"
+                + "sdiv r0, r0, r1\n";
+        processor.run(assembler.assemble(code));
+        assertEquals("Multiply result is wrong.", 0x8000_0000, registerFile.getValue("r0"));
+
+        code = "ldr r0, =0x80000000\n"
+                + "ldr r1, =0\n"
+                + "sdiv r0, r0, r1\n";
+        processor.run(assembler.assemble(code));
+        assertEquals("Multiply result is wrong.", 0, registerFile.getValue("r0"));
     }
 
     /**
@@ -169,5 +181,11 @@ public class MultiplyAndDivideVisitorTest {
                 + "udiv r0, r0, r1\n";
         processor.run(assembler.assemble(code));
         assertEquals("Multiply result is wrong.", 0xffff_ffff, registerFile.getValue("r0"));
+
+        code = "ldr r0, =0x80000000\n"
+                + "ldr r1, =0\n"
+                + "sdiv r0, r0, r1\n";
+        processor.run(assembler.assemble(code));
+        assertEquals("Multiply result is wrong.", 0, registerFile.getValue("r0"));
     }
 }

@@ -91,7 +91,12 @@ public class MultiplyAndDivideVisitor extends ProcessorBaseVisitor<Void> {
         String destRegister = registerVisitor.visit(ctx.rd());
         int left = registerFile.getValue(registerVisitor.visit(ctx.rn()));
         int right = registerFile.getValue(registerVisitor.visit(ctx.rm()));
-        registerFile.setValue(destRegister, left / right);
+        if(right == 0) {
+            registerFile.setValue(destRegister, 0);
+        }
+        else {
+            registerFile.setValue(destRegister, left / right);
+        }
         return null;
     }
 
@@ -100,7 +105,12 @@ public class MultiplyAndDivideVisitor extends ProcessorBaseVisitor<Void> {
         String destRegister = registerVisitor.visit(ctx.rd());
         int left = registerFile.getValue(registerVisitor.visit(ctx.rn()));
         int right = registerFile.getValue(registerVisitor.visit(ctx.rm()));
-        registerFile.setValue(destRegister, Integer.divideUnsigned(left, right));
+        if(right == 0) {
+            registerFile.setValue(destRegister, 0);
+        }
+        else {
+            registerFile.setValue(destRegister, Integer.divideUnsigned(left, right));
+        }
         return null;
     }
 }
