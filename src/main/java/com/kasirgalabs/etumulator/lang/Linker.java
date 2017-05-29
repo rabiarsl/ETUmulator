@@ -312,6 +312,11 @@ public class Linker extends AssemblerBaseVisitor<Void> {
      */
     private char[][] parseCode(String code) {
         String[] parts = code.split("\\n");
+        for(int i = 0; i < parts.length; i++) {
+            if(parts[i].contains("/*") || parts[i].contains("*/")) {
+                parts[i] = "\n";
+            }
+        }
         char[][] instructions = new char[parts.length][];
         for(int i = 0; i < instructions.length; i++) {
             instructions[i] = (parts[i] + "\n").toCharArray();

@@ -67,8 +67,8 @@ public class Assembler {
             throw new SyntaxError("You have error(s) in your code.");
         }
         ConstantValidator.validate(code);
-        ExecutableCode executablecode = linker.link(code);
-        loader.load(executablecode);
-        return executablecode;
+        ExecutableCode executableCode = linker.link(code);
+        loader.load(executableCode);
+        return executableCode;
     }
 }
