@@ -15,18 +15,10 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 /*
-    Created on : Jun 11, 2017, 7:42:14 PM
+    Created on : Jun 11, 2017, 8:08:28 PM
     Author     : Görkem Mülayim
 */
-.keyword {
-    -fx-fill: #0000E6;
-}
-.string {
-    -fx-fill: #CE7B00;
-}
-.comment {
-    -fx-fill: #969696;
-}
-.label {
-    -fx-fill: #009900;
+
+.label.flag {
+    -fx-border-color: black;
 }

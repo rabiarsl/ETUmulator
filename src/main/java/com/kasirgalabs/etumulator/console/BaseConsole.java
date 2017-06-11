@@ -59,7 +59,6 @@ public class BaseConsole extends TextArea implements Initializable, Console, Obs
         setText(userName + "@ETUmulator: ");
         uart.addObserver(this);
         vbox.getChildren().add(this);
-        wrapTextProperty().set(true);
     }
 
     @Override

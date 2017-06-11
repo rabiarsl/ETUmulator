@@ -23,17 +23,17 @@ import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.TextField;
+import javafx.scene.control.Label;
 
 public class APSRStatus implements Initializable, Observer {
     @FXML
-    private TextField negative;
+    private Label negative;
     @FXML
-    private TextField zero;
+    private Label zero;
     @FXML
-    private TextField carry;
+    private Label carry;
     @FXML
-    private TextField overflow;
+    private Label overflow;
     private final APSR apsr;
 
     @Inject

@@ -16,6 +16,7 @@
  */
 package com.kasirgalabs.etumulator.processor;
 
+import com.google.inject.Inject;
 import com.google.inject.Singleton;
 import com.kasirgalabs.etumulator.util.BaseDispatcher;
 import com.kasirgalabs.etumulator.util.Dispatcher;
@@ -59,6 +60,7 @@ public class APSR implements Observable {
      *
      * @see Dispatcher
      */
+    @Inject
     public APSR(Dispatcher dispatcher) {
         this.dispatcher = dispatcher;
     }
