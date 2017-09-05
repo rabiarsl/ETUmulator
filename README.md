@@ -56,8 +56,8 @@ Execute the below command:
 ```
 ./gradlew jar
 ```
-then you will be able to run ETUmulator from your terminal by typing `java -jar build/libs/ETUmulator-0.3.7.jar`<br/>
-or navigate to `build/libs` directory and double click on the `ETUmulator-0.3.7.jar`
+then you will be able to run ETUmulator from your terminal by typing `java -jar build/libs/ETUmulator-0.5.0.jar`<br/>
+or navigate to `build/libs` directory and double click on the `ETUmulator-0.5.0.jar`
 
 ### Running the tests
 Open a terminal in the root of the project directory, then execute the command:
