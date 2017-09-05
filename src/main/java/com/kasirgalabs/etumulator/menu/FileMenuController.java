@@ -14,9 +14,10 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.kasirgalabs.etumulator.document;
+package com.kasirgalabs.etumulator.menu;
 
 import com.google.inject.Inject;
+import com.kasirgalabs.etumulator.document.Document;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
@@ -26,13 +27,13 @@ import javafx.fxml.FXML;
 import javafx.stage.FileChooser;
 import javafx.stage.Window;
 
-public class DocumentMenu {
+public class FileMenuController {
     private final Document document;
     private final FileChooser fileChooser;
     private Window window;
 
     @Inject
-    public DocumentMenu(Document document) {
+    public FileMenuController(Document document) {
         this.document = document;
         this.fileChooser = new FileChooser();
         fileChooser.setTitle("ETUmulator");
