@@ -33,7 +33,7 @@ import com.kasirgalabs.etumulator.util.Observer;
  * will be notified through default {@link BaseDispatcher} or the Dispatcher initialized during
  * construction.
  *
- * @author rootg
+ * @author Görkem Mülayim
  * @see Dispatcher
  */
 @Singleton

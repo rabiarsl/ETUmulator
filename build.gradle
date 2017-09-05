@@ -102,10 +102,12 @@ task uploadCoverageToCodacy(type: JavaExec, dependsOn : jacocoTestReport) {
 
 jar {
     manifest {
-        attributes "Specification-Title": "ETUmulator"
-        attributes "Specification-Version": version
-        attributes "Specification-Vendor": "Kasirgalabs"
+        attributes "Application-Name": "ETUmulator"
+        attributes "Implementation-Title": "Simple Thumb-2 Emulator"
+        attributes "Implementation-Version": version
+        attributes "Implementation-Vendor": "Kasirgalabs"
         attributes "Main-Class": mainClassName
+        attributes "Codebase": "https://github.com/kasirgalabs/ETUmulator/releases"
     }
     from {
         configurations.compile.collect { it.isDirectory() ? it : zipTree(it) }

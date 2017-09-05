@@ -25,11 +25,7 @@
         <MenuBar GridPane.columnSpan="3">
             <menus>
                 <fx:include source="FileMenu.fxml" />
-                <Menu mnemonicParsing="false" text="Help">
-                    <items>
-                        <MenuItem mnemonicParsing="false" text="About" />
-                    </items>
-                </Menu>
+                <fx:include source="HelpMenu.fxml" />
             </menus>
         </MenuBar>
         <fx:include source="Navigator.fxml" GridPane.rowIndex="1" GridPane.rowSpan="2" />

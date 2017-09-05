@@ -6,12 +6,12 @@
 
 <Menu mnemonicParsing="false" text="File" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.kasirgalabs.etumulator.menu.FileMenuController">
     <items>
-        <MenuItem mnemonicParsing="false" onAction="#newOnAction" text="New">
+        <MenuItem mnemonicParsing="false" onAction="#newOnAction" text="New...">
             <accelerator>
                 <KeyCodeCombination alt="UP" code="N" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
             </accelerator>
         </MenuItem>
-        <MenuItem mnemonicParsing="false" onAction="#openOnAction" text="Open">
+        <MenuItem mnemonicParsing="false" onAction="#openOnAction" text="Open...">
             <accelerator>
                 <KeyCodeCombination alt="UP" code="O" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
             </accelerator>
@@ -21,7 +21,7 @@
                 <KeyCodeCombination alt="UP" code="S" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
             </accelerator>
         </MenuItem>
-        <MenuItem mnemonicParsing="false" onAction="#saveAsOnaction" text="Save as">
+        <MenuItem mnemonicParsing="false" onAction="#saveAsOnaction" text="Save as...">
             <accelerator>
                 <KeyCodeCombination alt="UP" code="S" control="DOWN" meta="UP" shift="DOWN" shortcut="UP" />
             </accelerator>

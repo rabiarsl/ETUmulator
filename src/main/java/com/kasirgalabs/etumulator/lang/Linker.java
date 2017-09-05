@@ -59,7 +59,7 @@ import org.antlr.v4.runtime.tree.TerminalNode;
  * </code>
  * Linker simply replaced the branch label with the PC value of branch target.
  *
- * @author rootg
+ * @author Görkem Mülayim
  * @see Loader
  * @see Linker#link(String)
  */

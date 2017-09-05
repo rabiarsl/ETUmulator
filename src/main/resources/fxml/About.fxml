@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Hyperlink?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.text.Text?>
+
+<GridPane prefHeight="250.0" prefWidth="450.0" stylesheets="@../styles/About.css" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.kasirgalabs.etumulator.menu.AboutController">
+    <columnConstraints>
+        <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" />
+        <ColumnConstraints />
+    </columnConstraints>
+    <rowConstraints>
+        <RowConstraints valignment="CENTER" vgrow="SOMETIMES" />
+        <RowConstraints valignment="CENTER" vgrow="NEVER" />
+        <RowConstraints valignment="CENTER" vgrow="NEVER" />
+        <RowConstraints valignment="CENTER" vgrow="NEVER" />
+        <RowConstraints valignment="CENTER" vgrow="NEVER" />
+        <RowConstraints valignment="CENTER" vgrow="NEVER" />
+        <RowConstraints valignment="CENTER" vgrow="NEVER" />
+        <RowConstraints valignment="CENTER" vgrow="NEVER" />
+        <RowConstraints valignment="CENTER" vgrow="NEVER" />
+        <RowConstraints valignment="CENTER" vgrow="NEVER" />
+      <RowConstraints valignment="CENTER" vgrow="SOMETIMES" />
+      <RowConstraints valignment="CENTER" vgrow="NEVER" />
+      <RowConstraints valignment="CENTER" vgrow="NEVER" />
+      <RowConstraints valignment="CENTER" vgrow="SOMETIMES" />
+      <RowConstraints valignment="CENTER" vgrow="NEVER" />
+      <RowConstraints valignment="CENTER" vgrow="NEVER" />
+        <RowConstraints valignment="CENTER" vgrow="SOMETIMES" />
+    </rowConstraints>
+    <children>
+        <HBox alignment="CENTER" spacing="5.0" GridPane.columnSpan="2" GridPane.rowIndex="4">
+            <children>
+            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Version:" />
+                <Text fx:id="applicationVersion" strokeType="OUTSIDE" strokeWidth="0.0" />
+            </children>
+            <GridPane.margin>
+                <Insets />
+            </GridPane.margin>
+        </HBox>
+        <HBox alignment="CENTER" GridPane.columnSpan="2" GridPane.rowIndex="6">
+            <children>
+                <Text strokeType="OUTSIDE" strokeWidth="0.0" text="ETUmulator is designed by" />
+                <Hyperlink onAction="#kasirgalabsOnAction" text="Kasirgalabs" />
+                <Text strokeType="OUTSIDE" strokeWidth="0.0" text="," />
+            </children>
+        </HBox>
+        <Hyperlink onAction="#etumulatorOnAction" text="ETUmulator" GridPane.rowIndex="1" />
+        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="we are mainly working on" GridPane.rowIndex="8" />
+        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="embedded system designs and computer architecture." GridPane.rowIndex="9" />
+      <Text strokeType="OUTSIDE" strokeWidth="0.0" text="This program comes with absolutely no warranty." GridPane.rowIndex="14" />
+      <HBox alignment="CENTER" GridPane.rowIndex="15">
+         <children>
+            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="See the " />
+            <Hyperlink onAction="#licenseOnAction" text="GNU General Public License, version 3 or later" />
+            <Text strokeType="OUTSIDE" strokeWidth="0.0" text=" for details." />
+         </children>
+      </HBox>
+      <HBox alignment="CENTER" GridPane.rowIndex="11">
+         <children>
+            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Want to help? " />
+            <Hyperlink onAction="#bugReportOnAction" text="Report a bug" />
+            <Text strokeType="OUTSIDE" strokeWidth="0.0" text=" or " />
+            <Hyperlink onAction="#getInvolvedOnAction" text="get involved!" />
+         </children>
+      </HBox>
+      <HBox alignment="CENTER" GridPane.rowIndex="12">
+         <children>
+            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="The source code is available at " />
+            <Hyperlink onAction="#githubOnAction" text="GitHub." />
+         </children>
+      </HBox>
+      <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Simple Thumb-2 emulator." GridPane.rowIndex="3" />
+    </children>
+</GridPane>

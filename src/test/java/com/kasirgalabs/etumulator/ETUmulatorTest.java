@@ -23,7 +23,7 @@ import java.util.logging.Logger;
 import org.junit.Test;
 
 public class ETUmulatorTest {
-    private static final Logger LOG = Logger.getLogger(ETUmulatorTest.class.getName());
+    private static final Logger LOGGER = Logger.getLogger(ETUmulatorTest.class.getName());
     private volatile boolean success;
 
     /**
@@ -47,7 +47,7 @@ public class ETUmulatorTest {
                         return;
                     }
                     // This is not the exception we are looking for so log it.
-                    LOG.log(Level.SEVERE, null, t);
+                    LOGGER.log(Level.SEVERE, null, t);
                 }
                 success = false;
             }

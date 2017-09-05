@@ -34,7 +34,7 @@ import com.kasirgalabs.etumulator.util.Observer;
  * observers will be notified through default {@link BaseDispatcher} or the Dispatcher initialized
  * during construction.
  *
- * @author rootg
+ * @author Görkem Mülayim
  */
 @Singleton
 public class PC implements Observable {
