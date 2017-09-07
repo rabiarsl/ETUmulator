@@ -4,16 +4,11 @@
 @import "{{ site.theme }}";
 
 .row {
-  text-align: center !important;
-}
-
-.row:after {
-    content: '';
-    display: block;
-    clear: both;
+  text-align: center;
 }
 
 .column {
-  float: left;
   width: 50%;
+  vertical-align: middle;
+  display: table-cell;
 }
