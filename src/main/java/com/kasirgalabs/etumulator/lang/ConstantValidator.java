@@ -21,7 +21,7 @@ import com.kasirgalabs.thumb2.AssemblerBaseVisitor;
 import com.kasirgalabs.thumb2.AssemblerLexer;
 import com.kasirgalabs.thumb2.AssemblerParser;
 import java.math.BigInteger;
-import org.antlr.v4.runtime.ANTLRInputStream;
+import org.antlr.v4.runtime.CharStreams;
 import org.antlr.v4.runtime.CommonTokenStream;
 
 public final class ConstantValidator extends AssemblerBaseVisitor<Integer> {
@@ -30,8 +30,7 @@ public final class ConstantValidator extends AssemblerBaseVisitor<Integer> {
 
     public static void validate(String code) {
         ConstantValidator constantValidator = new ConstantValidator();
-        ANTLRInputStream in = new ANTLRInputStream(code);
-        AssemblerLexer lexer = new AssemblerLexer(in);
+        AssemblerLexer lexer = new AssemblerLexer(CharStreams.fromString(code));
         CommonTokenStream tokens = new CommonTokenStream(lexer);
         AssemblerParser parser = new AssemblerParser(tokens);
         AssemblerParser.ProgContext program = parser.prog();

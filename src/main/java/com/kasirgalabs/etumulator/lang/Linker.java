@@ -26,7 +26,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Random;
 import java.util.Set;
-import org.antlr.v4.runtime.ANTLRInputStream;
+import org.antlr.v4.runtime.CharStreams;
 import org.antlr.v4.runtime.CommonTokenStream;
 import org.antlr.v4.runtime.ParserRuleContext;
 import org.antlr.v4.runtime.tree.TerminalNode;
@@ -83,7 +83,7 @@ public class Linker extends AssemblerBaseVisitor<Void> {
     /**
      * Code that given to {@link Linker#link(String)} method which split by newline character.
      */
-    private char[][] code;
+    private String[] code;
 
     /**
      * Constructs a Linker object.
@@ -225,7 +225,7 @@ public class Linker extends AssemblerBaseVisitor<Void> {
         String temp = new String(code[lineNumber]);
         String address = Integer.toString(definedData.get(label).getAddress());
         temp = temp.replace(label, "#" + address);
-        code[lineNumber] = temp.toCharArray();
+        code[lineNumber] = temp;
         return null;
     }
 
@@ -276,8 +276,7 @@ public class Linker extends AssemblerBaseVisitor<Void> {
         addressBook.clear();
         secondPass = false;
         this.code = parseCode(code);
-        ANTLRInputStream in = new ANTLRInputStream(code);
-        AssemblerLexer lexer = new AssemblerLexer(in);
+        AssemblerLexer lexer = new AssemblerLexer(CharStreams.fromString(code));
         CommonTokenStream tokens = new CommonTokenStream(lexer);
         AssemblerParser parser = new AssemblerParser(tokens);
         AssemblerParser.ProgContext program = parser.prog();
@@ -293,33 +292,25 @@ public class Linker extends AssemblerBaseVisitor<Void> {
 
     /**
      * Splits the given string around matches of newline character. Then every match of strings are
-     * converted to char array. The resulting array has the same ordering as the given input. For
-     * example,<br>
-     * <code>
-     * &nbsp;"first\n"<br>
-     * &nbsp;"second\n"<br>
-     * </code>
-     * becomes:<br>
-     * <code>
-     * &nbsp;array[0] = {'f', 'i', 'r', 's', 't', '\n'}<br>
-     * &nbsp;array[1] = {'s', 'e', 'c', 'o', 'n', 'd', '\n'}<br>
-     * </code>
+     * converted to char string array.
      *
      * @param code Input string.
      *
-     * @return The array of char arrays that computed by splitting this string around matches of
-     *         the new line.
+     * @return The array of strings that computed by splitting this string around matches of the new
+     *         line.
      */
-    private char[][] parseCode(String code) {
-        String[] parts = code.split("\\n");
-        for(int i = 0; i < parts.length; i++) {
-            if(parts[i].contains("/*") || parts[i].contains("*/")) {
-                parts[i] = "\n";
+    private String[] parseCode(String code) {
+        String[] instructions = code.split("\\n");
+        for(int i = 0; i < instructions.length; i++) {
+            if(instructions[i].contains("/*") || instructions[i].contains("*/")) {
+                instructions[i] = "\n";
             }
         }
-        char[][] instructions = new char[parts.length][];
         for(int i = 0; i < instructions.length; i++) {
-            instructions[i] = (parts[i] + "\n").toCharArray();
+            if(!instructions[i].equals("\n")) {
+                String temp = instructions[i] + "\n";
+                instructions[i] = temp;
+            }
         }
         return instructions;
     }
@@ -336,7 +327,7 @@ public class Linker extends AssemblerBaseVisitor<Void> {
         String temp = new String(code[lineNumber]);
         String address = Integer.toString(definedBranches.get(label));
         temp = temp.replace(label, address);
-        code[lineNumber] = temp.toCharArray();
+        code[lineNumber] = temp;
     }
 
     /**
@@ -367,14 +358,13 @@ public class Linker extends AssemblerBaseVisitor<Void> {
     }
 
     public static class ExecutableCode {
-        private final char[][] code;
+        private final String[] code;
         private final List<Data> data;
 
-        private ExecutableCode(char[][] code, List<Data> data) {
-            this.code = new char[code.length][];
+        private ExecutableCode(String[] code, List<Data> data) {
+            this.code = new String[code.length];
             for(int i = 0; i < code.length; i++) {
-                this.code[i] = new char[code[i].length];
-                System.arraycopy(code[i], 0, this.code[i], 0, code[i].length);
+                this.code[i] = code[i];
             }
             this.data = new ArrayList<>(data.size());
             for(int i = 0; i < data.size(); i++) {
@@ -382,11 +372,10 @@ public class Linker extends AssemblerBaseVisitor<Void> {
             }
         }
 
-        public char[][] getCode() {
-            char[][] temp = new char[code.length][];
+        public String[] getCode() {
+            String[] temp = new String[code.length];
             for(int i = 0; i < code.length; i++) {
-                temp[i] = new char[code[i].length];
-                System.arraycopy(code[i], 0, temp[i], 0, code[i].length);
+                temp[i] = code[i];
             }
             return temp;
         }

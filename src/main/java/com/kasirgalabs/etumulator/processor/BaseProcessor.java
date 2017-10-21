@@ -29,7 +29,7 @@ import com.kasirgalabs.etumulator.visitor.StackVisitor;
 import com.kasirgalabs.thumb2.ProcessorBaseVisitor;
 import com.kasirgalabs.thumb2.ProcessorLexer;
 import com.kasirgalabs.thumb2.ProcessorParser;
-import org.antlr.v4.runtime.ANTLRInputStream;
+import org.antlr.v4.runtime.CharStreams;
 import org.antlr.v4.runtime.CommonTokenStream;
 
 public class BaseProcessor extends ProcessorBaseVisitor<Void> implements Processor {
@@ -113,20 +113,19 @@ public class BaseProcessor extends ProcessorBaseVisitor<Void> implements Process
     @Override
     public void run(ExecutableCode executableCode) {
         pc.setValue(0);
-        final char[][] instructions = executableCode.getCode();
+        final String[] instructions = executableCode.getCode();
         while(pc.getValue() < instructions.length) {
             if(pc.getValue() < 0) {
                 throw new IllegalPCException("PC can not be negative.");
             }
-            char[] instruction = instructions[pc.getValue()];
+            String instruction = instructions[pc.getValue()];
             execute(instruction);
             pc.increment();
         }
     }
 
-    private void execute(char[] instruction) {
-        ANTLRInputStream in = new ANTLRInputStream(instruction, instruction.length);
-        ProcessorLexer lexer = new ProcessorLexer(in);
+    private void execute(String instruction) {
+        ProcessorLexer lexer = new ProcessorLexer(CharStreams.fromString(instruction));
         CommonTokenStream tokens = new CommonTokenStream(lexer);
         ProcessorParser parser = new ProcessorParser(tokens);
         ProcessorParser.ProgContext tree = parser.prog();
