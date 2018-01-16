@@ -96,4 +96,8 @@ public class BaseConsole extends TextArea implements Initializable, Console, Obs
         uart.feed(text.charAt(0));
         readEnable = false;
     }
+    public void resetArea(){
+        this.clear();
+        setText(userName + "@ETUmulator: ");
+    }
 }
