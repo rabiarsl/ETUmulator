@@ -98,7 +98,8 @@ public class BaseConsole extends TextArea implements Initializable, Console, Obs
     }
 
     @Override
-    public void clearArea(){
+    @FXML
+    public void clearArea() {
         this.clear();
         setText(userName + "@ETUmulator: ");
     }
