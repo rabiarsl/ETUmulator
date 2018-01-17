@@ -22,4 +22,6 @@ public interface Console {
     char read();
 
     String getText();
+
+    void clearArea();
 }
