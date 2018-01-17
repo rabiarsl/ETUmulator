@@ -9,7 +9,7 @@
     <children>
         <TilePane>
             <Label maxWidth="Infinity" text="Console:" />
-            <Button onAction="#resetArea" text="Reset Console" />
+            <Button onAction="#clearArea" text="Clear Console" />
         </TilePane>
     </children>
 </VBox>
