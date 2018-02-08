@@ -17,13 +17,13 @@
 package com.kasirgalabs.etumulator.processor;
 
 public class BaseProcessorUnits implements ProcessorUnits {
-    private final RegisterFile registerFile;
-    private final APSR apsr;
-    private final Stack stack;
-    private final Memory memory;
-    private final UART uart;
-    private final PC pc;
-    private final LR lr;
+    private RegisterFile registerFile;
+    private APSR apsr;
+    private Stack stack;
+    private Memory memory;
+    private UART uart;
+    private PC pc;
+    private LR lr;
 
     public BaseProcessorUnits() {
         registerFile = new RegisterFile();
@@ -47,6 +47,11 @@ public class BaseProcessorUnits implements ProcessorUnits {
     }
 
     @Override
+    public void setRegisterFile(RegisterFile registerFile) {
+        this.registerFile = registerFile;
+    }
+
+    @Override
     public RegisterFile getRegisterFile() {
         return registerFile;
     }
@@ -57,8 +62,23 @@ public class BaseProcessorUnits implements ProcessorUnits {
     }
 
     @Override
+    public void setAPSR(APSR apsr) {
+        this.apsr = apsr;
+    }
+
+    @Override
+    public void setStack(Stack stack) {
+        this.stack = stack;
+    }
+
+    @Override
     public Stack getStack() {
         return stack;
+    }
+
+    @Override
+    public void setMemory(Memory memory) {
+        this.memory = memory;
     }
 
     @Override
@@ -67,13 +87,28 @@ public class BaseProcessorUnits implements ProcessorUnits {
     }
 
     @Override
+    public void setUART(UART uart) {
+        this.uart = uart;
+    }
+
+    @Override
     public UART getUART() {
         return uart;
     }
 
     @Override
+    public void setPC(PC pc) {
+        this.pc = pc;
+    }
+
+    @Override
     public PC getPC() {
         return pc;
+    }
+
+    @Override
+    public void setLR(LR lr) {
+        this.lr = lr;
     }
 
     @Override
